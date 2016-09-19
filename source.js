@@ -1,4 +1,4 @@
-// lines with *** WILL make changes to your Google Drive
+// Lines that *will* modify your Drive marked -> *** uncommenting the line below will... ***
 
 //   | General 
 // * | - Standard Array
@@ -7,7 +7,7 @@
 // * | -- Remove Empty Values from an Array
 //   | -- Count of Value in Array
 //   | - Arrays of Objects
-// ? | -- Count of Matching Value in Array
+// ? | -- Count of Value in Array
 //   | -- Sort Array of Objects by Property or Properties
 // * | - Dates and Times
 // * | -- Formatted Timestamps
@@ -350,7 +350,7 @@ function createSeveralFolders(arrayOfFolders, folderPath) {
 
 // Logger.log("Z's Id in Testing/X/Y/Z is " + containingFolderId);
 
-// *** uncommenting the line below will create the folders in aof at the Drive root *** 
+// *** uncommenting the line below will modify your Google Drive *** 
 // var rootId = createSeveralFolders(aof);
 // Logger.log("Root Folder Id: " + rootId);
 
