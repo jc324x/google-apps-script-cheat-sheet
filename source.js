@@ -1,11 +1,18 @@
+// lines with *** WILL make changes to your Google Drive
+
 //   | General 
-//   | - Utility
+// * | - Standard Array
 // * | -- Check an Array for a Value
 // * | -- Remove Duplicates from an Array
 // * | -- Remove Empty Values from an Array
+//   | -- Count of Value in Array
+//   | - Arrays of Objects
+//   | // BULK \\
+//   |
 // * | - Dates and Times
 // * | -- Formatted Timestamps
 // * | -- Match a Date to a Range of Dates
+//   | -- Date Objects 
 //   |  Drive 
 //   | - Folders
 // * | -- Create a Folder Path and/or Get the Id Of the Last Folder
@@ -38,14 +45,21 @@
 //   | - Range as Array of Arrays
 //   | -- Generate Array of Arrays
 //   | -- Flatten A Multidimensional Array
+//   | Forms
+//   | - Form Management
+//   | -- Build Array of Items
+//   | -- Set Item Dropdown Choices
+//   | -- Clear All Form Options
+//   | -- Get Destination Sheet
+//   | -- Working With Form Responses
+//   | -- Get Last Form Response
 //   | Docs
 //   | - Utility Functions for Docs
 //   | -- Clear All Content From a Doc
-//   | Triggers
-//   | - Managing Triggers
-//   | -- Removing All Installable Triggers
-//   | -- Bootstrapping Triggers
-//   | -- Trigger a Function on Form Submit
+//   | Gmail
+//   | - Send Email
+//   | -- Comma Separated List of Recipients
+// ? | -- HTML
 
 // migrating from BitBucket
 
@@ -62,6 +76,7 @@ function checkArrayForValue(array, value) {
 }
 
 var cafv_array = [1,2,3,4];
+
 if (checkArrayForValue(cafv_array, 99)) {
     // Logger.log(" checkArrayForValue || 99 is in the array"); 
   } else {
@@ -86,15 +101,19 @@ function removeDuplicates(array) {
 }
 
 var rd_array_input  = [1,2,3,1,2,3,4,];
+
 var rd_array_output = removeDuplicates(rd_array_input);
+
 // Logger.log(rd_array_output);
 
 // -- Remove Empty Values from an Array
 
 var ev_array_input  = ["a",,"b",,,"c"];
+
 var ev_array_output = ev_array_input.filter(function(x){
   return (x !== (undefined || ''));
 });
+
 // Logger.log(ev_array_output);
 
 // - Dates and Times
@@ -108,6 +127,7 @@ function getCurrentDate() {
 }
 
 var gcd = getCurrentDate();
+
 // Logger.log(" getCurrentDate || date: " + gcd);
 
 function getCurrentTime(){
@@ -122,6 +142,7 @@ function getCurrentTime(){
 }
 
 var gct = getCurrentTime();
+
 // Logger.log(" getCurrentTime || 24 hour time: " + gct );
 
 function getCurrentDateTime12Hour() {
@@ -139,6 +160,7 @@ function getCurrentDateTime12Hour() {
 }
 
 var gcdt12h = getCurrentDateTime12Hour();
+
 // Logger.log(" getCurrentDateTime12Hour || date + 12 hour time: " + gcdt12h);
 
 // -- Match a Date to a Range of Dates
@@ -163,6 +185,7 @@ function returnCurrentQuarterAsInteger() {
 }
 
 var rcqas = returnCurrentQuarterAsInteger();
+
 // Logger.log(" returnCurrentQuarterAsInteger || quarter: " + rcqas);
 
 // Drive 
@@ -196,7 +219,9 @@ function createFolderPathAndOrGetIdOfLastFolder(folderPath) {
 }
 
 var fp1     = "Testing/A/B/C";
+
 var coffpri = createFolderPathAndOrGetIdOfLastFolder(fp1);
+
 // Logger.log(" createFolderPathAndOrGetIdOfLastFolder || C's Id in Testing/A/B/C is " + coffpri);
 
 // -- Get Id of the Last Folder in a Folder Path
@@ -218,6 +243,7 @@ function getIdOfLastFolderInAFolderPath(folderPath) {
 }
 
 var giolfiafp1 = getIdOfLastFolderInAFolderPath("Testing/A/B/C");
+
 // Logger.log(" getIdOfLastFolderInAFolderPath || C's Id in Testing/A/B/C is " + giolfiafp1);
 
 // -- Search a Folder Path for a Folder
@@ -237,7 +263,8 @@ function searchAFolderPathForAFolderReturnId(folderPath, folderName) {
 }
 
 var idOfC = searchAFolderPathForAFolderReturnId("Testing/A/B", "C");
-Logger.log( "searchAFolderPathForAFolderReturnId || the Id of C is " + idOfC);
+
+// Logger.log( "searchAFolderPathForAFolderReturnId || the Id of C is " + idOfC);
 
 // -- List All Folders In A Folder
 
@@ -254,6 +281,7 @@ function listAllFoldersInAFolder(folderPath) {
 }
 
 // var rfcaa = listAllFoldersInAFolder("Testing");
+
 // Logger.log(rfcaa);
 
 // -- List All Folders in Drive
@@ -270,6 +298,7 @@ function returnAllFoldersInAnArray() {
 }
 
 // var allFolders = returnAllFoldersInAnArray();
+
 // Logger.log(allFolders);
 
 // -- List All Folders at Root in an Array
@@ -287,6 +316,7 @@ function returnAllFoldersAtRootInAnArray() {
 }
 
 // var foldersAtRoot = returnAllFoldersAtRootInAnArray();
+
 // Logger.log(foldersAtRoot);
 
 // -- Create Several Folders in a Folder
@@ -313,11 +343,14 @@ function createSeveralFolders(arrayOfFolders, folderPath) {
 }
 
 // var aof = ["apples", "bananas", "coffee"]
+
 // var fp2 = "Testing/X/Y/Z";
+
 // var containingFolderId = createSeveralFolders(aof, fp2);
+
 // Logger.log("Z's Id in Testing/X/Y/Z is " + containingFolderId);
 
-// uncommenting the line below will create the folders in aof at the Drive root 
+// *** uncommenting the line below will create the folders in aof at the Drive root *** 
 // var rootId = createSeveralFolders(aof);
 // Logger.log("Root Folder Id: " + rootId);
 
