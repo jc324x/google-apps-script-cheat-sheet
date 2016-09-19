@@ -7,8 +7,8 @@
 // * | -- Remove Empty Values from an Array
 //   | -- Count of Value in Array
 //   | - Arrays of Objects
-//   | // BULK \\
-//   |
+// ? | -- Count of Matching Value in Array
+//   | -- Sort Array of Objects by Property or Properties
 // * | - Dates and Times
 // * | -- Formatted Timestamps
 // * | -- Match a Date to a Range of Dates
@@ -35,7 +35,7 @@
 //   | -- Timestamp on Cell Change
 //   | -- Evaluating True and False
 //   | -- Replicating Import Range
-//   | - Range as Array of Objects
+//   | - Range as Array of Objects (Grid) 
 //   | -- Generate Array of Objects
 //   | -- Sort Array of Objects
 //   | -- Find Object With Unique Value
