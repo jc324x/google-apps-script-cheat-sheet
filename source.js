@@ -7,6 +7,9 @@
 //   | - Arrays of Objects
 // ? | -- Count of Value in Array
 //   | -- Sort Array of Objects by Property or Properties
+//   | -- Find Object With Unique Value
+//   | -- Create Array of Objects With Matching Value
+//   | -- Create Array of All Unique Values for a Property
 // * | - Dates and Times
 // * | -- Formatted Timestamps
 // * | -- Match a Date to a Range of Dates
@@ -34,15 +37,12 @@
 //   | -- Replicating Import Range
 //   | -- Evaluating True and False
 //   | - Range as Array of Objects - Grid
-//   | -- New Grid by Sheet
+//   | -- New Grid from Sheet
 //   | -- New Grid from Range
+//   | -- Set Values in Grid
 //   | - Range as Array of Objects - Generic
-//   | -- Generate Array of Objects
-//   | -- Sort Array of Objects
-//   | -- Find Object With Unique Value
-//   | -- Create Array of Objects With Matching Value
-//   | -- Create Array of All Unique Values for a Property
 //   | -- Set Values from an Array of Objects to Range
+//   | -- Generate Array of Objects
 //   | - Range as Array of Arrays
 //   | -- Generate Array of Arrays
 //   | -- Flatten A Multidimensional Array
