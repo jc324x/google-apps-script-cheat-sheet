@@ -1,8 +1,11 @@
+// * = done
+// ? = maybe?
+
 //   | General 
-// * | - Standard Array
-// * | -- Check an Array for a Value
-// * | -- Remove Duplicates from an Array
-// * | -- Remove Empty Values from an Array
+//   | - Standard Array
+//   | -- Check an Array for a Value
+//   | -- Remove Duplicates from an Array
+//   | -- Remove Empty Values from an Array
 //   | -- Count of Value in Array
 //   | - Arrays of Objects
 // ? | -- Count of Value in Array
@@ -10,15 +13,15 @@
 //   | -- Find Object With Unique Value
 //   | -- Create Array of Objects With Matching Value
 //   | -- Create Array of All Unique Values for a Property
-// * | - Dates and Times
-// * | -- Formatted Timestamps
-// * | -- Match a Date to a Range of Dates
+//   | - Dates and Times
+//   | -- Formatted Timestamps
+//   | -- Match a Date to a Range of Dates
 //   | -- Date Objects 
 //   |  Drive 
 //   | - Folders
-// * | -- Create a Folder Path and/or Get the Id Of the Last Folder
-// * | -- Get Id of Last Folder in a Folder Path
-// * | -- Search a Folder Path for a Folder
+//   | -- Create a Folder Path and/or Get the Id Of the Last Folder
+//   | -- Get Id of Last Folder in a Folder Path
+//   | -- Search a Folder Path for a Folder
 //   | -- List Folders in a Folder as an Array
 //   | -- List All Folders in Drive as an Array 
 //   | -- List All Folders at Root as an Array
