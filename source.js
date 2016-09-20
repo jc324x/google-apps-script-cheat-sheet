@@ -1,5 +1,3 @@
-// Lines that *will* modify your Drive marked -> *** uncommenting the line below will... ***
-
 //   | General 
 // * | - Standard Array
 // * | -- Check an Array for a Value
@@ -33,9 +31,12 @@
 //   | - Utility Functions for Sheets
 //   | -- Convert Column Number to a Letter
 //   | -- Timestamp on Cell Change
-//   | -- Evaluating True and False
 //   | -- Replicating Import Range
-//   | - Range as Array of Objects (Grid) 
+//   | -- Evaluating True and False
+//   | - Range as Array of Objects - Grid
+//   | -- New Grid by Sheet
+//   | -- New Grid from Range
+//   | - Range as Array of Objects - Generic
 //   | -- Generate Array of Objects
 //   | -- Sort Array of Objects
 //   | -- Find Object With Unique Value
@@ -51,17 +52,16 @@
 //   | -- Set Item Dropdown Choices
 //   | -- Clear All Form Options
 //   | -- Get Destination Sheet
-//   | -- Working With Form Responses
+//   | - Form Responses
 //   | -- Get Last Form Response
+//   | -- Dates in Form Responses
 //   | Docs
 //   | - Utility Functions for Docs
 //   | -- Clear All Content From a Doc
 //   | Gmail
 //   | - Send Email
 //   | -- Comma Separated List of Recipients
-// ? | -- HTML
-
-// migrating from BitBucket
+// ? | -- HTML in Email Body
 
 function testEverything() {}
 
