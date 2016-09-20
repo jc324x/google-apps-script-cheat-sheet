@@ -122,6 +122,12 @@ Logger.log(ev_array_output);
 
 // -- Get Count of Value in Array
 
+function getCountOfValueInArray(arr){
+  var comp = [];
+  var copy = arr.slice(0);
+
+}
+
 //////////
 
 // - Dates and Times
