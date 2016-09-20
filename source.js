@@ -1,12 +1,13 @@
 // * = done
-// ? = maybe?
+// ? = maybe add in?
+// & = in progress
 
 //   | General 
-//   | - Standard Array
-//   | -- Check an Array for a Value
-//   | -- Remove Duplicates from an Array
-//   | -- Remove Empty Values from an Array
-//   | -- Count of Value in Array
+// & | - Standard Array
+// & | -- Check an Array for a Value
+// & | -- Remove Duplicates from an Array
+// & | -- Remove Empty Values from an Array
+// & | -- Get Count of Value in Array
 //   | - Arrays of Objects
 // ? | -- Count of Value in Array
 //   | -- Sort Array of Objects by Property or Properties
@@ -74,27 +75,27 @@ function testEverything() {}
 
 // -- Check an Array for a Value 
 
-function checkArrayForValue(array, value) { 
-  return array.indexOf(value) > -1; 
+function checkArrForVal(arr, val) { 
+  return arr.indexOf(val) > -1; 
 }
 
-var cafv_array = [1,2,3,4];
+var checkArrForVal_arr = [1,2,3,4];
 
-if (checkArrayForValue(cafv_array, 99)) {
-    // Logger.log(" checkArrayForValue || 99 is in the array"); 
+if (checkArrayForValue(cafv_arr, 99)) {
+    Logger.log(" checkArrForVal || 99 is in the array"); 
   } else {
-    // Logger.log(" checkArrayForValue || 99 is not in the array");
+    Logger.log(" checkArrForVal || 99 is not in the array");
 }
 
 // -- Remove Duplicates from an Array 
 
-function removeDuplicates(array) {
+function removeDuplicates(arr) {
   var check  = {};
   var output = [];
-  var length = array.length;
+  var length = arr.length;
   var j = 0;
   for(var i = 0; i < length; i++) {
-       var item = array[i];
+       var item = arr[i];
        if(check[item] !== 1) {
              check[item] = 1;
              output[j++] = item;
@@ -103,11 +104,11 @@ function removeDuplicates(array) {
   return output;
 }
 
-var rd_array_input  = [1,2,3,1,2,3,4,];
+var removeDuplicates_input  = [1,2,3,1,2,3,4,];
 
-var rd_array_output = removeDuplicates(rd_array_input);
+var removeDuplicates_output = removeDuplicates(rd_array_input);
 
-// Logger.log(rd_array_output);
+Logger.log(rd_array_output);
 
 // -- Remove Empty Values from an Array
 
@@ -117,7 +118,11 @@ var ev_array_output = ev_array_input.filter(function(x){
   return (x !== (undefined || ''));
 });
 
-// Logger.log(ev_array_output);
+Logger.log(ev_array_output);
+
+// -- Get Count of Value in Array
+
+//////////
 
 // - Dates and Times
 
