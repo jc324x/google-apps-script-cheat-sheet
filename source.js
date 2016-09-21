@@ -1,15 +1,16 @@
 // * = done
 // ? = maybe add in?
 // & = in progress
+// ➡ 
 
 //   | General 
 // & | - Standard Array
-// & | -- Check an Array for a Value
-// & | -- Remove Duplicates from an Array
-// & | -- Remove Empty Values from an Array
+// * | -- Check an Array for a Value
+// * | -- Remove Duplicates from an Array
+// * | -- Remove Empty Values from an Array
 // & | -- Get Count of Value in Array
 //   | - Arrays of Objects
-// ? | -- Count of Value in Array
+//   | -- Count of Value in Array
 //   | -- Sort Array of Objects by Property or Properties
 //   | -- Find Object With Unique Value
 //   | -- Create Array of Objects With Matching Value
@@ -75,21 +76,21 @@ function testEverything() {}
 
 // -- Check an Array for a Value 
 
-function checkArrForVal(arr, val) { 
+function valChk(arr, val) { 
   return arr.indexOf(val) > -1; 
 }
 
-var checkArrForVal_arr = [1,2,3,4];
+var valChk_arr = [1,2,3,4];
 
-if (checkArrayForValue(cafv_arr, 99)) {
-    Logger.log(" checkArrForVal || 99 is in the array"); 
-  } else {
-    Logger.log(" checkArrForVal || 99 is not in the array");
-}
+// if (valChk(valChk_arr, 99)) {
+//     Logger.log("valChk ➡ 99 is in the array"); 
+//   } else {
+//     Logger.log("valChk ➡ 99 is not in the array");
+// }
 
 // -- Remove Duplicates from an Array 
 
-function removeDuplicates(arr) {
+function rmvDup(arr) {
   var check  = {};
   var output = [];
   var length = arr.length;
@@ -104,21 +105,21 @@ function removeDuplicates(arr) {
   return output;
 }
 
-var removeDuplicates_input  = [1,2,3,1,2,3,4,];
-
-var removeDuplicates_output = removeDuplicates(rd_array_input);
-
-Logger.log(rd_array_output);
+var rmvDup_inp = [1,2,3,1,2,3,4,];
+var rmvDup_out = rmvDup(rmvDup_inp);
+// Logger.log("rmvDup_inp ➡ " + rmvDup_inp);
+// Logger.log("rmvDup_output ➡ " + rmvDup_out);
 
 // -- Remove Empty Values from an Array
 
-var ev_array_input  = ["a",,"b",,,"c"];
-
-var ev_array_output = ev_array_input.filter(function(x){
+function rmvEmpty(x){
   return (x !== (undefined || ''));
-});
+}
 
-Logger.log(ev_array_output);
+var rmvEmpty_inp = ["a",,"b",,,"c"];
+var rmvEmpty_out = rmvEmpty_inp.filter(rmvEmpty);
+// Logger.log("rmvEmpty_inp ➡ " + rmvEmpty_inp);
+// Logger.log("rmvEmpty_output ➡ " + rmvEmpty_out);
 
 // -- Get Count of Value in Array
 
@@ -267,7 +268,7 @@ function searchAFolderPathForAFolderReturnId(folderPath, folderName) {
   if (idOfLastFolder) {
     var lastFolder    = DriveApp.getFolderById(idOfLastFolder);
     var folderContent = listAllFoldersInAFolder(folderPath);
-    if (checkArrayForValue(folderContent, folderName)) {
+    if (valChk(folderContent, folderName)) {
       var folderId = lastFolder.getFoldersByName(folderName).next().getId();
       return folderId;
     }
