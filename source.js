@@ -10,11 +10,10 @@
 // * | -- Remove Empty Values from an Array
 // & | -- Get Count of Value in Array
 //   | - Arrays of Objects
-//   | -- Count of Value in Array
+// ? | -- Count of Value in Array
 //   | -- Sort Array of Objects by Property or Properties
 //   | -- Find Object With Unique Value
 //   | -- Create Array of Objects With Matching Value
-//   | -- Create Array of All Unique Values for a Property
 //   | - Dates and Times
 //   | -- Formatted Timestamps
 //   | -- Match a Date to a Range of Dates
@@ -123,13 +122,129 @@ var rmvEmpty_out = rmvEmpty_inp.filter(rmvEmpty);
 
 // -- Get Count of Value in Array
 
-function getCountOfValueInArray(arr){
+function countVal(arr){
   var comp = [];
   var copy = arr.slice(0);
-
+	for (var i = 0; i < arr.length; i++) {
+		var myCount = 0;	
+		for (var w = 0; w < copy.length; w++) {
+			if (arr[i] == copy[w]) {
+				myCount++;
+				delete copy[w];
+			}
+		}
+		if (myCount > 0) {
+			var a = new Object();
+			a.value = arr[i];
+			a.count = myCount;
+			comp.push(a);
+		}
+	}
+  return comp;
 }
 
-//////////
+var countVal_inp = ["A", "B", "C", "A", "B", "C", "D", "A"];
+var countVal_out = countVal(countVal_input);
+Logger.log("countVal_input ➡ " + countVal_inp);
+Logger.log("countVal_out ➡ " + countVal_out);
+
+// - Array of Objects
+
+// -- Count of Value in Array
+
+function countProp(arrObj, val){
+  var comp = [];
+  var copy = arr.slice(0);
+	for (var i = 0; i < arr.length; i++) {
+		var myCount = 0;	
+		for (var w = 0; w < copy.length; w++) {
+			if (arr[i] == copy[w]) {
+				myCount++;
+				delete copy[w];
+			}
+		}
+		if (myCount > 0) {
+			var a = new Object();
+			a.value = arr[i];
+			a.count = myCount;
+			comp.push(a);
+		}
+	}
+  return comp;
+}
+
+var countProp_inp = [{}, {}, {}];
+var countProp_out = countVal(countProp_input, "A");
+Logger.log("countVal_input ➡ " + countVal_inp);
+Logger.log("countVal_out ➡ " + countVal_out);
+
+// -- Sort Array of Objects by Property / Properties
+
+function dynamicSort(prop) {
+  var sortOrder = 1;
+  if(prop[0] === "-") {
+    sortOrder = -1;
+    prop = prop.substr(1);
+  }
+    return function (a,b) {
+    var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
+    return result * sortOrder;
+  }
+}
+
+function dynamicSortMultiple() {
+  var props = arguments;
+  return function (obj1, obj2) {
+    var i = 0, result = 0, numberOfProperties = props.length;
+    while(result === 0 && i < numberOfProperties) {
+      result = dynamicSort(props[i])(obj1, obj2);
+      i++;
+    }
+      return result;
+  }
+}
+
+// -- Find Object With Unique Value - Return Obj / Value
+
+function findArrObj_Obj(arrObj, propQuery, value) {
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(propQuery)) {
+        if (prop == propQuery) {
+          if (obj[prop] == value) {
+          return obj;
+          }
+        }
+      }
+    }
+  }
+}
+
+function findArrObj_ForkVal(arrObj, propQuery, value, propReturn) {
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(propQuery)) {
+        if (prop == propQuery) {
+          if (obj[prop] == value) {
+          return obj[propReturn];
+          }
+        }
+      }
+    }
+  }
+}
+
+// -- Create Array of Objects With Matching Value
+
+function filterArrObj_ArrObj(arrayOfObj, propQuery, value) {
+  var array = [];
+  for (var i=0; i < arrayOfObj.length; i++) {
+    if (arrayOfObj[i][propQuery] == value) array.push(arrayOfObj[i]);
+  }
+  return array;
+}
 
 // - Dates and Times
 
