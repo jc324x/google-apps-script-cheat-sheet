@@ -3,7 +3,7 @@
 // &   = in progress
 // ➡ ⬇ = return
 
-//   | General 
+// * | General 
 // * | - Standard Array
 // * | -- Check an Array for a Value
 // * | -- Remove Duplicates from an Array
@@ -341,8 +341,7 @@ function createFolderPathAndOrGetIdOfLastFolder(folderPath) {
   return fId;
 }
 
-var fp1     = "JCodesMN/A/B/C";
-var coffpri = createFolderPathAndOrGetIdOfLastFolder(fp1);
+var coffpri = createFolderPathAndOrGetIdOfLastFolder("JCodesMN/A/B/C");
 Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + coffpri);
 
 // -- Get Id of the Last Folder in a Folder Path
@@ -382,8 +381,7 @@ function searchAFolderPathForAFolderReturnId(folderPath, folderName) {
   }
 }
 
-var idOfC = searchAFolderPathForAFolderReturnId("Testing/A/B", "C");
-
+var idOfC = searchAFolderPathForAFolderReturnId("JCodesMN/A/B", "C");
 // Logger.log( "searchAFolderPathForAFolderReturnId || the Id of C is " + idOfC);
 
 // -- List All Folders In A Folder
@@ -401,7 +399,6 @@ function listAllFoldersInAFolder(folderPath) {
 }
 
 // var rfcaa = listAllFoldersInAFolder("Testing");
-
 // Logger.log(rfcaa);
 
 // -- List All Folders in Drive
@@ -418,7 +415,6 @@ function returnAllFoldersInAnArray() {
 }
 
 // var allFolders = returnAllFoldersInAnArray();
-
 // Logger.log(allFolders);
 
 // -- List All Folders at Root in an Array
@@ -436,7 +432,6 @@ function returnAllFoldersAtRootInAnArray() {
 }
 
 // var foldersAtRoot = returnAllFoldersAtRootInAnArray();
-
 // Logger.log(foldersAtRoot);
 
 // -- Create Several Folders in a Folder
