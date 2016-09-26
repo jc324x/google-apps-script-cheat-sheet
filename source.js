@@ -17,12 +17,12 @@
 // * | -- Match a Date to a Range of Dates
 //   |  Drive 
 //   | - Folders
-//   | -- Create a Folder Path and/or Get the Id Of the Last Folder
-//   | -- Get Id of Last Folder in a Folder Path
-//   | -- Search a Folder Path for a Folder
-//   | -- List Folders in a Folder as an Array
-//   | -- List All Folders in Drive as an Array 
-//   | -- List All Folders at Root as an Array
+// * | -- Create a Folder Path and/or Get the Id Of the Last Folder
+// * | -- Get Id of Last Folder in a Folder Path
+// * | -- Search a Folder Path for a Folder
+//   | -- Array of All Folders in a Folder
+//   | -- Array of All Folders in Drive
+//   | -- Array of All Folders at Root
 //   | -- Create Several Folders in a Folder or at Root
 //   | -- Search Entire Drive for a Folder
 //   | -- Move a Folder
@@ -341,8 +341,8 @@ function createFolderPathAndOrGetIdOfLastFolder(folderPath) {
   return fId;
 }
 
-var coffpri = createFolderPathAndOrGetIdOfLastFolder("JCodesMN/A/B/C");
-Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + coffpri);
+// var coffpri = createFolderPathAndOrGetIdOfLastFolder("JCodesMN/A/B/C");
+// Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + coffpri);
 
 // -- Get Id of the Last Folder in a Folder Path
 
@@ -362,8 +362,8 @@ function getIdOfLastFolderInAFolderPath(folderPath) {
   return fId;
 }
 
-var giolfiafp = getIdOfLastFolderInAFolderPath("JCodesMN/A/B/C");
-Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + giolfiafp);
+// var giolfiafp = getIdOfLastFolderInAFolderPath("JCodesMN/A/B/C");
+// Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + giolfiafp);
 
 // -- Search a Folder Path for a Folder
 
@@ -381,10 +381,10 @@ function searchAFolderPathForAFolderReturnId(folderPath, folderName) {
   }
 }
 
-var idOfC = searchAFolderPathForAFolderReturnId("JCodesMN/A/B", "C");
-// Logger.log( "searchAFolderPathForAFolderReturnId || the Id of C is " + idOfC);
+// var idOfC = searchAFolderPathForAFolderReturnId("JCodesMN/A/B", "C");
+// Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + idOfC);
 
-// -- List All Folders In A Folder
+// -- Array of All Folders in a Folder
 
 function listAllFoldersInAFolder(folderPath) {
   var folder         = DriveApp.getFolderById(createFolderPathAndOrGetIdOfLastFolder(folderPath));
@@ -401,7 +401,7 @@ function listAllFoldersInAFolder(folderPath) {
 // var rfcaa = listAllFoldersInAFolder("Testing");
 // Logger.log(rfcaa);
 
-// -- List All Folders in Drive
+// -- Array of All Folders in Drive
 
 function returnAllFoldersInAnArray() {
   var folderIterator = DriveApp.getFolders();
@@ -417,7 +417,7 @@ function returnAllFoldersInAnArray() {
 // var allFolders = returnAllFoldersInAnArray();
 // Logger.log(allFolders);
 
-// -- List All Folders at Root in an Array
+// -- Array of All Folders at Root
 
 function returnAllFoldersAtRootInAnArray() {
   var rootFolder = DriveApp.getRootFolder();
