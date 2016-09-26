@@ -341,11 +341,9 @@ function createFolderPathAndOrGetIdOfLastFolder(folderPath) {
   return fId;
 }
 
-var fp1     = "Testing/A/B/C";
-
+var fp1     = "JCodesMN/A/B/C";
 var coffpri = createFolderPathAndOrGetIdOfLastFolder(fp1);
-
-// Logger.log(" createFolderPathAndOrGetIdOfLastFolder || C's Id in Testing/A/B/C is " + coffpri);
+Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + coffpri);
 
 // -- Get Id of the Last Folder in a Folder Path
 
@@ -365,9 +363,8 @@ function getIdOfLastFolderInAFolderPath(folderPath) {
   return fId;
 }
 
-var giolfiafp1 = getIdOfLastFolderInAFolderPath("Testing/A/B/C");
-
-// Logger.log(" getIdOfLastFolderInAFolderPath || C's Id in Testing/A/B/C is " + giolfiafp1);
+var giolfiafp = getIdOfLastFolderInAFolderPath("JCodesMN/A/B/C");
+Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + giolfiafp);
 
 // -- Search a Folder Path for a Folder
 
