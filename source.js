@@ -10,10 +10,9 @@
 // * | -- Remove Empty Values from an Array
 // & | -- Get Count of Value in Array
 //   | - Arrays of Objects
-// ? | -- Count of Value in Array
-//   | -- Sort Array of Objects by Property or Properties
-//   | -- Find Object With Unique Value
-//   | -- Create Array of Objects With Matching Value
+// ? | -- Count of Property in Array
+//   | -- Sort by Property or Properties
+//   | -- Find Object or Objects by Property Value
 //   | - Dates and Times
 //   | -- Formatted Timestamps
 //   | -- Match a Date to a Range of Dates
