@@ -386,7 +386,7 @@ function searchAFolderPathForAFolderReturnId(folderPath, folderName) {
 
 // -- Array of All Folders in a Folder
 
-function listAllFoldersInAFolder(folderPath) {
+function allFoldersIn(folderPath) {
   var folder         = DriveApp.getFolderById(createFolderPathAndOrGetIdOfLastFolder(folderPath));
   var folderIterator = folder.getFolders();
   var array  = [];
@@ -403,7 +403,7 @@ function listAllFoldersInAFolder(folderPath) {
 
 // -- Array of All Folders in Drive
 
-function returnAllFoldersInAnArray() {
+function allFoldersInDrive() {
   var folderIterator = DriveApp.getFolders();
   var array = [];
   while (folderIterator.hasNext()) {
@@ -417,9 +417,9 @@ function returnAllFoldersInAnArray() {
 // var allFolders = returnAllFoldersInAnArray();
 // Logger.log(allFolders);
 
-// -- Array of All Folders at Root
+// -- Array of All Root Folders
 
-function returnAllFoldersAtRootInAnArray() {
+function allRootFolders() {
   var rootFolder = DriveApp.getRootFolder();
   var folderIterator = rootFolder.getFolders();
   var array = [];
@@ -434,9 +434,9 @@ function returnAllFoldersAtRootInAnArray() {
 // var foldersAtRoot = returnAllFoldersAtRootInAnArray();
 // Logger.log(foldersAtRoot);
 
-// -- Create Several Folders in a Folder
+// -- Create Folder or Folders in a Folder
 
-function createSeveralFolders(arrayOfFolders, folderPath) {
+function createFolders(folderPath, arrFolders) {
   if (typeof folderPath === 'undefined') {
     var rootFolders = returnAllFoldersAtRootInAnArray();
     for (i=0; i < arrayOfFolders.length; i++) {
@@ -469,7 +469,7 @@ function createSeveralFolders(arrayOfFolders, folderPath) {
 // var rootId = createSeveralFolders(aof);
 // Logger.log("Root Folder Id: " + rootId);
 
-// -- Move a Folder - [ ] 
+// -- Move a Folder
 
 function moveAFolder(originFilePath, destinationFilePath){
 
