@@ -12,10 +12,9 @@
 // * | - Arrays of Objects
 // * | -- Sort by Property or Properties
 // * | -- Find Object or Objects by Property Value
-//   | - Dates and Times
-//   | -- Formatted Timestamps
-//   | -- Match a Date to a Range of Dates
-//   | -- Date Objects 
+// * | - Dates and Times
+// * | -- Formatted Timestamps
+// * | -- Match a Date to a Range of Dates
 //   |  Drive 
 //   | - Folders
 //   | -- Create a Folder Path and/or Get the Id Of the Last Folder
@@ -254,9 +253,8 @@ function getCurrentDate() {
   return d.join("/");
 }
 
-var gcd = getCurrentDate();
-
-Logger.log(" getCurrentDate || date: " + gcd);
+// var gcd = getCurrentDate();
+// Logger.log("current date ➡ " + gcd);
 
 function getCurrentTime(){
   var n  = new Date();
@@ -269,9 +267,8 @@ function getCurrentTime(){
   }
 }
 
-var gct = getCurrentTime();
-
-Logger.log(" getCurrentTime || 24 hour time: " + gct );
+// var gct = getCurrentTime();
+// Logger.log("current time (24 hour) ➡ " + gct);
 
 function getCurrentDateTime12Hour() {
   var n = new Date();
@@ -287,20 +284,19 @@ function getCurrentDateTime12Hour() {
   return d.join("/") + " " + t.join(":") + " " + s;
 }
 
-var gcdt12h = getCurrentDateTime12Hour();
-
-Logger.log(" getCurrentDateTime12Hour || date + 12 hour time: " + gcdt12h);
+// var gcdt12h = getCurrentDateTime12Hour();
+// Logger.log("current date + time (12 hour) ➡ " + gcdt12h);
 
 // -- Match a Date to a Range of Dates
 
 var quarterDates = [
-  ["08/01/2015", "10/28/2015"],
-  ["11/02/2015", "1/9/2016"],
-  ["1/15/2016", "3/19/2016"],
-  ["3/21/2016", "6/15/2016"],
+  ["08/01/2016", "10/28/2016"],
+  ["11/02/2016", "1/9/2017"],
+  ["1/15/2017", "3/19/2017"],
+  ["3/21/2017", "6/15/2017"],
   ];
 
-function returnCurrentQuarterAsInteger() {
+function academicQuarter() {
   var d = new Date();
   for (i = 0; i < 4; i++){
   var s = new Date(quarterDates[i][0]);
@@ -312,9 +308,8 @@ function returnCurrentQuarterAsInteger() {
   if (q) { return q } else { return "date outside of academic calendar"}
 }
 
-var rcqas = returnCurrentQuarterAsInteger();
-
-Logger.log(" returnCurrentQuarterAsInteger || quarter: " + rcqas);
+// var acdQ = academicQuarter();
+// Logger.log("current quarter ➡ " + acdQ);
 
 // Drive 
 
