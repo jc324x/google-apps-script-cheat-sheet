@@ -1,18 +1,17 @@
-// * = done
-// ? = maybe add in?
-// & = in progress
-// ➡ 
+// *   = done
+// ?   = maybe add in?
+// &   = in progress
+// ➡ ⬇ = return
 
 //   | General 
-// & | - Standard Array
+// * | - Standard Array
 // * | -- Check an Array for a Value
 // * | -- Remove Duplicates from an Array
 // * | -- Remove Empty Values from an Array
-// & | -- Get Count of Value in Array
-//   | - Arrays of Objects
-// ? | -- Count of Property in Array
-//   | -- Sort by Property or Properties
-//   | -- Find Object or Objects by Property Value
+// * | -- Get Count of Value in Array
+// * | - Arrays of Objects
+// * | -- Sort by Property or Properties
+// * | -- Find Object or Objects by Property Value
 //   | - Dates and Times
 //   | -- Formatted Timestamps
 //   | -- Match a Date to a Range of Dates
@@ -78,7 +77,7 @@ function valChk(arr, val) {
   return arr.indexOf(val) > -1; 
 }
 
-var valChk_arr = [1,2,3,4];
+// var valChk_arr = [1,2,3,4];
 
 // if (valChk(valChk_arr, 99)) {
 //     Logger.log("valChk ➡ 99 is in the array"); 
@@ -103,8 +102,8 @@ function rmvDup(arr) {
   return output;
 }
 
-var rmvDup_inp = [1,2,3,1,2,3,4,];
-var rmvDup_out = rmvDup(rmvDup_inp);
+// var rmvDup_inp = [1,2,3,1,2,3,4,];
+// var rmvDup_out = rmvDup(rmvDup_inp);
 // Logger.log("rmvDup_inp ➡ " + rmvDup_inp);
 // Logger.log("rmvDup_output ➡ " + rmvDup_out);
 
@@ -114,8 +113,8 @@ function rmvEmpty(x){
   return (x !== (undefined || ''));
 }
 
-var rmvEmpty_inp = ["a",,"b",,,"c"];
-var rmvEmpty_out = rmvEmpty_inp.filter(rmvEmpty);
+// var rmvEmpty_inp = ["a",,"b",,,"c"];
+// var rmvEmpty_out = rmvEmpty_inp.filter(rmvEmpty);
 // Logger.log("rmvEmpty_inp ➡ " + rmvEmpty_inp);
 // Logger.log("rmvEmpty_output ➡ " + rmvEmpty_out);
 
@@ -142,40 +141,20 @@ function countVal(arr){
   return comp;
 }
 
-var countVal_inp = ["A", "B", "C", "A", "B", "C", "D", "A"];
-var countVal_out = countVal(countVal_input);
-Logger.log("countVal_input ➡ " + countVal_inp);
-Logger.log("countVal_out ➡ " + countVal_out);
+// var countVal_inp = ["A", "B", "C", "A", "B", "C", "D", "A"];
+// var countVal_out = countVal(countVal_inp);
+// Logger.log("countVal_input ➡ " + countVal_inp);
+// Logger.log("countVal_out ⬇ ");
+// Logger.log(countVal_out);
 
 // - Array of Objects
 
-// -- Count of Value in Array
-
-function countProp(arrObj, val){
-  var comp = [];
-  var copy = arr.slice(0);
-	for (var i = 0; i < arr.length; i++) {
-		var myCount = 0;	
-		for (var w = 0; w < copy.length; w++) {
-			if (arr[i] == copy[w]) {
-				myCount++;
-				delete copy[w];
-			}
-		}
-		if (myCount > 0) {
-			var a = new Object();
-			a.value = arr[i];
-			a.count = myCount;
-			comp.push(a);
-		}
-	}
-  return comp;
-}
-
-var countProp_inp = [{}, {}, {}];
-var countProp_out = countVal(countProp_input, "A");
-Logger.log("countVal_input ➡ " + countVal_inp);
-Logger.log("countVal_out ➡ " + countVal_out);
+var arrObj = [
+  {a: 1000, b: 1, c: 5}, 
+  {a: 10000, b: 2, c: 5000}, 
+  {a: 10, b: 2, c: 500},
+  {a: 1, b: 1, c: 50}
+]
 
 // -- Sort Array of Objects by Property / Properties
 
@@ -191,7 +170,11 @@ function dynamicSort(prop) {
   }
 }
 
-function dynamicSortMultiple() {
+// arrObj.sort(dynamicSort("a"));
+// Logger.log("arrObj sorted by 'a' value ⬇ ");
+// Logger.log(arrObj);
+
+function dynamicSortMulti() {
   var props = arguments;
   return function (obj1, obj2) {
     var i = 0, result = 0, numberOfProperties = props.length;
@@ -203,9 +186,13 @@ function dynamicSortMultiple() {
   }
 }
 
+// arrObj.sort(dynamicSortMulti("b", "c"));
+// Logger.log("arrObj sorted by 'b' and 'c' values ⬇ ");
+// Logger.log(arrObj);
+
 // -- Find Object With Unique Value - Return Obj / Value
 
-function findArrObj_Obj(arrObj, propQuery, value) {
+function findObj_Obj(arrObj, propQuery, value) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
     for (var prop in obj) {
@@ -220,7 +207,11 @@ function findArrObj_Obj(arrObj, propQuery, value) {
   }
 }
 
-function findArrObj_ForkVal(arrObj, propQuery, value, propReturn) {
+// Logger.log("find obj with 'a' value of 1000 ⬇ ");
+// var found_returnObj = findObj_Obj(arrObj, "a", 1000);
+// Logger.log(found_returnObj);
+
+function findObj_Val(arrObj, propQuery, value, propReturn) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
     for (var prop in obj) {
@@ -235,15 +226,23 @@ function findArrObj_ForkVal(arrObj, propQuery, value, propReturn) {
   }
 }
 
+// Logger.log("find obj with 'c' value of 500 and return its 'a' value ⬇ ");
+// var found_returnVal = findObj_Val(arrObj, "c", 500, "a");
+// Logger.log(found_returnVal);
+
 // -- Create Array of Objects With Matching Value
 
-function filterArrObj_ArrObj(arrayOfObj, propQuery, value) {
+function filterArrObj_ArrObj(arrObj, propQuery, value) {
   var array = [];
-  for (var i=0; i < arrayOfObj.length; i++) {
-    if (arrayOfObj[i][propQuery] == value) array.push(arrayOfObj[i]);
+  for (var i=0; i < arrObj.length; i++) {
+    if (arrObj[i][propQuery] == value) array.push(arrObj[i]);
   }
   return array;
 }
+
+// var filterArrObj = filterArrObj_ArrObj(arrObj, "b", 2);
+// Logger.log("filter objs with 'b' value of 2 ⬇ ");
+// Logger.log(filterArrObj);
 
 // - Dates and Times
 
@@ -257,7 +256,7 @@ function getCurrentDate() {
 
 var gcd = getCurrentDate();
 
-// Logger.log(" getCurrentDate || date: " + gcd);
+Logger.log(" getCurrentDate || date: " + gcd);
 
 function getCurrentTime(){
   var n  = new Date();
@@ -272,7 +271,7 @@ function getCurrentTime(){
 
 var gct = getCurrentTime();
 
-// Logger.log(" getCurrentTime || 24 hour time: " + gct );
+Logger.log(" getCurrentTime || 24 hour time: " + gct );
 
 function getCurrentDateTime12Hour() {
   var n = new Date();
@@ -290,7 +289,7 @@ function getCurrentDateTime12Hour() {
 
 var gcdt12h = getCurrentDateTime12Hour();
 
-// Logger.log(" getCurrentDateTime12Hour || date + 12 hour time: " + gcdt12h);
+Logger.log(" getCurrentDateTime12Hour || date + 12 hour time: " + gcdt12h);
 
 // -- Match a Date to a Range of Dates
 
@@ -315,7 +314,7 @@ function returnCurrentQuarterAsInteger() {
 
 var rcqas = returnCurrentQuarterAsInteger();
 
-// Logger.log(" returnCurrentQuarterAsInteger || quarter: " + rcqas);
+Logger.log(" returnCurrentQuarterAsInteger || quarter: " + rcqas);
 
 // Drive 
 
