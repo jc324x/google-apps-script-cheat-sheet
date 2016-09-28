@@ -90,7 +90,7 @@ function valChk(arr, val) {
 // -- Remove Duplicates from an Array 
 // ➡  arr
 
-function rmvDup(arr) {
+function rmDup(arr) {
   var check  = {};
   var output = [];
   var length = arr.length;
@@ -105,22 +105,22 @@ function rmvDup(arr) {
   return output;
 }
 
-// var rmvDup_inp = [1,2,3,1,2,3,4,];
-// var rmvDup_out = rmvDup(rmvDup_inp);
-// Logger.log("rmvDup_inp ➡ " + rmvDup_inp);
-// Logger.log("rmvDup_output ➡ " + rmvDup_out);
+// var rmDup_inp = [1,2,3,1,2,3,4,];
+// var rmDup_out = rmDup(rmDup_inp);
+// Logger.log("rmDup_inp ➡ " + rmDup_inp);
+// Logger.log("rmDup_output ➡ " + rmDup_out);
 
 // -- Remove Empty Values from an Array
 // ➡  arr
 
-function rmvEmpty(x){
+function rmEmpty(x){
   return (x !== (undefined || ''));
 }
 
-// var rmvEmpty_inp = ["a",,"b",,,"c"];
-// var rmvEmpty_out = rmvEmpty_inp.filter(rmvEmpty);
-// Logger.log("rmvEmpty_inp ➡ " + rmvEmpty_inp);
-// Logger.log("rmvEmpty_output ➡ " + rmvEmpty_out);
+// var rmEmpty_inp = ["a",,"b",,,"c"];
+// var rmEmpty_out = rmEmpty_inp.filter(rmEmpty);
+// Logger.log("rmEmpty_inp ➡ " + rmEmpty_inp);
+// Logger.log("rmEmpty_output ➡ " + rmEmpty_out);
 
 // -- Get Count of Value in Array
 // ➡  arrObj
@@ -329,7 +329,7 @@ function academicQuarter() {
 
 // -- Create a Folder Path and/or Get the Id Of the Last Folder
 
-// createFoldersIn(folderPath)(
+// createOrVerifyFoldersIn(folderPath)(
 function createFolderPathAndOrGetIdOfLastFolder(folderPath) {
   var array = folderPath.split('/');
   var f;
@@ -472,7 +472,7 @@ function createFoldersAt(folderPath, arrFolders) {
   }
 }
 
-// function createFoldersAtRoot(arrFolders)
+// function createFoldersAtRoot(arrFolders) {}
 
 // var aof = ["apples", "bananas", "coffee"]
 // var fp2 = "Testing/X/Y/Z";
@@ -496,6 +496,8 @@ function moveFolder(originPath, destinationPath){
 
 // create folder path first -> returns folderId to drop into this or others...
 
+// move to docs...duplicate in sheets too
+
 function createDocIn(folderId, docName) {
   var folder    = DriveApp.getFolderById(folderId);
   var inputDoc  = DocumentApp.create(docName);
@@ -508,6 +510,8 @@ function createDocIn(folderId, docName) {
 }
 
 // from comment wizard...
+// fn copyFile(fileId, folderId) {}
+
 function copyFile(sourceFileId, folderId) {
 	var sourceFileFromId = DriveApp.getFileById(sourceFileId);
   var sourceFileName   = sourceFileFromId.getName();
@@ -519,8 +523,10 @@ function copyFile(sourceFileId, folderId) {
   }
   return outputFileId;
 }
-//
+
 // from comment wizard...
+
+// createOrVerifyDocIn(folderPath, docName)
 function makeOrFindDocInFolderPathReturnId() {
   var folderId = createOrFindFolderPathReturnId(exportFolder);
   var folder   = DriveApp.getFolderById(folderId);
