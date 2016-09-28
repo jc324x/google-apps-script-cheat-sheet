@@ -71,6 +71,7 @@ function testEverything() {}
 // - Utility 
 
 // -- Check an Array for a Value 
+// ➡  true / false 
 
 function valChk(arr, val) { 
   return arr.indexOf(val) > -1; 
@@ -85,6 +86,7 @@ function valChk(arr, val) {
 // }
 
 // -- Remove Duplicates from an Array 
+// ➡  arr
 
 function rmvDup(arr) {
   var check  = {};
@@ -107,6 +109,7 @@ function rmvDup(arr) {
 // Logger.log("rmvDup_output ➡ " + rmvDup_out);
 
 // -- Remove Empty Values from an Array
+// ➡  arr
 
 function rmvEmpty(x){
   return (x !== (undefined || ''));
@@ -118,6 +121,7 @@ function rmvEmpty(x){
 // Logger.log("rmvEmpty_output ➡ " + rmvEmpty_out);
 
 // -- Get Count of Value in Array
+// ➡  arrObj
 
 function countVal(arr){
   var comp = [];
@@ -147,6 +151,8 @@ function countVal(arr){
 // Logger.log(countVal_out);
 
 // - Array of Objects
+
+// example arrObj
 
 var arrObj = [
   {a: 1000, b: 1, c: 5}, 
@@ -191,6 +197,7 @@ function dynamicSortMulti() {
 
 // -- Find Object With Unique Value - Return Obj / Value
 
+// findObjIn
 function findObj_Obj(arrObj, propQuery, value) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
@@ -231,6 +238,7 @@ function findObj_Val(arrObj, propQuery, value, propReturn) {
 
 // -- Create Array of Objects With Matching Value
 
+// filterObjIn(arrObj, propQuery, value)
 function filterArrObj_ArrObj(arrObj, propQuery, value) {
   var array = [];
   for (var i=0; i < arrObj.length; i++) {
@@ -317,6 +325,7 @@ function academicQuarter() {
 
 // -- Create a Folder Path and/or Get the Id Of the Last Folder
 
+// createFoldersIn(folderPath)(
 function createFolderPathAndOrGetIdOfLastFolder(folderPath) {
   var array = folderPath.split('/');
   var f;
@@ -346,6 +355,7 @@ function createFolderPathAndOrGetIdOfLastFolder(folderPath) {
 
 // -- Get Id of the Last Folder in a Folder Path
 
+// idOfLastFolderIn(folderPath)
 function getIdOfLastFolderInAFolderPath(folderPath) {
   var array = folderPath.split('/');
   var f;
@@ -367,6 +377,7 @@ function getIdOfLastFolderInAFolderPath(folderPath) {
 
 // -- Search a Folder Path for a Folder
 
+// findFolderIn(folderPath, folderName)
 function searchAFolderPathForAFolderReturnId(folderPath, folderName) {
   var idOfLastFolder  = getIdOfLastFolderInAFolderPath(folderPath);
   if (idOfLastFolder) {
@@ -436,7 +447,7 @@ function allRootFolders() {
 
 // -- Create Folder or Folders in a Folder
 
-function createFolders(folderPath, arrFolders) {
+function createFoldersAt(folderPath, arrFolders) {
   if (typeof folderPath === 'undefined') {
     var rootFolders = returnAllFoldersAtRootInAnArray();
     for (i=0; i < arrayOfFolders.length; i++) {
@@ -457,12 +468,11 @@ function createFolders(folderPath, arrFolders) {
   }
 }
 
+// function createFoldersAtRoot(arrFolders)
+
 // var aof = ["apples", "bananas", "coffee"]
-
 // var fp2 = "Testing/X/Y/Z";
-
 // var containingFolderId = createSeveralFolders(aof, fp2);
-
 // Logger.log("Z's Id in Testing/X/Y/Z is " + containingFolderId);
 
 // *** uncommenting the line below will modify your Google Drive *** 
@@ -471,7 +481,7 @@ function createFolders(folderPath, arrFolders) {
 
 // -- Move a Folder
 
-function moveAFolder(originFilePath, destinationFilePath){
+function moveFolder(originPath, destinationPath){
 
 }
 
@@ -482,7 +492,7 @@ function moveAFolder(originFilePath, destinationFilePath){
 
 // create folder path first -> returns folderId to drop into this or others...
 
-function createABlankDocInAFolder(folderId, docName) {
+function createDocIn(folderId, docName) {
   var folder    = DriveApp.getFolderById(folderId);
   var inputDoc  = DocumentApp.create(docName);
   var outputDoc = inputDoc.makeCopy(docName, folder);
@@ -492,9 +502,9 @@ function createABlankDocInAFolder(folderId, docName) {
     DriveApp.inputDoc.setTrashed(true);
     }
 }
-//
+
 // from comment wizard...
-function copyFileDeleteSourceReturnNewId(sourceFileId, folderId) {
+function copyFile(sourceFileId, folderId) {
 	var sourceFileFromId = DriveApp.getFileById(sourceFileId);
   var sourceFileName   = sourceFileFromId.getName();
   var folderFromId     = DriveApp.getFolderById(folderId);
