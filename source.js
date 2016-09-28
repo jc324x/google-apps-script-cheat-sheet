@@ -3,23 +3,23 @@
 // &   = in progress
 // ➡ ⬇ = return
 
-// * | General 
-// * | - Standard Array
-// * | -- Check an Array for a Value
-// * | -- Remove Duplicates from an Array
-// * | -- Remove Empty Values from an Array
-// * | -- Get Count of Value in Array
-// * | - Arrays of Objects
-// * | -- Sort by Property or Properties
-// * | -- Find Object or Objects by Property Value
-// * | - Dates and Times
-// * | -- Formatted Timestamps
-// * | -- Match a Date to a Range of Dates
+//   | General 
+//   | - Standard Array
+//   | -- Check an Array for a Value
+//   | -- Remove Duplicates from an Array
+//   | -- Remove Empty Values from an Array
+//   | -- Get Count of Value in Array
+//   | - Arrays of Objects
+//   | -- Sort by Property or Properties
+//   | -- Find Object or Objects by Property Value
+//   | - Dates and Times
+//   | -- Formatted Timestamps
+//   | -- Match a Date to a Range of Dates
 //   |  Drive 
 //   | - Folders
-// * | -- Create a Folder Path and/or Get the Id Of the Last Folder
-// * | -- Get Id of Last Folder in a Folder Path
-// * | -- Search a Folder Path for a Folder
+//   | -- Create a Folder Path and/or Get the Id Of the Last Folder
+//   | -- Get Id of Last Folder in a Folder Path
+//   | -- Search a Folder Path for a Folder
 //   | -- Array of All Folders in a Folder
 //   | -- Array of All Folders in Drive
 //   | -- Array of All Folders at Root
@@ -66,7 +66,9 @@
 
 function testEverything() {}
 
-// General
+/////////////
+// General //
+/////////////
 
 // - Utility 
 
@@ -319,7 +321,9 @@ function academicQuarter() {
 // var acdQ = academicQuarter();
 // Logger.log("current quarter ➡ " + acdQ);
 
-// Drive 
+///////////
+// Drive //
+///////////
 
 // - Folders
 
@@ -540,7 +544,9 @@ function makeOrFindDocInFolderPathReturnId() {
 
 // Move a File to a Folder - [ ] 
 
-// Sheets - [ ] 
+////////////
+// Sheets // 
+////////////
 
 // - Utility Functions for Sheets - [ ] 
 
@@ -564,7 +570,9 @@ function makeOrFindDocInFolderPathReturnId() {
 
 // -- Flatten Multidimensional Array for One Column - [ ] 
 
-// Docs - [ ] 
+//////////
+// Docs //
+//////////
 
 // - Utility Functions for Docs - [ ]  
 
