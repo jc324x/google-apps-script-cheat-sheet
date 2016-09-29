@@ -152,9 +152,9 @@ Logger.log(ex_countVal);
 
 // - Array of Objects
 
-// example arrObj
+// arrObj for ex
 
-var arrObj = [
+var ex_arrObj = [
   {a: 1000, b: 1, c: 5}, 
   {a: 10000, b: 2, c: 5000}, 
   {a: 10, b: 2, c: 500},
@@ -319,9 +319,7 @@ function academicQuarter() {
 // var acdQ = academicQuarter();
 // Logger.log("current quarter ➡ " + acdQ);
 
-///////////
-// Drive //
-///////////
+// Drive
 
 // - Folders
 
