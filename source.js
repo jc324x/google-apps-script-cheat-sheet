@@ -4,11 +4,11 @@
 // ➡ ⬇ = return
 
 //   | General 
-//   | - Standard Array
-//   | -- Check an Array for a Value
-//   | -- Remove Duplicates from an Array
-//   | -- Remove Empty Values from an Array
-//   | -- Get Count of Value in Array
+// * | - Standard Array
+// * | -- Check an Array for a Value
+// * | -- Remove Duplicates from an Array
+// * | -- Remove Empty Values from an Array
+// * | -- Get Count of Value in Array
 //   | - Arrays of Objects
 //   | -- Sort by Property or Properties
 //   | -- Find Object or Objects by Property Value
@@ -66,31 +66,29 @@
 
 function testEverything() {}
 
-/////////////
-// General //
-/////////////
+// General
 
 // - Utility 
 
 // -- Check an Array for a Value 
-// ➡  true / false 
+// ➡  bool
 
-function valChk(arr, val) { 
+function checkValIn(arr, val) { 
   return arr.indexOf(val) > -1; 
 }
 
-// var valChk_arr = [1,2,3,4];
+var arr1 = [1,2,3,4];
 
-// if (valChk(valChk_arr, 99)) {
-//     Logger.log("valChk ➡ 99 is in the array"); 
-//   } else {
-//     Logger.log("valChk ➡ 99 is not in the array");
-// }
+if (checkValIn(arr1, 99)) {
+    Logger.log("value check ➡ 99 is in the array"); 
+  } else {
+    Logger.log("value check ➡ 99 is not in the array");
+}
 
 // -- Remove Duplicates from an Array 
 // ➡  arr
 
-function rmDup(arr) {
+function rmDuplicatesFrom(arr) {
   var check  = {};
   var output = [];
   var length = arr.length;
@@ -105,27 +103,27 @@ function rmDup(arr) {
   return output;
 }
 
-// var rmDup_inp = [1,2,3,1,2,3,4,];
-// var rmDup_out = rmDup(rmDup_inp);
-// Logger.log("rmDup_inp ➡ " + rmDup_inp);
-// Logger.log("rmDup_output ➡ " + rmDup_out);
+var arr2     = [1,2,3,1,2,3,4,];
+var ex_rmDup = rmDuplicatesFrom(arr2);
+Logger.log("rmDup input ➡ " + arr2);
+Logger.log("rmDup output ➡ " + ex_rmDup);
 
 // -- Remove Empty Values from an Array
 // ➡  arr
 
-function rmEmpty(x){
+function rmEmptyVal(x){
   return (x !== (undefined || ''));
 }
 
-// var rmEmpty_inp = ["a",,"b",,,"c"];
-// var rmEmpty_out = rmEmpty_inp.filter(rmEmpty);
-// Logger.log("rmEmpty_inp ➡ " + rmEmpty_inp);
-// Logger.log("rmEmpty_output ➡ " + rmEmpty_out);
+var arr3 = ["a",,"b",,,"c"];
+var ex_rmEmpty = arr3.filter(rmEmptyVal);
+Logger.log("rmEmpty input ➡ " + arr3);
+Logger.log("rmEmpty output ➡ " + ex_rmEmpty);
 
 // -- Get Count of Value in Array
 // ➡  arrObj
 
-function countVal(arr){
+function countValIn(arr){
   var comp = [];
   var copy = arr.slice(0);
 	for (var i = 0; i < arr.length; i++) {
@@ -146,11 +144,11 @@ function countVal(arr){
   return comp;
 }
 
-// var countVal_inp = ["A", "B", "C", "A", "B", "C", "D", "A"];
-// var countVal_out = countVal(countVal_inp);
-// Logger.log("countVal_input ➡ " + countVal_inp);
-// Logger.log("countVal_out ⬇ ");
-// Logger.log(countVal_out);
+var arr4 = ["A", "B", "C", "A", "B", "C", "D", "A"];
+var ex_countVal = countValIn(arr4);
+Logger.log("countVal input ➡ " + arr4);
+Logger.log("countVal out ⬇ ");
+Logger.log(ex_countVal);
 
 // - Array of Objects
 
