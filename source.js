@@ -416,26 +416,28 @@ function allFoldersIn(fPath) {
   return array;
 }
 
-var ex_afi = allFoldersIn("JCodesMN");
-Logger.log(ex_afi);
+// var ex_afi = allFoldersIn("JCodesMN");
+// Logger.log("'JCodesMN/A/B/C' has top level folder 'A' ➡ " + ex_afi);
 
 // -- Array of All Folders in Drive
+// ➡  arr of all folder names, *not* folder objs
 
 function allFoldersInDrive() {
   var folderIterator = DriveApp.getFolders();
   var array = [];
   while (folderIterator.hasNext()) {
     var item = folderIterator.next().getName();
-    // Logger.log("Found item: " + item);
    array.push(item);
   } 
   return array;
 }
 
-// var allFolders = returnAllFoldersInAnArray();
-// Logger.log(allFolders);
+var ex_af = allFoldersInDrive();
+Logger.log("all folders in Drive ⬇ ");
+Logger.log(ex_af);
 
 // -- Array of All Root Folders
+// ➡  arr of all folder names, *not* folder objs
 
 function allRootFolders() {
   var rootFolder = DriveApp.getRootFolder();
@@ -449,12 +451,14 @@ function allRootFolders() {
   return array;
 }
 
-// var foldersAtRoot = returnAllFoldersAtRootInAnArray();
-// Logger.log(foldersAtRoot);
+var ex_rf = allRootFolders();
+Logger.log("all root folders ⬇ ");
+Logger.log(ex_rf);
 
 // -- Create Folder or Folders in a Folder
+// ➡  id of last folder in folder path
 
-function createFoldersAt(folderPath, arrFolders) {
+function createFoldersAt(fPath, arrFolders) {
   if (typeof folderPath === 'undefined') {
     var rootFolders = returnAllFoldersAtRootInAnArray();
     for (i=0; i < arrayOfFolders.length; i++) {
