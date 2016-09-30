@@ -19,8 +19,8 @@
 // * | -- Match a Date to a Range of Dates
 //   |  Drive 
 //   | - Folders
-//   | -- Create a Folder Path and/or Get the Id Of the Last Folder
-//   | -- Get Id of Last Folder in a Folder Path
+//   | -- Create or Verify Folder Path
+//   | -- Get Id of Last Folder in Folder Path
 //   | -- Search a Folder Path for a Folder
 //   | -- Array of All Folders in a Folder
 //   | -- Array of All Folders in Drive
@@ -260,6 +260,7 @@ function filterObjIn(arrObj, pQuery, val) {
 // - Dates and Times
 
 // -- Formatted Timestamps 
+// ➡  string
 
 function fmatD() {
   var n = new Date();
@@ -329,11 +330,11 @@ function academicQuarter() {
 
 // - Folders
 
-// -- Create a Folder Path and/or Get the Id Of the Last Folder
+// -- Create or Verify Folder Path
+// ➡  id of last folder in folder path
 
-// createOrVerifyFoldersIn(folderPath)(
-function createFolderPathAndOrGetIdOfLastFolder(folderPath) {
-  var array = folderPath.split('/');
+function createOrVerify(fPath) {
+  var array = fPath.split('/');
   var f;
   for (i = 0; i < array.length; i++) {
     if (i == 0) {
@@ -356,14 +357,14 @@ function createFolderPathAndOrGetIdOfLastFolder(folderPath) {
   return fId;
 }
 
-// var coffpri = createFolderPathAndOrGetIdOfLastFolder("JCodesMN/A/B/C");
-// Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + coffpri);
+// var ex_cvfp = createOrVerify("JCodesMN/A/B/C");
+// Logger.log("Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_cvfp);
 
 // -- Get Id of the Last Folder in a Folder Path
+// ➡  id of last folder in folder path
 
-// idOfLastFolderIn(folderPath)
-function getIdOfLastFolderInAFolderPath(folderPath) {
-  var array = folderPath.split('/');
+function idOfLastFolderIn(fPath) {
+  var array = fPath.split('/');
   var f;
   for (i = 0; i < array.length; i++) {
     if (i == 0) {
@@ -378,19 +379,20 @@ function getIdOfLastFolderInAFolderPath(folderPath) {
   return fId;
 }
 
-// var giolfiafp = getIdOfLastFolderInAFolderPath("JCodesMN/A/B/C");
-// Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + giolfiafp);
+// var ex_idlf = idOfLastFolderIn("JCodesMN/A/B/C");
+// Logger.log("Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_idlf);
 
 // -- Search a Folder Path for a Folder
+// ➡  id of folder
 
 // findFolderIn(folderPath, folderName)
-function searchAFolderPathForAFolderReturnId(folderPath, folderName) {
-  var idOfLastFolder  = getIdOfLastFolderInAFolderPath(folderPath);
+function findFolderIn(fPath, fName) {
+  var idOfLastFolder  = idOfLastFolderIn(fPath);
   if (idOfLastFolder) {
     var lastFolder    = DriveApp.getFolderById(idOfLastFolder);
     var folderContent = listAllFoldersInAFolder(folderPath);
-    if (valChk(folderContent, folderName)) {
-      var folderId = lastFolder.getFoldersByName(folderName).next().getId();
+    if (valChk(folderContent, fName)) {
+      var folderId = lastFolder.getFoldersByName(fName).next().getId();
       return folderId;
     }
   } else {
@@ -398,8 +400,8 @@ function searchAFolderPathForAFolderReturnId(folderPath, folderName) {
   }
 }
 
-// var idOfC = searchAFolderPathForAFolderReturnId("JCodesMN/A/B", "C");
-// Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + idOfC);
+var ex_ffi = findFolderIn("JCodesMN/A/B", "C");
+Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_ffi);
 
 // -- Array of All Folders in a Folder
 
