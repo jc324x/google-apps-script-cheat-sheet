@@ -509,10 +509,26 @@ function searchDriveForFolder(fName) {
   }
 }
 
-var ex_id = searchDriveForFolder("JCodesMN");
-Logger.log(" Id of 'JCodesMN' at root ➡ " + ex_id);
+var ex_fldrid = searchDriveForFolder("JCodesMN");
+Logger.log(" Id of 'JCodesMN' at root ➡ " + ex_fldrid);
 
 // - Files
+
+// fn to create scratch file for examples below
+
+function checkForExFile(){
+  var allFiles = DriveApp.getFilesByName("JCodesMN_exFile");
+  var array    = [];
+  while (allFiles.hasNext()) {
+    var file = allFiles.next();
+    array.push(file);
+  }
+  if (!(checkValIn(array, "JCodesMN_exFile"))){
+    DriveApp.createFile("JCodesMN_exFile", "Hello, world!");
+  }
+}
+
+checkForExFile();
 
 // -- Get the Id of a File in a Folder
 
@@ -520,20 +536,55 @@ Logger.log(" Id of 'JCodesMN' at root ➡ " + ex_id);
 
 // -- Search Drive for a File
 
+function searchDriveForFile(fName) {
+  var arr = [];
+  var fi  = DriveApp.getFilesByName(fName);
+  while (fi.hasNext()) {
+   var fldr = fi.next();
+   arr.push(fldr);
+ }
+  if (arr.length == 1) {
+    return arr[0].getId();
+  } else {
+    return arr;
+  }
+}
+
+// DriveApp.createFile("JCodesMN_exFile", "Hello, world!");
+
+var ex_fileid = searchDriveForFile("JCodesMN_exFile");
+Logger.log(" Id of 'JCodesMN_exFile' ➡ " + ex_fileid);
+
 // -- Move a File to a Folder
+// ➡  id of newly created file 
+
+
+// moveFileById()
+function moveFile(sourceId, folderId) {
+	var sFile     = DriveApp.getFileById(sourceId);
+  var sFileName = sFile.getName();
+  var fldr      = DriveApp.getFolderById(folderId);
+  var oFile     = sFile.makeCopy(sFileName, fldr);
+  var oFileId   = outputFile.getId();
+  if (outputFileId !== "") {
+    DriveApp.getFileById(sFileId).setTrashed(true);
+  }
+  return oFileId;
+}
+
+// moveFileByPath(fPath
+
 
 // -- Copy a File to a Folder
+// ➡  id of newly created file 
 
-function copyFile(sourceFileId, folderId) {
-	var sourceFileFromId = DriveApp.getFileById(sourceFileId);
-  var sourceFileName   = sourceFileFromId.getName();
-  var folderFromId     = DriveApp.getFolderById(folderId);
-  var outputFile       = sourceFileFromId.makeCopy(sourceFileName, folderFromId);
-  var outputFileId     = outputFile.getId();
-  if (outputFileId !== "") {
-    DriveApp.getFileById(sourceFileId).setTrashed(true);
-  }
-  return outputFileId;
+function copyFile(sourceId, folderId) {
+	var sFile     = DriveApp.getFileById(sourceId);
+  var sFileName = sFile.getName();
+  var fldr      = DriveApp.getFolderById(folderId);
+  var oFile     = sFile.makeCopy(sFileName, fldr);
+  var oFileId   = outputFile.getId();
+  return oFileId;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
