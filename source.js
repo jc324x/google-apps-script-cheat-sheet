@@ -517,14 +517,14 @@ Logger.log(" Id of 'JCodesMN' at root ➡ " + ex_fldrid);
 // fn to create scratch file for examples below
 
 function checkForExFile(){
-  var allFiles = DriveApp.getFilesByName("JCodesMN_exFile");
-  var array    = [];
-  while (allFiles.hasNext()) {
-    var file = allFiles.next();
-    array.push(file);
+  var jcmnf = DriveApp.getFolderById(searchDriveForFolder("JCodesMN"));
+  var files = jcmnf.getFilesByName("JCodesMN_exFile");
+  var exFile;
+  while (files.hasNext()) {
+    exFile = files.next();
   }
-  if (!(checkValIn(array, "JCodesMN_exFile"))){
-    DriveApp.createFile("JCodesMN_exFile", "Hello, world!");
+  if (!(exFile)){
+    jcmnf.createFile("JCodesMN_exFile", "Hello, world!");
   }
 }
 
