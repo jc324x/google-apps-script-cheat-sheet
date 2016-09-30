@@ -261,16 +261,16 @@ function filterObjIn(arrObj, pQuery, val) {
 
 // -- Formatted Timestamps 
 
-function getCurrentDate() {
+function fmatD() {
   var n = new Date();
   var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
   return d.join("/");
 }
 
-// var gcd = getCurrentDate();
-// Logger.log("current date ➡ " + gcd);
+var ex_fd = fmatD();
+Logger.log("current date ➡ " + ex_fd);
 
-function getCurrentTime(){
+function fmat24T(){
   var n  = new Date();
   var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
   for ( var i = 1; i < 3; i++ ) {
@@ -281,10 +281,10 @@ function getCurrentTime(){
   }
 }
 
-// var gct = getCurrentTime();
-// Logger.log("current time (24 hour) ➡ " + gct);
+var ex_24T = fmat24T();
+Logger.log("current time (24 hour) ➡ " + ex_24T);
 
-function getCurrentDateTime12Hour() {
+function fmat12DT() {
   var n = new Date();
   var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
   var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
@@ -298,8 +298,8 @@ function getCurrentDateTime12Hour() {
   return d.join("/") + " " + t.join(":") + " " + s;
 }
 
-// var gcdt12h = getCurrentDateTime12Hour();
-// Logger.log("current date + time (12 hour) ➡ " + gcdt12h);
+var ex_dt12 = fmat12DT();
+Logger.log("current date + time (12 hour) ➡ " + ex_dt12);
 
 // -- Match a Date to a Range of Dates
 
