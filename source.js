@@ -523,11 +523,8 @@ function checkForExFile(){
   while (files.hasNext()) {
     exFile = files.next();
   }
-  if (!(exFile)){
-    jcmnf.createFile("JCodesMN_exFile", "Hello, world!");
-  }
+  if (!(exFile)){jcmnf.createFile("JCodesMN_exFile", "Hello, world!");}
 }
-
 checkForExFile();
 
 // -- Get the Id of a File in a Folder
@@ -535,6 +532,7 @@ checkForExFile();
 // -- Get the Id of a File at Root
 
 // -- Search Drive for a File
+// ➡  id of file or arr of matching files
 
 function searchDriveForFile(fName) {
   var arr = [];
