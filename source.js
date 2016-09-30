@@ -432,7 +432,7 @@ function allFoldersInDrive() {
   return array;
 }
 
-var ex_af = allFoldersInDrive();
+// var ex_af = allFoldersInDrive();
 // Logger.log("all folders in Drive ⬇ ");
 // Logger.log(ex_af);
 
@@ -451,7 +451,7 @@ function allRootFolders() {
   return array;
 }
 
-var ex_rf = allRootFolders();
+// var ex_rf = allRootFolders();
 // Logger.log("all root folders ⬇ ");
 // Logger.log(ex_rf);
 
@@ -469,10 +469,10 @@ function createFoldersAt(fPath, arrFolders) {
   return destination.getId();
 }
 
-var ex_af1 = ["X", "Y", "Z"];
-var ex_cfa = createFoldersAt("JCodesMN", ex_af1);
-Logger.log("all folders in 'JCodesMN' = AXYZ ⬇ ");
-Logger.log(allFoldersIn("JCodesMN"));
+// var ex_af1 = ["X", "Y", "Z"];
+// var ex_cfa = createFoldersAt("JCodesMN", ex_af1);
+// Logger.log("all folders in 'JCodesMN' = AXYZ ⬇ ");
+// Logger.log(allFoldersIn("JCodesMN"));
 
 // -- Create or Verify Folder(s) at Root
 // ➡  id of root folder
@@ -487,10 +487,10 @@ function createFoldersAtRoot(arrFolders) {
     return DriveApp.getRootFolder().getId();
 }
 
-var ex_af2 = ["1", "2", "3"];
-var ex_cfa = createFoldersAtRoot(ex_af2);
-Logger.log("all folders at Root ⬇ ");
-Logger.log(allRootFolders());
+// var ex_af2 = ["1", "2", "3"];
+// var ex_cfa = createFoldersAtRoot(ex_af2);
+// Logger.log("all folders at Root ⬇ ");
+// Logger.log(allRootFolders());
 
 //  -- Search Drive for Folder(s)
 // ➡  id of folder or arr of matching folders
@@ -509,8 +509,8 @@ function searchDriveForFolder(fName) {
   }
 }
 
-var ex_fldrid = searchDriveForFolder("JCodesMN");
-Logger.log(" Id of 'JCodesMN' at root ➡ " + ex_fldrid);
+// var ex_fldrid = searchDriveForFolder("JCodesMN");
+// Logger.log(" Id of 'JCodesMN' at root ➡ " + ex_fldrid);
 
 // - Files
 
@@ -549,8 +549,6 @@ function searchDriveForFile(fName) {
     return arr;
   }
 }
-
-// DriveApp.createFile("JCodesMN_exFile", "Hello, world!");
 
 var ex_fileid = searchDriveForFile("JCodesMN_exFile");
 Logger.log(" Id of 'JCodesMN_exFile' ➡ " + ex_fileid);
