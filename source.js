@@ -29,10 +29,11 @@
 // * | -- Create or Verify Folder(s) at Root
 // * | -- Search Drive for Folder(s)
 //   | - Files
-//   | -- Create a Blank Doc or Sheet in a Folder
-//   | -- Get the Id of a File in a Folder Path
-//   | -- Search Entire Drive for a File
+//   | -- Get the Id of a File in a Folder
+//   | -- Get the Id of a File at Root
+//   | -- Search Drive for a File
 //   | -- Move a File to a Folder
+//   | -- Copy a File to a Folder
 //   | Sheets
 //   | - Utility Functions for Sheets
 //   | -- Convert Column Number to a Letter
@@ -64,7 +65,7 @@
 //   | Gmail
 //   | - Send Email
 //   | -- Comma Separated List of Recipients
-// ? | -- HTML in Email Body
+//   | -- HTML in Email Body
 
 function testEverything() {}
 
@@ -511,31 +512,17 @@ function searchDriveForFolder(fName) {
 var ex_id = searchDriveForFolder("JCodesMN");
 Logger.log(" Id of 'JCodesMN' at root ➡ " + ex_id);
 
-/////////////////////////////////////////
-/////////////////////////////////////////
-/////////////////////////////////////////
+// - Files
 
-// - Files - [ ] 
+// -- Get the Id of a File in a Folder
 
-// -- Create a Blank Doc or Sheet in a Folder - [ ] 
+// -- Get the Id of a File at Root
 
-// create folder path first -> returns folderId to drop into this or others...
+// -- Search Drive for a File
 
-// move to docs...duplicate in sheets too
+// -- Move a File to a Folder
 
-function createDocIn(folderId, docName) {
-  var folder    = DriveApp.getFolderById(folderId);
-  var inputDoc  = DocumentApp.create(docName);
-  var outputDoc = inputDoc.makeCopy(docName, folder);
-  var docCheck = folder.getFilesByName(docName);
-  if (docCheck.hasNext()) {
-    var outputDocId = docCheck.next().getId();
-    DriveApp.inputDoc.setTrashed(true);
-    }
-}
-
-// from comment wizard...
-// fn copyFile(fileId, folderId) {}
+// -- Copy a File to a Folder
 
 function copyFile(sourceFileId, folderId) {
 	var sourceFileFromId = DriveApp.getFileById(sourceFileId);
@@ -549,35 +536,11 @@ function copyFile(sourceFileId, folderId) {
   return outputFileId;
 }
 
-// from comment wizard...
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
-// createOrVerifyDocIn(folderPath, docName)
-function makeOrFindDocInFolderPathReturnId() {
-  var folderId = createOrFindFolderPathReturnId(exportFolder);
-  var folder   = DriveApp.getFolderById(folderId);
-  var docName  = generateDocName();
-  var docCheck = folder.getFilesByName(docName);
-  if (docCheck.hasNext()) {
-      var file = docCheck.next(); 
-      return file.getId();
-    } else {
-      var docId       = makeDocReturnId(docName);
-      var outputDocId = copyFileDeleteSourceReturnNewId(docId, folderId);
-      return outputDocId;
-   }
-}
-
-// getIdOfFileInFolderPath
-
-// -- Search Drive for a File and Return its Id - [ ] 
-
-// -- Find a File in a Folder Path - [ ] 
-
-// Move a File to a Folder - [ ] 
-
-////////////
-// Sheets // 
-////////////
+// Sheets
 
 // - Utility Functions for Sheets - [ ] 
 
@@ -607,9 +570,38 @@ function makeOrFindDocInFolderPathReturnId() {
 
 // - Utility Functions for Docs - [ ]  
 
+// createOrVerifyDocIn(folderPath, docName)
+function makeOrFindDocInFolderPathReturnId() {
+  var folderId = createOrFindFolderPathReturnId(exportFolder);
+  var folder   = DriveApp.getFolderById(folderId);
+  var docName  = generateDocName();
+  var docCheck = folder.getFilesByName(docName);
+  if (docCheck.hasNext()) {
+      var file = docCheck.next(); 
+      return file.getId();
+    } else {
+      var docId       = makeDocReturnId(docName);
+      var outputDocId = copyFileDeleteSourceReturnNewId(docId, folderId);
+      return outputDocId;
+   }
+}
+
+// -- Create a Blank Doc in a Folder
+function createDocIn(folderId, docName) {
+  var folder    = DriveApp.getFolderById(folderId);
+  var inputDoc  = DocumentApp.create(docName);
+  var outputDoc = inputDoc.makeCopy(docName, folder);
+  var docCheck = folder.getFilesByName(docName);
+  if (docCheck.hasNext()) {
+    var outputDocId = docCheck.next().getId();
+    DriveApp.inputDoc.setTrashed(true);
+    }
+}
+
 // -- Clear All Content From a Doc - [ ] 
 
-// Logger.log("...done!");
+////////////////////////////////////////////
+////////////////////////////////////////////
 
 function createArrayOfObjectsFromRange_Vertical(sheetName, a1Notation) {
   var range      = ss.getSheetByName(sheetName).getRange(a1Notation);
