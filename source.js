@@ -385,13 +385,12 @@ function idOfLastFolderIn(fPath) {
 // -- Search a Folder Path for a Folder
 // ➡  id of folder
 
-// findFolderIn(folderPath, folderName)
 function findFolderIn(fPath, fName) {
   var idOfLastFolder  = idOfLastFolderIn(fPath);
   if (idOfLastFolder) {
     var lastFolder    = DriveApp.getFolderById(idOfLastFolder);
-    var folderContent = listAllFoldersInAFolder(folderPath);
-    if (valChk(folderContent, fName)) {
+    var folderContent = allFoldersIn(fPath);
+    if (checkValIn(folderContent, fName)) {
       var folderId = lastFolder.getFoldersByName(fName).next().getId();
       return folderId;
     }
@@ -400,25 +399,25 @@ function findFolderIn(fPath, fName) {
   }
 }
 
-var ex_ffi = findFolderIn("JCodesMN/A/B", "C");
-Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_ffi);
+// var ex_ffi = findFolderIn("JCodesMN/A/B", "C");
+// Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_ffi);
 
 // -- Array of All Folders in a Folder
+// ➡  arr of all folder names, *not* folder objs
 
-function allFoldersIn(folderPath) {
-  var folder         = DriveApp.getFolderById(createFolderPathAndOrGetIdOfLastFolder(folderPath));
+function allFoldersIn(fPath) {
+  var folder         = DriveApp.getFolderById(createOrVerify(fPath));
   var folderIterator = folder.getFolders();
   var array  = [];
   while (folderIterator.hasNext()) {
     var item = folderIterator.next().getName();
-    // Logger.log("Found folder " + item + " inside of " + folderPath);
    array.push(item);
   } 
   return array;
 }
 
-// var rfcaa = listAllFoldersInAFolder("Testing");
-// Logger.log(rfcaa);
+var ex_afi = allFoldersIn("JCodesMN");
+Logger.log(ex_afi);
 
 // -- Array of All Folders in Drive
 
