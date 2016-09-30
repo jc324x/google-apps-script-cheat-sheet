@@ -18,15 +18,16 @@
 // * | -- Formatted Timestamps
 // * | -- Match a Date to a Range of Dates
 //   |  Drive 
-//   | - Folders
-//   | -- Create or Verify Folder Path
-//   | -- Get Id of Last Folder in Folder Path
-//   | -- Search a Folder Path for a Folder
-//   | -- Array of All Folders in a Folder
-//   | -- Array of All Folders in Drive
-//   | -- Array of All Folders at Root
-//   | -- Create Several Folders in a Folder or at Root
-//   | -- Search Entire Drive for a Folder
+// * | - Folders
+// * | -- Create or Verify Folder Path
+// * | -- Get Id of Last Folder in Folder Path
+// * | -- Search a Folder Path for a Folder
+// * | -- Array of All Folders in a Folder
+// * | -- Array of All Folders in Drive
+// * | -- Array of All Folders at Root
+// * | -- Create or Verify Folder(s) in a Folder
+// * | -- Create or Verify Folder(s) at Root
+//   | -- Search All of Drive for a Folder
 //   | -- Move a Folder
 //   | - Files
 //   | -- Create a Blank Doc or Sheet in a Folder
@@ -93,9 +94,8 @@ function checkValIn(arr, val) {
 function rmDuplicatesFrom(arr) {
   var check  = {};
   var output = [];
-  var length = arr.length;
   var j = 0;
-  for(var i = 0; i < length; i++) {
+  for(var i = 0; i < arr.length; i++) {
        var item = arr[i];
        if(check[item] !== 1) {
              check[item] = 1;
@@ -433,8 +433,8 @@ function allFoldersInDrive() {
 }
 
 var ex_af = allFoldersInDrive();
-Logger.log("all folders in Drive ⬇ ");
-Logger.log(ex_af);
+// Logger.log("all folders in Drive ⬇ ");
+// Logger.log(ex_af);
 
 // -- Array of All Root Folders
 // ➡  arr of all folder names, *not* folder objs
@@ -452,50 +452,57 @@ function allRootFolders() {
 }
 
 var ex_rf = allRootFolders();
-Logger.log("all root folders ⬇ ");
-Logger.log(ex_rf);
+// Logger.log("all root folders ⬇ ");
+// Logger.log(ex_rf);
 
-// -- Create Folder or Folders in a Folder
+// -- Create or Verify Folder(s) in a Folder
 // ➡  id of last folder in folder path
 
 function createFoldersAt(fPath, arrFolders) {
-  if (typeof folderPath === 'undefined') {
-    var rootFolders = returnAllFoldersAtRootInAnArray();
-    for (i=0; i < arrayOfFolders.length; i++) {
-      if (!(findValueInArray(rootFolders, arrayOfFolders[i]))) {
-        DriveApp.createFolder(arrayOfFolders[i]);
+    var destination = DriveApp.getFolderById(createOrVerify(fPath));
+    var destinationFolders = allFoldersIn(fPath);
+    for (i=0; i < arrFolders.length; i++) {
+      if (!(checkValIn(destinationFolders, arrFolders[i]))) {
+        destination.createFolder(arrFolders[i]);
+      }
+    }
+  return destination.getId();
+}
+
+// var ex_af1 = ["X", "Y", "Z"];
+// var ex_cfa = createFoldersAt("JCodesMN", ex_af1);
+// Logger.log("all folders in 'JCodesMN' = AXYZ ⬇ ");
+// Logger.log(allFoldersIn("JCodesMN"));
+
+// -- Create or Verify Folder(s) at Root
+
+function createFoldersAtRoot(arrFolders) {
+    var rootFolders = allRootFolders();
+    for (i=0; i < arrFolders.length; i++) {
+      if (!(checkValIn(rootFolders, arrFolders[i]))) {
+        DriveApp.createFolder(arrFolders[i]);
       }
     } 
     return DriveApp.getRootFolder().getId();
-  } else {
-    var destination = DriveApp.getFolderById(createOrFindFolderPathReturnId(folderPath));
-    var destinationFolders = listAllFoldersInAFolder(folderPath);
-    for (i=0; i < arrayOfFolders.length; i++) {
-      if (!(findValueInArray(destinationFolders, arrayOfFolders[i]))) {
-        destination.createFolder(arrayOfFolders[i]);
-      }
-    }
-    return destination.getId();
-  }
 }
 
-// function createFoldersAtRoot(arrFolders) {}
+// var ex_af2 = ["1", "2", "3"];
+// var ex_cfa = createFoldersAtRoot(ex_af2);
+// Logger.log("all folders at Root ⬇ ");
+// Logger.log(allRootFolders());
 
-// var aof = ["apples", "bananas", "coffee"]
-// var fp2 = "Testing/X/Y/Z";
-// var containingFolderId = createSeveralFolders(aof, fp2);
-// Logger.log("Z's Id in Testing/X/Y/Z is " + containingFolderId);
+//  -- Search All of Drive for a Folder
 
-// *** uncommenting the line below will modify your Google Drive *** 
-// var rootId = createSeveralFolders(aof);
-// Logger.log("Root Folder Id: " + rootId);
-
-// -- Move a Folder
+//  -- Move a Folder
 
 function moveFolder(originPath, destinationPath){
 
 }
 
+
+/////////////////////////////////////////
+/////////////////////////////////////////
+/////////////////////////////////////////
 
 // - Files - [ ] 
 
