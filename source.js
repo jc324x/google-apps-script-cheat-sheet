@@ -3,20 +3,20 @@
 // &   = in progress
 // ➡ ⬇ = return
 
-//   | General 
+// * | General 
 // * | - Array
 // * | -- Check for a Value
 // * | -- Remove Duplicates
 // * | -- Remove Empty Values
 // * | -- Get Count of Values in Array
-//   | - Array of Objects
+// * | - Array of Objects
 // * | -- Sort by Property or Properties
-//   | -- Find Object With Unique Property Value - Return Object
-//   | -- Find Object With Unique Property Value - Return Value 
-//   | -- Filter by Property Value
-//   | - Dates and Times
-//   | -- Formatted Timestamps
-//   | -- Match a Date to a Range of Dates
+// * | -- Find Object With Unique Property Value - Return Object
+// * | -- Find Object With Unique Property Value - Return Value 
+// * | -- Filter by Property Value
+// * | - Dates and Times
+// * | -- Formatted Timestamps
+// * | -- Match a Date to a Range of Dates
 //   |  Drive 
 //   | - Folders
 //   | -- Create a Folder Path and/or Get the Id Of the Last Folder
@@ -267,8 +267,8 @@ function fmatD() {
   return d.join("/");
 }
 
-var ex_fd = fmatD();
-Logger.log("current date ➡ " + ex_fd);
+// var ex_fd = fmatD();
+// Logger.log("current date ➡ " + ex_fd);
 
 function fmat24T(){
   var n  = new Date();
@@ -281,8 +281,8 @@ function fmat24T(){
   }
 }
 
-var ex_24T = fmat24T();
-Logger.log("current time (24 hour) ➡ " + ex_24T);
+// var ex_24T = fmat24T();
+// Logger.log("current time (24 hour) ➡ " + ex_24T);
 
 function fmat12DT() {
   var n = new Date();
@@ -298,8 +298,8 @@ function fmat12DT() {
   return d.join("/") + " " + t.join(":") + " " + s;
 }
 
-var ex_dt12 = fmat12DT();
-Logger.log("current date + time (12 hour) ➡ " + ex_dt12);
+// var ex_dt12 = fmat12DT();
+// Logger.log("current date + time (12 hour) ➡ " + ex_dt12);
 
 // -- Match a Date to a Range of Dates
 
