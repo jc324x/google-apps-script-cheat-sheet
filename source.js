@@ -27,8 +27,7 @@
 // * | -- Array of All Folders at Root
 // * | -- Create or Verify Folder(s) in a Folder
 // * | -- Create or Verify Folder(s) at Root
-//   | -- Search All of Drive for a Folder
-//   | -- Move a Folder
+// * | -- Search Drive for Folder(s)
 //   | - Files
 //   | -- Create a Blank Doc or Sheet in a Folder
 //   | -- Get the Id of a File in a Folder Path
@@ -469,12 +468,13 @@ function createFoldersAt(fPath, arrFolders) {
   return destination.getId();
 }
 
-// var ex_af1 = ["X", "Y", "Z"];
-// var ex_cfa = createFoldersAt("JCodesMN", ex_af1);
-// Logger.log("all folders in 'JCodesMN' = AXYZ ⬇ ");
-// Logger.log(allFoldersIn("JCodesMN"));
+var ex_af1 = ["X", "Y", "Z"];
+var ex_cfa = createFoldersAt("JCodesMN", ex_af1);
+Logger.log("all folders in 'JCodesMN' = AXYZ ⬇ ");
+Logger.log(allFoldersIn("JCodesMN"));
 
 // -- Create or Verify Folder(s) at Root
+// ➡  id of root folder
 
 function createFoldersAtRoot(arrFolders) {
     var rootFolders = allRootFolders();
@@ -486,19 +486,30 @@ function createFoldersAtRoot(arrFolders) {
     return DriveApp.getRootFolder().getId();
 }
 
-// var ex_af2 = ["1", "2", "3"];
-// var ex_cfa = createFoldersAtRoot(ex_af2);
-// Logger.log("all folders at Root ⬇ ");
-// Logger.log(allRootFolders());
+var ex_af2 = ["1", "2", "3"];
+var ex_cfa = createFoldersAtRoot(ex_af2);
+Logger.log("all folders at Root ⬇ ");
+Logger.log(allRootFolders());
 
-//  -- Search All of Drive for a Folder
+//  -- Search Drive for Folder(s)
+// ➡  id of folder or arr of matching folders
 
-//  -- Move a Folder
-
-function moveFolder(originPath, destinationPath){
-
+function searchDriveForFolder(fName) {
+  var arr = [];
+  var fi  = DriveApp.getFoldersByName(fName);
+  while (fi.hasNext()) {
+   var fldr = fi.next();
+   arr.push(fldr);
+ }
+  if (arr.length == 1) {
+    return arr[0].getId();
+  } else {
+    return arr;
+  }
 }
 
+var ex_id = searchDriveForFolder("JCodesMN");
+Logger.log(" Id of 'JCodesMN' at root ➡ " + ex_id);
 
 /////////////////////////////////////////
 /////////////////////////////////////////
