@@ -4,14 +4,16 @@
 // ➡ ⬇ = return
 
 //   | General 
-// * | - Standard Array
-// * | -- Check an Array for a Value
-// * | -- Remove Duplicates from an Array
-// * | -- Remove Empty Values from an Array
-// * | -- Get Count of Value in Array
-//   | - Arrays of Objects
-//   | -- Sort by Property or Properties
-//   | -- Find Object or Objects by Property Value
+// * | - Array
+// * | -- Check for a Value
+// * | -- Remove Duplicates
+// * | -- Remove Empty Values
+// * | -- Get Count of Values in Array
+//   | - Array of Objects
+// * | -- Sort by Property or Properties
+//   | -- Find Object With Unique Property Value - Return Object
+//   | -- Find Object With Unique Property Value - Return Value 
+//   | -- Filter by Property Value
 //   | - Dates and Times
 //   | -- Formatted Timestamps
 //   | -- Match a Date to a Range of Dates
@@ -68,24 +70,24 @@ function testEverything() {}
 
 // General
 
-// - Utility 
+// - Array 
 
-// -- Check an Array for a Value 
+// -- Check for a Value
 // ➡  bool
 
 function checkValIn(arr, val) { 
   return arr.indexOf(val) > -1; 
 }
 
-var arr1 = [1,2,3,4];
+// var arr1 = [1,2,3,4];
 
-if (checkValIn(arr1, 99)) {
-    Logger.log("value check ➡ 99 is in the array"); 
-  } else {
-    Logger.log("value check ➡ 99 is not in the array");
-}
+// if (checkValIn(arr1, 99)) {
+//     Logger.log("value check ➡ 99 is in the array"); 
+//   } else {
+//     Logger.log("value check ➡ 99 is not in the array");
+// }
 
-// -- Remove Duplicates from an Array 
+// -- Remove Duplicates 
 // ➡  arr
 
 function rmDuplicatesFrom(arr) {
@@ -103,27 +105,27 @@ function rmDuplicatesFrom(arr) {
   return output;
 }
 
-var arr2     = [1,2,3,1,2,3,4,];
-var ex_rmDup = rmDuplicatesFrom(arr2);
-Logger.log("rmDup input ➡ " + arr2);
-Logger.log("rmDup output ➡ " + ex_rmDup);
+// var arr2  = [1,2,3,1,2,3,4,];
+// var ex_rd = rmDuplicatesFrom(arr2);
+// Logger.log("rmDup input ➡ " + arr2);
+// Logger.log("rmDup output ➡ " + ex_rd);
 
-// -- Remove Empty Values from an Array
+// -- Remove Empty Values
 // ➡  arr
 
 function rmEmptyVal(x){
   return (x !== (undefined || ''));
 }
 
-var arr3 = ["a",,"b",,,"c"];
-var ex_rmEmpty = arr3.filter(rmEmptyVal);
-Logger.log("rmEmpty input ➡ " + arr3);
-Logger.log("rmEmpty output ➡ " + ex_rmEmpty);
+// var arr3  = ["a",,"b",,,"c"];
+// var ex_re = arr3.filter(rmEmptyVal);
+// Logger.log("rmEmpty input ➡ " + arr3);
+// Logger.log("rmEmpty output ➡ " + ex_re);
 
-// -- Get Count of Value in Array
+// -- Get Count of Values in Array
 // ➡  arrObj
 
-function countValIn(arr){
+function countOfValIn(arr){
   var comp = [];
   var copy = arr.slice(0);
 	for (var i = 0; i < arr.length; i++) {
@@ -144,15 +146,15 @@ function countValIn(arr){
   return comp;
 }
 
-var arr4 = ["A", "B", "C", "A", "B", "C", "D", "A"];
-var ex_countVal = countValIn(arr4);
-Logger.log("countVal input ➡ " + arr4);
-Logger.log("countVal out ⬇ ");
-Logger.log(ex_countVal);
+// var arr4  = ["A", "B", "C", "A", "B", "C", "D", "A"];
+// var ex_cv = countOfValIn(arr4);
+// Logger.log("countVal input ➡ " + arr4);
+// Logger.log("countVal out ⬇ ");
+// Logger.log(ex_cv);
 
 // - Array of Objects
 
-// arrObj for ex
+// example arrObj
 
 var ex_arrObj = [
   {a: 1000, b: 1, c: 5}, 
@@ -161,9 +163,10 @@ var ex_arrObj = [
   {a: 1, b: 1, c: 50}
 ]
 
-// -- Sort Array of Objects by Property / Properties
+// -- Sort by Property or Properties
+// ➡  arrObj
 
-function dynamicSort(prop) {
+function dynSort(prop) {
   var sortOrder = 1;
   if(prop[0] === "-") {
     sortOrder = -1;
@@ -175,36 +178,36 @@ function dynamicSort(prop) {
   }
 }
 
-// arrObj.sort(dynamicSort("a"));
+// ex_arrObj.sort(dynSort("a"));
 // Logger.log("arrObj sorted by 'a' value ⬇ ");
-// Logger.log(arrObj);
+// Logger.log(ex_arrObj);
 
-function dynamicSortMulti() {
+function dynSortM() {
   var props = arguments;
   return function (obj1, obj2) {
     var i = 0, result = 0, numberOfProperties = props.length;
     while(result === 0 && i < numberOfProperties) {
-      result = dynamicSort(props[i])(obj1, obj2);
+      result = dynSort(props[i])(obj1, obj2);
       i++;
     }
       return result;
   }
 }
 
-// arrObj.sort(dynamicSortMulti("b", "c"));
+// ex_arrObj.sort(dynSortM("b", "c"));
 // Logger.log("arrObj sorted by 'b' and 'c' values ⬇ ");
-// Logger.log(arrObj);
+// Logger.log(ex_arrObj);
 
-// -- Find Object With Unique Value - Return Obj / Value
+// -- Find Object With Unique Property Value - Return Object
+// ➡  obj 
 
-// findObjIn
-function findObj_Obj(arrObj, propQuery, value) {
+function findObjIn(arrObj, pQuery, val) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
     for (var prop in obj) {
-      if (obj.hasOwnProperty(propQuery)) {
-        if (prop == propQuery) {
-          if (obj[prop] == value) {
+      if (obj.hasOwnProperty(pQuery)) {
+        if (prop == pQuery) {
+          if (obj[prop] == val) {
           return obj;
           }
         }
@@ -214,17 +217,20 @@ function findObj_Obj(arrObj, propQuery, value) {
 }
 
 // Logger.log("find obj with 'a' value of 1000 ⬇ ");
-// var found_returnObj = findObj_Obj(arrObj, "a", 1000);
-// Logger.log(found_returnObj);
+// var ex_foi = findObjIn(ex_arrObj, "a", 1000);
+// Logger.log(ex_foi);
 
-function findObj_Val(arrObj, propQuery, value, propReturn) {
+// -- Find Object With Unique Property Value - Return Value 
+// ➡  val 
+
+function findObjValIn(arrObj, pQuery, val, pReturn) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
     for (var prop in obj) {
-      if (obj.hasOwnProperty(propQuery)) {
-        if (prop == propQuery) {
-          if (obj[prop] == value) {
-          return obj[propReturn];
+      if (obj.hasOwnProperty(pQuery)) {
+        if (prop == pQuery) {
+          if (obj[prop] == val) {
+          return obj[pReturn];
           }
         }
       }
@@ -233,23 +239,23 @@ function findObj_Val(arrObj, propQuery, value, propReturn) {
 }
 
 // Logger.log("find obj with 'c' value of 500 and return its 'a' value ⬇ ");
-// var found_returnVal = findObj_Val(arrObj, "c", 500, "a");
-// Logger.log(found_returnVal);
+// var ex_fovi = findObjValIn(ex_arrObj, "c", 500, "a");
+// Logger.log(ex_fovi);
 
-// -- Create Array of Objects With Matching Value
+// -- Filter by Property Value
+// ➡  arrObj
 
-// filterObjIn(arrObj, propQuery, value)
-function filterArrObj_ArrObj(arrObj, propQuery, value) {
+function filterObjIn(arrObj, pQuery, val) {
   var array = [];
   for (var i=0; i < arrObj.length; i++) {
-    if (arrObj[i][propQuery] == value) array.push(arrObj[i]);
+    if (arrObj[i][pQuery] == val) array.push(arrObj[i]);
   }
   return array;
 }
 
-// var filterArrObj = filterArrObj_ArrObj(arrObj, "b", 2);
-// Logger.log("filter objs with 'b' value of 2 ⬇ ");
-// Logger.log(filterArrObj);
+// var ex_foi = filterObjIn(ex_arrObj, "b", 2);
+// Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
+// Logger.log(ex_foi);
 
 // - Dates and Times
 
