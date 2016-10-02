@@ -25,10 +25,12 @@
 // * | -- Create or Verify Folder Path
 // * | -- Get Id of Last Folder in Folder Path
 //   | -- Array of All Folders in Folder / Root / Drive
+//   | -- Array of All Folder Names for Array of Folders
 //   | -- Search for a Folder - Path / Obj / Id / All of Drive
 //   | -- Create or Verify Folder(s) in Folder or at Root
 //   | - Files
 //   | -- Array of All Files in a Folder / Root / Drive
+//   | -- Array of All File Names for Array of Files
 //   | -- Search for a File - Path / Obj / Id / All of Drive
 //   | -- Move a File to a Folder - Path / Obj / Id
 //   | -- Copy a File to a Folder - Path / Obj / Id
@@ -380,9 +382,9 @@ function idOfLastFolderIn(fPath) {
 // var ex_idlf = idOfLastFolderIn("JCodesMN/A/B/C");
 // Logger.log("Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_idlf);
 
-// ARRAYS OF FOLDERS
+// -- Array of All Folders in Folder / Root / Drive
 
-// -- Array of All Folders in a Folder
+// -- All Folders in a Folder
 // ➡  arr of all folder names, *not* folder objs
 
 function allFoldersIn(fPath) {
