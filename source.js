@@ -18,22 +18,17 @@
 // * | -- Formatted Timestamps
 // * | -- Match a Date to a Range of Dates
 //   |  Drive 
-// * | - Folders
-// * | -- Create or Verify Folder Path
-// * | -- Get Id of Last Folder in Folder Path
-// * | -- Search a Folder Path for a Folder
-// * | -- Array of All Folders in a Folder
-// * | -- Array of All Folders in Drive
-// * | -- Array of All Folders at Root
-// * | -- Create or Verify Folder(s) in a Folder
-// * | -- Create or Verify Folder(s) at Root
-// * | -- Search Drive for Folder(s)
+//   | - Folders
+//   | -- Create or Verify Folder Path
+//   | -- Get Id of Last Folder in Folder Path
+//   | -- Array of All Folders in Folder / Drive / Root
+//   | -- Search for a Folder - Path / Obj / Id / All of Drive
+//   | -- Create or Verify Folder(s) Folder or at Root
 //   | - Files
-//   | -- Get the Id of a File in a Folder
-//   | -- Get the Id of a File at Root
-//   | -- Search Drive for a File
-//   | -- Move a File to a Folder
-//   | -- Copy a File to a Folder
+//   | -- Array of All Files in a Folder / Drive / Root
+//   | -- Search for a File - Path / Obj / Id / All of Drive
+//   | -- Move a File to a Folder - Path / Obj / Id
+//   | -- Copy a File to a Folder - Path / Obj / Id
 //   | Sheets
 //   | - Utility Functions for Sheets
 //   | -- Convert Column Number to a Letter
@@ -512,11 +507,10 @@ function searchDriveForFolder(fName) {
 // var ex_fldrid = searchDriveForFolder("JCodesMN");
 // Logger.log(" Id of 'JCodesMN' at root ➡ " + ex_fldrid);
 
-// - Files
 
 // fn to create scratch file for examples below
 
-function checkForExFile(){
+function checkForExFile() {
   createOrVerify("JCodesMN");
   var jcmnf = DriveApp.getFolderById(searchDriveForFolder("JCodesMN"));
   var files = jcmnf.getFilesByName("JCodesMN_exFile");
@@ -529,9 +523,25 @@ function checkForExFile(){
 
 checkForExFile();
 
-// -- Get the Id of a File in a Folder
+// - Files
 
-// -- Get the Id of a File at Root
+
+
+
+// -- Search a Folder for a File
+// ➡  id of file or arr of matching files
+
+function searchFolderForFile(fPath, fName) {
+  var fldr = DriveApp.getFolderById(idOfLastFolderIn(fPath));
+
+}
+
+// -- Search Root for a File
+// ➡  id of file or arr of matching files
+
+function searchRootForFile(fName) {
+
+}
 
 // -- Search Drive for a File
 // ➡  id of file or arr of matching files
@@ -556,8 +566,6 @@ Logger.log(" Id of 'JCodesMN_exFile' ➡ " + ex_fileid);
 // -- Move a File to a Folder
 // ➡  id of newly created file 
 
-// moveFileByIds()
-
 function moveFileById(fileId, folderId) {
 	var sFile     = DriveApp.getFileById(fileId);
   var sFileName = sFile.getName();
@@ -570,9 +578,13 @@ function moveFileById(fileId, folderId) {
   return oFileId;
 }
 
-// moveFileByObjs(fileObj, folderObj) {}
+function moveFileByObj(fileObj, folderObj) {
 
-// moveFileByPath(oPath, dPath) {}
+}
+
+function moveFileByPath(oPath, dPath) {
+
+}
 
 // -- Copy a File to a Folder
 // ➡  id of newly created file 
