@@ -24,10 +24,10 @@
 //   | - Folders
 // * | -- Create or Verify Folder Path
 // * | -- Get Id of Last Folder in Folder Path
+//   | -- Create or Verify Folder(s) in Folder or at Root
 //   | -- Array of All Folders in Folder / Root / Drive
 //   | -- Array of All Folder Names for Array of Folders
 //   | -- Search for a Folder - Path / Obj / Id / All of Drive
-//   | -- Create or Verify Folder(s) in Folder or at Root
 //   | - Files
 //   | -- Array of All Files in a Folder / Root / Drive
 //   | -- Array of All File Names for Array of Files
@@ -357,8 +357,8 @@ function createOrVerify(fPath) {
   return fId;
 }
 
-// var ex_cvfp = createOrVerify("JCodesMN/A/B/C");
-// Logger.log("Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_cvfp);
+// var ex_cvfp = createOrVerify("google-apps-script-cheat-sheet/A/B/C");
+// Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_cvfp);
 
 // -- Get Id of Last Folder in Folder Path
 // ➡  id of last folder in folder path
@@ -379,65 +379,100 @@ function idOfLastFolderIn(fPath) {
   return fId;
 }
 
-// var ex_idlf = idOfLastFolderIn("JCodesMN/A/B/C");
-// Logger.log("Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_idlf);
+// var ex_idlf = idOfLastFolderIn("google-apps-script-cheat-sheet/A/B/C");
+// Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_idlf);
 
-// -- Array of All Folders in Folder / Root / Drive
+// -- Create or Verify Folder(s) in a Folder
+// ➡  id of last folder in folder path
 
-// -- All Folders in a Folder
-// ➡  arr of all folder names, *not* folder objs
-
-function allFoldersIn(fPath) {
-  var folder         = DriveApp.getFolderById(createOrVerify(fPath));
-  var folderIterator = folder.getFolders();
-  var array  = [];
-  while (folderIterator.hasNext()) {
-    var item = folderIterator.next().getName();
-   array.push(item);
-  } 
-  return array;
+function createFoldersAt(fPath, arrFolders) {
+    var destination = DriveApp.getFolderById(createOrVerify(fPath));
+    var destinationFolders = allFoldersIn(fPath);
+    for (i=0; i < arrFolders.length; i++) {
+      if (!(checkValIn(destinationFolders, arrFolders[i]))) {
+        destination.createFolder(arrFolders[i]);
+      }
+    }
+  return destination.getId();
 }
 
-// var ex_afi = allFoldersIn("JCodesMN");
-// Logger.log("'JCodesMN/A/B/C' has top level folder 'A' ➡ " + ex_afi);
+// var ex_af1 = ["X", "Y", "Z"];
+// var ex_cfa = createFoldersAt("google-apps-script-cheat-sheet", ex_af1);
+// Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ ⬇ ");
+// Logger.log(allFoldersIn("google-apps-script-cheat-sheet"));
 
-// -- Array of All Folders in Drive
-// ➡  arr of all folder names, *not* folder objs
+// -- Create or Verify Folder(s) at Root
+// ➡  id of root folder
+
+function createFoldersAtRoot(arrFolders) {
+    var rootFolders = allRootFolders();
+    for (i=0; i < arrFolders.length; i++) {
+      if (!(checkValIn(rootFolders, arrFolders[i]))) {
+        DriveApp.createFolder(arrFolders[i]);
+      }
+    } 
+    return DriveApp.getRootFolder().getId();
+}
+
+// var ex_af2 = ["1", "2", "3"];
+// var ex_cfa = createFoldersAtRoot(ex_af2);
+// Logger.log("all folders at Root ⬇ ");
+// Logger.log(allRootFolders());
+
+// -- Array of All Folders in Folder / Root / Drive
+// ➡  arr of fldrObjs
+
+// --- All Folders at the End of a File Path
+
+function allFoldersIn(fPath) {
+  var fldrObj = DriveApp.getFolderById(idOfLastFolderIn(fPath));
+  var fldrI   = fldrObj.getFolders();
+  var _arr    = [];
+  while (fldrI.hasNext()) {
+    var fldr = fldrI.next();
+   _arr.push(fldr);
+  } 
+  return _arr;
+}
+
+var ex_afi = allFoldersIn("google-apps-script-cheat-sheet");
+Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_afi);
+
+// --- All Root Level Folders
+
+function allRootFolders() {
+  var rootFolder = DriveApp.getRootFolder();
+  var fldrI      = rootFolder.getFolders();
+  var _arr       = [];
+  while (fldrI.hasNext()) {
+    var fldr = fldrI.next();
+   _arr.push(fldr);
+  } 
+  return _arr;
+}
+
+var ex_rf = allRootFolders();
+Logger.log("all root folders ⬇ ");
+Logger.log(ex_rf);
+Logger.log(ex_rf[0].getName());
+Logger.log(ex_rf[0].getId());
+
+
+// --- All Folders in Drive
 
 function allFoldersInDrive() {
-  var folderIterator = DriveApp.getFolders();
-  var array = [];
-  while (folderIterator.hasNext()) {
-    var item = folderIterator.next().getName();
-   array.push(item);
+  var fldrI = DriveApp.getFolders();
+  var _arr  = [];
+  while (fldrI.hasNext()) {
+    var fldr = fldrI.next();
+   _arr.push(fldr);
   } 
-  return array;
+  return _arr;
 }
 
 // var ex_af = allFoldersInDrive();
 // Logger.log("all folders in Drive ⬇ ");
 // Logger.log(ex_af);
-
-// -- Array of All Root Folders
-// ➡  arr of all folder names, *not* folder objs
-
-function allRootFolders() {
-  var rootFolder = DriveApp.getRootFolder();
-  var folderIterator = rootFolder.getFolders();
-  var array = [];
-  while (folderIterator.hasNext()) {
-    var item = folderIterator.next().getName();
-    // Logger.log("Found item: " + item);
-   array.push(item);
-  } 
-  return array;
-}
-
-// var ex_rf = allRootFolders();
-// Logger.log("all root folders ⬇ ");
-// Logger.log(ex_rf);
-
-// SEARCH FOR A FOLDER
 
 //  -- Search Drive for Folder(s)
 // ➡  id of folder or arr of matching folders
@@ -479,44 +514,6 @@ function findFolderIn(fPath, fName) {
 // var ex_ffi = findFolderIn("JCodesMN/A/B", "C");
 // Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_ffi);
 
-// CREATE OR VERIFY FOLDER(S) IN FOLDER OR AT ROOT 
-
-// -- Create or Verify Folder(s) at Root
-// ➡  id of root folder
-
-function createFoldersAtRoot(arrFolders) {
-    var rootFolders = allRootFolders();
-    for (i=0; i < arrFolders.length; i++) {
-      if (!(checkValIn(rootFolders, arrFolders[i]))) {
-        DriveApp.createFolder(arrFolders[i]);
-      }
-    } 
-    return DriveApp.getRootFolder().getId();
-}
-
-// var ex_af2 = ["1", "2", "3"];
-// var ex_cfa = createFoldersAtRoot(ex_af2);
-// Logger.log("all folders at Root ⬇ ");
-// Logger.log(allRootFolders());
-
-// -- Create or Verify Folder(s) in a Folder
-// ➡  id of last folder in folder path
-
-function createFoldersAt(fPath, arrFolders) {
-    var destination = DriveApp.getFolderById(createOrVerify(fPath));
-    var destinationFolders = allFoldersIn(fPath);
-    for (i=0; i < arrFolders.length; i++) {
-      if (!(checkValIn(destinationFolders, arrFolders[i]))) {
-        destination.createFolder(arrFolders[i]);
-      }
-    }
-  return destination.getId();
-}
-
-// var ex_af1 = ["X", "Y", "Z"];
-// var ex_cfa = createFoldersAt("JCodesMN", ex_af1);
-// Logger.log("all folders in 'JCodesMN' = AXYZ ⬇ ");
-// Logger.log(allFoldersIn("JCodesMN"));
 
 //////////////////////////////////////////////////
 
