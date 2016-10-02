@@ -517,6 +517,7 @@ function searchDriveForFolder(fName) {
 // fn to create scratch file for examples below
 
 function checkForExFile(){
+  createOrVerify("JCodesMN");
   var jcmnf = DriveApp.getFolderById(searchDriveForFolder("JCodesMN"));
   var files = jcmnf.getFilesByName("JCodesMN_exFile");
   var exFile;
@@ -525,6 +526,7 @@ function checkForExFile(){
   }
   if (!(exFile)){jcmnf.createFile("JCodesMN_exFile", "Hello, world!");}
 }
+
 checkForExFile();
 
 // -- Get the Id of a File in a Folder
@@ -554,10 +556,10 @@ Logger.log(" Id of 'JCodesMN_exFile' ➡ " + ex_fileid);
 // -- Move a File to a Folder
 // ➡  id of newly created file 
 
+// moveFileByIds()
 
-// moveFileById()
-function moveFile(sourceId, folderId) {
-	var sFile     = DriveApp.getFileById(sourceId);
+function moveFileById(fileId, folderId) {
+	var sFile     = DriveApp.getFileById(fileId);
   var sFileName = sFile.getName();
   var fldr      = DriveApp.getFolderById(folderId);
   var oFile     = sFile.makeCopy(sFileName, fldr);
@@ -568,20 +570,25 @@ function moveFile(sourceId, folderId) {
   return oFileId;
 }
 
-// moveFileByPath(fPath
+// moveFileByObjs(fileObj, folderObj) {}
 
+// moveFileByPath(oPath, dPath) {}
 
 // -- Copy a File to a Folder
 // ➡  id of newly created file 
 
-function copyFile(sourceId, folderId) {
-	var sFile     = DriveApp.getFileById(sourceId);
+function copyFileById(fileId, folderId) {
+	var sFile     = DriveApp.getFileById(fileId);
   var sFileName = sFile.getName();
   var fldr      = DriveApp.getFolderById(folderId);
   var oFile     = sFile.makeCopy(sFileName, fldr);
   var oFileId   = outputFile.getId();
   return oFileId;
 }
+
+// copyFileByObjs(fileObj, folderObj) {}
+
+// copyFileByPath(oPath, dPath) {}
 
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
