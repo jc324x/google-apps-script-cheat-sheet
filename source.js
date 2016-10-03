@@ -525,7 +525,7 @@ function getFolderNames(arrFldrObj) {
 // -- Search for Folder(s) in Path / Id / Obj / Root / Drive
 // ➡  id of folder or arr of matching folders
 
-// --- Search a Folder Path for a Folder or Folders
+// --- Search a Folder Path for a Folder
 
 function findFolderInPath(fPath, fName) {
   var fldrId = idOfLastFolderIn(fPath);
@@ -542,10 +542,10 @@ function findFolderInPath(fPath, fName) {
   }
 }
 
-var ex_ffip = findFolderInPath("google-apps-script-cheat-sheet", "A");
-Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffip);
+// var ex_ffip = findFolderInPath("google-apps-script-cheat-sheet", "A");
+// Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffip);
 
-// --- Access a Folder by Id and Search for a Folder or Folders
+// --- Access a Folder by Id and Search for a Folder
 
 function findFolderInId(fId, fName) {
   var fldrObj = DriveApp.getFolderById(fId);
@@ -561,30 +561,26 @@ function findFolderInId(fId, fName) {
   }
 }
 
-var ex_fid = idOfLastFolderIn("google-apps-script-cheat-sheet");
-var ex_ffii = findFolderInId(ex_fid, "A");
-Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffii);
+// var ex_fid = idOfLastFolderIn("google-apps-script-cheat-sheet");
+// var ex_ffii = findFolderInId(ex_fid, "A");
+// Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffii);
 
-// --- Search a Folder Object for a Folder or Folders
+// --- Search a Folder Object for a Folder
 
 function findFolderInObj(fObj, fName) {
-  var idOfLastFolder  = idOfLastFolderIn(fPath);
-  if (idOfLastFolder) {
-    var lastFolder    = DriveApp.getFolderById(idOfLastFolder);
-    var folderContent = allFoldersIn(fPath);
-    if (checkValIn(folderContent, fName)) {
-      var folderId = lastFolder.getFoldersByName(fName).next().getId();
-      return folderId;
+    var arrFldrObj   = allFoldersInObj(fObj);
+    var arrFldrNames = getFolderNames(arrFldrObj);
+    if (checkValIn(arrFldrNames, fName)) {
+      var fldrIdRet = fObj.getFoldersByName(fName).next().getId();
+      return fldrIdRet;
     }
-  } else {
-    return null;
-  }
 }
 
-// var ex_ffi = findFolderIn("JCodesMN/A/B", "C");
-// Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_ffi);
+// var ex_fobj = DriveApp.getFolderById(ex_fid);
+// var ex_ffio = findFolderInObj(ex_fobj, "A");
+// Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffio);
 
-// --- Search Drive for a Folder or Folders
+// --- Search Drive for a Folder
 
 function searchDriveForFolder(fName) {
   var arr = [];
@@ -600,18 +596,8 @@ function searchDriveForFolder(fName) {
   }
 }
 
-// var ex_fldrid = searchDriveForFolder("JCodesMN");
-// Logger.log(" Id of 'JCodesMN' at root ➡ " + ex_fldrid);
-
-
-
-//////////////////////////////////////////////////
-
-
-
-
-
-
+// var ex_fldrid = searchDriveForFolder("google-apps-script-cheat-sheet");
+// Logger.log(" Id of 'google-apps-script-cheat-sheet' at root ➡ " + ex_fldrid);
 
 // fn to create scratch file for examples below
 
