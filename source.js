@@ -22,12 +22,12 @@
 // * | -- Match a Date to a Range of Dates
 //   |  Drive 
 //   | - Folders
-// * | -- Create or Verify Folder Path
-// * | -- Get Id of Last Folder in Folder Path
+//   | -- Create or Verify Folder Path
+//   | -- Get Id of Last Folder in Folder Path
 //   | -- Create or Verify Folder(s) in Folder or at Root
-//   | -- Array of All Folders in Folder / Root / Drive
-//   | -- Array of All Folder Names for Array of Folders
-//   | -- Search for a Folder - Path / Obj / Id / All of Drive
+//   | -- Array of All Folders in Path / Id / Obj / Root / Drive
+//   | -- Array of All Folder Names for Array of Folder Objects
+//   | -- Search for Folder(s) in Path / Id / Obj / Root / Drive
 //   | - Files
 //   | -- Array of All Files in a Folder / Root / Drive
 //   | -- Array of All File Names for Array of Files
@@ -385,12 +385,12 @@ function idOfLastFolderIn(fPath) {
 // -- Create or Verify Folder(s) in a Folder
 // ➡  id of last folder in folder path
 
-function createFoldersAt(fPath, arrFolders) {
+function createFoldersAt(fPath, arrFldrNames) {
     var destination = DriveApp.getFolderById(createOrVerify(fPath));
     var destinationFolders = allFoldersIn(fPath);
-    for (i=0; i < arrFolders.length; i++) {
-      if (!(checkValIn(destinationFolders, arrFolders[i]))) {
-        destination.createFolder(arrFolders[i]);
+    for (i=0; i < arrFldrNames.length; i++) {
+      if (!(checkValIn(destinationFolders, arrFldrNames[i]))) {
+        destination.createFolder(arrFldrNames[i]);
       }
     }
   return destination.getId();
@@ -404,11 +404,11 @@ function createFoldersAt(fPath, arrFolders) {
 // -- Create or Verify Folder(s) at Root
 // ➡  id of root folder
 
-function createFoldersAtRoot(arrFolders) {
+function createFoldersAtRoot(arrFldrNames) {
     var rootFolders = allRootFolders();
-    for (i=0; i < arrFolders.length; i++) {
-      if (!(checkValIn(rootFolders, arrFolders[i]))) {
-        DriveApp.createFolder(arrFolders[i]);
+    for (i=0; i < arrFldrNames.length; i++) {
+      if (!(checkValIn(rootFolders, arrFldrNames[i]))) {
+        DriveApp.createFolder(arrFldrNames[i]);
       }
     } 
     return DriveApp.getRootFolder().getId();
@@ -419,12 +419,12 @@ function createFoldersAtRoot(arrFolders) {
 // Logger.log("all folders at Root ⬇ ");
 // Logger.log(allRootFolders());
 
-// -- Array of All Folders in Folder / Root / Drive
+// -- Array of All Folders in Path / Obj / Id / Root / Drive
 // ➡  arr of fldrObjs
 
 // --- All Folders at the End of a File Path
 
-function allFoldersIn(fPath) {
+function allFoldersInPath(fPath) {
   var fldrObj = DriveApp.getFolderById(idOfLastFolderIn(fPath));
   var fldrI   = fldrObj.getFolders();
   var _arr    = [];
@@ -435,8 +435,41 @@ function allFoldersIn(fPath) {
   return _arr;
 }
 
-var ex_afi = allFoldersIn("google-apps-script-cheat-sheet");
-Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_afi);
+// var ex_afip = allFoldersInPath("google-apps-script-cheat-sheet");
+// Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_afip);
+
+// --- All Folders in Folder By Id
+
+function allFoldersInId(fId) {
+  var fldrObj = DriveApp.getFolderById(fId);
+  var fldrI   = fldrObj.getFolders();
+  var _arr    = [];
+  while (fldrI.hasNext()) {
+    var fldr = fldrI.next();
+   _arr.push(fldr);
+  } 
+  return _arr;
+}
+
+// var gascs_id = idOfLastFolderIn("google-apps-script-cheat-sheet");
+// var ex_afii  = allFoldersInId(gascs_id);
+// Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_afii);
+
+// --- All Folders in Folder Obj
+
+function allFoldersInObj(fObj) {
+  var fldrI   = fObj.getFolders();
+  var _arr    = [];
+  while (fldrI.hasNext()) {
+    var fldr = fldrI.next();
+   _arr.push(fldr);
+  } 
+  return _arr;
+}
+
+// var gascs_obj = DriveApp.getFolderById(gascs_id)
+// var ex_afio   = allFoldersInObj(gascs_obj);
+// Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_afio);
 
 // --- All Root Level Folders
 
@@ -451,10 +484,9 @@ function allRootFolders() {
   return _arr;
 }
 
-var ex_rf = allRootFolders();
-Logger.log("all root folders ⬇ ");
-Logger.log(ex_rf);
-
+// var ex_rf = allRootFolders();
+// Logger.log("all root folders ⬇ ");
+// Logger.log(ex_rf);
 
 // --- All Folders in Drive
 
@@ -472,14 +504,87 @@ function allFoldersInDrive() {
 // Logger.log("all folders in Drive ⬇ ");
 // Logger.log(ex_af);
 
-// -- Array of All Folder Names for Array of Folders
+// -- Array of All Folder Names for Array of Folder Objects
 // ➡  arr folder names
 
-function getFolderNames() {}
+function getFolderNames(arrFldrObj) {
+  var _arr = [];
+  for (var i = 0; i < arrFldrObj.length; i++) {
+    var fldrName = arrFldrObj[i].getName();
+    _arr.push(fldrName);
+  }
+  return _arr;
+}
 
+// var ex_gfn = getFolderNames(ex_rf);
+// var test1  = checkValIn(ex_rf, "google-apps-script-cheat-sheet");
+// var test2  = checkValIn(ex_gfn, "google-apps-script-cheat-sheet");
+// Logger.log("check for 'google-apps-script-cheat-sheet' in arrFldrObj ➡ " + test1);
+// Logger.log("check for 'google-apps-script-cheat-sheet' in arrFldrNames ➡ " + test2);
 
-// -- Search Drive for Folder(s)
+// -- Search for Folder(s) in Path / Id / Obj / Root / Drive
 // ➡  id of folder or arr of matching folders
+
+// --- Search a Folder Path for a Folder or Folders
+
+function findFolderInPath(fPath, fName) {
+  var fldrId = idOfLastFolderIn(fPath);
+  if (fldrId) {
+    var fldrObj      = DriveApp.getFolderById(fldrId);
+    var arrFldrObj   = allFoldersInObj(fldrObj);
+    var arrFldrNames = getFolderNames(arrFldrObj);
+    if (checkValIn(arrFldrNames, fName)) {
+      var fldrIdRet = fldrObj.getFoldersByName(fName).next().getId();
+      return fldrIdRet;
+    }
+  } else {
+    return null;
+  }
+}
+
+var ex_ffip = findFolderInPath("google-apps-script-cheat-sheet", "A");
+Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffip);
+
+// --- Access a Folder by Id and Search for a Folder or Folders
+
+function findFolderInId(fId, fName) {
+  var fldrObj = DriveApp.getFolderById(fId);
+  if (fldrObj) {
+    var arrFldrObj   = allFoldersInObj(fldrObj);
+    var arrFldrNames = getFolderNames(arrFldrObj);
+    if (checkValIn(arrFldrNames, fName)) {
+      var fldrIdRet = fldrObj.getFoldersByName(fName).next().getId();
+      return fldrIdRet;
+    }
+  } else {
+    return null;
+  }
+}
+
+var ex_fid = idOfLastFolderIn("google-apps-script-cheat-sheet");
+var ex_ffii = findFolderInId(ex_fid, "A");
+Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffii);
+
+// --- Search a Folder Object for a Folder or Folders
+
+function findFolderInObj(fObj, fName) {
+  var idOfLastFolder  = idOfLastFolderIn(fPath);
+  if (idOfLastFolder) {
+    var lastFolder    = DriveApp.getFolderById(idOfLastFolder);
+    var folderContent = allFoldersIn(fPath);
+    if (checkValIn(folderContent, fName)) {
+      var folderId = lastFolder.getFoldersByName(fName).next().getId();
+      return folderId;
+    }
+  } else {
+    return null;
+  }
+}
+
+// var ex_ffi = findFolderIn("JCodesMN/A/B", "C");
+// Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_ffi);
+
+// --- Search Drive for a Folder or Folders
 
 function searchDriveForFolder(fName) {
   var arr = [];
@@ -498,25 +603,6 @@ function searchDriveForFolder(fName) {
 // var ex_fldrid = searchDriveForFolder("JCodesMN");
 // Logger.log(" Id of 'JCodesMN' at root ➡ " + ex_fldrid);
 
-// -- Search a Folder Path for a Folder
-// ➡  id of folder
-
-function findFolderIn(fPath, fName) {
-  var idOfLastFolder  = idOfLastFolderIn(fPath);
-  if (idOfLastFolder) {
-    var lastFolder    = DriveApp.getFolderById(idOfLastFolder);
-    var folderContent = allFoldersIn(fPath);
-    if (checkValIn(folderContent, fName)) {
-      var folderId = lastFolder.getFoldersByName(fName).next().getId();
-      return folderId;
-    }
-  } else {
-    return null;
-  }
-}
-
-// var ex_ffi = findFolderIn("JCodesMN/A/B", "C");
-// Logger.log(" Id of 'C' in 'JCodesMN/A/B/C' is ➡ " + ex_ffi);
 
 
 //////////////////////////////////////////////////
