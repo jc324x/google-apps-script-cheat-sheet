@@ -454,8 +454,6 @@ function allRootFolders() {
 var ex_rf = allRootFolders();
 Logger.log("all root folders ⬇ ");
 Logger.log(ex_rf);
-Logger.log(ex_rf[0].getName());
-Logger.log(ex_rf[0].getId());
 
 
 // --- All Folders in Drive
@@ -474,7 +472,13 @@ function allFoldersInDrive() {
 // Logger.log("all folders in Drive ⬇ ");
 // Logger.log(ex_af);
 
-//  -- Search Drive for Folder(s)
+// -- Array of All Folder Names for Array of Folders
+// ➡  arr folder names
+
+function getFolderNames() {}
+
+
+// -- Search Drive for Folder(s)
 // ➡  id of folder or arr of matching folders
 
 function searchDriveForFolder(fName) {
