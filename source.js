@@ -424,10 +424,9 @@ Logger.log("all folders in Drive ⬇ ");
 Logger.log(ex_af);
 
 // -- Search for a Folder in a Folder, at Root or All of Drive
-// ➡  folder or array of matching folders
+// ➡  folder 
 
-// --- Search for a Folder in a Folder
-
+// function findFolderIn(fldr, name)
 function findFolderInObj(fObj, fName) {
     var arrFldrObj   = allFoldersInObj(fObj);
     var arrFldrNames = getFolderNames(arrFldrObj);
