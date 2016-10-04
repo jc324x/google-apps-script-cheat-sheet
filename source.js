@@ -599,6 +599,7 @@ function searchDriveForFolder(fName) {
 // var ex_fldrid = searchDriveForFolder("google-apps-script-cheat-sheet");
 // Logger.log(" Id of 'google-apps-script-cheat-sheet' at root ➡ " + ex_fldrid);
 
+// ignore checkForExFile
 // fn to create scratch file for examples below
 
 function checkForExFile() {
@@ -610,9 +611,12 @@ function checkForExFile() {
     exFile = files.next();
   }
   if (!(exFile)){jcmnf.createFile("JCodesMN_exFile", "Hello, world!");}
+  // var files2 = jcmnf.getFilesByName("JCodesMN_exFile");
+  return jcmnf.getFilesByName("JCodesMN_exFile").next().getId();
 }
 
-checkForExFile();
+var ex_chk = checkForExFile();
+Logger.log(ex_chk);
 
 // - Files
 
@@ -625,8 +629,7 @@ function allFilesIn(fPath) {
     var fileI = fldrObj.getFiles();
     var _arr  = [];
     while (fileI.hasNext()) {
-      var file = fileI.next().getName();
-     Logger.log(file);
+      var file = fileI.next();
      _arr.push(file);
     } 
     return _arr;
@@ -671,11 +674,16 @@ function allFilesInDrive() {
 function getFileNames(arrFileObj) {
   var _arr = [];
   for (var i = 0; i < arrFileObj.length; i++) {
-    var fileName = arrFileObj[i].getName();
-    _arr.push(fileName);
+    var file = arrFileObj[i];
+    var fName = file.getName();
+    _arr.push(fName);
   }
   return _arr;
 }
+
+var ex_afi2 = allFilesIn("google-apps-script-cheat-sheet");
+var ex_gfn  = getFileNames(ex_afi2);
+Logger.log(ex_gfn);
 
 // -- Search a Folder for a File
 // ➡  id of file or arr of matching files
