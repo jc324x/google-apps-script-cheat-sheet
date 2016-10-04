@@ -23,11 +23,11 @@
 //   |  Drive 
 //   | - Folders
 //   | -- Create or Verify Folder Path
-//   | -- Get Id of Last Folder in Folder Path
+//   | -- Get Last Folder in Folder Path
 //   | -- Create or Verify Folder(s) in Folder or at Root
-//   | -- Array of All Folders in Path / Id / Obj / Root / Drive
-//   | -- Array of All Folder Names for Array of Folder Objects
-//   | -- Search for Folder(s) in Path / Id / Obj / Root / Drive
+//   | -- Array of All Folders in Path / Folder / Id / Root / Drive
+//   | -- Array of All Folder Names for Array of Folders 
+//   | -- Search for Folder(s) in Path / Folder / Id / Root / Drive
 //   | - Files
 //   | -- Array of All Files in a Folder / Root / Drive
 //   | -- Array of All File Names for Array of Files
@@ -331,7 +331,7 @@ function academicQuarter() {
 // - Folders
 
 // -- Create or Verify Folder Path
-// ➡  id of last folder in folder path
+// ➡  fldrObj
 
 function createOrVerify(fPath) {
   var array = fPath.split('/');
@@ -361,7 +361,7 @@ function createOrVerify(fPath) {
 // Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_cvfp);
 
 // -- Get Id of Last Folder in Folder Path
-// ➡  id of last folder in folder path
+// ➡  fldrObj
 
 function idOfLastFolderIn(fPath) {
   var array = fPath.split('/');
@@ -383,7 +383,7 @@ function idOfLastFolderIn(fPath) {
 // Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_idlf);
 
 // -- Create or Verify Folder(s) in a Folder
-// ➡  id of last folder in folder path
+// ➡  fldrObj
 
 function createFoldersAt(fPath, arrFldrNames) {
     var destination = DriveApp.getFolderById(createOrVerify(fPath));
@@ -402,7 +402,7 @@ function createFoldersAt(fPath, arrFldrNames) {
 // Logger.log(allFoldersIn("google-apps-script-cheat-sheet"));
 
 // -- Create or Verify Folder(s) at Root
-// ➡  id of root folder
+// ➡  fldrObj (Root folder)
 
 function createFoldersAtRoot(arrFldrNames) {
     var rootFolders = allRootFolders();
