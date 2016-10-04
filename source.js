@@ -4,7 +4,7 @@
 // ➡ ⬇ = return
 
 // fn conventions
-// _arr, fldr, fldrI, fldrN
+// _arr, fldr, fi, fldr
 
 // * | General 
 // * | - Array
@@ -21,19 +21,17 @@
 // * | -- Formatted Timestamps
 // * | -- Match a Date to a Range of Dates
 //   |  Drive 
-// & | - Folders
-// & | -- Create or Verify Folder Path
-// & | -- Get Last Folder in Folder Path
-// & | -- Create or Verify Folder(s) in Path / Folder / Root
-//   | -- Array of All Folders in Path / Folder / Id / Root / Drive
-//   | -- Array of All Folder Names for Array of Folders 
-//   | -- Search for Folder(s) in Path / Folder / Id / Root / Drive
+//   | - Folders
+// * | -- Create or Verify Folder Path
+// * | -- Get Last Folder in Folder Path
+//   | -- Array of All Folders in Folder / Path / Root / Drive
+//   | -- Search for Folder in Folder / Path / Root / Drive
+//   | -- Create or Verify Folder(s) in Folder / Path / Root
 //   | - Files
-//   | -- Array of All Files in a Folder / Root / Drive
-//   | -- Array of All File Names for Array of Files
-//   | -- Search for a File - Path / Obj / Id / All of Drive
-//   | -- Move a File to a Folder - Path / Obj / Id
-//   | -- Copy a File to a Folder - Path / Obj / Id
+//   | -- Array of All Files in a Folder / Path / Root / Drive
+//   | -- Search for File in Folder / Path / Drive
+//   | -- Move a File to a Folder / Path 
+//   | -- Copy a File to a Folder / Path
 //   | Sheets
 //   | - Utility Functions for Sheets
 //   | -- Convert Column Number to a Letter
@@ -74,7 +72,7 @@ function testEverything() {}
 // - Array 
 
 // -- Check for a Value
-// ➡  bool
+// ➡  boolean
 
 function checkValIn(arr, val) { 
   return arr.indexOf(val) > -1; 
@@ -89,20 +87,20 @@ function checkValIn(arr, val) {
 // }
 
 // -- Remove Duplicates 
-// ➡  arr
+// ➡  array
 
 function rmDuplicatesFrom(arr) {
   var check  = {};
-  var output = [];
+  var _arr = [];
   var j = 0;
   for(var i = 0; i < arr.length; i++) {
        var item = arr[i];
        if(check[item] !== 1) {
              check[item] = 1;
-             output[j++] = item;
+             _arr[j++] = item;
        }
   }
-  return output;
+  return _arr;
 }
 
 // var arr2  = [1,2,3,1,2,3,4,];
@@ -111,7 +109,7 @@ function rmDuplicatesFrom(arr) {
 // Logger.log("rmDup output ➡ " + ex_rd);
 
 // -- Remove Empty Values
-// ➡  arr
+// ➡  array
 
 function rmEmptyVal(x){
   return (x !== (undefined || ''));
@@ -123,10 +121,10 @@ function rmEmptyVal(x){
 // Logger.log("rmEmpty output ➡ " + ex_re);
 
 // -- Get Count of Values in Array
-// ➡  arrObj
+// ➡  array of objects
 
 function countOfValIn(arr){
-  var comp = [];
+  var _arr = [];
   var copy = arr.slice(0);
 	for (var i = 0; i < arr.length; i++) {
 		var myCount = 0;	
@@ -140,10 +138,10 @@ function countOfValIn(arr){
 			var a = new Object();
 			a.value = arr[i];
 			a.count = myCount;
-			comp.push(a);
+			_arr.push(a);
 		}
 	}
-  return comp;
+  return _arr;
 }
 
 // var arr4  = ["A", "B", "C", "A", "B", "C", "D", "A"];
@@ -154,7 +152,7 @@ function countOfValIn(arr){
 
 // - Array of Objects
 
-// example arrObj
+// example array of objects
 
 var ex_arrObj = [
   {a: 1000, b: 1, c: 5}, 
@@ -164,7 +162,7 @@ var ex_arrObj = [
 ]
 
 // -- Sort by Property or Properties
-// ➡  arrObj
+// ➡  array of objects
 
 function dynSort(prop) {
   var sortOrder = 1;
@@ -199,43 +197,36 @@ function dynSortM() {
 // Logger.log(ex_arrObj);
 
 // -- Find Object With Unique Property Value - Return Object
-// ➡  obj 
+// ➡  object 
 
 function findObjIn(arrObj, pQuery, val) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
     for (var prop in obj) {
-      if (obj.hasOwnProperty(pQuery)) {
-        if (prop == pQuery) {
-          if (obj[prop] == val) {
+      if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
           return obj;
-          }
-        }
       }
     }
   }
 }
+
 
 // Logger.log("find obj with 'a' value of 1000 ⬇ ");
 // var ex_foi = findObjIn(ex_arrObj, "a", 1000);
 // Logger.log(ex_foi);
 
 // -- Find Object With Unique Property Value - Return Value 
-// ➡  val 
+// ➡  value  
 
 function findObjValIn(arrObj, pQuery, val, pReturn) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
     for (var prop in obj) {
-      if (obj.hasOwnProperty(pQuery)) {
-        if (prop == pQuery) {
-          if (obj[prop] == val) {
+      if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
           return obj[pReturn];
-          }
-        }
-      }
-    }
-  }
+			}
+		}
+	}
 }
 
 // Logger.log("find obj with 'c' value of 500 and return its 'a' value ⬇ ");
@@ -243,14 +234,14 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 // Logger.log(ex_fovi);
 
 // -- Filter by Property Value
-// ➡  arrObj
+// ➡  array of objects
 
 function filterObjIn(arrObj, pQuery, val) {
-  var array = [];
+  var _arr = [];
   for (var i=0; i < arrObj.length; i++) {
-    if (arrObj[i][pQuery] == val) array.push(arrObj[i]);
+    if (arrObj[i][pQuery] == val) _arr.push(arrObj[i]);
   }
-  return array;
+  return _arr;
 }
 
 // var ex_foi = filterObjIn(ex_arrObj, "b", 2);
@@ -334,115 +325,59 @@ function academicQuarter() {
 // ➡  folder
 
 function createOrVerify(fPath) {
-  var array = fPath.split('/');
-  var f;
-  for (i = 0; i < array.length; i++) {
+  var arr = fPath.split('/');
+  var fldr;
+  for (i = 0; i < arr.length; i++) {
     if (i == 0) {
-      var fi = DriveApp.getRootFolder().getFoldersByName(array[i]);
+      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
       if(!(fi.hasNext())) {
-        DriveApp.createFolder(array[i]);
-        fi = DriveApp.getFoldersByName(array[i]);
+        DriveApp.createFolder(arr[i]);
+        fi = DriveApp.getFoldersByName(arry[i]);
         } 
-      f = fi.next();
+      fldr = fi.next();
       } else if (i >= 1) {
-        fi = f.getFoldersByName(array[i]);
+        fi = fldr.getFoldersByName(arr[i]);
         if(!(fi.hasNext())) {
-          f.createFolder(array[i]);
-          fi = DriveApp.getFoldersByName(array[i]);
+          fldr.createFolder(arr[i]);
+          fi = DriveApp.getFoldersByName(arr[i]);
         } 
-        f = fi.next();
+        fldr = fi.next();
       }
   } 
-  return f;
+  return fldr;
 }
 
-var ex_cvfp = createOrVerify("google-apps-script-cheat-sheet/A/B/C");
-Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_cvfp.getId());
+// var ex_cvfp = createOrVerify("google-apps-script-cheat-sheet/A/B/C");
+// Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_cvfp.getId());
 
 // -- Get Last Folder in Folder Path
 // ➡  folder
 
 function lastFolderInPath(fPath) {
-  var array = fPath.split('/');
-  var f;
-  for (i = 0; i < array.length; i++) {
+  var arr = fPath.split('/');
+  var fldr;
+  for (i = 0; i < arr.length; i++) {
     if (i == 0) {
-      var fi = DriveApp.getRootFolder().getFoldersByName(array[i]);
-      if(fi.hasNext()) {f = fi.next();} else { return null;}
+      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      if(fi.hasNext()) {fldr = fi.next();} else { return null;}
     } else if (i >= 1) {
-        fi = f.getFoldersByName(array[i]);
-        if(fi.hasNext()) {f = fi.next();} else { return null;}
+        fi = fldr.getFoldersByName(arr[i]);
+        if(fi.hasNext()) {fldr = fi.next();} else { return null;}
       }
   } 
-  return f;
+  return fldr;
 }
 
-var ex_idlf = lastFolderInPath("google-apps-script-cheat-sheet/A/B/C");
-Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_idlf.getId());
-
-// -- Create or Verify Folder(s) in Path / Folder / Root
-// ➡  folder
-
-/// --- Create in Path
-
-function createFoldersAt(fPath, arrFldrNames) {
-    var destination = DriveApp.getFolderById(createOrVerify(fPath));
-    var destinationFolders = allFoldersIn(fPath);
-    for (i=0; i < arrFldrNames.length; i++) {
-      if (!(checkValIn(destinationFolders, arrFldrNames[i]))) {
-        destination.createFolder(arrFldrNames[i]);
-      }
-    }
-  return destination.getId();
-}
-
-// var ex_af1 = ["X", "Y", "Z"];
-// var ex_cfa = createFoldersAt("google-apps-script-cheat-sheet", ex_af1);
-// Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ ⬇ ");
-// Logger.log(allFoldersIn("google-apps-script-cheat-sheet"));
-
-// --- Create in Folder
-
-function createFoldersIn(fldrObj, arrFldrNames) {
-    var destination = DriveApp.getFolderById(createOrVerify(fPath));
-    var destinationFolders = allFoldersIn(fPath);
-    for (i=0; i < arrFldrNames.length; i++) {
-      if (!(checkValIn(destinationFolders, arrFldrNames[i]))) {
-        destination.createFolder(arrFldrNames[i]);
-      }
-    }
-  return destination.getId();
-}
-
-// var ex_af1 = ["X", "Y", "Z"];
-// var ex_cfa = createFoldersAt("google-apps-script-cheat-sheet", ex_af1);
-// Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ ⬇ ");
-// Logger.log(allFoldersIn("google-apps-script-cheat-sheet"));
-
-// --- Create at Root
-
-function createFoldersAtRoot(arrFldrNames) {
-    var rootFolders = allRootFolders();
-    for (i=0; i < arrFldrNames.length; i++) {
-      if (!(checkValIn(rootFolders, arrFldrNames[i]))) {
-        DriveApp.createFolder(arrFldrNames[i]);
-      }
-    } 
-    return DriveApp.getRootFolder().getId();
-}
-
-// var ex_af2 = ["1", "2", "3"];
-// var ex_cfa = createFoldersAtRoot(ex_af2);
-// Logger.log("all folders at Root ⬇ ");
-// Logger.log(allRootFolders());
+// var ex_idlf = lastFolderInPath("google-apps-script-cheat-sheet/A/B/C");
+// Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_idlf.getId());
 
 // -- Array of All Folders in Path / Obj / Id / Root / Drive
-// ➡  arr of fldrObjs
+// ➡  array of folders
 
 // --- All Folders at the End of a File Path
 
 function allFoldersInPath(fPath) {
-  var fldrObj = DriveApp.getFolderById(idOfLastFolderIn(fPath));
+  var fldrObj = lastFolderInPath(fPath);
   var fldrI   = fldrObj.getFolders();
   var _arr    = [];
   while (fldrI.hasNext()) {
@@ -454,6 +389,22 @@ function allFoldersInPath(fPath) {
 
 // var ex_afip = allFoldersInPath("google-apps-script-cheat-sheet");
 // Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_afip);
+
+// --- All Folders in Folder
+
+function allFoldersInFolder(fldr) {
+  var fldrI   = fldr.getFolders();
+  var _arr    = [];
+  while (fldrI.hasNext()) {
+    var fldr = fldrI.next();
+   _arr.push(fldr);
+  } 
+  return _arr;
+}
+
+// var gascs_obj = DriveApp.getFolderById(gascs_id)
+// var ex_afio   = allFoldersInObj(gascs_obj);
+// Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_afio);
 
 // --- All Folders in Folder By Id
 
@@ -472,21 +423,6 @@ function allFoldersInId(fId) {
 // var ex_afii  = allFoldersInId(gascs_id);
 // Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_afii);
 
-// --- All Folders in Folder
-
-function allFoldersInFolder(fldrObj) {
-  var fldrI   = fObj.getFolders();
-  var _arr    = [];
-  while (fldrI.hasNext()) {
-    var fldr = fldrI.next();
-   _arr.push(fldr);
-  } 
-  return _arr;
-}
-
-// var gascs_obj = DriveApp.getFolderById(gascs_id)
-// var ex_afio   = allFoldersInObj(gascs_obj);
-// Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_afio);
 
 // --- All Root Level Folders
 
@@ -538,6 +474,64 @@ function getFolderNames(arrFldrObj) {
 // var test2  = checkValIn(ex_gfn, "google-apps-script-cheat-sheet");
 // Logger.log("check for 'google-apps-script-cheat-sheet' in arrFldrObj ➡ " + test1);
 // Logger.log("check for 'google-apps-script-cheat-sheet' in arrFldrNames ➡ " + test2);
+
+// -- Create or Verify Folder(s) in Path / Folder / Root
+// ➡  folder
+
+/// --- Create in Path
+
+function createFoldersAt(fPath, arrFldrNames) {
+    var destF   = createOrVerify(fPath);
+    var destFs  = allFoldersInFolder(destF);
+		var destFsN = getFolderNames(destFs);
+    for (i=0; i < arrFldrNames.length; i++) {
+      if (!(checkValIn(destFsN, arrFldrNames[i]))) {
+        destF.createFolder(arrFldrNames[i]);
+      }
+    }
+  return destF;
+}
+
+// var ex_af1 = ["X", "Y", "Z"];
+// var ex_cfa = createFoldersAt("google-apps-script-cheat-sheet", ex_af1);
+// Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ ⬇ ");
+// Logger.log(allFoldersInPath("google-apps-script-cheat-sheet"));
+
+// --- Create in Folder
+
+function createFoldersIn(fldrObj, arrFldrNames) {
+    var destination = DriveApp.getFolderById(createOrVerify(fPath));
+    var destinationFolders = allFoldersIn(fPath);
+    for (i=0; i < arrFldrNames.length; i++) {
+      if (!(checkValIn(destinationFolders, arrFldrNames[i]))) {
+        destination.createFolder(arrFldrNames[i]);
+      }
+    }
+  return destination.getId();
+}
+
+// var ex_af1 = ["X", "Y", "Z"];
+// var ex_cfa = createFoldersAt("google-apps-script-cheat-sheet", ex_af1);
+// Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ ⬇ ");
+// Logger.log(allFoldersIn("google-apps-script-cheat-sheet"));
+
+// --- Create at Root
+
+function createFoldersAtRoot(arrFldrNames) {
+    var rootFolders = allRootFolders();
+    for (i=0; i < arrFldrNames.length; i++) {
+      if (!(checkValIn(rootFolders, arrFldrNames[i]))) {
+        DriveApp.createFolder(arrFldrNames[i]);
+      }
+    } 
+    return DriveApp.getRootFolder().getId();
+}
+
+// var ex_af2 = ["1", "2", "3"];
+// var ex_cfa = createFoldersAtRoot(ex_af2);
+// Logger.log("all folders at Root ⬇ ");
+// Logger.log(allRootFolders());
+
 
 // -- Search for Folder(s) in Path / Id / Obj / Root / Drive
 // ➡  id of folder or arr of matching folders
@@ -632,8 +626,8 @@ function checkForExFile() {
   return jcmnf.getFilesByName("JCodesMN_exFile").next().getId();
 }
 
-var ex_chk = checkForExFile();
-Logger.log(ex_chk);
+// var ex_chk = checkForExFile();
+// Logger.log(ex_chk);
 
 // - Files
 
