@@ -681,9 +681,24 @@ function getFileNames(arrFileObj) {
   return _arr;
 }
 
-var ex_afi2 = allFilesIn("google-apps-script-cheat-sheet");
-var ex_gfn  = getFileNames(ex_afi2);
-Logger.log(ex_gfn);
+// var ex_afi2 = allFilesIn("google-apps-script-cheat-sheet");
+// var ex_gfn  = getFileNames(ex_afi2);
+// Logger.log(ex_gfn);
+
+
+// function searchDriveForFolder(fName) {
+//   var arr = [];
+//   var fi  = DriveApp.getFoldersByName(fName);
+//   while (fi.hasNext()) {
+//    var fldr = fi.next();
+//    arr.push(fldr);
+//  }
+//   if (arr.length == 1) {
+//     return arr[0].getId();
+//   } else {
+//     return arr;
+//   }
+// }
 
 // -- Search a Folder for a File
 // ➡  id of file or arr of matching files
