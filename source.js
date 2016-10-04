@@ -374,23 +374,23 @@ function lastFolderInPath(fPath) {
 // -- Array of All Folders in a Folder, at Root or All of Drive
 // ➡  array of folders
 
-// --- All Folders in Folder
+// --- All Folders in a Folder
 
 function allFoldersInFolder(fldr) {
-  var fldrI   = fldr.getFolders();
-  var _arr    = [];
-  while (fldrI.hasNext()) {
-    var fldr = fldrI.next();
-   _arr.push(fldr);
+  var fi  = fldr.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var _fldr = fi.next();
+   arr.push(_fldr);
   } 
-  return _arr;
+  return arr;
 }
 
-// var gascs_obj = DriveApp.getFolderById(gascs_id)
-// var ex_afio   = allFoldersInObj(gascs_obj);
-// Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_afio);
+var ex_f1   = lastFolderInPath("google-apps-script-cheat-sheet");
+var ex_afif = allFoldersInFolder(ex_f1);
+Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_afif);
 
-// --- All Root Level Folders
+// --- All Folders at Root
 
 function allRootFolders() {
   var rootFolder = DriveApp.getRootFolder();
@@ -407,7 +407,7 @@ function allRootFolders() {
 // Logger.log("all root folders ⬇ ");
 // Logger.log(ex_rf);
 
-// --- All Folders in Drive
+// --- All Folders in All of Drive
 
 function allFoldersInDrive() {
   var fldrI = DriveApp.getFolders();
