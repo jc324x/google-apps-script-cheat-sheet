@@ -24,7 +24,7 @@
 //   | - Folders
 // * | -- Create or Verify Folder Path and Get Last Folder in Path
 // * | -- Get the Last Folder in a Folder Path
-//   | -- Array of All Folders in a Folder, at Root or All of Drive
+// * | -- Array of All Folders in a Folder, at Root or All of Drive
 //   | -- Search for a Folder in a Folder, at Root or All of Drive
 //   | -- Create or Verify Folders in a Folder or at Root
 //   | - Files
@@ -424,49 +424,9 @@ Logger.log("all folders in Drive ⬇ ");
 Logger.log(ex_af);
 
 // -- Search for a Folder in a Folder, at Root or All of Drive
-// ➡  id of folder or arr of matching folders
+// ➡  folder or array of matching folders
 
-// --- Search a Folder Path for a Folder
-
-function findFolderInPath(fPath, fName) {
-  var fldrId = idOfLastFolderIn(fPath);
-  if (fldrId) {
-    var fldrObj      = DriveApp.getFolderById(fldrId);
-    var arrFldrObj   = allFoldersInObj(fldrObj);
-    var arrFldrNames = getFolderNames(arrFldrObj);
-    if (checkValIn(arrFldrNames, fName)) {
-      var fldrIdRet = fldrObj.getFoldersByName(fName).next().getId();
-      return fldrIdRet;
-    }
-  } else {
-    return null;
-  }
-}
-
-// var ex_ffip = findFolderInPath("google-apps-script-cheat-sheet", "A");
-// Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffip);
-
-// --- Access a Folder by Id and Search for a Folder
-
-function findFolderInId(fId, fName) {
-  var fldrObj = DriveApp.getFolderById(fId);
-  if (fldrObj) {
-    var arrFldrObj   = allFoldersInObj(fldrObj);
-    var arrFldrNames = getFolderNames(arrFldrObj);
-    if (checkValIn(arrFldrNames, fName)) {
-      var fldrIdRet = fldrObj.getFoldersByName(fName).next().getId();
-      return fldrIdRet;
-    }
-  } else {
-    return null;
-  }
-}
-
-// var ex_fid = idOfLastFolderIn("google-apps-script-cheat-sheet");
-// var ex_ffii = findFolderInId(ex_fid, "A");
-// Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffii);
-
-// --- Search a Folder Object for a Folder
+// --- Search for a Folder in a Folder
 
 function findFolderInObj(fObj, fName) {
     var arrFldrObj   = allFoldersInObj(fObj);
