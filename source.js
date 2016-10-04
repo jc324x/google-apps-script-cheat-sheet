@@ -22,16 +22,16 @@
 // * | -- Match a Date to a Range of Dates
 //   |  Drive 
 //   | - Folders
-// * | -- Create or Verify Folder Path
+// * | -- Create or Verify Folder Path and Get Last Folder in Path
 // * | -- Get Last Folder in Folder Path
-//   | -- Array of All Folders in Folder / Path / Root / Drive
-//   | -- Search for Folder in Folder / Path / Root / Drive
-//   | -- Create or Verify Folder(s) in Folder / Path / Root
+//   | -- Array of All Folders in a Folder, at Root or All of Drive
+//   | -- Search for a Folder in a Folder, at Root or All of Drive
+//   | -- Create or Verify Folders in a Folder or at Root
 //   | - Files
-//   | -- Array of All Files in a Folder / Path / Root / Drive
-//   | -- Search for File in Folder / Path / Drive
-//   | -- Move a File to a Folder / Path 
-//   | -- Copy a File to a Folder / Path
+//   | -- Array of All Files in a Folder, at Root or All of Drive
+//   | -- Search for a File in a Folder or Search All of Drive 
+//   | -- Move a File to a Folder
+//   | -- Copy a File to a Folder 
 //   | Sheets
 //   | - Utility Functions for Sheets
 //   | -- Convert Column Number to a Letter
