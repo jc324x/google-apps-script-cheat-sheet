@@ -397,8 +397,8 @@ function allRootFolders() {
   var fi  = rf.getFolders();
   var arr = [];
   while (fi.hasNext()) {
-    var fldr = fi.next();
-   arr.push(fldr);
+   	var fldr = fi.next();
+  	arr.push(fldr);
   } 
   return arr;
 }
@@ -410,19 +410,18 @@ Logger.log(ex_rf);
 // --- All Folders in All of Drive
 
 function allFoldersInDrive() {
-  var fldrI = DriveApp.getFolders();
-  var _arr  = [];
-  while (fldrI.hasNext()) {
-    var fldr = fldrI.next();
-   _arr.push(fldr);
+  var fi  = DriveApp.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+  	var fldr = fi.next();
+  	arr.push(fldr);
   } 
-  return _arr;
+  return arr;
 }
 
-// var ex_af = allFoldersInDrive();
-// Logger.log("all folders in Drive ⬇ ");
-// Logger.log(ex_af);
-
+var ex_af = allFoldersInDrive();
+Logger.log("all folders in Drive ⬇ ");
+Logger.log(ex_af);
 
 // -- Search for a Folder in a Folder, at Root or All of Drive
 // ➡  id of folder or arr of matching folders
