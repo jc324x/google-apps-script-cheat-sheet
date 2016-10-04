@@ -393,19 +393,19 @@ Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_af
 // --- All Folders at Root
 
 function allRootFolders() {
-  var rootFolder = DriveApp.getRootFolder();
-  var fldrI      = rootFolder.getFolders();
-  var _arr       = [];
-  while (fldrI.hasNext()) {
-    var fldr = fldrI.next();
-   _arr.push(fldr);
+  var rf  = DriveApp.getRootFolder();
+  var fi  = rf.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var fldr = fi.next();
+   arr.push(fldr);
   } 
-  return _arr;
+  return arr;
 }
 
-// var ex_rf = allRootFolders();
-// Logger.log("all root folders ⬇ ");
-// Logger.log(ex_rf);
+var ex_rf = allRootFolders();
+Logger.log("all root folders ⬇ ");
+Logger.log(ex_rf);
 
 // --- All Folders in All of Drive
 
