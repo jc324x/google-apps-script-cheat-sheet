@@ -41,13 +41,8 @@
 //   | -- Timestamp on Cell Change
 //   | -- Replicating Import Range
 //   | -- Evaluating True and False
-//   | - Range as Array of Objects - Grid
-//   | -- New Grid from Sheet
-//   | -- New Grid from Range
-//   | -- Set Values in Grid
-//   | - Range as Array of Objects - Generic
-//   | -- Set Values from an Array of Objects to Range
-//   | -- Generate Array of Objects
+//   | - Range as Array of Objects
+//   | -- Grid Object
 //   | - Range as Array of Arrays
 //   | -- Generate Array of Arrays
 //   | -- Flatten A Multidimensional Array
@@ -700,8 +695,6 @@ function moveFile(file, fldr) {
 // var ex_fldr3 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
 // var move     = moveFile(ex_file2, ex_fldr3);
 // Logger.log(move);
-
-//////////////////////////////////////////////////////////////////////////////////////
 
 // Sheets
 
