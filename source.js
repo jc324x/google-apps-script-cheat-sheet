@@ -409,7 +409,7 @@ function rootFolders() {
 // Logger.log("all root folders ⬇ ");
 // Logger.log(ex_rf);
 
-// --- All Folders in All of Drive
+// --- All Folders in Drive
 
 function allFolders() {
   var fi  = DriveApp.getFolders();
@@ -426,22 +426,23 @@ function allFolders() {
 // Logger.log(ex_af);
 
 // -- Array of Folder Names
+// ➡  array of folder names
 
-function folderNames(arrFldrs) {
-	var _arr = [];
-	for (var i = 0; i < arrFldrs.length; i++) {
-		var name = arrFldrs[i].getName();
-		_arr.push(name);
+function folderNames(fldrs) {
+	var arr = [];
+	for (var i = 0; i < fldrs.length; i++) {
+		var name = fldrs[i].getName();
+		arr.push(name);
 	}
-	return _arr;
+	return arr;
 }
 
-// var ex_f2  = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_af1 = foldersIn(ex_f2);
-// var ex_fn  = folderNames(ex_af1)
-// Logger.log("'google-apps-script-cheat-sheet' has top level folders " + ex_fn);
+var ex_f2  = lastFolderIn("google-apps-script-cheat-sheet");
+var ex_af1 = foldersIn(ex_f2);
+var ex_fn  = folderNames(ex_af1)
+Logger.log("'google-apps-script-cheat-sheet' has top level folders " + ex_fn);
 
-// -- Search for a Folder in a Folder, at Root or All of Drive
+// -- Find a Folder in a Folder, at Root or All of Drive
 // ➡  folder 
 
 // --- Find a Folder in a Folder
@@ -532,8 +533,8 @@ function createVerifyFoldersAtRoot(names) {
 // fn to create scratch file for examples below
 
 // function checkForExFile() {
-//   createVerify("google-apps-script-cheat-sheet");
-//   var jcmnf = DriveApp.getFolderById(searchDriveForFolder("google-apps-script-cheat-sheet"));
+// 	var fldr = createVerify("google-apps-script-cheat-sheet");
+// 	var file = findFileInFolder(fldr, "JCodesMN_exFile");
 //   var files = jcmnf.getFilesByName("JCodesMN_exFile");
 //   var exFile;
 //   while (files.hasNext()) {
@@ -550,6 +551,8 @@ function createVerifyFoldersAtRoot(names) {
 // -- Array of All Files in a Folder / Drive / Root
 // ➡  array of files
 
+// --- All Files in a Folder
+
 function filesIn(fldr) {
 	var fi  = fldr.getFiles();
 	var arr = [];
@@ -563,6 +566,8 @@ function filesIn(fldr) {
 // var ex_f4  = lastFolderIn("google-apps-script-cheat-sheet");
 // var ex_afi = filesIn(ex_f4);
 // Logger.log(ex_afi);
+
+// --- All Files at Root
 
 function rootFiles() {
   var rf = DriveApp.getRootFolder();
@@ -578,7 +583,9 @@ function rootFiles() {
 // var ex_arf = rootFiles();
 // Logger.log(ex_arf);
 
-function allFilesInDrive() {
+// --- All Files in Drive
+
+function allFiles() {
   var fi = DriveApp.getFiles();
   var arr  = [];
   while (fi.hasNext()) {
@@ -588,34 +595,46 @@ function allFilesInDrive() {
   return arr;
 }
 
-// var ex_afid = allFilesInDrive();
+// var ex_afid = allFiles();
 // Logger.log(ex_afid);
 
 // -- Array of File Names 
 // ➡  array of file names
 
-function getFileNames(arrFileObj) {
-  var _arr = [];
-  for (var i = 0; i < arrFileObj.length; i++) {
-    var file = arrFileObj[i];
-    var fName = file.getName();
-    _arr.push(fName);
+function fileNames(files) {
+  var arr = [];
+  for (var i = 0; i < files.length; i++) {
+    var name = files[i].getName();
+    arr.push(name);
   }
-  return _arr;
+  return arr;
 }
 
 // var ex_f3   = lastFolderIn("google-apps-script-cheat-sheet");
 // var ex_afi2 = filesIn(ex_f3);
-// var ex_gfn  = getFileNames(ex_afi2);
+// var ex_gfn  = fileNames(ex_afi2);
 // Logger.log(ex_gfn);
+
+// -- Find a File in a Folder, at Root or in Drive 
+// ➡  file
 
 // --- Find a File in a Folder, at Root or Search All of Drive 
 
+function findFileIn(fldr, name) {
+    var files = filesIn(fldr);
+    var names = fileNames(files);
+    if (checkValIn(names, name)) {
+      var file = fldr.getFilesByName(name).next();
+      return file;
+    }
+}
+
+// var ex_f2a = lastFolderIn("google-apps-script-cheat-sheet");
+// var ex_ffi = findFolderIn(ex_f2a, "A");
+// Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffi.getId());
 // --- Find a File at Root
 
 // --- Find a File in Drive
-
-
 
 
 // -- Move a File to a Folder
