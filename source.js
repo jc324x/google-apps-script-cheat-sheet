@@ -32,8 +32,9 @@
 //   | -- Array of All Files in a Folder, at Root or in Drive
 //   | -- Array of All File Names
 //   | -- Find a File in a Folder, at Root or in Drive 
-//   | -- Move a File to a Folder
+//   | -- Parent Folder for a File
 //   | -- Copy a File to a Folder 
+//   | -- Move a File to a Folder
 //   | Sheets
 //   | - Utility Functions for Sheets
 //   | -- Convert Column Number to a Letter
@@ -437,10 +438,10 @@ function folderNames(fldrs) {
 	return arr;
 }
 
-var ex_f2  = lastFolderIn("google-apps-script-cheat-sheet");
-var ex_af1 = foldersIn(ex_f2);
-var ex_fn  = folderNames(ex_af1)
-Logger.log("'google-apps-script-cheat-sheet' has top level folders " + ex_fn);
+// var ex_f2  = lastFolderIn("google-apps-script-cheat-sheet");
+// var ex_af1 = foldersIn(ex_f2);
+// var ex_fn  = folderNames(ex_af1)
+// Logger.log("'google-apps-script-cheat-sheet' has top level folders " + ex_fn);
 
 // -- Find a Folder in a Folder, at Root or All of Drive
 // ➡  folder 
@@ -532,20 +533,14 @@ function createVerifyFoldersAtRoot(names) {
 
 // fn to create scratch file for examples below
 
-// function checkForExFile() {
-// 	var fldr = createVerify("google-apps-script-cheat-sheet");
-// 	var file = findFileInFolder(fldr, "JCodesMN_exFile");
-//   var files = jcmnf.getFilesByName("JCodesMN_exFile");
-//   var exFile;
-//   while (files.hasNext()) {
-//     exFile = files.next();
-//   }
-//   if (!(exFile)){jcmnf.createFile("JCodesMN_exFile", "Hello, world!");}
-//   // var files2 = jcmnf.getFilesByName("JCodesMN_exFile");
-//   return jcmnf.getFilesByName("JCodesMN_exFile").next().getId();
-// }
+function checkForExFile() {
+	var fldr = createVerify("google-apps-script-cheat-sheet");
+	var file = findFileIn(fldr, "example_file");
+  if (!(file)){fldr.createFile("example_file", "stuff!");}
+  return findFileIn(fldr, "example_file");
+}
 
-// var ex_chk = checkForExFile();
+var ex_chk = checkForExFile();
 // Logger.log(ex_chk);
 
 // -- Array of All Files in a Folder / Drive / Root
@@ -630,51 +625,81 @@ function findFileIn(fldr, name) {
 }
 
 // var ex_f2a = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_ffi = findFolderIn(ex_f2a, "A");
-// Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffi.getId());
+// var ex_ffi = findFileIn(ex_f2a, "example_file");
+// Logger.log(" Id of 'example_file' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffi.getId());
+
 // --- Find a File at Root
+
+function findFileAtRoot(name) {
+	var rf    = DriveApp.getRootFolder();
+	var files = rootFiles();
+	var names = fileNames(files);
+	if (checkValIn(names, name)) {
+		var file = rf.getFilesByName(name).next();
+		return file;
+	}
+}
+
+// var ex_ffar1 = findFileAtRoot("name-of-your-file-goes-here");
+// Logger.log(" Id of '" + ex_ffar1 + "' at root ➡ " + ex_ffar1.getId());
 
 // --- Find a File in Drive
 
-
-// -- Move a File to a Folder
-// ➡  id of newly created file 
-
-function moveFileById(fileId, folderId) {
-	var sFile     = DriveApp.getFileById(fileId);
-  var sFileName = sFile.getName();
-  var fldr      = DriveApp.getFolderById(folderId);
-  var oFile     = sFile.makeCopy(sFileName, fldr);
-  var oFileId   = outputFile.getId();
-  if (outputFileId !== "") {
-    DriveApp.getFileById(sFileId).setTrashed(true);
-  }
-  return oFileId;
+function findFileInDrive(name) {
+	var fi = DriveApp.getFilesByName(name);
+	while (fi.hasNext()){
+		var file = fi.next();
+		return file;
+	}
 }
 
-function moveFileByObj(fileObj, folderObj) {
+// var ex_ffid2 = findFileInDrive("example_file");
+// Logger.log(" Id of '" + ex_ffid2 + "' in " + ex_ffid2.getE "➡ " + ex_ffid2.getId());
 
+// -- Parent Folder for a File
+
+function parentFolderOf(file) {
+	var fi = file.getParents();
+	return fi.next();
 }
 
-function moveFileByPath(oPath, dPath) {
-
-}
+// var ex_f5  = findFileInDrive("example_file");
+// var ex_pfo = parentFolderOf(ex_f5);
+// Logger.log(ex_pfo);
 
 // -- Copy a File to a Folder
-// ➡  id of newly created file 
+// ➡  file
 
-function copyFileById(fileId, folderId) {
-	var sFile     = DriveApp.getFileById(fileId);
-  var sFileName = sFile.getName();
-  var fldr      = DriveApp.getFolderById(folderId);
-  var oFile     = sFile.makeCopy(sFileName, fldr);
-  var oFileId   = outputFile.getId();
-  return oFileId;
+function copyFile(file, fldr) {
+	var name = file.getName();
+	var dest = findFileIn(fldr, name);
+	if (dest === undefined) { file.makeCopy(fldr) }
+	return findFileIn(fldr, name);
 }
 
-// copyFileByObjs(fileObj, folderObj) {}
+// var ex_fldr1 = lastFolderIn("google-apps-script-cheat-sheet");
+// var ex_file1 = findFileIn(ex_fldr1, "example_file");
+// var ex_fldr2 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
+// var copy     = copyFile(ex_file1, ex_fldr2);
+// Logger.log(copy);
 
-// copyFileByPath(oPath, dPath) {}
+// -- Move a File to a Folder
+// ➡  file
+
+function moveFile(file, fldr) {
+	var name = file.getName();
+	var dest = findFileIn(fldr, name);
+	if (dest === undefined) { file.makeCopy(fldr) }
+	var done = findFileIn(fldr, name);
+	if (done !== undefined) { file.setTrashed(true) }
+	return done;
+}
+
+// var ex_fldr2 = lastFolderIn("google-apps-script-cheat-sheet");
+// var ex_file2 = findFileIn(ex_fldr2, "example_file");
+// var ex_fldr3 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
+// var move     = moveFile(ex_file2, ex_fldr3);
+// Logger.log(move);
 
 //////////////////////////////////////////////////////////////////////////////////////
 
