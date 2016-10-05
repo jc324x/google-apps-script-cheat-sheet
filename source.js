@@ -24,13 +24,14 @@
 //   | - Folders
 //   | -- Create or Verify Folder Path
 //   | -- Last Folder in a Folder Path
-//   | -- Array of All Folders in a Folder, at Root or All of Drive
+//   | -- Array of All Folders in a Folder, at Root or in Drive
 //   | -- Array of All Folder Names
-//   | -- Find a Folder in a Folder, at Root or All of Drive
+//   | -- Find a Folder in a Folder, at Root or in Drive
 //   | -- Create or Verify Folders in a Folder or at Root
 //   | - Files
-//   | -- Array of All Files in a Folder, at Root or All of Drive
-//   | -- Find a File in a Folder or Search All of Drive 
+//   | -- Array of All Files in a Folder, at Root or in Drive
+//   | -- Array of All File Names
+//   | -- Find a File in a Folder, at Root or in Drive 
 //   | -- Move a File to a Folder
 //   | -- Copy a File to a Folder 
 //   | Sheets
@@ -404,9 +405,9 @@ function rootFolders() {
   return arr;
 }
 
-var ex_rf  = rootFolders();
-Logger.log("all root folders ⬇ ");
-Logger.log(ex_rf);
+// var ex_rf  = rootFolders();
+// Logger.log("all root folders ⬇ ");
+// Logger.log(ex_rf);
 
 // --- All Folders in All of Drive
 
@@ -547,55 +548,51 @@ function createVerifyFoldersAtRoot(names) {
 // Logger.log(ex_chk);
 
 // -- Array of All Files in a Folder / Drive / Root
-// ➡  arr of fileObjs
+// ➡  array of files
 
-function allFilesIn(fPath) {
-  var fldrObj = DriveApp.getFolderById(idOfLastFolderIn(fPath));
-  if (fldrObj) {
-    var fileI = fldrObj.getFiles();
-    var _arr  = [];
-    while (fileI.hasNext()) {
-      var file = fileI.next();
-     _arr.push(file);
-    } 
-    return _arr;
-  } else {
-    return null;
-  }
+function filesIn(fldr) {
+	var fi  = fldr.getFiles();
+	var arr = [];
+	while (fi.hasNext()) {
+		var file = fi.next();
+		arr.push(file);
+	} 
+   return arr;
 }
 
-// var ex_afi = allFilesIn("google-apps-script-cheat-sheet");
+// var ex_f4  = lastFolderIn("google-apps-script-cheat-sheet");
+// var ex_afi = filesIn(ex_f4);
 // Logger.log(ex_afi);
 
-function allRootFiles() {
-  var rFldr = DriveApp.getRootFolder();
-  var fileI = rFldr.getFiles();
-  var _arr = [];
-  while (fileI.hasNext()) {
-    var file = fileI.next().getName();
-   _arr.push(file);
-  } 
-  return _arr;
+function rootFiles() {
+  var rf = DriveApp.getRootFolder();
+  var fi = rf.getFiles();
+  var arr = [];
+  while (fi.hasNext()) {
+		var file = fi.next();
+		arr.push(file);
+	} 
+  return arr;
 }
 
-// var ex_arf = allRootFiles();
+// var ex_arf = rootFiles();
 // Logger.log(ex_arf);
 
 function allFilesInDrive() {
-  var fileI = DriveApp.getFiles();
-  var _arr  = [];
-  while (fileI.hasNext()) {
-    var file = fileI.next().getName();
-   _arr.push(file);
+  var fi = DriveApp.getFiles();
+  var arr  = [];
+  while (fi.hasNext()) {
+		var file = fi.next();
+		arr.push(file);
   } 
-  return _arr;
+  return arr;
 }
 
 // var ex_afid = allFilesInDrive();
 // Logger.log(ex_afid);
 
-// -- Array of All File Names for Array of Files
-// ➡  arr file names
+// -- Array of File Names 
+// ➡  array of file names
 
 function getFileNames(arrFileObj) {
   var _arr = [];
@@ -607,59 +604,19 @@ function getFileNames(arrFileObj) {
   return _arr;
 }
 
-// var ex_afi2 = allFilesIn("google-apps-script-cheat-sheet");
+// var ex_f3   = lastFolderIn("google-apps-script-cheat-sheet");
+// var ex_afi2 = filesIn(ex_f3);
 // var ex_gfn  = getFileNames(ex_afi2);
 // Logger.log(ex_gfn);
 
+// --- Find a File in a Folder, at Root or Search All of Drive 
 
-// function searchDriveForFolder(fName) {
-//   var arr = [];
-//   var fi  = DriveApp.getFoldersByName(fName);
-//   while (fi.hasNext()) {
-//    var fldr = fi.next();
-//    arr.push(fldr);
-//  }
-//   if (arr.length == 1) {
-//     return arr[0].getId();
-//   } else {
-//     return arr;
-//   }
-// }
+// --- Find a File at Root
 
-// -- Search a Folder for a File
-// ➡  id of file or arr of matching files
+// --- Find a File in Drive
 
-function searchFolderForFile(fPath, fName) {
-  var fldr = DriveApp.getFolderById(idOfLastFolderIn(fPath));
 
-}
 
-// -- Search Root for a File
-// ➡  id of file or arr of matching files
-
-function searchRootForFile(fName) {
-
-}
-
-// -- Search Drive for a File
-// ➡  id of file or arr of matching files
-
-function searchDriveForFile(fName) {
-  var arr = [];
-  var fi  = DriveApp.getFilesByName(fName);
-  while (fi.hasNext()) {
-   var fldr = fi.next();
-   arr.push(fldr);
- }
-  if (arr.length == 1) {
-    return arr[0].getId();
-  } else {
-    return arr;
-  }
-}
-
-var ex_fileid = searchDriveForFile("JCodesMN_exFile");
-// Logger.log(" Id of 'JCodesMN_exFile' ➡ " + ex_fileid);
 
 // -- Move a File to a Folder
 // ➡  id of newly created file 
@@ -700,8 +657,6 @@ function copyFileById(fileId, folderId) {
 
 // copyFileByPath(oPath, dPath) {}
 
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 
 // Sheets
