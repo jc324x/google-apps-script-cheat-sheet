@@ -698,50 +698,65 @@ function moveFile(file, fldr) {
 
 // Sheets
 
-// - Utility Functions for Sheets - [ ] 
+// - Managing Spreadsheet Files
+// -- Create or Verify Spreadsheet in a Folder or at Root
+// -- Search Drive for a Spreadsheet
+// - Utility Functions for Sheets
+// -- Convert Column Number to a Letter
+// -- Timestamp on Cell Change
+// -- Replicating Import Range
+// -- Evaluating True and False
+// - Range as Array of Objects
+// -- Grid Object
+// - Range as Array of Arrays
+// -- Generate Array of Arrays
+// -- Flatten A Multidimensional Array
 
-// -- Convert Column Number to a Letter - [ ] 
+// Forms
 
-// -- Timestamp on Cell Change - [ ] 
+// - Form Management
+// -- Build Array of Items
+// -- Set Item Dropdown Choices
+// -- Clear All Form Options
+// -- Get Destination Sheet
+// - Form Responses
+// -- Get Last Form Response
+// -- Dates in Form Responses
 
-// - Arrays and Ranges - [ ] 
+// Docs
 
-// -- Evaluating User Input as True or False - [ ] 
+// - Managing Document Files
+// -- Create or Verify Document in a Folder or at Root
 
-// -- Generate Array of Arrays by Row - [ ] 
-
-// -- Remove Duplicates from an Array - [ ] 
-
-// -- Remove Empty Values from an Array - [ ] 
-
-// -- Vlookup in Google Script - [ ] 
-
-// -- Flatten Multidimensional Array for One Row - [ ] 
-
-// -- Flatten Multidimensional Array for One Column - [ ] 
-
-//////////
-// Docs //
-//////////
-
-// - Utility Functions for Docs - [ ]  
-
-// createOrVerifyDocIn(folderPath, docName)
-function makeOrFindDocInFolderPathReturnId() {
-  var folderId = createOrFindFolderPathReturnId(exportFolder);
-  var folder   = DriveApp.getFolderById(folderId);
-  var docName  = generateDocName();
-  var docCheck = folder.getFilesByName(docName);
+// have to go through DriveApp to copy files / folders ->
+// -- LEGACY --
+function createABlankDocInAFolder(folderId, docName) {
+  var folder       = DriveApp.getFolderById(folderId);
+  var inputDocId   = DocumentApp.create(docName).getId();
+  var inputDocFile = DriveApp.getFileById(inputDocId);
+  var outputDoc    = inputDocFile.makeCopy(docName, folder);
+  var docCheck     = folder.getFilesByName(docName);
   if (docCheck.hasNext()) {
-      var file = docCheck.next(); 
-      return file.getId();
-    } else {
-      var docId       = makeDocReturnId(docName);
-      var outputDocId = copyFileDeleteSourceReturnNewId(docId, folderId);
-      return outputDocId;
-   }
+    var outputDocId = docCheck.next().getId();
+    inputDocFile.setTrashed(true);
+    return outputDocId;
+    }
 }
 
+// -- Search Drive for a Document
+// - Utility Functions for Docs
+// -- Clear All Content From a Doc
+
+// Gmail
+
+// - Send Email
+// -- Comma Separated List of Recipients
+// -- HTML in Email Body
+
+// - Utility Functions for Docs 
+
+
+// -- LEGACY --
 // -- Create a Blank Doc in a Folder
 function createDocIn(folderId, docName) {
   var folder    = DriveApp.getFolderById(folderId);
@@ -754,11 +769,7 @@ function createDocIn(folderId, docName) {
     }
 }
 
-// -- Clear All Content From a Doc - [ ] 
-
-////////////////////////////////////////////
-////////////////////////////////////////////
-
+// -- LEGACY --
 function createArrayOfObjectsFromRange_Vertical(sheetName, a1Notation) {
   var range      = ss.getSheetByName(sheetName).getRange(a1Notation);
   var height     = range.getHeight();
@@ -837,27 +848,12 @@ function range_ArrayOfObjects(sheetName, a1Notation){
 }
 
 
+// -- LEGACY --
 // doesn't work in onEdit(e)
 function getSetValues(sheet1, a1Notation1, sheet2, a1Notation2) {
   var get = ss.getSheetByName(sheet1).getRange(a1Notation1).getValues();
   var set = ss.getSheetByName(sheet2).getRange(a1Notation2).setValues();
 } 
-
-
-// have to go through DriveApp to copy files / folders ->
-
-function createABlankDocInAFolder(folderId, docName) {
-  var folder       = DriveApp.getFolderById(folderId);
-  var inputDocId   = DocumentApp.create(docName).getId();
-  var inputDocFile = DriveApp.getFileById(inputDocId);
-  var outputDoc    = inputDocFile.makeCopy(docName, folder);
-  var docCheck     = folder.getFilesByName(docName);
-  if (docCheck.hasNext()) {
-    var outputDocId = docCheck.next().getId();
-    inputDocFile.setTrashed(true);
-    return outputDocId;
-    }
-}
 
 // number of unique values for a property in array of objects
 
@@ -935,6 +931,7 @@ function compressArray(original) {
 	return compressed;
 };
 
+// -- LEGACY -- ?
 // function buildArrayOfItemsByTitle(formObj) {
 //   var output_array = [];
 //   var arrayOfItemObjects = formObj.getItems()
@@ -950,77 +947,6 @@ function compressArray(original) {
 // RegEx -> digits only
 // myString = myString.replace(/\d+/g)
 
-
-// like a vlookup, but works for any property in the row
-// change arrayOfObject build code to include index value and sheet
-
-function buildArrayOfObjectsForSheet(sheetObj, headerRow) {
-  // assumed to be one, but it could start lower
-  // add properties to each rowObj: rowNumber, sheet, headerRow
-}
-
-function buildArrayOfHeaders(sheetObj, headerRow) {
-
-}
-
-function getObjectMatchingUniquePropertyValue(arrayOfObjects, property, value) {
-
-}
-
-function buildArrayOfObjectsForProperty(arrayOfObjects, property, value) {
-
-}
-
-function buildArrayOfHeaders(sheetObj, rowPosition) {
-  // won't match property count of object (off by 3?)
-}
-
-// new pvPair?
-
-function setCellValueOrValues(rowObj, property, value) {
-  // if (opt_headerRowNumber == nil) -> opt_headerRowNumber = 1
-  // will be able to get rowObj.sheet + rowObj.row
-  // var sheet  = rowObj.sheet
-  // var arrayOfHeaders = buildArrayOfHeadrers(
-  // var row    = rowObj.row;
-  // var cell   = 
-
-  // is there someway to halt execution and batch process changes?
-
-}
-
-
-// in typical run, only one object would have "" value for 'Complete?' column
-
-// ---
-
-function setCellValue(sheet, queryHeader, queryValue, header, value) {
-  // build array of all column headers, find position of columnValue and convert to A1
-  // build array of objects for sheet -> build array of from all row values
-}
-
-function getColumnIndexForValue(sheet, value) {
-
-}
-
-// PULLED FROM HW FORM SCRIPT.JS
-
-
-// function returnFirstMatch(obj, arrProp){
-//   for (var i = 0; i < arrProp.length; i++) {
-//     for (var prop in obj) {
-//       if (obj.hasOwnProperty(prop)){
-//         if (prop == arrProp[i]){
-//           if (obj[prop] != "") {
-//             return obj[prop];
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-
-// JUNK?
 
 // function setUnifiedDate(arrObj){
 //   for (var h = 0; h < arrObj.length; h++){
