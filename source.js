@@ -67,6 +67,7 @@
 //   | - Send Email
 //   | -- Comma Separated List of Recipients
 //   | -- HTML in Email Body
+//   | -- Mail Merge
 
 function testEverything() {}
 
@@ -779,6 +780,9 @@ function columnABCToNumber(columnABC) {
 
 // -- Timestamp on Cell Change
 
+var watch  = "ColA";
+var update = "ColB";
+
 function onEdit(event) { 
   var timezone     = "GMT-5";
   var format       = "MM/dd/YYYY HH:mm:ss";
@@ -795,6 +799,40 @@ function onEdit(event) {
     cellToUpdate.setValue(datestamp);
   }
 } 
+
+var watch_update   = [
+  {watch: 'ColA', update: 'ColB'},
+  {watch: 'ColC', update: 'ColD'},
+  {watch: 'ColE', update: 'ColF'},
+];
+
+// multi
+function onEditMulti(event) { 
+  var timezone       = "GMT-5";
+  var format         = "MM/dd/YYYY HH:mm:ss";
+  var sheet          = event.source.getActiveSheet();
+  var actRng         = event.source.getActiveRange();
+  var editColumn     = actRng.getColumn();
+  var index          = actRng.getRowIndex();
+  var headers        = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues();
+  for (i = 0; i < watch_update.length; i++) {
+    var watch        = watch_update[i].watch;
+    var update       = watch_update[i].update;
+    var sheet        = event.source.getActiveSheet();
+    var actRng       = event.source.getActiveRange();
+    var editColumn   = actRng.getColumn();
+    var index        = actRng.getRowIndex();
+    var headers      = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues();
+    var watchCol     = headers[0].indexOf(watch) + 1;
+    var updateCol    = headers[0].indexOf(update);
+    if (updateCol > -1 && index > 1 && editColumn == watchCol) {
+      var updateCell = sheet.getRange(index, updateCol + 1);
+      var datestamp  = Utilities.formatDate(new Date(), timezone, format);
+      updateCell.setValue(datestamp);
+    }
+  } 
+}
+
 
 // -- Replicating Import Range
 
