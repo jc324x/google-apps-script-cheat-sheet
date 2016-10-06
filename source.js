@@ -113,10 +113,10 @@ function rmEmptyVal(x){
   return (x !== (undefined || ''));
 }
 
-// var arr3  = ["a",,"b",,,"c"];
-// var ex_re = arr3.filter(rmEmptyVal);
-// Logger.log("rmEmpty input ➡ " + arr3);
-// Logger.log("rmEmpty output ➡ " + ex_re);
+// var arr_rev  = ["a",,"b",,,"c"];
+// var ex_rev = arr_rev.filter(rmEmptyVal);
+// Logger.log("rmEmpty input ➡ " + arr_rev);
+// Logger.log("rmEmpty output ➡ " + ex_rev);
 
 // -- Get Count of Values in Array
 // ➡  array of objects
@@ -142,11 +142,11 @@ function countOfValIn(arr){
   return _arr;
 }
 
-// var arr4  = ["A", "B", "C", "A", "B", "C", "D", "A"];
-// var ex_cv = countOfValIn(arr4);
-// Logger.log("countVal input ➡ " + arr4);
+// var arr_covi  = ["A", "B", "C", "A", "B", "C", "D", "A"];
+// var ex_covi = countOfValIn(arr_covi);
+// Logger.log("countVal input ➡ " + arr_covi);
 // Logger.log("countVal out ⬇ ");
-// Logger.log(ex_cv);
+// Logger.log(ex_covi);
 
 // - Array of Objects
 
@@ -384,8 +384,8 @@ function foldersIn(fldr) {
   return arr;
 }
 
-// var ex_f1 = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_fi = foldersIn(ex_f1);
+// var fldr_fi = lastFolderIn("google-apps-script-cheat-sheet");
+// var ex_fi   = foldersIn(fldr_fi);
 // Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_fi);
 
 // --- All Folders at Root
@@ -433,9 +433,9 @@ function folderNames(fldrs) {
 	return arr;
 }
 
-// var ex_f2  = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_af1 = foldersIn(ex_f2);
-// var ex_fn  = folderNames(ex_af1)
+// var fldr_fn = lastFolderIn("google-apps-script-cheat-sheet");
+// var arr_fn  = foldersIn(fldr_fn);
+// var ex_fn   = folderNames(arr_fn)
 // Logger.log("'google-apps-script-cheat-sheet' has top level folders " + ex_fn);
 
 // -- Find a Folder in a Folder, at Root or All of Drive
@@ -452,8 +452,8 @@ function findFolderIn(fldr, name) {
     }
 }
 
-// var ex_f2a = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_ffi = findFolderIn(ex_f2a, "A");
+// var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet");
+// var ex_ffi = findFolderIn(fldr_ffi, "A");
 // Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffi.getId());
 
 // --- Find a Folder at Root
@@ -500,11 +500,11 @@ function createVerifyFoldersIn(fldr, names) {
   return fldr;
 }
 
-// var ex_f3  = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_n1  = ["X", "Y", "Z"];
-// var ex_cfi = createVerifyFoldersIn(ex_f3, ex_n1);
+// var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet");
+// var arr_cvfi  = ["X", "Y", "Z"];
+// var ex_cfi = createVerifyFoldersIn(fldr_cvfi, arr_cvfi);
 // Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ+ ⬇ ");
-// Logger.log(foldersIn(ex_f3));
+// Logger.log(foldersIn(ex_cfi));
 
 // --- Create or Verify Folders at Root
 
@@ -519,8 +519,8 @@ function createVerifyFoldersAtRoot(names) {
     return DriveApp.getRootFolder();
 }
 
-// var ex_af2 = ["1", "2", "3"];
-// var ex_cfa = createVerifyFoldersAtRoot(ex_af2);
+// var arr_cvfar = ["1", "2", "3"];
+// var ex_cvfar  = createVerifyFoldersAtRoot(arr_cvfar);
 // Logger.log("all folders at Root ⬇ ");
 // Logger.log(rootFolders());
 
@@ -553,8 +553,8 @@ function filesIn(fldr) {
    return arr;
 }
 
-// var ex_f4  = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_afi = filesIn(ex_f4);
+// var fldr_fin = lastFolderIn("google-apps-script-cheat-sheet");
+// var ex_afi   = filesIn(fldr_fin);
 // Logger.log(ex_afi);
 
 // --- All Files at Root
@@ -600,10 +600,10 @@ function fileNames(files) {
   return arr;
 }
 
-// var ex_f3   = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_afi2 = filesIn(ex_f3);
-// var ex_gfn  = fileNames(ex_afi2);
-// Logger.log(ex_gfn);
+// var fldr_fnam = lastFolderIn("google-apps-script-cheat-sheet");
+// var arr_fnam  = filesIn(fldr_fnam);
+// var ex_fnam   = fileNames(arr_fnam);
+// Logger.log(ex_fnam);
 
 // -- Find a File in a Folder, at Root or in Drive 
 // ➡  file
@@ -619,8 +619,8 @@ function findFileIn(fldr, name) {
     }
 }
 
-// var ex_f2a = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_ffi = findFileIn(ex_f2a, "example_file");
+// var fldr_ffli = lastFolderIn("google-apps-script-cheat-sheet");
+// var ex_ffli   = findFileIn(fldr_ffli, "example_file");
 // Logger.log(" Id of 'example_file' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffi.getId());
 
 // --- Find a File at Root
@@ -635,8 +635,8 @@ function findFileAtRoot(name) {
 	}
 }
 
-// var ex_ffar1 = findFileAtRoot("name-of-your-file-goes-here");
-// Logger.log(" Id of '" + ex_ffar1 + "' at root ➡ " + ex_ffar1.getId());
+// var file_ffar = findFileAtRoot("NAME-OF-YOUR-FILE-GOES-HERE");
+// Logger.log(" Id of '" + file_ffar + "' at root ➡ " + file_ffar.getId());
 
 // --- Find a File in Drive
 
@@ -648,8 +648,8 @@ function findFileInDrive(name) {
 	}
 }
 
-// var ex_ffid2 = findFileInDrive("example_file");
-// Logger.log(" Id of '" + ex_ffid2 + "' in " + ex_ffid2.getE "➡ " + ex_ffid2.getId());
+// var file_ffid = findFileInDrive("example_file");
+// Logger.log(" Id of '" + file_ffid + "' in " + parentFolderOf(file_ffid) + " ➡ " + file_ffid.getId());
 
 // -- Parent Folder for a File
 
@@ -658,9 +658,9 @@ function parentFolderOf(file) {
 	return fi.next();
 }
 
-// var ex_f5  = findFileInDrive("example_file");
-// var ex_pfo = parentFolderOf(ex_f5);
-// Logger.log(ex_pfo);
+// var file_pfo  = findFileInDrive("example_file");
+// var ex_pfo = parentFolderOf(file_pfo);
+// Logger.log("The parent folder of '" + file_pfo + "' is '" + ex_pfo + "'");
 
 // -- Copy a File to a Folder
 // ➡  file
