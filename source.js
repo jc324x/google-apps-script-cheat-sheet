@@ -672,11 +672,11 @@ function copyFile(file, fldr) {
 	return findFileIn(fldr, name);
 }
 
-// var ex_fldr1 = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_file1 = findFileIn(ex_fldr1, "example_file");
-// var ex_fldr2 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
-// var copy     = copyFile(ex_file1, ex_fldr2);
-// Logger.log(copy);
+var fldr_cf1 = lastFolderIn("google-apps-script-cheat-sheet");
+var file_cf  = findFileIn(fldr_cf1, "example_file");
+var fldr_cf2 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
+var ex_cf    = copyFile(file_cf, fldr_cf2);
+Logger.log("'" + ex_cf + "' " + "has been copied to " + parentFolderOf(ex_cf));
 
 // -- Move a File to a Folder
 // ➡  file
@@ -685,16 +685,16 @@ function moveFile(file, fldr) {
 	var name = file.getName();
 	var dest = findFileIn(fldr, name);
 	if (dest === undefined) { file.makeCopy(fldr) }
-	var done = findFileIn(fldr, name);
-	if (done !== undefined) { file.setTrashed(true) }
-	return done;
+	var _file = findFileIn(fldr, name);
+	if (_file !== undefined) { file.setTrashed(true) }
+	return _file;
 }
 
-// var ex_fldr2 = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_file2 = findFileIn(ex_fldr2, "example_file");
-// var ex_fldr3 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
-// var move     = moveFile(ex_file2, ex_fldr3);
-// Logger.log(move);
+var fldr_mf1 = lastFolderIn("google-apps-script-cheat-sheet");
+var file_mf  = findFileIn(fldr_mf1, "example_file");
+var fldr_mf2 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
+var ex_mf    = moveFile(file_mf, fldr_mf2);
+Logger.log("'" + ex_mf + "' " + "has been moved to " + parentFolderOf(ex_mf));
 
 // Sheets
 
