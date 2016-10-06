@@ -76,12 +76,12 @@ function checkValIn(arr, val) {
   return arr.indexOf(val) > -1; 
 }
 
-// var arr1 = [1,2,3,4];
+// var arr_cvi = [1,2,3,4];
 
-// if (checkValIn(arr1, 99)) {
-//     Logger.log("value check ➡ 99 is in the array"); 
+// if (checkValIn(arr_cvi, 99)) {
+//     Logger.log("check value in ➡ 99 is in the array"); 
 //   } else {
-//     Logger.log("value check ➡ 99 is not in the array");
+//     Logger.log("check value in ➡ 99 is not in the array");
 // }
 
 // -- Remove Duplicates 
@@ -101,10 +101,10 @@ function rmDuplicatesFrom(arr) {
   return _arr;
 }
 
-// var arr2  = [1,2,3,1,2,3,4,];
-// var ex_rd = rmDuplicatesFrom(arr2);
-// Logger.log("rmDup input ➡ " + arr2);
-// Logger.log("rmDup output ➡ " + ex_rd);
+// var arr_rdf  = [1,2,3,1,2,3,4,];
+// var ex_rdf = rmDuplicatesFrom(arr_rdf);
+// Logger.log("rmDup input ➡ " + arr_rdf);
+// Logger.log("rmDup output ➡ " + ex_rdf);
 
 // -- Remove Empty Values
 // ➡  array
@@ -713,9 +713,9 @@ function createVerifySSIn(fldr, name) {
 	return fldr.getFilesByName(name).next();
 }
 
-var fldr_cvss = createVerifyPath("google-apps-script-cheat-sheet");
-var ex_cvss = createVerifySSIn(fldr_cvss, "example_sheet");
-Logger.log("The Id of '" + ex_cvss + "' ");
+var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet");
+var ex_cvssi = createVerifySSIn(fldr_cvssi, "example_sheet");
+Logger.log("The Id of '" + ex_cvssi + "' ");
 
 function createVerifySSAtRoot(name) {
 
