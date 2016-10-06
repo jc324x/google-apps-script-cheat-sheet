@@ -8,11 +8,12 @@
 
 // * | General 
 // * | - Array
-// * | -- Check for a Value
+// * | -- Check for a Value - Standard Array
 // * | -- Remove Duplicates
 // * | -- Remove Empty Values
 // * | -- Get Count of Values in Array
 // * | - Array of Objects
+//   | -- Check for a Value - Array of Objects
 // * | -- Sort by Property or Properties
 // * | -- Find Object With Unique Property Value - Return Object
 // * | -- Find Object With Unique Property Value - Return Value 
@@ -742,6 +743,40 @@ function createVerifySSAtRoot(name) {
 
 // -- Convert Column Number to a Letter
 
+function numberToColumnABC(number) {
+	var number = number - 1;
+	if (number <= 26) {
+		var character = String.fromCharCode(97 + number).toUpperCase();
+		return character;
+	} else if (number >= 27 && number <= 52) {
+		var adjNumber = number - 26;
+		var character = String.fromCharCode(97 + adjNumber).toUpperCase();
+		return "A" + character;
+	} else if (number >= 53 && number <= 78) {
+		var adjNumber = number - 52;
+		var character = String.fromCharCode(97 + adjNumber).toUpperCase();
+		return "B" + character;
+	} else if (number >= 79 && number <= 104) {
+		var adjNumber = number - 78;
+		var character = String.fromCharCode(97 + adjNumber).toUpperCase();
+		return "C" + character;
+	}
+}
+
+// -- Convert Column Letter to a Number
+
+function columnABCToNumber(columnABC) {
+	var columnABC = columnABC.toUpperCase();
+	if (columnABC.length === 1)  {
+		var char0Value = columnABC.charCodeAt(0) - 64;
+		return char0Value;
+	} else if (columnABC.length === 2) {
+		var char0Value = (columnABC.charCodeAt(0) - 64) * 26;
+		var char1Value = columnABC.charCodeAt(1) - 64;
+		return char0Value + char1Value;
+	}
+}
+
 // -- Timestamp on Cell Change
 
 // -- Replicating Import Range
@@ -751,6 +786,93 @@ function createVerifySSAtRoot(name) {
 // - Range as Array of Objects
 
 // -- Grid Object
+
+function Grid(sheetObj, headerRow) {
+
+  function HVal(i, header) {
+    this.header = header;
+    var _i = i;
+
+    Object.defineProperty(this, "colIndex", {
+        get: function() {
+          return _i + 1;
+        }
+    });
+
+    Object.defineProperty(this, "colIndexABC", {
+        get: function() {
+          return numberToColumnABC(this.colIndex);
+        }
+    });
+  }
+
+  function RVal(i, headerRow) {
+    var _i         = i;
+    var _headerRow = headerRow;
+
+    Object.defineProperty(this, "rowIndex", {
+        get: function() {
+          return _i + _headerRow;
+        }
+    });
+  }
+
+  var _shObj       = sheetObj;
+  var _hRow        = headerRow;
+  var _lColNum     = _shObj.getLastColumn();
+  var _lColABC     = numberToColumnABC(_lColNum);
+  var _lRow        = _shObj.getLastRow();
+  var _hRange      = "A" + _hRow + ":" + _lColABC + _hRow;
+  var _hRangeObj   = _shObj.getRange(_hRange)
+  var _valRange    = "A" + (_hRow +1 ) + ":" + _lColABC + _lRow;
+  var _valRangeObj = _shObj.getRange(_valRange)
+
+  function buildArrayOfHValObjs(hRangeObj){
+    var mArr    = hRangeObj.getValues();
+    var arrHVal = [];
+    for (var i = 0; i < mArr[0].length; i++) {
+      var val  = mArr[0][i];
+      var hObj = new HVal(i, val);
+      arrHVal.push(hObj);
+    } 
+    return arrHVal;
+  }
+
+  var _arrHValObj  = buildArrayOfHValObjs(_hRangeObj);
+
+  function buildArrayOfRValObjs(valRangeObj, arrHValObj){
+    var h       = valRangeObj.getHeight();
+    var w       = valRangeObj.getWidth();
+    var mArr    = valRangeObj.getValues();
+    var arrRVal = [];
+    for (var i = 0; i < h; i++) {
+      var rVal = new RVal(i, _hRow);
+      for (var j = 0; j < w; j++) {
+        var prop = arrHValObj[j].header;
+        var val  = mArr[i][j];
+        if (val !== "") {
+          rVal[prop] = val;
+        } 
+      }
+      arrRVal.push(rVal);
+    }  
+    return arrRVal;
+  }
+
+  var _arrRValObj = buildArrayOfRValObjs(_valRangeObj, _arrHValObj);
+
+  Object.defineProperty(this, "arrHValObj", {
+    get: function() {
+      return _arrHValObj;
+    }
+  });
+
+  Object.defineProperty(this, "arrRValObj", {
+    get: function() {
+      return _arrRValObj;
+    }
+  });
+}
 
 // - Range as Array of Arrays
 
@@ -767,55 +889,77 @@ function createVerifySSAtRoot(name) {
 // -- Get Destination Sheet
 // - Form Responses
 // -- Get Last Form Response
+
+function getLastResponse(formObj) {
+  var allRsp  = form.getResponses();
+  var lastRsp = allRsp[allRsp.length - 1];
+  var itemRsp = lastRsp.getItemResponses();
+  var lastObj = {};
+  for (var i = 0; i < itemRsp.length; i++) {
+    var item = itemRsp[i];
+    var prop = item.getItem().getTitle();
+    var val  = item.getResponse();
+    if (val !== "") {
+      lastObj[prop] = val;
+    } else {
+      lastObj[prop] = undefined;
+    }
+  }
+  lastObj["Email"]     = lastRsp.getRespondentEmail();
+  lastObj["Timestamp"] = lastRsp.getTimestamp();
+  return lastObj;
+}
+
 // -- Dates in Form Responses
 
 // Docs
 
 // - Managing Document Files
+
 // -- Create or Verify Document in a Folder or at Root
 
-// have to go through DriveApp to copy files / folders ->
-// -- LEGACY --
-// function createABlankDocInAFolder(folderId, docName) {
-//   var folder       = DriveApp.getFolderById(folderId);
-//   var inputDocId   = DocumentApp.create(docName).getId();
-//   var inputDocFile = DriveApp.getFileById(inputDocId);
-//   var outputDoc    = inputDocFile.makeCopy(docName, folder);
-//   var docCheck     = folder.getFilesByName(docName);
-//   if (docCheck.hasNext()) {
-//     var outputDocId = docCheck.next().getId();
-//     inputDocFile.setTrashed(true);
-//     return outputDocId;
-//     }
-// }
-
-// -- Search Drive for a Document
 // - Utility Functions for Docs
+
 // -- Clear All Content From a Doc
+
+// -- Access Document Body
 
 // Gmail
 
 // - Send Email
+
 // -- Comma Separated List of Recipients
+
+function commaSeperated(obj, arrProp){
+  var emailArr_All = [];
+  var emailStr     = "";
+  for (var i = 0; i < arrProp.length; i++) {
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)){
+        if (prop == arrProp[i]){
+          if (obj[prop] != "") {
+            emailArr_All.push(obj[prop]);
+          }
+        }
+      }
+    }
+  }
+  var emailArr = removeDuplicates(emailArr_All);
+  for (var i = 0; i < emailArr.length; i++ ){
+    emailStr += emailArr[i] + ", ";
+  }
+  emailStr = emailStr.slice(0, -2);
+  return emailStr;
+}
+
 // -- HTML in Email Body
 
 // - Utility Functions for Docs 
 
+/////////////////
+// -- LEGACY -- /
+/////////////////
 
-// -- LEGACY --
-// -- Create a Blank Doc in a Folder
-function createDocIn(folderId, docName) {
-  var folder    = DriveApp.getFolderById(folderId);
-  var inputDoc  = DocumentApp.create(docName);
-  var outputDoc = inputDoc.makeCopy(docName, folder);
-  var docCheck = folder.getFilesByName(docName);
-  if (docCheck.hasNext()) {
-    var outputDocId = docCheck.next().getId();
-    DriveApp.inputDoc.setTrashed(true);
-    }
-}
-
-// -- LEGACY --
 function createArrayOfObjectsFromRange_Vertical(sheetName, a1Notation) {
   var range      = ss.getSheetByName(sheetName).getRange(a1Notation);
   var height     = range.getHeight();
@@ -893,8 +1037,6 @@ function range_ArrayOfObjects(sheetName, a1Notation){
   return arrayOfObjects;
 }
 
-
-// -- LEGACY --
 // doesn't work in onEdit(e)
 function getSetValues(sheet1, a1Notation1, sheet2, a1Notation2) {
   var get = ss.getSheetByName(sheet1).getRange(a1Notation1).getValues();
@@ -945,37 +1087,6 @@ function newArrayByObjProp(arrayOfObj, propToFind) {
   }
   return array;
 }
-
-
-function compressArray(original) {
- 
-	var compressed = [];
-	var copy       = original.slice(0);
- 
-	// first loop goes over every element
-	for (var i = 0; i < original.length; i++) {
- 
-		var myCount = 0;	
-		// loop over every element in the copy and see if it's the same
-		for (var w = 0; w < copy.length; w++) {
-			if (original[i] == copy[w]) {
-				// increase amount of times duplicate is found
-				myCount++;
-				// sets item to undefined
-				delete copy[w];
-			}
-		}
- 
-		if (myCount > 0) {
-			var a = new Object();
-			a.value = original[i];
-			a.count = myCount;
-			compressed.push(a);
-		}
-	}
- 
-	return compressed;
-};
 
 // -- LEGACY -- ?
 // function buildArrayOfItemsByTitle(formObj) {
