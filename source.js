@@ -36,6 +36,8 @@
 //   | -- Copy a File to a Folder 
 //   | -- Move a File to a Folder
 //   | Sheets
+//   | - Managing Spreadsheet Files
+//   | -- Create or Verify Spreadsheet in a Folder or at Root
 //   | - Utility Functions for Sheets
 //   | -- Convert Column Number to a Letter
 //   | -- Timestamp on Cell Change
@@ -56,6 +58,8 @@
 //   | -- Get Last Form Response
 //   | -- Dates in Form Responses
 //   | Docs
+//   | - Managing Document Files
+//   | -- Create or Verify Document in a Folder or at Root
 //   | - Utility Functions for Docs
 //   | -- Clear All Content From a Doc
 //   | Gmail
@@ -672,11 +676,11 @@ function copyFile(file, fldr) {
 	return findFileIn(fldr, name);
 }
 
-var fldr_cf1 = lastFolderIn("google-apps-script-cheat-sheet");
-var file_cf  = findFileIn(fldr_cf1, "example_file");
-var fldr_cf2 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
-var ex_cf    = copyFile(file_cf, fldr_cf2);
-Logger.log("'" + ex_cf + "' " + "has been copied to " + parentFolderOf(ex_cf));
+// var fldr_cf1 = lastFolderIn("google-apps-script-cheat-sheet");
+// var file_cf  = findFileIn(fldr_cf1, "example_file");
+// var fldr_cf2 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
+// var ex_cf    = copyFile(file_cf, fldr_cf2);
+// Logger.log("'" + ex_cf + "' " + "has been copied to " + parentFolderOf(ex_cf));
 
 // -- Move a File to a Folder
 // ➡  file
@@ -690,17 +694,20 @@ function moveFile(file, fldr) {
 	return _file;
 }
 
-var fldr_mf1 = lastFolderIn("google-apps-script-cheat-sheet");
-var file_mf  = findFileIn(fldr_mf1, "example_file");
-var fldr_mf2 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
-var ex_mf    = moveFile(file_mf, fldr_mf2);
-Logger.log("'" + ex_mf + "' " + "has been moved to " + parentFolderOf(ex_mf));
+// var fldr_mf1 = lastFolderIn("google-apps-script-cheat-sheet");
+// var file_mf  = findFileIn(fldr_mf1, "example_file");
+// var fldr_mf2 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
+// var ex_mf    = moveFile(file_mf, fldr_mf2);
+// Logger.log("'" + ex_mf + "' " + "has been moved to " + parentFolderOf(ex_mf));
 
 // Sheets
 
 // - Managing Spreadsheet Files
 
 // -- Create or Verify Spreadsheet in a Folder or at Root
+// ➡  spreadsheet
+
+// --- Create or Verify Spreadsheet in a Folder
 
 function createVerifySSIn(fldr, name) {
 	var files = filesIn(fldr);
@@ -710,27 +717,45 @@ function createVerifySSIn(fldr, name) {
 		var file = DriveApp.getFileById(ss);
 		moveFile(file, fldr);
 	}
-	return fldr.getFilesByName(name).next();
+	return findFileIn(fldr, name);
 }
 
-var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet");
-var ex_cvssi = createVerifySSIn(fldr_cvssi, "example_sheet");
-Logger.log("The Id of '" + ex_cvssi + "' ");
+// var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet");
+// var ex_cvssi   = createVerifySSIn(fldr_cvssi, "example_sheet");
+// Logger.log("The Id of '" + ex_cvssi + "' in " + parentFolderOf(ex_cvssi) + " is '" + ex_cvssi.getId());
+
+// --- Create or Verify Spreadsheet at Root
 
 function createVerifySSAtRoot(name) {
-
+	var files = rootFiles();
+	var names = fileNames(files);
+	if (!(checkValIn(names, name))) {
+		var ss = SpreadsheetApp.create(name);
+	}
+	return findFileAtRoot(name);
 }
 
-// -- Search Drive for a Spreadsheet
+// var ex_cvssar = createVerifySSAtRoot("example_sheet");
+// Logger.log("The Id of '" + ex_cvssar + "' at root is '" + ex_cvssar.getId());
+
 // - Utility Functions for Sheets
+
 // -- Convert Column Number to a Letter
+
 // -- Timestamp on Cell Change
+
 // -- Replicating Import Range
+
 // -- Evaluating True and False
+
 // - Range as Array of Objects
+
 // -- Grid Object
+
 // - Range as Array of Arrays
+
 // -- Generate Array of Arrays
+
 // -- Flatten A Multidimensional Array
 
 // Forms
