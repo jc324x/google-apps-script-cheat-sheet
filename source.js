@@ -322,7 +322,7 @@ function academicQuarter() {
 // -- Create or Verify Folder Path and Get Last Folder in Path
 // ➡  folder
 
-function createVerify(path) {
+function createVerifyPath(path) {
   var arr = path.split('/');
   var fldr;
   for (i = 0; i < arr.length; i++) {
@@ -345,7 +345,7 @@ function createVerify(path) {
   return fldr;
 }
 
-// var ex_cov = createVerify("google-apps-script-cheat-sheet/A/B/C");
+// var ex_cov = createVerifyPath("google-apps-script-cheat-sheet/A/B/C");
 // Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_cov.getId());
 
 // -- Get the Last Folder in a Folder Path
@@ -529,7 +529,7 @@ function createVerifyFoldersAtRoot(names) {
 // fn to create scratch file for examples below
 
 function checkForExFile() {
-	var fldr = createVerify("google-apps-script-cheat-sheet");
+	var fldr = createVerifyPath("google-apps-script-cheat-sheet");
 	var file = findFileIn(fldr, "example_file");
   if (!(file)){fldr.createFile("example_file", "stuff!");}
   return findFileIn(fldr, "example_file");
@@ -668,7 +668,7 @@ function parentFolderOf(file) {
 function copyFile(file, fldr) {
 	var name = file.getName();
 	var dest = findFileIn(fldr, name);
-	if (dest === undefined) { file.makeCopy(fldr) }
+	if (dest === undefined) { file.makeCopy(name, fldr) }
 	return findFileIn(fldr, name);
 }
 
@@ -699,7 +699,28 @@ function moveFile(file, fldr) {
 // Sheets
 
 // - Managing Spreadsheet Files
+
 // -- Create or Verify Spreadsheet in a Folder or at Root
+
+function createVerifySSIn(fldr, name) {
+	var files = filesIn(fldr);
+	var names = fileNames(files);
+	if (!(checkValIn(names, name))) {
+		var ss   = SpreadsheetApp.create(name).getId();
+		var file = DriveApp.getFileById(ss);
+		moveFile(file, fldr);
+	}
+	return fldr.getFilesByName(name).next();
+}
+
+var fldr_cvss = createVerifyPath("google-apps-script-cheat-sheet");
+var ex_cvss = createVerifySSIn(fldr_cvss, "example_sheet");
+Logger.log("The Id of '" + ex_cvss + "' ");
+
+function createVerifySSAtRoot(name) {
+
+}
+
 // -- Search Drive for a Spreadsheet
 // - Utility Functions for Sheets
 // -- Convert Column Number to a Letter
@@ -730,18 +751,18 @@ function moveFile(file, fldr) {
 
 // have to go through DriveApp to copy files / folders ->
 // -- LEGACY --
-function createABlankDocInAFolder(folderId, docName) {
-  var folder       = DriveApp.getFolderById(folderId);
-  var inputDocId   = DocumentApp.create(docName).getId();
-  var inputDocFile = DriveApp.getFileById(inputDocId);
-  var outputDoc    = inputDocFile.makeCopy(docName, folder);
-  var docCheck     = folder.getFilesByName(docName);
-  if (docCheck.hasNext()) {
-    var outputDocId = docCheck.next().getId();
-    inputDocFile.setTrashed(true);
-    return outputDocId;
-    }
-}
+// function createABlankDocInAFolder(folderId, docName) {
+//   var folder       = DriveApp.getFolderById(folderId);
+//   var inputDocId   = DocumentApp.create(docName).getId();
+//   var inputDocFile = DriveApp.getFileById(inputDocId);
+//   var outputDoc    = inputDocFile.makeCopy(docName, folder);
+//   var docCheck     = folder.getFilesByName(docName);
+//   if (docCheck.hasNext()) {
+//     var outputDocId = docCheck.next().getId();
+//     inputDocFile.setTrashed(true);
+//     return outputDocId;
+//     }
+// }
 
 // -- Search Drive for a Document
 // - Utility Functions for Docs
