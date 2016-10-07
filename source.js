@@ -744,30 +744,39 @@ function createVerifySSAtRoot(name) {
 
 // -- Convert Column Number to a Letter
 
-function numberToColumnABC(number) {
-	var number = number - 1;
-	if (number <= 26) {
-		var character = String.fromCharCode(97 + number).toUpperCase();
-		return character;
-	} else if (number >= 27 && number <= 52) {
-		var adjNumber = number - 26;
-		var character = String.fromCharCode(97 + adjNumber).toUpperCase();
-		return "A" + character;
-	} else if (number >= 53 && number <= 78) {
-		var adjNumber = number - 52;
-		var character = String.fromCharCode(97 + adjNumber).toUpperCase();
-		return "B" + character;
-	} else if (number >= 79 && number <= 104) {
-		var adjNumber = number - 78;
-		var character = String.fromCharCode(97 + adjNumber).toUpperCase();
-		return "C" + character;
+function numberToColumn(num) {
+	var num = num - 1, chr;
+	if (num <= 26) {
+    chr = String.fromCharCode(97 + num).toUpperCase();
+    return chr;
+	} else if (num >= 27 && num <= 52) {
+		num -= 26;
+		chr = String.fromCharCode(97 + num).toUpperCase();
+		return "A" + chr;
+	} else if (num >= 53 && num <= 78) {
+		num -= 52;
+		chr = String.fromCharCode(97 + num).toUpperCase();
+		return "B" + chr;
+	} else if (num >= 79 && num <= 104) {
+		num -= 78;
+		chr = String.fromCharCode(97 + num).toUpperCase();
+		return "C" + chr;
 	}
 }
 
+function ex_ntc() {
+  for (var i = 1; i <= 104; i++) {
+    var j = numberToColumn(i);
+    Logger.log(i + " - " + j);
+  }
+}
+
+ex_ntc();
+
 // -- Convert Column Letter to a Number
 
-function columnABCToNumber(columnABC) {
-	var columnABC = columnABC.toUpperCase();
+function columnToNumber(col) {
+	var column = columnABC.toUpperCase();
 	if (columnABC.length === 1)  {
 		var char0Value = columnABC.charCodeAt(0) - 64;
 		return char0Value;
