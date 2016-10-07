@@ -746,18 +746,18 @@ function createVerifySSAtRoot(name) {
 
 function numberToColumn(num) {
 	var num = num - 1, chr;
-	if (num <= 26) {
+	if (num <= 25) {
     chr = String.fromCharCode(97 + num).toUpperCase();
     return chr;
-	} else if (num >= 27 && num <= 52) {
+	} else if (num >= 26 && num <= 51) {
 		num -= 26;
 		chr = String.fromCharCode(97 + num).toUpperCase();
 		return "A" + chr;
-	} else if (num >= 53 && num <= 78) {
+	} else if (num >= 52 && num <= 77) {
 		num -= 52;
 		chr = String.fromCharCode(97 + num).toUpperCase();
 		return "B" + chr;
-	} else if (num >= 79 && num <= 104) {
+	} else if (num >= 78 && num <= 103) {
 		num -= 78;
 		chr = String.fromCharCode(97 + num).toUpperCase();
 		return "C" + chr;
@@ -772,6 +772,8 @@ function ex_ntc() {
 }
 
 ex_ntc();
+
+
 
 // -- Convert Column Letter to a Number
 
