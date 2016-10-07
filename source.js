@@ -801,34 +801,18 @@ function ex_cn() {
 // ex_cn();
 
 // -- Timestamp on Cell Change
+// *set trigger* 
 
-var watch  = "ColA";
-var update = "ColB";
-
-function onEdit(event) { 
-  var timezone     = "GMT-5";
-  var format       = "MM/dd/YYYY HH:mm:ss";
-  var sheet        = event.source.getActiveSheet();
-  var actRng       = event.source.getActiveRange();
-  var editColumn   = actRng.getColumn();
-  var index        = actRng.getRowIndex();
-  var headers      = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues();
-  var watchCol     = headers[0].indexOf(watch) + 1;
-  var updateCol    = headers[0].indexOf(update);
-  if (updateCol > -1 && index > 1 && editColumn == watchCol) {
-    var cellToUpdate = sheet.getRange(index, updateCol + 1);
-    var datestamp    = Utilities.formatDate(new Date(), timezone, format);
-    cellToUpdate.setValue(datestamp);
-  }
-} 
-
-var watch_update   = [
+var track = [
   {watch: 'ColA', update: 'ColB'},
   {watch: 'ColC', update: 'ColD'},
   {watch: 'ColE', update: 'ColF'},
-];
+]
 
-// multi
+function timestampChange(arrTrack) {
+
+}
+
 function onEditMulti(event) { 
   var timezone       = "GMT-5";
   var format         = "MM/dd/YYYY HH:mm:ss";
@@ -854,7 +838,6 @@ function onEditMulti(event) {
     }
   } 
 }
-
 
 // -- Replicating Import Range
 
