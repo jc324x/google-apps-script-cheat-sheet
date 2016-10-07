@@ -744,7 +744,7 @@ function createVerifySSAtRoot(name) {
 
 // -- Convert Column Number to a Letter
 
-function numberToColumn(num) {
+function numCol(num) {
 	var num = num - 1, chr;
 	if (num <= 25) {
     chr = String.fromCharCode(97 + num).toUpperCase();
@@ -764,30 +764,41 @@ function numberToColumn(num) {
 	}
 }
 
-function ex_ntc() {
+function ex_nc() {
   for (var i = 1; i <= 104; i++) {
-    var j = numberToColumn(i);
+    var j = numCol(i);
     Logger.log(i + " - " + j);
   }
 }
 
-ex_ntc();
-
-
+// ex_nc();
 
 // -- Convert Column Letter to a Number
 
-function columnToNumber(col) {
-	var column = columnABC.toUpperCase();
-	if (columnABC.length === 1)  {
-		var char0Value = columnABC.charCodeAt(0) - 64;
-		return char0Value;
-	} else if (columnABC.length === 2) {
-		var char0Value = (columnABC.charCodeAt(0) - 64) * 26;
-		var char1Value = columnABC.charCodeAt(1) - 64;
-		return char0Value + char1Value;
+function colNum(col) {
+	var col = col.toUpperCase();
+	if (col.length === 1)  {
+		var chr0 = col.charCodeAt(0) - 64;
+		return chr0;
+	} else if (col.length === 2) {
+		var chr0 = (col.charCodeAt(0) - 64) * 26;
+		var chr1 = col.charCodeAt(1) - 64;
+		return chr0 + chr1;
 	}
 }
+
+function ex_cn() {
+  for (var i = 0; i <= 25; i++) {
+    var abc = String.fromCharCode(97 + i).toUpperCase();
+    Logger.log(abc + " - " + colNum(abc));
+  }
+  for (var i = 26; i <= 51; i++) {
+    var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
+    Logger.log(abc + " - " + colNum(abc));
+  }
+}
+
+// ex_cn();
 
 // -- Timestamp on Cell Change
 
