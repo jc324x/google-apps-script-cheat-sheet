@@ -801,10 +801,15 @@ function ex_cn() {
 // ex_cn();
 
 // -- Timestamp on Cell Change
-// *set trigger* 
 
-function onEdit(event) 
-{ 
+// function onEdit(){
+// 	var tz   = "GMT-5";
+// 	var fmat = "MM/dd/YYYY HH:mm:ss";
+// 	var watch = "ColA";
+// 	var update = "ColB";
+// }
+
+function onEdit(event) { 
   var timezone         = "GMT-5";
   var timestamp_format = "MM/dd/YYYY HH:mm:ss";
 
@@ -869,8 +874,6 @@ function onEdit(event)
 //     }
 // 	}
 // }
-
-
 
 // function onEditMulti(event) { 
 //   var timezone       = "GMT-5";
