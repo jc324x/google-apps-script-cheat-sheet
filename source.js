@@ -41,7 +41,6 @@
 //   | -- Create or Verify Spreadsheet in a Folder or at Root
 //   | - Utility Functions for Sheets
 //   | -- Convert Column Number to a Letter
-//   | -- Timestamp on Cell Change
 //   | -- Replicating Import Range
 //   | -- Evaluating True and False
 //   | - Range as Array of Objects
@@ -68,6 +67,8 @@
 //   | -- Comma Separated List of Recipients
 //   | -- HTML in Email Body
 //   | -- Mail Merge
+
+// Future: Timestamp on Cell Change, Moving / Copying Folders
 
 function testEverything() {}
 
@@ -799,107 +800,6 @@ function ex_cn() {
 }
 
 // ex_cn();
-
-// -- Timestamp on Cell Change
-
-// function onEdit(){
-// 	var tz   = "GMT-5";
-// 	var fmat = "MM/dd/YYYY HH:mm:ss";
-// 	var watch = "ColA";
-// 	var update = "ColB";
-// }
-
-function onEdit(event) { 
-  var timezone         = "GMT-5";
-  var timestamp_format = "MM/dd/YYYY HH:mm:ss";
-
-	// In
-  var updateColNameA   = "ColA";
-  var updateColNameB   = "InBy";
- 
-	// Out
-  var timeStampColNameA = "ColB"; 
-  var timeStampColNameB = "In:Time Stamp"; 
-  
-  var sheet      = event.source.getSheetByName('Swaps');
-  var actRng     = event.source.getActiveRange();
-  var editColumn = actRng.getColumn();
-  var index      = actRng.getRowIndex();
-  var headers    = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues();
-  
-  var dateColA = headers[0].indexOf(timeStampColNameA); 
-  var updateColA = headers[0].indexOf(updateColNameA); updateColA = updateColA+1; if (dateColA > -1 && index > 1 && editColumn == updateColA) { 
-    var cellA = sheet.getRange(index, dateColA + 1); 
-    var dateA = Utilities.formatDate(new Date(), timezone, timestamp_format); cellA.setValue(dateA); 
-  }
-  
-	var dateColB = headers[0].indexOf(timeStampColNameB); 
-  var updateColB = headers[0].indexOf(updateColNameB); updateColB = updateColB+1; if (dateColB > -1 && index > 1 && editColumn == updateColB) { 
-    var cellB = sheet.getRange(index, dateColB + 1); 
-    var dateB = Utilities.formatDate(new Date(), timezone, timestamp_format); cellB.setValue(dateB); 
-  }
-  
-  var dateColC = headers[0].indexOf(timeStampColNameC); 
- 	var updateColC = headers[0].indexOf(updateColNameC); updateColC = updateColC+1; if (dateColC > -1 && index > 1 && editColumn == updateColC) { 
-    var cellC = sheet.getRange(index, dateColC + 1); 
-    var dateC = Utilities.formatDate(new Date(), timezone, timestamp_format); cellC.setValue(dateC); 
-  }
-} 
-  
-// function onEditTS(event) {
-
-// 	var arr = [
-// 		{watch: 'ColA', update: 'ColB'},
-// 		{watch: 'ColC', update: 'ColD'},
-// 		{watch: 'ColE', update: 'ColF'},
-// 	]
-
-// 	var tz   = "GMT-5";
-// 	var fmat = "MM/dd/YYYY HH:mm:ss";
-// 	var sh   = event.source.getActiveSheet();
-// 	var rng  = event.source.getActiveRange();
-// 	var col  = rng.getColumn();
-// 	var row  = rng.getRowIndex();
-// 	var hdrs = sheet.getRange(1,1,1, sh.getLastColumn()).getValues();
-// 	Logger.log(hdrs);
-// 	for (i = 0; i < arr.length; i++){
-// 		var w    = arr[i].watch;
-// 		var u    = arr[i].update;
-//     var wCol = hdrs[0].indexOf(w) + 1;
-//     var uCol = hdrs[0].indexOf(u);
-//     if (updateCol > -1 && index > 1 && editColumn == watchCol) {
-//       var uCell = sh.getRange(row, uCol + 1);
-//       var ts    = Utilities.formatDate(new Date(), tz, fmat);
-//       uCell.setValue(datestamp);
-//     }
-// 	}
-// }
-
-// function onEditMulti(event) { 
-//   var timezone       = "GMT-5";
-//   var format         = "MM/dd/YYYY HH:mm:ss";
-//   var sheet          = event.source.getActiveSheet();
-//   var actRng         = event.source.getActiveRange();
-//   var editColumn     = actRng.getColumn();
-//   var index          = actRng.getRowIndex();
-//   var headers        = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues();
-//   for (i = 0; i < watch_update.length; i++) {
-//     var watch        = watch_update[i].watch;
-//     var update       = watch_update[i].update;
-//     var sheet        = event.source.getActiveSheet();
-//     var actRng       = event.source.getActiveRange();
-//     var editColumn   = actRng.getColumn();
-//     var index        = actRng.getRowIndex();
-//     var headers      = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues();
-//     var watchCol     = headers[0].indexOf(watch) + 1;
-//     var updateCol    = headers[0].indexOf(update);
-//     if (updateCol > -1 && index > 1 && editColumn == watchCol) {
-//       var updateCell = sheet.getRange(index, updateCol + 1);
-//       var datestamp  = Utilities.formatDate(new Date(), timezone, format);
-//       updateCell.setValue(datestamp);
-//     }
-//   } 
-// }
 
 // -- Replicating Import Range
 
