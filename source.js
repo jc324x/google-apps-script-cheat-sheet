@@ -42,9 +42,10 @@
 //   | - Utility Functions for Sheets
 // - | -- Convert Column Number to a Letter
 // - | -- Replicating Import Range
-//   | -- Evaluating True and False
+// - | -- Evaluating True and False
 //   | - Range as Array of Objects
-//   | -- Grid Object
+//   | -- Grid Object from Sheet or Range - Horizontal Orientation
+//   | -- Grid Object from Sheet or Range - Vertical Orientation
 //   | - Range as Array of Arrays
 //   | -- Generate Array of Arrays
 //   | -- Flatten A Multidimensional Array
@@ -839,9 +840,9 @@ var ex_ctf2 = "No";
 
 // - Range as Array of Objects
 
-// -- Grid Object
+// -- Grid Object from Sheet or Range
 
-function Grid(sheetObj, headerRow) {
+function HorizontalGrid(sheetObj, headerRow, a1Range) {
 
   function HVal(i, header) {
     this.header = header;
