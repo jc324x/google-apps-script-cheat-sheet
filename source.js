@@ -812,6 +812,8 @@ function getSet(){
 }
 
 // -- Evaluating True and False
+// true:  1, t*, T*, y*, Y*
+// false: 0, !t || !y
 
 function checkTF(input) {
   if (isNaN(input)) {
@@ -829,6 +831,11 @@ function checkTF(input) {
     }
   }
 }
+
+var ex_ctf1 = "Yes";
+var ex_ctf2 = "No";
+// Logger.log(checkTF(ex_ctf1));
+// Logger.log(checkTF(ex_ctf2));
 
 // - Range as Array of Objects
 
