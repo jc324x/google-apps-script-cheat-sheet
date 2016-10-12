@@ -44,8 +44,8 @@
 // - | -- Replicating Import Range
 // - | -- Evaluating True and False
 //   | - Range as Array of Objects
-//   | -- Grid Object from Sheet
-//   | -- Grid Object from Range - Vertical Orientation
+//   | -- Grid from Sheet
+//   | -- Vertical Grid from Range
 //   | - Range as Array of Arrays
 //   | -- Generate Array of Arrays
 //   | -- Flatten A Multidimensional Array
@@ -840,7 +840,7 @@ var ex_ctf2 = "No";
 
 // - Range as Array of Objects
 
-// -- Grid Object from Sheet
+// -- Grid from Sheet
 
 function Grid(sheetObj, hRow) {
 
@@ -921,12 +921,26 @@ function Grid(sheetObj, hRow) {
   });
 }
 
-var ss_g    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_Grid = new Grid(ss_g, 1);
-var ex_arrRValObj = ex_Grid.arrRValObj;
-var ex_arrHValObj = ex_Grid.arrHValObj;
-Logger.log(ex_arrRValObj);
-Logger.log(ex_arrHValObj);
+// var ss_g    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var ex_Grid = new Grid(ss_g, 1);
+// var ex_arrRValObj = ex_Grid.arrRValObj;
+// var ex_arrHValObj = ex_Grid.arrHValObj;
+// Logger.log(ex_arrRValObj);
+// Logger.log(ex_arrHValObj);
+
+// -- Vertical Grid from Range
+
+function VerticalGrid(sheetObj, a1Notation)
+  var range  = sheetObj.getRange(a1Notation);
+  var height = range.getHeight();
+  var width  = range.getWidth();
+  var values = range.getValues();
+  var obj    = new Object();
+  for (var i = 0; i < values.length; i++) {
+    obj[values[i][0]] = values[i][1];
+  } 
+  return obj;
+}
 
 // - Range as Array of Arrays
 
