@@ -6,42 +6,42 @@
 // fn conventions
 // _arr, fldr, fi, fldr
 
-// * | General 
-// * | - Array
-// * | -- Check for a Value - Standard Array
-// * | -- Remove Duplicates
-// * | -- Remove Empty Values
-// * | -- Get Count of Values in Array
-// * | - Array of Objects
-//   | -- Check for a Value - Array of Objects
-// * | -- Sort by Property or Properties
-// * | -- Find Object With Unique Property Value - Return Object
-// * | -- Find Object With Unique Property Value - Return Value 
-// * | -- Filter by Property Value
-// * | - Dates and Times
-// * | -- Formatted Timestamps
-// * | -- Match a Date to a Range of Dates
-//   |  Drive 
-//   | - Folders
-//   | -- Create or Verify Folder Path
-//   | -- Last Folder in a Folder Path
-//   | -- Array of All Folders in a Folder, at Root or in Drive
-//   | -- Array of All Folder Names
-//   | -- Find a Folder in a Folder, at Root or in Drive
-//   | -- Create or Verify Folders in a Folder or at Root
-//   | - Files
-//   | -- Array of All Files in a Folder, at Root or in Drive
-//   | -- Array of All File Names
-//   | -- Find a File in a Folder, at Root or in Drive 
-//   | -- Parent Folder for a File
-//   | -- Copy a File to a Folder 
-//   | -- Move a File to a Folder
+// - | General 
+// - | - Array
+// - | -- Check for a Value - Standard Array
+// - | -- Remove Duplicates
+// - | -- Remove Empty Values
+// - | -- Get Count of Values in Array
+// - | - Array of Objects
+// - | -- Check for a Value - Array of Objects
+// - | -- Sort by Property or Properties
+// - | -- Find Object With Unique Property Value - Return Object
+// - | -- Find Object With Unique Property Value - Return Value 
+// - | -- Filter by Property Value
+// - | - Dates and Times
+// - | -- Formatted Timestamps
+// - | -- Match a Date to a Range of Dates
+// - |  Drive 
+// - | - Folders
+// - | -- Create or Verify Folder Path
+// - | -- Last Folder in a Folder Path
+// - | -- Array of All Folders in a Folder, at Root or in Drive
+// - | -- Array of All Folder Names
+// - | -- Find a Folder in a Folder, at Root or in Drive
+// - | -- Create or Verify Folders in a Folder or at Root
+// - | - Files
+// - | -- Array of All Files in a Folder, at Root or in Drive
+// - | -- Array of All File Names
+// - | -- Find a File in a Folder, at Root or in Drive 
+// - | -- Parent Folder for a File
+// - | -- Copy a File to a Folder 
+// - | -- Move a File to a Folder
 //   | Sheets
-//   | - Managing Spreadsheet Files
-//   | -- Create or Verify Spreadsheet in a Folder or at Root
+// - | - Managing Spreadsheet Files
+// - | -- Create or Verify Spreadsheet in a Folder or at Root
 //   | - Utility Functions for Sheets
-//   | -- Convert Column Number to a Letter
-//   | -- Replicating Import Range
+// - | -- Convert Column Number to a Letter
+// - | -- Replicating Import Range
 //   | -- Evaluating True and False
 //   | - Range as Array of Objects
 //   | -- Grid Object
@@ -802,17 +802,13 @@ function ex_cn() {
 // ex_cn();
 
 // -- Replicating Import Range
+// trigger -> getSet : From spreadsheet : On edit
 
-function onEdit(e){
-  // section, first, last
-  var getA = selectComments_Sheet.getRange("A3:C228").getValues();
-  var setA = export_Sheet.getRange("A2:C227").setValues(getA);
-  // comment
-  var getB = selectComments_Sheet.getRange("AB3:AB228").getValues();
-  var setB = export_Sheet.getRange("D2:D227").setValues(getB);
-  // advisor
-  var getC = selectComments_Sheet.getRange("D3:D228").getValues();
-  var setC = export_Sheet.getRange("E2:E227").setValues(getC);
+var sheet_oe = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+
+function getSet(){
+  var get = sheet_oe.getRange("A1:A5").getValues();
+  var set = sheet_oe.getRange("B1:B5").setValues(get);
 }
 
 // -- Evaluating True and False
