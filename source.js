@@ -868,13 +868,11 @@ function Grid(sheetObj, hRow) {
     });
   }
 
-  var _lColNum     = sheetObj.getLastColumn();
-  var _lColABC     = numCol(_lColNum);
-  var _lRow        = sheetObj.getLastRow();
-  var _hRange      = "A" + hRow + ":" + _lColABC + hRow;
-  var _hRangeObj   = sheetObj.getRange(_hRange)
-  // var _valRange    = "A" + (hRow +1 ) + ":" + _lColABC + _lRow;
-  var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + _lColABC + _lRow)
+  var lColNum     = sheetObj.getLastColumn();
+  var lColABC     = numCol(lColNum);
+  var lRow        = sheetObj.getLastRow();
+  var hRangeObj   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow)
+  var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow)
 
   function buildArrayOfHValObjs(hRangeObj){
     var mArr    = hRangeObj.getValues();
@@ -887,7 +885,7 @@ function Grid(sheetObj, hRow) {
     return arrHVal;
   }
 
-  var _arrHValObj  = buildArrayOfHValObjs(_hRangeObj);
+  var arrHValObj  = buildArrayOfHValObjs(hRangeObj);
 
   function buildArrayOfRValObjs(valRangeObj, arrHValObj){
     var h       = valRangeObj.getHeight();
@@ -908,24 +906,27 @@ function Grid(sheetObj, hRow) {
     return arrRVal;
   }
 
-  var _arrRValObj = buildArrayOfRValObjs(valRangeObj, _arrHValObj);
+  var arrRValObj = buildArrayOfRValObjs(valRangeObj, arrHValObj);
 
   Object.defineProperty(this, "arrHValObj", {
     get: function() {
-      return _arrHValObj;
+      return arrHValObj;
     }
   });
 
   Object.defineProperty(this, "arrRValObj", {
     get: function() {
-      return _arrRValObj;
+      return arrRValObj;
     }
   });
 }
 
 var ss_g    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_Grid = new Grid(ss_g, 1).arrRValObj;
-Logger.log(ex_Grid);
+var ex_Grid = new Grid(ss_g, 1);
+var ex_arrRValObj = ex_Grid.arrRValObj;
+var ex_arrHValObj = ex_Grid.arrHValObj;
+Logger.log(ex_arrRValObj);
+Logger.log(ex_arrHValObj);
 
 // - Range as Array of Arrays
 
