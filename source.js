@@ -57,8 +57,10 @@
 //   | -- Comma Separated List of Recipients
 //   | -- HTML in Email Body
 //   | -- Mail Merge
-
-// Future: Timestamp on Cell Change, Moving / Copying Folders, Set Cell Values in Grid, Array of Arrays?
+//   | Other
+//   | -- Regex Only Numbers or Letters
+  
+// Future: Timestamp on Cell Change, Moving / Copying Folders, Set Cell Values in Grid, Array of Arrays, Count Val arrObj
 
 function testEverything() {}
 
@@ -991,190 +993,14 @@ function commaSeperated(obj, arrProp){
 
 // -- HTML in Email Body
 
-// - Utility Functions for Docs 
+// -- Mail Merge
 
-/////////////////
-// -- LEGACY -- /
-/////////////////
+// Other
 
-function createArrayOfObjectsFromRange_Vertical(sheetName, a1Notation) {
-  var range      = ss.getSheetByName(sheetName).getRange(a1Notation);
-  var height     = range.getHeight();
-  var width      = range.getWidth();
-  var values     = range.getValues();
-  var properties = [];
-  for (var i = 0; i < values.length; i++) {
-    properties.push(values[i][0]);
-  } 
-  var arrayOfObjects = [];
-
-  for (var i = 0; i < height; i++) {
-    var obj = new Object();
-    for (var j = 1; j < width; j++) {
-      var property  = properties[i];
-      var value     = values[i][j];
-      // skip empty values 
-      if (value !== "") {
-        obj[property] = value;
-      }
-    }
-    // don't add empty objects to the array
-    var count = 0;
-    for (var k in obj) {
-        if (obj.hasOwnProperty(k)) {
-            count++;
-        }
-      }
-    if (count >= 1) {
-      arrayOfObjects.push(obj);
-    } 
-  }  
-  return arrayOfObjects;
-}
-
-
-// horizontal
-function range_ArrayOfObjects(sheetName, a1Notation){
-
-  var range  = SpreadsheetApp.getActive().getSheetByName(sheetName).getRange(a1Notation);
-  var height = range.getHeight();
-  var width  = range.getWidth();
-  var values = range.getValues();
-
-  var headers = [];
-  for (var i = 0; i < values[0].length; i++) {
-    headers.push(values[0][i])
-  } 
-
-  var arrayOfObjects = [];
-
-  for (var i = 1; i < height; i++) {
-    var obj = new Object();
-
-    for (var j = 0; j < width; j++) {
-      var property  = headers[j];
-      var value     = values[i][j];
-      // pass over empty values 
-      if (value !== "") {
-        obj[property] = value;
-      }
-
-    }
-      var count = 0;
-      for (var k in obj) {
-          if (obj.hasOwnProperty(k)) {
-              count++;
-          }
-        }
-
-      if (count >= 1) {
-        arrayOfObjects.push(obj);
-      } 
-  }  
-  return arrayOfObjects;
-}
-
-// number of unique values for a property in array of objects
-
-function countValuesForProperty(arrayOfObjects, property) {
-  for (var i = 0; i < arrayOfObjects.length; i++) {
-      
-  } 
-}
-
-
-// gets all values for array of objects
-
-// var result = objArray.map(function(a) {return a.foo;});
-
-// function onlyUnique(value, index, self) { 
-//       return self.indexOf(value) === index;
-// }
-
-// Logger.log(val.indexOf("Last"));
-
-// var index = val.map(function(e) { return e.Last; }).indexOf('ZZZ');
-
-function uniqueValuesForProperty(arrayOfObjects, property) {
-  var allValues    = arrayOfObjects.map(function(a) {return a.property;});
-  var uniqueValues = removeDuplicates(allValues);
-  return uniqueValues;
-}
-
-
-// ---
-
-function newArrayByObjProp(arrayOfObj, propToFind) {
-  var array = [];
-  for (var i = 0; i < arrayOfObj.length; i++) { 
-  var obj = arrayOfObj[i];
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(prop)) {
-        if (prop == propToFind) {
-          array.push(obj[prop]);
-        }
-      }
-    }
-  }
-  return array;
-}
-
-// -- LEGACY -- ?
-// function buildArrayOfItemsByTitle(formObj) {
-//   var output_array = [];
-//   var arrayOfItemObjects = formObj.getItems()
-//   for (var i = 0; i < arrayOfItemObjects.length; i++) {
-//     output_array.push(arrayOfItemObjects[i].getTitle());
-//   }
-//   return output_array;
-// }
+// -- Regex Only Numbers or Letters
 
 // RegEx -> non-digits
 // myString = myString.replace(/\D/g,'');
 
 // RegEx -> digits only
 // myString = myString.replace(/\d+/g)
-
-
-// function setUnifiedDate(arrObj){
-//   for (var h = 0; h < arrObj.length; h++){
-//     var item = arrObj[h];
-//       for (var prop in item) {
-//         if (item.hasOwnProperty(prop)){
-//           if (prop == "Due Date"){
-//             item["Unified Date"] = item[prop];
-//             continue;
-//           } else {
-//             item["Unified Date"] = item["Timestamp"];
-//           }
-//         }
-//     }
-//   }
-//   return arrObj;
-// }
-
-// FORM OPTIONS
-
-function buildArrayOfItemTitleID(formObj) {
-  var output_array = [];
-  var arrayOfItemObjects = formObj.getItems()
-  for (var i = 0; i < arrayOfItemObjects.length; i++) {
-    var item = {}; 
-    item.index = i;
-    item.title = arrayOfItemObjects[i].getTitle();
-    item.id    = arrayOfItemObjects[i].getId();
-    item.item  = arrayOfItemObjects[i];
-    output_array.push(item);
-  }
-  return output_array;
-}
-
-function buildArrayOfChoices(itemObject, inputArray) {
-  var arrayOfChoices = [];
-  for (var i = 0; i < inputArray.length; i++){
-    var response = itemObject.createChoice(inputArray[i]);
-    Logger.log(response);
-    // arrayOfChoices.push(response);
-  }
-  // return arrayOfChoices ;
-}
