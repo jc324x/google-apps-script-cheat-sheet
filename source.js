@@ -44,11 +44,8 @@
 // - | -- Replicating Import Range
 // - | -- Evaluating True and False
 //   | - Range as Array of Objects
-//   | -- Grid from Sheet
-//   | -- Vertical Grid from Range
-//   | - Range as Array of Arrays
-//   | -- Generate Array of Arrays
-//   | -- Flatten A Multidimensional Array
+//   | -- Grid Object
+//   | -- Two Column Options Array
 //   | Forms
 //   | - Form Management
 //   | -- Build Array of Items
@@ -69,7 +66,7 @@
 //   | -- HTML in Email Body
 //   | -- Mail Merge
 
-// Future: Timestamp on Cell Change, Moving / Copying Folders
+// Future: Timestamp on Cell Change, Moving / Copying Folders, Set Cell Values in Grid, Array of Arrays?
 
 function testEverything() {}
 
@@ -805,12 +802,12 @@ function ex_cn() {
 // -- Replicating Import Range
 // trigger -> getSet : From spreadsheet : On edit
 
-// var sheet_oe = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var sheet_oe = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 
-// function getSet(){
-//   var get = sheet_oe.getRange("A1:A5").getValues();
-//   var set = sheet_oe.getRange("B1:B5").setValues(get);
-// }
+function getSet(){
+  var get = sheet_oe.getRange("G2:G5").getValues();
+  var set = sheet_oe.getRange("H2:H5").setValues(get);
+}
 
 // -- Evaluating True and False
 // true:  1, t*, T*, y*, Y*
@@ -928,9 +925,9 @@ function Grid(sheetObj, hRow) {
 // Logger.log(ex_arrRValObj);
 // Logger.log(ex_arrHValObj);
 
-// -- Vertical Grid from Range
+// -- Two Column Options Array
 
-function VerticalGrid(sheetObj, a1Notation)
+function twoColOpt(sheetObj, a1Notation) {
   var range  = sheetObj.getRange(a1Notation);
   var height = range.getHeight();
   var width  = range.getWidth();
@@ -942,11 +939,9 @@ function VerticalGrid(sheetObj, a1Notation)
   return obj;
 }
 
-// - Range as Array of Arrays
-
-// -- Generate Array of Arrays
-
-// -- Flatten A Multidimensional Array
+var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_vg    = twoColOpt(sheet_vg, "D1:F5");
+Logger.log(ex_vg);
 
 // Forms
 
@@ -1110,12 +1105,6 @@ function range_ArrayOfObjects(sheetName, a1Notation){
   }  
   return arrayOfObjects;
 }
-
-// doesn't work in onEdit(e)
-function getSetValues(sheet1, a1Notation1, sheet2, a1Notation2) {
-  var get = ss.getSheetByName(sheet1).getRange(a1Notation1).getValues();
-  var set = ss.getSheetByName(sheet2).getRange(a1Notation2).setValues();
-} 
 
 // number of unique values for a property in array of objects
 
