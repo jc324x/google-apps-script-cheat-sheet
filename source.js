@@ -50,7 +50,6 @@
 //   | - Form Management
 //   | -- Build Array of Items
 //   | -- Set Item Dropdown Choices
-//   | -- Clear All Form Options
 //   | -- Get Destination Sheet
 //   | - Form Responses
 //   | -- Get Last Form Response
@@ -949,11 +948,27 @@ Logger.log(ex_vg);
 
 // -- Build Array of Items
 
+function buildArrOfItemTitleID(formObj) {
+  var output_array = [];
+  var arrayOfItemObjects = formObj.getItems()
+  for (var i = 0; i < arrayOfItemObjects.length; i++) {
+    var item = {}; 
+    item.index = i;
+    item.title = arrayOfItemObjects[i].getTitle();
+    item.id    = arrayOfItemObjects[i].getId();
+    item.item  = arrayOfItemObjects[i];
+    output_array.push(item);
+  }
+  return output_array;
+}
+
 // -- Set Item Dropdown Choices
 
-// -- Clear All Form Options
+// .setChoiceValues();
 
 // -- Get Destination Sheet
+
+var formRSheetId = form.getDestinationId();
 
 // - Form Responses
 
@@ -979,7 +994,21 @@ function getLastResponse(formObj) {
   return lastObj;
 }
 
-// -- Dates in Form Responses
+// -- Unify Dates in Form Responses
+
+// ROUGH import
+
+function unifyObjProp(obj, check, set){
+  if (obj["Due Date"] == null){
+    obj["DDObj"] = new Date(obj["Timestamp"]);
+  } else {
+    // obj["DDObj"] = gFormDateToDateObj_Form(obj["Due Date"]);
+    obj["DDObj"] = gFormToDateObj_Form(obj["Due Date"]);
+    Logger.log(obj["DDObj"] = gFormToDateObj_Form(obj["Due Date"]);
+  }
+    obj["DDStr"] = formattedDate_DateObj(obj["DDObj"]);
+  return obj;
+}
 
 // Docs
 
