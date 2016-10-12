@@ -18,7 +18,7 @@
 // - | -- Find Object With Unique Property Value - Return Object
 // - | -- Find Object With Unique Property Value - Return Value 
 // - | -- Filter by Property Value
-//   | -- Unify Properties
+//   | -- Unify Properties -- ROUGH
 // - | - Dates and Times
 // - | -- Formatted Timestamps
 // - | -- Match a Date to a Range of Dates
@@ -47,13 +47,6 @@
 //   | - Range as Array of Objects
 //   | -- Grid Object
 //   | -- Two Column Options Array
-//   | Forms
-//   | - Form Management
-//   | -- Build Array of Items
-//   | -- Set Item Dropdown Choices
-//   | -- Get Destination Sheet
-//   | - Form Responses
-//   | -- Get Last Form Response
 //   | Docs
 //   | - Managing Document Files
 //   | -- Create or Verify Document in a Folder or at Root
@@ -553,8 +546,8 @@ function checkForExFile() {
 	return findFileIn(fldr, "example_file");
 }
 
-var ex_chk = checkForExFile();
-// Logger.log(ex_chk);
+var chkFile = checkForExFile();
+// Logger.log(chkFile);
 
 // -- Array of All Files in a Folder / Drive / Root
 // ➡  array of files
@@ -957,6 +950,8 @@ var ex_vg    = twoColOpt(sheet_vg, "D1:F5");
 Logger.log(ex_vg);
 
 // Forms
+
+// fn to create scratch form for examples below
 
 // - Form Management
 
