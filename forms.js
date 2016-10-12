@@ -1,10 +1,15 @@
+// form obj 
+
+var form = FormApp.getActiveForm();
+
 //   | Forms
 //   | - Form Management
-//   | -- Build Array of Items
-//   | -- Set Item Dropdown Choices
+//   | -- Array of Items
+//   | -- Set Dropdown Choices
 //   | -- Get Destination Sheet
 //   | - Form Responses
 //   | -- Get Last Form Response
+//   | -- Timestamps in Forms
 
 // Forms
 
