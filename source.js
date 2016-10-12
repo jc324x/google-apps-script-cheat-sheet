@@ -44,8 +44,8 @@
 // - | -- Replicating Import Range
 // - | -- Evaluating True and False
 //   | - Range as Array of Objects
-//   | -- Grid Object from Sheet or Range - Horizontal Orientation
-//   | -- Grid Object from Sheet or Range - Vertical Orientation
+//   | -- Grid Object from Sheet
+//   | -- Grid Object from Range - Vertical Orientation
 //   | - Range as Array of Arrays
 //   | -- Generate Array of Arrays
 //   | -- Flatten A Multidimensional Array
@@ -805,12 +805,12 @@ function ex_cn() {
 // -- Replicating Import Range
 // trigger -> getSet : From spreadsheet : On edit
 
-var sheet_oe = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var sheet_oe = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 
-function getSet(){
-  var get = sheet_oe.getRange("A1:A5").getValues();
-  var set = sheet_oe.getRange("B1:B5").setValues(get);
-}
+// function getSet(){
+//   var get = sheet_oe.getRange("A1:A5").getValues();
+//   var set = sheet_oe.getRange("B1:B5").setValues(get);
+// }
 
 // -- Evaluating True and False
 // true:  1, t*, T*, y*, Y*
@@ -840,47 +840,41 @@ var ex_ctf2 = "No";
 
 // - Range as Array of Objects
 
-// -- Grid Object from Sheet or Range
+// -- Grid Object from Sheet
 
-function HorizontalGrid(sheetObj, headerRow, a1Range) {
+function Grid(sheetObj, hRow) {
 
   function HVal(i, header) {
     this.header = header;
-    var _i = i;
 
     Object.defineProperty(this, "colIndex", {
         get: function() {
-          return _i + 1;
+          return i + 1;
         }
     });
 
     Object.defineProperty(this, "colIndexABC", {
         get: function() {
-          return numberToColumnABC(this.colIndex);
+          return numCol(this.colIndex);
         }
     });
   }
 
-  function RVal(i, headerRow) {
-    var _i         = i;
-    var _headerRow = headerRow;
-
+  function RVal(i, hRow) {
     Object.defineProperty(this, "rowIndex", {
         get: function() {
-          return _i + _headerRow;
+          return i + hRow;
         }
     });
   }
 
-  var _shObj       = sheetObj;
-  var _hRow        = headerRow;
-  var _lColNum     = _shObj.getLastColumn();
-  var _lColABC     = numberToColumnABC(_lColNum);
-  var _lRow        = _shObj.getLastRow();
-  var _hRange      = "A" + _hRow + ":" + _lColABC + _hRow;
-  var _hRangeObj   = _shObj.getRange(_hRange)
-  var _valRange    = "A" + (_hRow +1 ) + ":" + _lColABC + _lRow;
-  var _valRangeObj = _shObj.getRange(_valRange)
+  var _lColNum     = sheetObj.getLastColumn();
+  var _lColABC     = numCol(_lColNum);
+  var _lRow        = sheetObj.getLastRow();
+  var _hRange      = "A" + hRow + ":" + _lColABC + hRow;
+  var _hRangeObj   = sheetObj.getRange(_hRange)
+  // var _valRange    = "A" + (hRow +1 ) + ":" + _lColABC + _lRow;
+  var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + _lColABC + _lRow)
 
   function buildArrayOfHValObjs(hRangeObj){
     var mArr    = hRangeObj.getValues();
@@ -901,7 +895,7 @@ function HorizontalGrid(sheetObj, headerRow, a1Range) {
     var mArr    = valRangeObj.getValues();
     var arrRVal = [];
     for (var i = 0; i < h; i++) {
-      var rVal = new RVal(i, _hRow);
+      var rVal = new RVal(i, hRow);
       for (var j = 0; j < w; j++) {
         var prop = arrHValObj[j].header;
         var val  = mArr[i][j];
@@ -914,7 +908,7 @@ function HorizontalGrid(sheetObj, headerRow, a1Range) {
     return arrRVal;
   }
 
-  var _arrRValObj = buildArrayOfRValObjs(_valRangeObj, _arrHValObj);
+  var _arrRValObj = buildArrayOfRValObjs(valRangeObj, _arrHValObj);
 
   Object.defineProperty(this, "arrHValObj", {
     get: function() {
@@ -928,6 +922,10 @@ function HorizontalGrid(sheetObj, headerRow, a1Range) {
     }
   });
 }
+
+var ss_g    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_Grid = new Grid(ss_g, 1).arrRValObj;
+Logger.log(ex_Grid);
 
 // - Range as Array of Arrays
 
