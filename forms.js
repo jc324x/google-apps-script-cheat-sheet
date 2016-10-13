@@ -2,15 +2,14 @@
 
 var form = FormApp.getActiveForm();
 
-//   | Forms
-//   | - Form Management
-// - | -- Array of Form Items
-// - | -- Get Form Item by Name
-//   | -- Set Choices from Array
-// - | -- Get Destination Sheet
-//   | - Form Responses
-//   | -- Get Last Form Response
-//   | -- Timestamps in Forms
+// * | Forms
+// * | - Form Management
+// * | -- Array of Form Items
+// * | -- Get Form Item by Name
+// * | -- Set Item Choices 
+// * | -- Get Destination Sheet
+// * | - Form Responses
+// * | -- Get Last Form Response
 
 function testEverything() {}
 
@@ -38,7 +37,7 @@ var items = arrItemsIn(form);
 // Logger.log(items);
 
 // -- Get Form Item by Name
-// from source.js
+// note: from source.js
 
 function findObjValIn(arrObj, pQuery, val, pReturn) {
 	for (var i = 0; i < arrObj.length; i++) {
@@ -54,7 +53,7 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 // var ex_fovi = findObjValIn(items, "title", "Multiple Choice Example", "item");
 // Logger.log(form.getItemById(ex_fovi).getTitle());
 
-// -- Set Item Dropdown Choices
+// -- Set Item Choices
 var choices   = ["1", "2", "3", "4", "5"];
 
 // --- Multiple Choice
@@ -62,12 +61,12 @@ var choices   = ["1", "2", "3", "4", "5"];
 var multi = findObjValIn(items, "title", "Multiple Choice Example", "item").asMultipleChoiceItem();
 multi.setChoiceValues(choices);
 
-// --- Dropdown Choices
+// --- Dropdown
 
 var drop = findObjValIn(items, "title", "Dropdown Example", "item").asListItem();
 drop.setChoiceValues(choices);
 
-// --- Checkbox Choices
+// --- Checkbox
 
 var chkbox = findObjValIn(items, "title", "Checkbox Example", "item").asCheckboxItem();
 chkbox.setChoiceValues(choices);
@@ -82,21 +81,24 @@ chkbox.setChoiceValues(choices);
 // -- Get Last Form Response
 
 function lastResponse(formObj) {
-  var allRsp  = form.getResponses();
-  var lastRsp = allRsp[allRsp.length - 1];
-  var itemRsp = lastRsp.getItemResponses();
-  var lastObj = {};
-  for (var i = 0; i < itemRsp.length; i++) {
-    var item = itemRsp[i];
-    var prop = item.getItem().getTitle();
-    var val  = item.getResponse();
+  var all  = form.getResponses();
+  var last = all[all.length - 1];
+  var rsps = last.getItemResponses();
+  var j = {};
+  for (var i = 0; i < rsps.length; i++) {
+    var rsp  = rsps[i];
+    var prop = rsp.getItem().getTitle();
+    var val  = rsp.getResponse();
     if (val !== "") {
-      lastObj[prop] = val;
+      j[prop] = val;
     } else {
-      lastObj[prop] = undefined;
+      j[prop] = undefined;
     }
   }
-  lastObj["Email"]     = lastRsp.getRespondentEmail();
-  lastObj["Timestamp"] = lastRsp.getTimestamp();
-  return lastObj;
+  j.email     = last.getRespondentEmail();
+  j.timestamp = last.getTimestamp();
+  return j;
 }
+
+// var last = lastResponse(form);
+// Logger.log(last);
