@@ -18,9 +18,6 @@
 // - | -- Find Object With Unique Property Value - Return Object
 // - | -- Find Object With Unique Property Value - Return Value 
 // - | -- Filter by Property Value
-//   | -- Unify Properties - draft
-//   | - Objects
-//   | -- Unify Properties - draft
 // - | - Dates and Times
 // - | -- Formatted Timestamps
 // - | -- Match a Date to a Range of Dates
@@ -52,10 +49,11 @@
 //   | -- Array of Objects from Two Columns
 //   | -- Grid Object
 //   | Docs
-//   | - Managing Document Files
-//   | -- Create or Verify Document in a Folder or at Root
-//   | - Utility Functions for Docs
-//   | -- Clear All Content From a Doc
+// - | - Managing Document Files
+// - | -- Create or Verify Document in a Folder or at Root
+// - | - Utility Functions for Docs
+// - | -- Access Document Body
+// - | -- Clear Document Body
 //   | Gmail
 //   | - Send Email
 //   | -- Comma Separated List of Recipients
@@ -317,20 +315,6 @@ function academicQuarter() {
 
 // var acdQ = academicQuarter();
 // Logger.log("current quarter ➡ " + acdQ);
-
-// -- Unify Properties -- ROUGH
-
-// function unifyProp(arrObj, check, set) {
-//   if (obj["Due Date"] == null){
-//     obj["DDObj"] = new Date(obj["Timestamp"]);
-//   } else {
-//     // obj["DDObj"] = gFormDateToDateObj_Form(obj["Due Date"]);
-//     obj["DDObj"] = gFormToDateObj_Form(obj["Due Date"]);
-//     Logger.log(obj["DDObj"] = gFormToDateObj_Form(obj["Due Date"]);
-//   }
-//     obj["DDStr"] = formattedDate_DateObj(obj["DDObj"]);
-//   return obj;
-// }
 
 // Drive
 
@@ -701,7 +685,7 @@ function copyFile(file, fldr) {
 function moveFile(file, fldr) {
 	var name = file.getName();
 	var dest = findFileIn(fldr, name);
-	if (dest === undefined) { file.makeCopy(fldr) }
+	if (dest === undefined) { file.makeCopy(name, fldr) }
 	var _file = findFileIn(fldr, name);
 	if (_file !== undefined) { file.setTrashed(true) }
 	return _file;
@@ -1071,11 +1055,53 @@ return arrRValObj;
 
 // -- Create or Verify Document in a Folder or at Root
 
+// --- Create or Verify Document in a Folder
+
+function createVerifyDocIn(fldr, name) {
+	var files = filesIn(fldr);
+	var names = fileNames(files);
+	if (!(checkValIn(names, name))) {
+		var doc  = DocumentApp.create(name).getId();
+		var file = DriveApp.getFileById(doc);
+		moveFile(file, fldr);
+	}
+	return findFileIn(fldr, name);
+}
+
+// var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet");
+// var ex_cvdi   = createVerifyDocIn(fldr_cvdi, "example_doc");
+// Logger.log("The Id of '" + ex_cvdi + "' in " + parentFolderOf(ex_cvdi) + " is '" + ex_cvdi.getId());
+
+// --- Create or Verify Document at Root
+
+function createVerifyDocAtRoot(name) {
+	var files = rootFiles();
+	var names = fileNames(files);
+	if (!(checkValIn(names, name))) {
+		var ss = DocumentApp.create(name);
+	}
+	return findFileAtRoot(name);
+}
+
+// var ex_cvdar = createVerifyDocAtRoot("example_doc");
+// Logger.log("The Id of '" + ex_cvdar + "' at root is '" + ex_cvdar.getId());
+
 // - Utility Functions for Docs
 
-// -- Clear All Content From a Doc
-
 // -- Access Document Body
+
+// var fldr_adb = lastFolderIn("google-apps-script-cheat-sheet");
+// var doc_adb  = findFileIn(fldr_adb, "example_doc").getId();
+// var body     = DocumentApp.openById(doc_adb).getBody();
+
+// body.appendParagraph("Hello, world!");
+
+// -- Clear Document Body
+
+// var fldr_cdb = lastFolderIn("google-apps-script-cheat-sheet");
+// var doc_cdb  = findFileIn(fldr_cdb, "example_doc").getId();
+// var body     = DocumentApp.openById(doc_cdb).getBody();
+// body.clear();
 
 // Gmail
 
