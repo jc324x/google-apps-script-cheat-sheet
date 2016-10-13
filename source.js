@@ -12,12 +12,15 @@
 // - | -- Remove Duplicates
 // - | -- Remove Empty Values
 // - | -- Get Count of Values in Array
+//   | -- Intersect of Two Arrays
 // - | - Array of Objects
 // - | -- Check for a Value - Array of Objects
 // - | -- Sort by Property or Properties
 // - | -- Find Object With Unique Property Value - Return Object
 // - | -- Find Object With Unique Property Value - Return Value 
 // - | -- Filter by Property Value
+//   | - Objects
+//   | -- Array of Matching Property Values
 // - | - Dates and Times
 // - | -- Formatted Timestamps
 // - | -- Match a Date to a Range of Dates
@@ -149,6 +152,28 @@ function countOfValIn(arr){
 // Logger.log("countVal out ⬇ ");
 // Logger.log(ex_covi);
 
+// -- Intersect of Two Arrays
+
+var arr1 = [1, 2, 3];
+var arr2 = [3, 4, 5];
+
+function intersectOf(a, b) {
+  var ai=0, bi=0;
+  var _arr = [];
+  while( ai < a.length && bi < b.length ) {
+     if (a[ai] < b[bi] ) { ai++; }
+     else if (a[ai] > b[bi] ){ bi++; }
+     else /* they're equal */
+     {
+       _arr.push(a[ai]);
+       ai++;
+       bi++;
+     }
+  }
+  return _arr;
+}
+
+
 // - Array of Objects
 
 // example array of objects
@@ -246,6 +271,34 @@ function filterObjIn(arrObj, pQuery, val) {
 // var ex_foi = filterObjIn(ex_arrObj, "b", 2);
 // Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
 // Logger.log(ex_foi);
+
+// - Objects
+// -- Array of Matching Property Values
+
+// function filterValuesIn(obj, arrProp) {
+// 	var arr  = [];
+// 	var keys = Object.keys(obj);
+
+// 	Logger.log(keys);
+
+// 	keys.filter(function(n) {
+// 			return arrProp.indexOf(n) != -1;
+// 	});
+
+// 	Logger.log(keys);
+
+// 	return keys;
+// }
+
+// var obj_fvi = { 
+// 	a: 1, 
+// 	b: 2, 
+// 	c:3
+// };
+
+// var arr_fvi = ["a", "b", "d"];
+// var ex_fvi  = filterValuesIn(obj_fvi, arr_fvi);
+// Logger.log(ex_fvi);
 
 // - Dates and Times
 
@@ -1111,7 +1164,6 @@ function createVerifyDocAtRoot(name) {
 
 function commaListFrom(arr){
   var _arr = rmDuplicatesFrom(arr).sort();
-	Logger.log(_arr);
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
 		str += _arr[i] + ", "
@@ -1120,9 +1172,9 @@ function commaListFrom(arr){
   return str;
 }
 
-var arr_clf = ["a@gmail.com", "b@gmail.com", "z@gmail.com", "z@gmail.com", "h@gmail.com"]
-var ex_clf  = commaListFrom(arr_clf);
-Logger.log(ex_clf);
+// var arr_clf = ["a@gmail.com", "b@gmail.com", "z@gmail.com", "z@gmail.com", "h@gmail.com"]
+// var ex_clf  = commaListFrom(arr_clf);
+// Logger.log(ex_clf);
 
 // -- HTML in Email Body
 
@@ -1132,9 +1184,9 @@ Logger.log(ex_clf);
 
 // -- Regex Only Numbers or Letters
 
-var re     = "123ABC234XYZ"
-var ex_num = re.match(/\d+/g);
-var ex_abc = re.replace(/\d/g, "");
+// var re     = "123ABC234XYZ"
+// var ex_num = re.match(/\d+/g);
+// var ex_abc = re.replace(/\d/g, "");
 
-Logger.log(ex_num);
-Logger.log(ex_abc);
+// Logger.log(ex_num);
+// Logger.log(ex_abc);
