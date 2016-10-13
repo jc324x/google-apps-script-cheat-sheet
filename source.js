@@ -1109,27 +1109,20 @@ function createVerifyDocAtRoot(name) {
 
 // -- Comma Separated List of Recipients
 
-function commaSeperated(obj, arrProp){
-  var emailArr_All = [];
-  var emailStr     = "";
-  for (var i = 0; i < arrProp.length; i++) {
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(prop)){
-        if (prop == arrProp[i]){
-          if (obj[prop] != "") {
-            emailArr_All.push(obj[prop]);
-          }
-        }
-      }
-    }
+function commaListFrom(arr){
+  var _arr = rmDuplicatesFrom(arr).sort();
+	Logger.log(_arr);
+  var str  = "";
+  for (var i = 0; i < _arr.length; i++) {
+		str += _arr[i] + ", "
   }
-  var emailArr = removeDuplicates(emailArr_All);
-  for (var i = 0; i < emailArr.length; i++ ){
-    emailStr += emailArr[i] + ", ";
-  }
-  emailStr = emailStr.slice(0, -2);
-  return emailStr;
+  str = str.slice(0, -2);
+  return str;
 }
+
+var arr_clf = ["a@gmail.com", "b@gmail.com", "z@gmail.com", "z@gmail.com", "h@gmail.com"]
+var ex_clf  = commaListFrom(arr_clf);
+Logger.log(ex_clf);
 
 // -- HTML in Email Body
 
@@ -1139,8 +1132,9 @@ function commaSeperated(obj, arrProp){
 
 // -- Regex Only Numbers or Letters
 
-// RegEx -> non-digits
-// myString = myString.replace(/\D/g,'');
+var re     = "123ABC234XYZ"
+var ex_num = re.match(/\d+/g);
+var ex_abc = re.replace(/\d/g, "");
 
-// RegEx -> digits only
-// myString = myString.replace(/\d+/g)
+Logger.log(ex_num);
+Logger.log(ex_abc);
