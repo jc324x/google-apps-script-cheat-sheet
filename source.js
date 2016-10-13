@@ -154,25 +154,25 @@ function countOfValIn(arr){
 
 // -- Intersect of Two Arrays
 
-var arr1 = [1, 2, 3];
-var arr2 = [3, 4, 5];
-
-function intersectOf(a, b) {
-  var ai=0, bi=0;
+function intersectOf(arrA, arrB) {
+	var a = 0;
+	var b = 0;
   var _arr = [];
-  while( ai < a.length && bi < b.length ) {
-     if (a[ai] < b[bi] ) { ai++; }
-     else if (a[ai] > b[bi] ){ bi++; }
-     else /* they're equal */
-     {
-       _arr.push(a[ai]);
-       ai++;
-       bi++;
+  while( a < arrA.length && b < arrB.length ) {
+     if (arrA[a] < arrB[b] ) { a++; }
+     else if (arrA[a] > arrB[b] ) { b++; }
+     else {
+       _arr.push(arrA[a]);
+       a++;
+       b++;
      }
   }
   return _arr;
 }
 
+// var arr1_io = [1, 2, 3];
+// var arr2_io = [3, 4, 5];
+// Logger.log(intersectOf(arr1_io, arr2_io));
 
 // - Array of Objects
 
@@ -275,30 +275,22 @@ function filterObjIn(arrObj, pQuery, val) {
 // - Objects
 // -- Array of Matching Property Values
 
-// function filterValuesIn(obj, arrProp) {
-// 	var arr  = [];
-// 	var keys = Object.keys(obj);
+function filterValuesIn(obj, arrProp) {
+	var arr   = [];
+	var keys  = Object.keys(obj);
+	var props = intersectOf(keys, arrProp)
+	// push matching props in obj val to arr 
+}
 
-// 	Logger.log(keys);
+var obj_fvi = { 
+	a: 1, 
+	b: 2, 
+	c: 3
+};
 
-// 	keys.filter(function(n) {
-// 			return arrProp.indexOf(n) != -1;
-// 	});
-
-// 	Logger.log(keys);
-
-// 	return keys;
-// }
-
-// var obj_fvi = { 
-// 	a: 1, 
-// 	b: 2, 
-// 	c:3
-// };
-
-// var arr_fvi = ["a", "b", "d"];
-// var ex_fvi  = filterValuesIn(obj_fvi, arr_fvi);
-// Logger.log(ex_fvi);
+var arr_fvi = ["a", "b", "d"];
+var ex_fvi  = filterValuesIn(obj_fvi, arr_fvi);
+Logger.log(ex_fvi);
 
 // - Dates and Times
 
