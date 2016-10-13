@@ -1,11 +1,3 @@
-// *   = done
-// ?   = maybe add in?
-// &   = in progress
-// ➡ ⬇ = return
-
-// fn conventions
-// _arr, fldr, fi, fldr
-
 // - | General 
 // - | - Array
 // - | -- Check for a Value - Standard Array
