@@ -47,8 +47,9 @@
 // - | -- Replicating Import Range
 // - | -- Evaluating True and False
 //   | - Range as Array of Objects
-//   | -- Grid Object
-//   | -- Two Column Options Array
+//   | -- Array Of Objects by Sheet
+//   | -- Array of Objects from Range
+//   | -- Array of Objects from Two Columns
 //   | Docs
 //   | - Managing Document Files
 //   | -- Create or Verify Document in a Folder or at Root
@@ -62,7 +63,7 @@
 //   | Other
 //   | -- Regex Only Numbers or Letters
   
-// Future: Timestamp on Cell Change, Moving / Copying Folders, Set Cell Values in Grid, Array of Arrays, Count Val arrObj
+// Future: Timestamp on Cell Change, Moving / Copying Folders, Grid - Set Values / Add / Remove, Array of Arrays, Count Val arrObj
 
 function testEverything() {}
 
