@@ -4,48 +4,84 @@ var form = FormApp.getActiveForm();
 
 //   | Forms
 //   | - Form Management
-//   | -- Array of Items
-//   | -- Set Dropdown Choices
-//   | -- Get Destination Sheet
+// - | -- Array of Form Items
+// - | -- Get Form Item by Name
+//   | -- Set Choices from Array
+// - | -- Get Destination Sheet
 //   | - Form Responses
 //   | -- Get Last Form Response
 //   | -- Timestamps in Forms
 
-// Forms
+function testEverything() {}
 
-// fn to create scratch form for examples below
+// Forms
 
 // - Form Management
 
-// -- Build Array of Items
+// -- Array of Form Items
 
-function buildArrOfItemTitleID(formObj) {
-  var output_array = [];
-  var arrayOfItemObjects = formObj.getItems()
-  for (var i = 0; i < arrayOfItemObjects.length; i++) {
-    var item = {}; 
-    item.index = i;
-    item.title = arrayOfItemObjects[i].getTitle();
-    item.id    = arrayOfItemObjects[i].getId();
-    item.item  = arrayOfItemObjects[i];
-    output_array.push(item);
+function arrItemsIn(formObj) {
+  var _arr  = [];
+  var items = formObj.getItems()
+  for (var i = 0; i < items.length; i++) {
+    var j = {}; 
+    j.index = i;
+    j.title = items[i].getTitle();
+    j.id    = items[i].getId();
+    j.item  = items[i];
+    _arr.push(j);
   }
-  return output_array;
+  return _arr;
 }
 
-// -- Set Item Dropdown Choices
+var items = arrItemsIn(form);
+// Logger.log(items);
 
-// .setChoiceValues();
+// -- Get Form Item by Name
+// from source.js
+
+function findObjValIn(arrObj, pQuery, val, pReturn) {
+	for (var i = 0; i < arrObj.length; i++) {
+		var obj = arrObj[i];
+		for (var prop in obj) {
+			if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
+				return obj[pReturn];
+			}
+		}
+	}
+}
+
+// var ex_fovi = findObjValIn(items, "title", "Multiple Choice Example", "item");
+// Logger.log(form.getItemById(ex_fovi).getTitle());
+
+// -- Set Item Dropdown Choices
+var choices   = ["1", "2", "3", "4", "5"];
+
+// --- Multiple Choice
+
+var multi = findObjValIn(items, "title", "Multiple Choice Example", "item").asMultipleChoiceItem();
+multi.setChoiceValues(choices);
+
+// --- Dropdown Choices
+
+var drop = findObjValIn(items, "title", "Dropdown Example", "item").asListItem();
+drop.setChoiceValues(choices);
+
+// --- Checkbox Choices
+
+var chkbox = findObjValIn(items, "title", "Checkbox Example", "item").asCheckboxItem();
+chkbox.setChoiceValues(choices);
 
 // -- Get Destination Sheet
 
-var formRSheetId = form.getDestinationId();
+// var destSheet = SpreadsheetApp.openById(form.getDestinationId());
+// Logger.log(destSheet.getName());
 
 // - Form Responses
 
 // -- Get Last Form Response
 
-function getLastResponse(formObj) {
+function lastResponse(formObj) {
   var allRsp  = form.getResponses();
   var lastRsp = allRsp[allRsp.length - 1];
   var itemRsp = lastRsp.getItemResponses();
