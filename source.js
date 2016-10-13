@@ -283,6 +283,7 @@ function filterValIn(obj, props) {
 		for (var prop in obj) {
 			if (obj.hasOwnProperty(key)) {
 				arr.push(obj[key]);
+				break;
 			}
 		}
 	}
