@@ -1176,9 +1176,28 @@ function commaListFrom(arr){
 // var ex_clf  = commaListFrom(arr_clf);
 // Logger.log(ex_clf);
 
-// -- HTML in Email Body
-
 // -- Mail Merge
+
+function mailMerge(arrObj, subj) {
+  for (var i =0; i < arrObj.length; i++){
+    var email = arrObj[i]["Email"];
+
+		var body  = 
+		"<p>this is some text</p>" + "<p>pulling in some other fields from the data " + 
+		arrObj[i]["A"] + " </p>";
+
+		// add in check -> email?
+    MailApp.sendEmail({
+			to: email,
+			subject: subj,
+			htmlBody: body
+		});
+  }
+}
+
+var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_mm = arrObjSheet(ss_mm, 1);
+mailMerge(ex_mm, "testing mail merge!");
 
 // Other
 
