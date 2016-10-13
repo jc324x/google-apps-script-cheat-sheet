@@ -275,11 +275,18 @@ function filterObjIn(arrObj, pQuery, val) {
 // - Objects
 // -- Array of Matching Property Values
 
-function filterValuesIn(obj, arrProp) {
-	var arr   = [];
-	var keys  = Object.keys(obj);
-	var props = intersectOf(keys, arrProp)
-	// push matching props in obj val to arr 
+function filterValIn(obj, props) {
+	var arr  = [];
+	var keys = intersectOf(Object.keys(obj), props);
+	for (var i = 0; i < keys.length; i++) {
+		var key = keys[i];
+		for (var prop in obj) {
+			if (obj.hasOwnProperty(key)) {
+				arr.push(obj[key]);
+			}
+		}
+	}
+	return arr;
 }
 
 var obj_fvi = { 
@@ -289,7 +296,7 @@ var obj_fvi = {
 };
 
 var arr_fvi = ["a", "b", "d"];
-var ex_fvi  = filterValuesIn(obj_fvi, arr_fvi);
+var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
 Logger.log(ex_fvi);
 
 // - Dates and Times
