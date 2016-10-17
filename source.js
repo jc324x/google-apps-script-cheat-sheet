@@ -1,6 +1,6 @@
 // - | General 
 // - | - Array
-// - | -- Check for a Value - Standard Array
+// - | -- Check for a Value 
 // - | -- Remove Duplicates
 // - | -- Remove Empty Values
 // - | -- Get Count of Values in Array
@@ -72,13 +72,13 @@ function checkValIn(arr, val) {
 	return arr.indexOf(val) > -1; 
 }
 
-// var arr_cvi = [1,2,3,4];
+var arr_cvi = [1,2,3,4];
 
-// if (checkValIn(arr_cvi, 99)) {
-//     Logger.log("check value in ➡ 99 is in the array"); 
-//   } else {
-//     Logger.log("check value in ➡ 99 is not in the array");
-// }
+if (checkValIn(arr_cvi, 99)) {
+    Logger.log("check value in ➡ 99 is in the array"); 
+  } else {
+    Logger.log("check value in ➡ 99 is not in the array");
+}
 
 // -- Remove Duplicates 
 // ➡  array
