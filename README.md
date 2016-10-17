@@ -23,6 +23,7 @@
 
 #### Check for a Value
   ➡  boolean
+  return `boolean`
 
 ```javascript
 function checkValIn(arr, val) { 
