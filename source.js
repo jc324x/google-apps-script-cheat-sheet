@@ -5,15 +5,15 @@
 // * | -- Remove Empty Values
 // * | -- Get Count of Values in Array
 // * | -- Intersect of Two Arrays
-//   | - Array of Objects
-//   | -- Sort by Property or Properties
-//   | -- Find Object With Unique Property Value
-//   | -- Filter by Property Value
-//   | - Object
-//   | -- Array of Matching Property Values
-//   | - Dates and Times
-//   | -- Formatted Timestamps
-//   | -- Match a Date to a Range
+// * | - Array of Objects
+// * | -- Sort by Property or Properties
+// * | -- Find Object With Unique Property Value
+// * | -- Filter by Property Value
+// * | - Object
+// * | -- Array of Matching Property Values
+// * | - Dates and Times
+// * | -- Formatted Timestamps
+// * | -- Match a Date to a Range
 //   |  Drive 
 //   | - Folders
 //   | -- Create or Verify Folder Path

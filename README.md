@@ -268,3 +268,74 @@ Logger.log(ex_fvi);
 ```
 
 ### Dates and Times
+
+#### Formatted Timestamps
+
+```javascript
+
+function fmatD() {
+	var n = new Date();
+	var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
+		return d.join("/");
+}
+
+var ex_fd = fmatD();
+Logger.log("current date ➡ " + ex_fd);
+
+function fmat24T(){
+	var n  = new Date();
+	var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+		for ( var i = 1; i < 3; i++ ) {
+			if ( t[i] < 10 ) {
+				t[i] = "0" + t[i];
+			}
+			return t.join(":");
+		}
+}
+
+var ex_24T = fmat24T();
+Logger.log("current time (24 hour) ➡ " + ex_24T);
+
+function fmat12DT() {
+	var n = new Date();
+	var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
+		var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+		var s = ( t[0] < 12 ) ? "AM" : "PM";
+	t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
+	for ( var i = 1; i < 3; i++ ) {
+		if ( t[i] < 10 ) {
+			t[i] = "0" + t[i];
+		}
+	}
+	return d.join("/") + " " + t.join(":") + " " + s;
+}
+
+var ex_dt12 = fmat12DT();
+Logger.log("current date + time (12 hour) ➡ " + ex_dt12);
+```
+
+#### Match a Date to a Range of Dates
+
+```javascript
+var quarterDates = [
+	["08/01/2016", "10/28/2016"],
+	["11/02/2016", "1/9/2017"],
+	["1/15/2017", "3/19/2017"],
+	["3/21/2017", "6/15/2017"],
+];
+
+function academicQuarter() {
+	var d = new Date();
+	for (i = 0; i < 4; i++){
+		var s = new Date(quarterDates[i][0]);
+		var e = new Date(quarterDates[i][1]);
+		if (d >= s && d <= e ) {
+			var q =  i + 1;
+		} 
+	}
+	if (q) { return q } else { return "date outside of academic calendar"}
+}
+
+var acdQ = academicQuarter();
+Logger.log("current quarter ➡ " + acdQ);
+```
