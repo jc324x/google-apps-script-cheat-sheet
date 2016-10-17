@@ -69,7 +69,7 @@ Logger.log("rmDup output ➡ " + ex_rdf);
 ```javascript
 
 function rmEmptyVal(x){
-	return (x !== (undefined || ''));
+  return (x !== (undefined || ''));
 }
 
 var arr_rev = ["a",,"b",,,"c"];
@@ -82,25 +82,25 @@ Logger.log("rmEmpty output ➡ " + ex_rev);
 `array of objects`
 
 ```javascript
-function countOfValIn(arr){
-	var _arr = [];
-	var copy = arr.slice(0);
-	for (var i = 0; i < arr.length; i++) {
-		var myCount = 0;	
-		for (var w = 0; w < copy.length; w++) {
-			if (arr[i] == copy[w]) {
-				myCount++;
-				delete copy[w];
-			}
-		}
-		if (myCount > 0) {
-			var a = new Object();
-			a.value = arr[i];
-			a.count = myCount;
-			_arr.push(a);
-		}
-	}
-	return _arr;
+  function countOfValIn(arr){
+  var _arr = [];
+  var copy = arr.slice(0);
+  for (var i = 0; i < arr.length; i++) {
+    var myCount = 0;	
+    for (var w = 0; w < copy.length; w++) {
+      if (arr[i] == copy[w]) {
+        myCount++;
+        delete copy[w];
+      }
+    }
+    if (myCount > 0) {
+      var a = new Object();
+      a.value = arr[i];
+      a.count = myCount;
+      _arr.push(a);
+    }
+  }
+  return _arr;
 }
 
 var arr_covi = ["A", "B", "C", "A", "B", "C", "D", "A"];
