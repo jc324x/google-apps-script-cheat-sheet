@@ -1,7 +1,5 @@
 # Google Apps Script Cheat Sheet
 
-## Index 
-
 ##[General](#general)
 * [Array](#array)
   * [Check for a Value](#check-for-a-value)
@@ -9,8 +7,19 @@
   * [Remove Empty](#remove-empty)
   * [Get Count of Values in Array](#get-count-of-values-in-array)
   * [Intersect of Two Arrays](#intersect-of-two-arrays)
+* [Array of Objects](#array-of-objects)
+  * [Sort by Property or Properties](#sort-by-property-or-properties)
+  * [Find Object With Unique Property Value](#find-object-with-unique-property-value)
+  * [Filter by Property Value](#filter-by-property-value)
+* [Object](#object)
+  * [Array of Matching Property Values](#array-of-matching-property-values)
+* [Dates and Times](#dates-and-times)
+  * [Formatted Timestamps](#formatted-timestamps)
+  * [Match a Date to a Range](#match-a-date-to-a-range)
 
-### General
+## General
+
+### Array
 
 #### Check for a Value
   ➡  boolean

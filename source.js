@@ -1,21 +1,19 @@
 //   | General 
-//   | - Array
-//   | -- Check for a Value 
-//   | -- Remove Duplicates
-//   | -- Remove Empty Values
-//   | -- Get Count of Values in Array
-//   | -- Intersect of Two Arrays
+// * | - Array
+// * | -- Check for a Value In Array
+// * | -- Remove Duplicates
+// * | -- Remove Empty Values
+// * | -- Get Count of Values in Array
+// * | -- Intersect of Two Arrays
 //   | - Array of Objects
-//   | -- Check for a Value - Array of Objects
 //   | -- Sort by Property or Properties
-//   | -- Find Object With Unique Property Value - Return Object
-//   | -- Find Object With Unique Property Value - Return Value 
+//   | -- Find Object With Unique Property Value
 //   | -- Filter by Property Value
-//   | - Objects
+//   | - Object
 //   | -- Array of Matching Property Values
 //   | - Dates and Times
 //   | -- Formatted Timestamps
-//   | -- Match a Date to a Range of Dates
+//   | -- Match a Date to a Range
 //   |  Drive 
 //   | - Folders
 //   | -- Create or Verify Folder Path
@@ -57,7 +55,8 @@
 //   | Other
 //   | -- Regex Only Numbers or Letters
   
-// Future: Timestamp on Cell Change, Moving / Copying Folders, Grid - Set Values / Add / Remove, Array of Arrays, Count Val arrObj
+// Future: 
+// Timestamp on Cell Change, Moving / Copying Folders, Grid - Set Values / Add / Remove, Array of Arrays, Count Val arrObj
 
 function testEverything() {}
 
@@ -65,7 +64,7 @@ function testEverything() {}
 
 // - Array 
 
-// -- Check for a Value
+// -- Check for a Value in Array
 // ➡  boolean
 
 function checkValIn(arr, val) { 
@@ -213,7 +212,7 @@ function dynSortM() {
 // Logger.log("arrObj sorted by 'b' and 'c' values ⬇ ");
 // Logger.log(ex_arrObj);
 
-// -- Find Object With Unique Property Value - Return Object
+// -- Find Object With Unique Property Value
 // ➡  object 
 
 function findObjIn(arrObj, pQuery, val) {
@@ -232,7 +231,7 @@ function findObjIn(arrObj, pQuery, val) {
 // var ex_foi = findObjIn(ex_arrObj, "a", 1000);
 // Logger.log(ex_foi);
 
-// -- Find Object With Unique Property Value - Return Value 
+// -- Return Single Value
 // ➡  value  
 
 function findObjValIn(arrObj, pQuery, val, pReturn) {
@@ -265,7 +264,7 @@ function filterObjIn(arrObj, pQuery, val) {
 // Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
 // Logger.log(ex_foi);
 
-// - Objects
+// - Object
 // -- Array of Matching Property Values
 
 function filterValIn(obj, props) {
