@@ -135,8 +135,91 @@ var arr2_io = [3, 4, 5];
 Logger.log(intersectOf(arr1_io, arr2_io));
 ```
 
-#### Template
-  ➡  
+### Array of Objects
+
+#### Example Array
+```javascript
+var ex_arrObj = [
+{a: 1000, b: 1, c: 5}, 
+{a: 10000, b: 2, c: 5000}, 
+{a: 10, b: 2, c: 500},
+{a: 1, b: 1, c: 50}
+]
+```
+
+#### Sort by Property or Properties
+
+```javascript
+function dynSort(prop) {
+	var sortOrder = 1;
+	if(prop[0] === "-") {
+		sortOrder = -1;
+		prop = prop.substr(1);
+	}
+	return function (a,b) {
+		var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
+		return result * sortOrder;
+	}
+}
+
+ex_arrObj.sort(dynSort("a"));
+Logger.log("arrObj sorted by 'a' value ⬇ ");
+Logger.log(ex_arrObj);
+
+function dynSortM() {
+	var props = arguments;
+	return function (obj1, obj2) {
+		var i = 0, result = 0, numberOfProperties = props.length;
+		while(result === 0 && i < numberOfProperties) {
+			result = dynSort(props[i])(obj1, obj2);
+			i++;
+		}
+		return result;
+	}
+}
+
+ex_arrObj.sort(dynSortM("b", "c"));
+Logger.log("arrObj sorted by 'b' and 'c' values ⬇ ");
+Logger.log(ex_arrObj);
+```
+
+#### Find Object With Unique Property Value
+
+```javascript
+function findObjIn(arrObj, pQuery, val) {
+	for (var i = 0; i < arrObj.length; i++) {
+		var obj = arrObj[i];
+		for (var prop in obj) {
+			if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
+				return obj;
+			}
+		}
+	}
+}
+
+
+Logger.log("find obj with 'a' value of 1000 ⬇ ");
+var ex_foi = findObjIn(ex_arrObj, "a", 1000);
+Logger.log(ex_foi);
+
+function findObjValIn(arrObj, pQuery, val, pReturn) {
+	for (var i = 0; i < arrObj.length; i++) {
+		var obj = arrObj[i];
+		for (var prop in obj) {
+			if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
+				return obj[pReturn];
+			}
+		}
+	}
+}
+
+Logger.log("find obj with 'c' value of 500 and return its 'a' value ⬇ ");
+var ex_fovi = findObjValIn(ex_arrObj, "c", 500, "a");
+Logger.log(ex_fovi);
+
+```
+
+#### Filter by Property Value
 
 ```javascript
 
