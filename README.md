@@ -224,11 +224,11 @@ Logger.log(ex_fovi);
 
 ```javascript
 function filterObjIn(arrObj, pQuery, val) {
-	var _arr = [];
-	for (var i=0; i < arrObj.length; i++) {
-		if (arrObj[i][pQuery] == val) _arr.push(arrObj[i]);
-	}
-	return _arr;
+  var _arr = [];
+  for (var i=0; i < arrObj.length; i++) {
+    if (arrObj[i][pQuery] == val) _arr.push(arrObj[i]);
+  }
+  return _arr;
 }
 
 var ex_foi = filterObjIn(ex_arrObj, "b", 2);
@@ -242,18 +242,18 @@ Logger.log(ex_foi);
 
 ```javascript
 function filterValIn(obj, props) {
-	var arr  = [];
-	var keys = intersectOf(Object.keys(obj), props);
-	for (var i = 0; i < keys.length; i++) {
-		var key = keys[i];
-		for (var prop in obj) {
-			if (obj.hasOwnProperty(key)) {
-				arr.push(obj[key]);
-				break;
-			}
-		}
-	}
-	return arr;
+  var arr  = [];
+  var keys = intersectOf(Object.keys(obj), props);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(key)) {
+        arr.push(obj[key]);
+        break;
+      }
+    }
+  }
+  return arr;
 }
 
 var obj_fvi = { 
