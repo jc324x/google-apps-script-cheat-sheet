@@ -290,7 +290,7 @@ var obj_fvi = {
 
 var arr_fvi = ["a", "b", "d"];
 var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
-Logger.log(ex_fvi);
+// Logger.log(ex_fvi);
 
 // - Dates and Times
 
@@ -807,7 +807,7 @@ function numCol(num) {
 function ex_nc() {
 	for (var i = 1; i <= 104; i++) {
 		var j = numCol(i);
-		Logger.log(i + " - " + j);
+		// Logger.log(i + " - " + j);
 	}
 }
 
@@ -830,11 +830,11 @@ function colNum(col) {
 function ex_cn() {
 	for (var i = 0; i <= 25; i++) {
 		var abc = String.fromCharCode(97 + i).toUpperCase();
-		Logger.log(abc + " - " + colNum(abc));
+		// Logger.log(abc + " - " + colNum(abc));
 	}
 	for (var i = 26; i <= 51; i++) {
 		var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
-		Logger.log(abc + " - " + colNum(abc));
+		// Logger.log(abc + " - " + colNum(abc));
 	}
 }
 
@@ -1170,34 +1170,35 @@ function commaListFrom(arr){
 
 // -- Mail Merge
 
-function mailMerge(arrObj, subj) {
+function mailMerge(arrObj) {
+	var subj = "test mail merge";
+	var body =
+	"<p>this is some text</p>" + "<p>pulling in some data " + 
+	arrObj[i]["A"] + " </p>";
+
   for (var i =0; i < arrObj.length; i++){
     var email = arrObj[i]["Email"];
-
-		var body  = 
-		"<p>this is some text</p>" + "<p>pulling in some other fields from the data " + 
-		arrObj[i]["A"] + " </p>";
-
-		// add in check -> email?
-    MailApp.sendEmail({
-			to: email,
-			subject: subj,
-			htmlBody: body
-		});
+		if (email) {
+			MailApp.sendEmail({
+				to: email,
+				subject: subj,
+				htmlBody: body
+			});
+		}
   }
 }
 
-var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_mm = arrObjSheet(ss_mm, 1);
-mailMerge(ex_mm, "testing mail merge!");
+// var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var ex_mm = arrObjSheet(ss_mm, 1);
+// mailMerge(ex_mm);
 
 // Other
 
 // -- Regex Only Numbers or Letters
 
-// var re     = "123ABC234XYZ"
-// var ex_num = re.match(/\d+/g);
-// var ex_abc = re.replace(/\d/g, "");
+var re     = "123ABC234XYZ"
+var ex_num = re.match(/\d+/g);
+var ex_abc = re.replace(/\d/g, "");
 
 // Logger.log(ex_num);
 // Logger.log(ex_abc);
