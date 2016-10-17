@@ -40,7 +40,7 @@ if (checkValIn(arr_cvi, 99)) {
 ```
 
 #### Remove Duplicates
-  ➡  array
+`array`
 
 ```javascript
 function rmDuplicatesFrom(arr) {
@@ -64,7 +64,7 @@ Logger.log("rmDup output ➡ " + ex_rdf);
 ```
 
 #### Remove Empty Values
-  ➡ array
+`array`
 
 ```javascript
 
@@ -79,7 +79,7 @@ Logger.log("rmEmpty output ➡ " + ex_rev);
 ```
 
 #### Get Count of Values in Array
-  ➡ array of objects 
+`array of objects`
 
 ```javascript
 function countOfValIn(arr){
@@ -111,7 +111,7 @@ Logger.log(ex_covi);
 ```
 
 #### Intersect of Two Arrays
-  ➡ array
+`array`
 
 ```javascript
 function intersectOf(arrA, arrB) {
@@ -148,6 +148,7 @@ var ex_arrObj = [
 ```
 
 #### Sort by Property or Properties
+`array of objects`
 
 ```javascript
 function dynSort(prop) {
@@ -216,11 +217,54 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 Logger.log("find obj with 'c' value of 500 and return its 'a' value ⬇ ");
 var ex_fovi = findObjValIn(ex_arrObj, "c", 500, "a");
 Logger.log(ex_fovi);
-
 ```
 
 #### Filter by Property Value
+`array of objects`
 
 ```javascript
+function filterObjIn(arrObj, pQuery, val) {
+	var _arr = [];
+	for (var i=0; i < arrObj.length; i++) {
+		if (arrObj[i][pQuery] == val) _arr.push(arrObj[i]);
+	}
+	return _arr;
+}
 
+var ex_foi = filterObjIn(ex_arrObj, "b", 2);
+Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
+Logger.log(ex_foi);
 ```
+
+### Object
+
+#### Array of Matching Property Values
+
+```javascript
+function filterValIn(obj, props) {
+	var arr  = [];
+	var keys = intersectOf(Object.keys(obj), props);
+	for (var i = 0; i < keys.length; i++) {
+		var key = keys[i];
+		for (var prop in obj) {
+			if (obj.hasOwnProperty(key)) {
+				arr.push(obj[key]);
+				break;
+			}
+		}
+	}
+	return arr;
+}
+
+var obj_fvi = { 
+	a: 1, 
+	b: 2, 
+	c: 3
+};
+
+var arr_fvi = ["a", "b", "d"];
+var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
+Logger.log(ex_fvi);
+```
+
+### Dates and Times

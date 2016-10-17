@@ -260,9 +260,9 @@ function filterObjIn(arrObj, pQuery, val) {
 	return _arr;
 }
 
-// var ex_foi = filterObjIn(ex_arrObj, "b", 2);
-// Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
-// Logger.log(ex_foi);
+var ex_foi = filterObjIn(ex_arrObj, "b", 2);
+Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
+Logger.log(ex_foi);
 
 // - Object
 // -- Array of Matching Property Values
@@ -288,8 +288,8 @@ var obj_fvi = {
 	c: 3
 };
 
-var arr_fvi = ["a", "b", "d"];
-var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
+// var arr_fvi = ["a", "b", "d"];
+// var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
 // Logger.log(ex_fvi);
 
 // - Dates and Times
