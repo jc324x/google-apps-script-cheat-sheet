@@ -26,15 +26,15 @@
 
 ```javascript
 function checkValIn(arr, val) { 
-	return arr.indexOf(val) > -1; 
+  return arr.indexOf(val) > -1; 
 }
 
 var arr_cvi = [1,2,3,4];
 
 if (checkValIn(arr_cvi, 99)) {
-    Logger.log("check value in ➡ 99 is in the array"); 
+  Logger.log("check value in ➡ 99 is in the array"); 
   } else {
-    Logger.log("check value in ➡ 99 is not in the array");
+  Logger.log("check value in ➡ 99 is not in the array");
 }
 
 ```
@@ -44,17 +44,17 @@ if (checkValIn(arr_cvi, 99)) {
 
 ```javascript
 function rmDuplicatesFrom(arr) {
-	var check = {};
-	var _arr  = [];
-	var j     = 0;
-	for(var i = 0; i < arr.length; i++) {
-		var item = arr[i];
-		if(check[item] !== 1) {
-			check[item] = 1;
-			_arr[j++] = item;
-		}
-	}
-	return _arr;
+  var check = {};
+  var _arr  = [];
+  var j     = 0;
+  for(var i = 0; i < arr.length; i++) {
+    var item = arr[i];
+    if(check[item] !== 1) {
+      check[item] = 1;
+      _arr[j++] = item;
+    }
+  }
+  return _arr;
 }
 
 var arr_rdf = [1,2,3,1,2,3,4,];
