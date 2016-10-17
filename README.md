@@ -94,7 +94,7 @@ function countOfValIn(arr){
       }
     }
     if (myCount > 0) {
-      var a = new Object();
+      var a   = new Object();
       a.value = arr[i];
       a.count = myCount;
       _arr.push(a);
