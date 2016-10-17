@@ -44,9 +44,9 @@ if (checkValIn(arr_cvi, 99)) {
 
 ```javascript
 function rmDuplicatesFrom(arr) {
-	var check  = {};
-	var _arr = [];
-	var j = 0;
+	var check = {};
+	var _arr  = [];
+	var j     = 0;
 	for(var i = 0; i < arr.length; i++) {
 		var item = arr[i];
 		if(check[item] !== 1) {
@@ -57,8 +57,8 @@ function rmDuplicatesFrom(arr) {
 	return _arr;
 }
 
-var arr_rdf  = [1,2,3,1,2,3,4,];
-var ex_rdf = rmDuplicatesFrom(arr_rdf);
+var arr_rdf = [1,2,3,1,2,3,4,];
+var ex_rdf  = rmDuplicatesFrom(arr_rdf);
 Logger.log("rmDup input ➡ " + arr_rdf);
 Logger.log("rmDup output ➡ " + ex_rdf);
 ```
@@ -72,8 +72,8 @@ function rmEmptyVal(x){
 	return (x !== (undefined || ''));
 }
 
-var arr_rev  = ["a",,"b",,,"c"];
-var ex_rev = arr_rev.filter(rmEmptyVal);
+var arr_rev = ["a",,"b",,,"c"];
+var ex_rev  = arr_rev.filter(rmEmptyVal);
 Logger.log("rmEmpty input ➡ " + arr_rev);
 Logger.log("rmEmpty output ➡ " + ex_rev);
 ```
@@ -103,8 +103,8 @@ function countOfValIn(arr){
 	return _arr;
 }
 
-var arr_covi  = ["A", "B", "C", "A", "B", "C", "D", "A"];
-var ex_covi = countOfValIn(arr_covi);
+var arr_covi = ["A", "B", "C", "A", "B", "C", "D", "A"];
+var ex_covi  = countOfValIn(arr_covi);
 Logger.log("countVal input ➡ " + arr_covi);
 Logger.log("countVal out ⬇ ");
 Logger.log(ex_covi);
@@ -115,8 +115,8 @@ Logger.log(ex_covi);
 
 ```javascript
 function intersectOf(arrA, arrB) {
-	var a = 0;
-	var b = 0;
+	var a    = 0;
+	var b    = 0;
   var _arr = [];
   while( a < arrA.length && b < arrB.length ) {
      if (arrA[a] < arrB[b] ) { a++; }
