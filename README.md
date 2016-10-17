@@ -21,7 +21,7 @@
 
 ### Array
 
-#### Check for a Value
+#### Check for a Value -> `boolean` 
   -> `boolean`
 
 ```javascript
