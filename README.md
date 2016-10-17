@@ -115,8 +115,8 @@ Logger.log(ex_covi);
 
 ```javascript
 function intersectOf(arrA, arrB) {
-	var a    = 0;
-	var b    = 0;
+  var a    = 0;
+  var b    = 0;
   var _arr = [];
   while( a < arrA.length && b < arrB.length ) {
      if (arrA[a] < arrB[b] ) { a++; }
