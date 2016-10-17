@@ -21,8 +21,8 @@
 
 ### Array
 
-#### Check for a Value -> `boolean` 
-  -> `boolean`
+#### Check for a Value
+`boolean`
 
 ```javascript
 function checkValIn(arr, val) { 
