@@ -283,14 +283,14 @@ var ex_fd = fmatD();
 Logger.log("current date ➡ " + ex_fd);
 
 function fmat24T(){
-	var n  = new Date();
-	var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
-		for ( var i = 1; i < 3; i++ ) {
-			if ( t[i] < 10 ) {
-				t[i] = "0" + t[i];
-			}
-			return t.join(":");
-		}
+  var n  = new Date();
+  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+  for ( var i = 1; i < 3; i++ ) {
+    if ( t[i] < 10 ) {
+    t[i] = "0" + t[i];
+  }
+  return t.join(":");
+  }
 }
 
 var ex_24T = fmat24T();
@@ -301,13 +301,13 @@ function fmat12DT() {
   var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
   var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
   var s = ( t[0] < 12 ) ? "AM" : "PM";
-	t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
-	for ( var i = 1; i < 3; i++ ) {
-		if ( t[i] < 10 ) {
-			t[i] = "0" + t[i];
-		}
-	}
-	return d.join("/") + " " + t.join(":") + " " + s;
+  t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
+  for ( var i = 1; i < 3; i++ ) {
+    if ( t[i] < 10 ) {
+      t[i] = "0" + t[i];
+    }
+  }
+  return d.join("/") + " " + t.join(":") + " " + s;
 }
 
 var ex_dt12 = fmat12DT();
