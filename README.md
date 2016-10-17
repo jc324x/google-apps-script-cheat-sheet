@@ -82,7 +82,7 @@ Logger.log("rmEmpty output ➡ " + ex_rev);
 `array of objects`
 
 ```javascript
-  function countOfValIn(arr){
+function countOfValIn(arr){
   var _arr = [];
   var copy = arr.slice(0);
   for (var i = 0; i < arr.length; i++) {
