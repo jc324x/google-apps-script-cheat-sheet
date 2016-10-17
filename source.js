@@ -337,7 +337,7 @@ function fmat12DT() {
 // var ex_dt12 = fmat12DT();
 // Logger.log("current date + time (12 hour) ➡ " + ex_dt12);
 
-// -- Match a Date to a Range of Dates
+// -- Match a Date to a Range
 
 var quarterDates = [
 	["08/01/2016", "10/28/2016"],

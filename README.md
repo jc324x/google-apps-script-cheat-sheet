@@ -314,7 +314,7 @@ var ex_dt12 = fmat12DT();
 Logger.log("current date + time (12 hour) ➡ " + ex_dt12);
 ```
 
-#### Match a Date to a Range of Dates
+#### Match a Date to a Range
 
 ```javascript
 var quarterDates = [
@@ -339,3 +339,5 @@ function academicQuarter() {
 var acdQ = academicQuarter();
 Logger.log("current quarter ➡ " + acdQ);
 ```
+
+
