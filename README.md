@@ -274,9 +274,9 @@ Logger.log(ex_fvi);
 ```javascript
 
 function fmatD() {
-	var n = new Date();
-	var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
-		return d.join("/");
+  var n = new Date();
+  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
+  return d.join("/");
 }
 
 var ex_fd = fmatD();
@@ -297,10 +297,10 @@ var ex_24T = fmat24T();
 Logger.log("current time (24 hour) ➡ " + ex_24T);
 
 function fmat12DT() {
-	var n = new Date();
-	var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
-		var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
-		var s = ( t[0] < 12 ) ? "AM" : "PM";
+  var n = new Date();
+  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
+  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+  var s = ( t[0] < 12 ) ? "AM" : "PM";
 	t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
 	for ( var i = 1; i < 3; i++ ) {
 		if ( t[i] < 10 ) {
