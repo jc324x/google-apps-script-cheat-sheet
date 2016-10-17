@@ -1,54 +1,54 @@
-// - | General 
-// - | - Array
-// - | -- Check for a Value 
-// - | -- Remove Duplicates
-// - | -- Remove Empty Values
-// - | -- Get Count of Values in Array
+//   | General 
+//   | - Array
+//   | -- Check for a Value 
+//   | -- Remove Duplicates
+//   | -- Remove Empty Values
+//   | -- Get Count of Values in Array
 //   | -- Intersect of Two Arrays
-// - | - Array of Objects
-// - | -- Check for a Value - Array of Objects
-// - | -- Sort by Property or Properties
-// - | -- Find Object With Unique Property Value - Return Object
-// - | -- Find Object With Unique Property Value - Return Value 
-// - | -- Filter by Property Value
+//   | - Array of Objects
+//   | -- Check for a Value - Array of Objects
+//   | -- Sort by Property or Properties
+//   | -- Find Object With Unique Property Value - Return Object
+//   | -- Find Object With Unique Property Value - Return Value 
+//   | -- Filter by Property Value
 //   | - Objects
 //   | -- Array of Matching Property Values
-// - | - Dates and Times
-// - | -- Formatted Timestamps
-// - | -- Match a Date to a Range of Dates
-// - |  Drive 
-// - | - Folders
-// - | -- Create or Verify Folder Path
-// - | -- Last Folder in a Folder Path
-// - | -- Array of All Folders in a Folder, at Root or in Drive
-// - | -- Array of All Folder Names
-// - | -- Find a Folder in a Folder, at Root or in Drive
-// - | -- Create or Verify Folders in a Folder or at Root
-// - | - Files
-// - | -- Array of All Files in a Folder, at Root or in Drive
-// - | -- Array of All File Names
-// - | -- Find a File in a Folder, at Root or in Drive 
-// - | -- Parent Folder for a File
-// - | -- Copy a File to a Folder 
-// - | -- Move a File to a Folder
+//   | - Dates and Times
+//   | -- Formatted Timestamps
+//   | -- Match a Date to a Range of Dates
+//   |  Drive 
+//   | - Folders
+//   | -- Create or Verify Folder Path
+//   | -- Last Folder in a Folder Path
+//   | -- Array of All Folders in a Folder, at Root or in Drive
+//   | -- Array of All Folder Names
+//   | -- Find a Folder in a Folder, at Root or in Drive
+//   | -- Create or Verify Folders in a Folder or at Root
+//   | - Files
+//   | -- Array of All Files in a Folder, at Root or in Drive
+//   | -- Array of All File Names
+//   | -- Find a File in a Folder, at Root or in Drive 
+//   | -- Parent Folder for a File
+//   | -- Copy a File to a Folder 
+//   | -- Move a File to a Folder
 //   | Sheets
-// - | - Managing Spreadsheet Files
-// - | -- Create or Verify Spreadsheet in a Folder or at Root
+//   | - Managing Spreadsheet Files
+//   | -- Create or Verify Spreadsheet in a Folder or at Root
 //   | - Utility Functions for Sheets
-// - | -- Convert Column Number to a Letter
-// - | -- Replicating Import Range
-// - | -- Evaluating True and False
+//   | -- Convert Column Number to a Letter
+//   | -- Replicating Import Range
+//   | -- Evaluating True and False
 //   | - Range as Array of Objects
 //   | -- Array Of Objects by Sheet
 //   | -- Array of Objects from Range
 //   | -- Array of Objects from Two Columns
 //   | -- Grid Object
 //   | Docs
-// - | - Managing Document Files
-// - | -- Create or Verify Document in a Folder or at Root
-// - | - Utility Functions for Docs
-// - | -- Access Document Body
-// - | -- Clear Document Body
+//   | - Managing Document Files
+//   | -- Create or Verify Document in a Folder or at Root
+//   | - Utility Functions for Docs
+//   | -- Access Document Body
+//   | -- Clear Document Body
 //   | Gmail
 //   | - Send Email
 //   | -- Comma Separated List of Recipients
@@ -72,13 +72,13 @@ function checkValIn(arr, val) {
 	return arr.indexOf(val) > -1; 
 }
 
-var arr_cvi = [1,2,3,4];
+// var arr_cvi = [1,2,3,4];
 
-if (checkValIn(arr_cvi, 99)) {
-    Logger.log("check value in ➡ 99 is in the array"); 
-  } else {
-    Logger.log("check value in ➡ 99 is not in the array");
-}
+// if (checkValIn(arr_cvi, 99)) {
+//     Logger.log("check value in ➡ 99 is in the array"); 
+//   } else {
+//     Logger.log("check value in ➡ 99 is not in the array");
+// }
 
 // -- Remove Duplicates 
 // ➡  array
@@ -109,10 +109,10 @@ function rmEmptyVal(x){
 	return (x !== (undefined || ''));
 }
 
-// var arr_rev  = ["a",,"b",,,"c"];
-// var ex_rev = arr_rev.filter(rmEmptyVal);
-// Logger.log("rmEmpty input ➡ " + arr_rev);
-// Logger.log("rmEmpty output ➡ " + ex_rev);
+var arr_rev  = ["a",,"b",,,"c"];
+var ex_rev = arr_rev.filter(rmEmptyVal);
+Logger.log("rmEmpty input ➡ " + arr_rev);
+Logger.log("rmEmpty output ➡ " + ex_rev);
 
 // -- Get Count of Values in Array
 // ➡  array of objects
@@ -145,6 +145,7 @@ function countOfValIn(arr){
 // Logger.log(ex_covi);
 
 // -- Intersect of Two Arrays
+// ➡  array 
 
 function intersectOf(arrA, arrB) {
 	var a = 0;
