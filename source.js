@@ -430,9 +430,9 @@ function foldersIn(fldr) {
 	return arr;
 }
 
-// var fldr_fi = lastFolderIn("google-apps-script-cheat-sheet");
-// var ex_fi   = foldersIn(fldr_fi);
-// Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_fi);
+var fldr_fi = lastFolderIn("google-apps-script-cheat-sheet");
+var ex_fi   = foldersIn(fldr_fi);
+Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_fi);
 
 // --- All Folders at Root
 
@@ -447,9 +447,9 @@ function rootFolders() {
 	return arr;
 }
 
-// var ex_rf  = rootFolders();
-// Logger.log("all root folders ⬇ ");
-// Logger.log(ex_rf);
+var ex_rf  = rootFolders();
+Logger.log("all root folders ⬇ ");
+Logger.log(ex_rf);
 
 // --- All Folders in Drive
 
@@ -463,9 +463,9 @@ function allFolders() {
 	return arr;
 }
 
-// var ex_af = allFolders();
-// Logger.log("all folders in Drive ⬇ ");
-// Logger.log(ex_af);
+var ex_af = allFolders();
+Logger.log("all folders in Drive ⬇ ");
+Logger.log(ex_af);
 
 // -- Array of Folder Names
 // ➡  array of folder names

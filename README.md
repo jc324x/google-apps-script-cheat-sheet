@@ -397,6 +397,54 @@ Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_lf
 
 #### Array of All Folders in a Folder, at Root or in Drive
 ```javascript
+// --- All Folders in a Folder
+
+function foldersIn(fldr) {
+	var fi  = fldr.getFolders();
+	var arr = [];
+	while (fi.hasNext()) {
+		var _fldr = fi.next();
+		arr.push(_fldr);
+	} 
+	return arr;
+}
+
+var fldr_fi = lastFolderIn("google-apps-script-cheat-sheet");
+var ex_fi   = foldersIn(fldr_fi);
+Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_fi);
+
+// --- All Folders at Root
+
+function rootFolders() {
+	var rf  = DriveApp.getRootFolder();
+	var fi  = rf.getFolders();
+	var arr = [];
+	while (fi.hasNext()) {
+		var fldr = fi.next();
+		arr.push(fldr);
+	} 
+	return arr;
+}
+
+var ex_rf  = rootFolders();
+Logger.log("all root folders ⬇ ");
+Logger.log(ex_rf);
+
+// --- All Folders in Drive
+
+function allFolders() {
+	var fi  = DriveApp.getFolders();
+	var arr = [];
+	while (fi.hasNext()) {
+		var fldr = fi.next();
+		arr.push(fldr);
+	} 
+	return arr;
+}
+
+var ex_af = allFolders();
+Logger.log("all folders in Drive ⬇ ");
+Logger.log(ex_af);
 
 ```
 
