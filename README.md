@@ -673,8 +673,8 @@ Logger.log(" Id of '" + file_ffid + "' in " + parentFolderOf(file_ffid) + " ➡ 
 #### Parent Folder for a File 
 ```javascript
 function parentFolderOf(file) {
-	var fi = file.getParents();
-	return fi.next();
+  var fi = file.getParents();
+  return fi.next();
 }
 
 var file_pfo = findFileInDrive("example_file");
@@ -685,10 +685,10 @@ Logger.log("The parent folder of '" + file_pfo + "' is '" + ex_pfo + "'");
 #### Copy a File to a Folder
 ```javascript
 function copyFile(file, fldr) {
-	var name = file.getName();
-	var dest = findFileIn(fldr, name);
-	if (dest === undefined) { file.makeCopy(name, fldr) }
-	return findFileIn(fldr, name);
+  var name = file.getName();
+  var dest = findFileIn(fldr, name);
+  if (dest === undefined) { file.makeCopy(name, fldr) }
+  return findFileIn(fldr, name);
 }
 
 var fldr_cf1 = lastFolderIn("google-apps-script-cheat-sheet");
@@ -701,12 +701,12 @@ Logger.log("'" + ex_cf + "' " + "has been copied to " + parentFolderOf(ex_cf));
 #### Move a File to a Folder
 ```javascript
 function moveFile(file, fldr) {
-	var name = file.getName();
-	var dest = findFileIn(fldr, name);
-	if (dest === undefined) { file.makeCopy(name, fldr) }
-	var _file = findFileIn(fldr, name);
-	if (_file !== undefined) { file.setTrashed(true) }
-	return _file;
+  var name = file.getName();
+  var dest = findFileIn(fldr, name);
+  if (dest === undefined) { file.makeCopy(name, fldr) }
+  var _file = findFileIn(fldr, name);
+  if (_file !== undefined) { file.setTrashed(true) }
+  return _file;
 }
 
 var fldr_mf1 = lastFolderIn("google-apps-script-cheat-sheet");
