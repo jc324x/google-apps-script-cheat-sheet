@@ -908,44 +908,14 @@ Logger.log(checkTF(ex_ctf1));
 Logger.log(checkTF(ex_ctf2));
 ```
 
-### Range as Array of Objects
+### Array of Objects
 
-#### Build Array of Headers 
+#### Utility Functions for Array of Objects
 
-```javascript
-function arrHeadFrom(rangeObj){
-  var vals = rangeObj.getValues();
-  var arr  = [];
-  for (var i = 0; i < vals[0].length; i++) {
-    var val  = vals[0][i];
-    arr.push(val);
-  } 
-  return arr;
-}
-```
-
-#### Build Array of Objects 
-
-```javascript
-function arrObjFrom(rangeObj, headers){
-  var h    = rangeObj.getHeight();
-  var w    = rangeObj.getWidth();
-  var vals = rangeObj.getValues();
-  var arr  = [];
-  for (var i = 0; i < h; i++) {
-    var row = {};
-    for (var j = 0; j < w; j++) {
-      var prop = headers[j];
-      var val  = vals[i][j];
-      if (val !== "") {
-        row[prop] = val;
-      } 
-    }
-    arr.push(row);
-  }  
-  return arr;
-}
-```
+##### Header Range Object
+##### Value Range Object
+##### Array of Headers
+##### Values by Row
 
 #### Array of Objects from Sheet
 ```javascript
