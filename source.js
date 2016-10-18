@@ -17,7 +17,7 @@
 //   |  Drive 
 //   | - Folders
 //   | -- Create or Verify Folder Path
-//   | -- Last Folder in a Folder Path
+//   | -- Last Folder in Folder Path
 //   | -- Array of All Folders in a Folder, at Root or in Drive
 //   | -- Array of All Folder Names
 //   | -- Find a Folder in a Folder, at Root or in Drive
@@ -56,7 +56,7 @@
 //   | -- Regex Only Numbers or Letters
   
 // Future: 
-// Timestamp on Cell Change, Moving / Copying Folders, Grid - Set Values / Add / Remove, Array of Arrays, Count Val arrObj
+// Timestamp on Cell Change, Moving / Copying Folders, Grid - Set Values / Add / Remove, Array of Arrays, Count Val arrObj, arrFolderObj(name + obj)
 
 function testEverything() {}
 
@@ -365,7 +365,7 @@ function academicQuarter() {
 
 // - Folders
 
-// -- Create or Verify Folder Path and Get Last Folder in Path
+// -- Create or Verify Folder Path 
 // ➡  folder
 
 function createVerifyPath(path) {
@@ -394,7 +394,7 @@ function createVerifyPath(path) {
 // var ex_cov = createVerifyPath("google-apps-script-cheat-sheet/A/B/C");
 // Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_cov.getId());
 
-// -- Get the Last Folder in a Folder Path
+// -- Get the Last Folder in Folder Path
 // ➡  folder
 
 function lastFolderIn(path) {

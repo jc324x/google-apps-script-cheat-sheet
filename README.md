@@ -340,4 +340,38 @@ var acdQ = academicQuarter();
 Logger.log("current quarter ➡ " + acdQ);
 ```
 
+## Drive
 
+### Folders
+
+#### Create or Verify Folder Path
+```javascript
+
+```
+
+#### Last Folder in Folder Path
+```javascript
+
+```
+
+#### Array of All Folders in a Folder, at Root or in Drive
+```javascript
+
+```
+
+#### Array of all Folder Names
+```javascript
+
+```
+
+#### Find a Folder in a Folder, at Root or in Drive
+```javascript
+
+```
+
+#### Create or Verify Folders in a Folder or at Root
+```javascript
+
+```
+
+### Files
