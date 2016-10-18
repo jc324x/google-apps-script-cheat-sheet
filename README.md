@@ -152,15 +152,15 @@ var ex_arrObj = [
 
 ```javascript
 function dynSort(prop) {
-	var sortOrder = 1;
-	if(prop[0] === "-") {
-		sortOrder = -1;
-		prop = prop.substr(1);
-	}
-	return function (a,b) {
-		var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
-		return result * sortOrder;
-	}
+  var sortOrder = 1;
+  if(prop[0] === "-") {
+    sortOrder = -1;
+    prop = prop.substr(1);
+  }
+  return function (a,b) {
+    var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
+    return result * sortOrder;
+  }
 }
 
 ex_arrObj.sort(dynSort("a"));
