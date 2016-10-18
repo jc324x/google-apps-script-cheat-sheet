@@ -26,7 +26,7 @@
 //   | -- Array of All Files
 //   | -- Array of All File Names
 //   | -- Find a File
-//   | -- Parent Folder for a File
+//   | -- Parent Folder of a File
 //   | -- Copy a File to a Folder 
 //   | -- Move a File to a Folder
 //   | Sheets
@@ -38,7 +38,7 @@
 //   | -- Replicating Import Range
 //   | -- Evaluating True and False
 //   | - Range as Array of Objects
-//   | -- Array Of Objects by Sheet
+//   | -- Array Of Objects from Sheet
 //   | -- Array of Objects from Range
 //   | -- Array of Objects from Two Columns
 //   | -- Grid Object
@@ -698,7 +698,7 @@ function findFileInDrive(name) {
 // var file_ffid = findFileInDrive("example_file");
 // Logger.log(" Id of '" + file_ffid + "' in " + parentFolderOf(file_ffid) + " ➡ " + file_ffid.getId());
 
-// -- Parent Folder for a File
+// -- Parent Folder of a File
 
 function parentFolderOf(file) {
 	var fi = file.getParents();
@@ -879,7 +879,7 @@ var ex_ctf2 = "No";
 
 // - Range as Array of Objects
 
-// -- Array Of Objects by Sheet
+// -- Array Of Objects from Sheet
 
 function arrObjSheet(sheetObj, hRow){
 

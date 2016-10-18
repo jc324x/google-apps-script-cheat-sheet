@@ -33,13 +33,39 @@
   * [Array of All Files](#array-of-all-files)
   * [Array of All File Names](#array-of-all-file-names)
   * [Find a File](#find-a-file)
-  * [Parent Folder for a File](#parent-folder-for-a-file)
+  * [Parent Folder of a File](#parent-folder-of-a-file)
   * [Copy a File to a Folder](#copy-a-file-to-a-folder)
   * [Move a File to a Folder](#move-a-flie-to-a-folder)
 
 ##[Sheets](#sheets)
 * [Managing Spreadsheet Files](#managing-spreadsheet-files)
-  * [Create or Verify Spreadsheet in a Folder or at Root](#create-or-verify-spreadsheet-in-a-folder-or-at-root)
+  * [Create or Verify Spreadsheet](#create-or-verify-spreadsheet-in-a-folder-or-at-root)
+* [Utility Functions for Sheets](#utility-functions-for-sheets)
+  * [Convert Column Number to a Letter](#convert-column-number-to-a-letter)
+  * [Convert Column Letter to a Number](#convert-column-letter-to-a-number)
+  * [Replicating Import Range](#replicating-import-range)
+  * [Evaluating True and False](#evaluating-true-and-false)
+* [Range as Array of Objects](#range-as-array-of-objects)
+  * [Array of Objects from Sheet](#array-of-objects-from-sheet)
+  * [Array of Objects from Range](#array-of-objects-from-range)
+  * [Array of Objects from Two Columns](#array-of-object-from-two-columns)
+  * [Grid Object](#grid-object)
+
+##[Docs](#docs)
+* [Managing Document Files](#managing-document-files)
+  * [Create or Verify Document](#create-or-verify-document)
+* [Utility Functions for Docs](#utility-functions-for-docs)
+  * [Access Document Body](#access-document-body)
+  * [Clear Document Body](#clear-document-body)
+
+##[Gmail](#gmail)
+* [Send Email](#send-email)
+  * [Comma Seperated List of Recipients](#comma-seperated-list-of-recipients)
+  * [HTML in Email Body](#html-in-email-body)
+  * [Mail Merge](#mail-merge)
+
+##[Other](#other)
+  * [Regex Only Numbers or Letters](#regex-only-numbers-or-letters)
 
 ## General
 
@@ -694,7 +720,7 @@ Logger.log(" Id of '" + file_ffid + "' in " + parentFolderOf(file_ffid) + " ➡ 
 
 ```
 
-#### Parent Folder for a File 
+#### Parent Folder of a File 
 ```javascript
 function parentFolderOf(file) {
   var fi = file.getParents();
@@ -744,7 +770,7 @@ Logger.log("'" + ex_mf + "' " + "has been moved to " + parentFolderOf(ex_mf));
 
 ### Managing Spreadsheet Files
 
-#### Create or Verify Spreadsheet in a Folder or at Root
+#### Create or Verify Spreadsheet
 ```javascript
 
 ```
@@ -775,7 +801,7 @@ Logger.log("'" + ex_mf + "' " + "has been moved to " + parentFolderOf(ex_mf));
 
 ```
 
-#### Array of Objects by Sheet
+#### Array of Objects from Sheet
 ```javascript
 
 ```
@@ -799,7 +825,7 @@ Logger.log("'" + ex_mf + "' " + "has been moved to " + parentFolderOf(ex_mf));
 
 ### Managing Document Files
 
-#### Create or Verify Document in a Folder or at Root
+#### Create or Verify Document
 ```javascript
 
 ```
