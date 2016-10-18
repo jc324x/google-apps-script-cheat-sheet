@@ -514,6 +514,42 @@ Logger.log(" Id of 'google-apps-script-cheat-sheet' at root ➡ " + ex_ffid.getI
 
 #### Create or Verify Folders in a Folder or at Root
 ```javascript
+// --- Create or Verify Folders in a Folder
+
+function createVerifyFoldersIn(fldr, names) {
+  var fldrs  = foldersIn(fldr);
+  var _names = folderNames(fldrs);
+  for (i = 0; i < names.length; i++) {
+    if (!(checkValIn(_names, names[i]))) {
+      fldr.createFolder(names[i]);
+    }
+  }
+  return fldr;
+}
+
+var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet");
+var arr_cvfi  = ["X", "Y", "Z"];
+var ex_cfi = createVerifyFoldersIn(fldr_cvfi, arr_cvfi);
+Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ+ ⬇ ");
+Logger.log(foldersIn(ex_cfi));
+
+// --- Create or Verify Folders at Root
+
+function createVerifyFoldersAtRoot(names) {
+  var rfs    = rootFolders();
+  var _names = folderNames(rfs);
+  for (i=0; i < names.length; i++) {
+    if (!(checkValIn(_names, names[i]))) {
+      DriveApp.createFolder(names[i]);
+    }
+  } 
+  return DriveApp.getRootFolder();
+}
+
+var arr_cvfar = ["1", "2", "3"];
+var ex_cvfar  = createVerifyFoldersAtRoot(arr_cvfar);
+Logger.log("all folders at Root ⬇ ");
+Logger.log(rootFolders());
 
 ```
 

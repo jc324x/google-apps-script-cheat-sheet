@@ -546,11 +546,11 @@ function createVerifyFoldersIn(fldr, names) {
 	return fldr;
 }
 
-// var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet");
-// var arr_cvfi  = ["X", "Y", "Z"];
-// var ex_cfi = createVerifyFoldersIn(fldr_cvfi, arr_cvfi);
-// Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ+ ⬇ ");
-// Logger.log(foldersIn(ex_cfi));
+var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet");
+var arr_cvfi  = ["X", "Y", "Z"];
+var ex_cfi = createVerifyFoldersIn(fldr_cvfi, arr_cvfi);
+Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ+ ⬇ ");
+Logger.log(foldersIn(ex_cfi));
 
 // --- Create or Verify Folders at Root
 
@@ -565,10 +565,10 @@ function createVerifyFoldersAtRoot(names) {
 	return DriveApp.getRootFolder();
 }
 
-// var arr_cvfar = ["1", "2", "3"];
-// var ex_cvfar  = createVerifyFoldersAtRoot(arr_cvfar);
-// Logger.log("all folders at Root ⬇ ");
-// Logger.log(rootFolders());
+var arr_cvfar = ["1", "2", "3"];
+var ex_cvfar  = createVerifyFoldersAtRoot(arr_cvfar);
+Logger.log("all folders at Root ⬇ ");
+Logger.log(rootFolders());
 
 // - Files
 
