@@ -25,10 +25,10 @@
 * [Folders](#folders)
   * [Create or Verify Folder Path](#create-or-verify-folder-path)
   * [Last Folder in Folder Path](#last-folder-in-folder-path)
-  * [Array of All Folders](#array-of-all-folders-in-a-folder,-at-root-or-in-drive)
+  * [Array of All Folders](#array-of-all-folders)
   * [Array of All Folder Names](#array-of-all-folder-names)
   * [Find a Folder](#find-a-folder)
-  * [Create or Verify Folders in a Folder or at Root](#create-or-verify-folders-in-a-folder-or-at-root)
+  * [Create or Verify Folders](#create-or-verify-folders)
 * [Files](#files)
   * [Array of All Files](#array-of-all-files)
   * [Array of All File Names](#array-of-all-file-names)
@@ -370,7 +370,7 @@ Logger.log("current quarter ➡ " + acdQ);
 
 #### Create or Verify Folder Path
 ```javascript
-  function createVerifyPath(path) {
+function createVerifyPath(path) {
   var arr = path.split('/');
   var fldr;
   for (i = 0; i < arr.length; i++) {
@@ -553,7 +553,7 @@ function createVerifyFoldersIn(fldr, names) {
 
 var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet");
 var arr_cvfi  = ["X", "Y", "Z"];
-var ex_cfi = createVerifyFoldersIn(fldr_cvfi, arr_cvfi);
+var ex_cfi    = createVerifyFoldersIn(fldr_cvfi, arr_cvfi);
 Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ+ ⬇ ");
 Logger.log(foldersIn(ex_cfi));
 
