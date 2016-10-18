@@ -400,13 +400,13 @@ Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_lf
 // --- All Folders in a Folder
 
 function foldersIn(fldr) {
-	var fi  = fldr.getFolders();
-	var arr = [];
-	while (fi.hasNext()) {
-		var _fldr = fi.next();
-		arr.push(_fldr);
-	} 
-	return arr;
+  var fi  = fldr.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var _fldr = fi.next();
+    arr.push(_fldr);
+  } 
+  return arr;
 }
 
 var fldr_fi = lastFolderIn("google-apps-script-cheat-sheet");
@@ -416,14 +416,14 @@ Logger.log("'google-apps-script-cheat-sheet' has top level folders ➡ " + ex_fi
 // --- All Folders at Root
 
 function rootFolders() {
-	var rf  = DriveApp.getRootFolder();
-	var fi  = rf.getFolders();
-	var arr = [];
-	while (fi.hasNext()) {
-		var fldr = fi.next();
-		arr.push(fldr);
-	} 
-	return arr;
+  var rf  = DriveApp.getRootFolder();
+  var fi  = rf.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var fldr = fi.next();
+    arr.push(fldr);
+  } 
+  return arr;
 }
 
 var ex_rf  = rootFolders();
@@ -433,13 +433,13 @@ Logger.log(ex_rf);
 // --- All Folders in Drive
 
 function allFolders() {
-	var fi  = DriveApp.getFolders();
-	var arr = [];
-	while (fi.hasNext()) {
-		var fldr = fi.next();
-		arr.push(fldr);
-	} 
-	return arr;
+  var fi  = DriveApp.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var fldr = fi.next();
+    arr.push(fldr);
+  } 
+  return arr;
 }
 
 var ex_af = allFolders();
@@ -451,6 +451,19 @@ Logger.log(ex_af);
 #### Array of all Folder Names
 ```javascript
 
+function folderNames(fldrs) {
+  var arr = [];
+  for (var i = 0; i < fldrs.length; i++) {
+    var name = fldrs[i].getName();
+    arr.push(name);
+  }
+  return arr;
+}
+
+// var fldr_fn = lastFolderIn("google-apps-script-cheat-sheet");
+// var arr_fn  = foldersIn(fldr_fn);
+// var ex_fn   = folderNames(arr_fn)
+// Logger.log("'google-apps-script-cheat-sheet' has top level folders " + ex_fn);
 ```
 
 #### Find a Folder in a Folder, at Root or in Drive
