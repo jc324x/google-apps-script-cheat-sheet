@@ -325,15 +325,15 @@ var quarterDates = [
 ];
 
 function academicQuarter() {
-	var d = new Date();
-	for (i = 0; i < 4; i++){
-		var s = new Date(quarterDates[i][0]);
-		var e = new Date(quarterDates[i][1]);
-		if (d >= s && d <= e ) {
-			var q =  i + 1;
-		} 
-	}
-	if (q) { return q } else { return "date outside of academic calendar"}
+  var d = new Date();
+  for (i = 0; i < 4; i++){
+    var s = new Date(quarterDates[i][0]);
+    var e = new Date(quarterDates[i][1]);
+    if (d >= s && d <= e ) {
+      var q =  i + 1;
+    } 
+  }
+  if (q) { return q } else { return "date outside of academic calendar"}
 }
 
 var acdQ = academicQuarter();
