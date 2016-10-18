@@ -37,9 +37,12 @@
 //   | -- Convert Column Letter to a Number
 //   | -- Replicating Import Range
 //   | -- Evaluating True and False
-//   | - Range as Array of Objects
-//   | -- Build Array of Headers
-//   | -- Build Array of Objects
+//   | -  Array of Objects
+//   | -- Utility Functions for Array of Objects 
+//   | --- Header Range
+//   | --- Value Range
+//   | --- Header Values
+//   | --- Values by Row 
 //   | -- Array of Objects from Sheet
 //   | -- Array of Objects from Range
 //   | -- Array of Objects from Two Columns
