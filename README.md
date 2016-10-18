@@ -419,7 +419,7 @@ var ex_lfi = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
 Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_lfi.getId());
 ```
 
-#### Array of All Folders in a Folder, at Root or in Drive
+#### Array of All Folders
 ```javascript
 // --- All Folders in a Folder
 
@@ -490,7 +490,7 @@ var ex_fn   = folderNames(arr_fn)
 Logger.log("'google-apps-script-cheat-sheet' has top level folders " + ex_fn);
 ```
 
-#### Find a Folder in a Folder, at Root or in Drive
+#### Find a Folder
 ```javascript
 // --- Find a Folder in a Folder
 
@@ -536,7 +536,7 @@ var ex_ffid = findFolderInDrive("google-apps-script-cheat-sheet");
 Logger.log(" Id of 'google-apps-script-cheat-sheet' at root ➡ " + ex_ffid.getId());
 ```
 
-#### Create or Verify Folders in a Folder or at Root
+#### Create or Verify Folders
 ```javascript
 // --- Create or Verify Folders in a Folder
 
@@ -579,7 +579,7 @@ Logger.log(rootFolders());
 
 ### Files
 
-#### Array of All Files in a Folder, at Root or in Drive
+#### Array of All Files
 ```javascript
 // --- All Files in a Folder
 
@@ -646,9 +646,9 @@ var ex_fnam   = fileNames(arr_fnam);
 Logger.log(ex_fnam);
 ```
 
-#### Find a File in a Folder, at Root or in Drive
+#### Find a File
 ```javascript
-// --- Find a File in a Folder, at Root or Search All of Drive 
+// --- Find a File in a Folder
 
 function findFileIn(fldr, name) {
   var files = filesIn(fldr);
