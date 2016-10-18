@@ -916,7 +916,6 @@ function arrObjFrom(rangeObj, headers){
 // -- Array of Objects from Sheet
 
 function arrObjSheet(sheetObj, hRow){
-
 	var lColNum     = sheetObj.getLastColumn();
 	var lColABC     = numCol(lColNum);
 	var lRow        = sheetObj.getLastRow();
@@ -933,7 +932,6 @@ function arrObjSheet(sheetObj, hRow){
 // -- Array of Objects from Range 
 
 function arrObjRange(sheetObj, a1Notation) {
-
 	function hRangeNotation(a1Notation) {
 		var arr  = a1Notation.split(":");
 		var col0 = arr[0].match(/\D/g,'');
@@ -941,7 +939,6 @@ function arrObjRange(sheetObj, a1Notation) {
 		var row  = arr[0].match(/\d+/g);
 		return col0 + row + ":" + col1 + row;
 	}
-
 	function valRangeNotation(a1Notation) {
 		var arr  = a1Notation.split(":");
 		var col0 = arr[0].match(/\D/g,'');
@@ -950,7 +947,6 @@ function arrObjRange(sheetObj, a1Notation) {
 		var row1 = arr[1].match(/\d+/g);
 		return col0 + (Number(row0) + 1) + ":" + col1 + row1;
 	}
-
 	var hRange      = hRangeNotation(a1Notation);
 	var hRangeObj   = sheetObj.getRange(hRange);
 	var valRange    = valRangeNotation(a1Notation);

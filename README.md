@@ -914,13 +914,13 @@ Logger.log(checkTF(ex_ctf2));
 
 ```javascript
 function arrHeadFrom(rangeObj){
-	var vals = rangeObj.getValues();
-	var arr  = [];
-	for (var i = 0; i < vals[0].length; i++) {
-		var val  = vals[0][i];
-		arr.push(val);
-	} 
-	return arr;
+  var vals = rangeObj.getValues();
+  var arr  = [];
+  for (var i = 0; i < vals[0].length; i++) {
+    var val  = vals[0][i];
+    arr.push(val);
+  } 
+  return arr;
 }
 ```
 
@@ -928,37 +928,35 @@ function arrHeadFrom(rangeObj){
 
 ```javascript
 function arrObjFrom(rangeObj, headers){
-	var h    = rangeObj.getHeight();
-	var w    = rangeObj.getWidth();
-	var vals = rangeObj.getValues();
-	var arr  = [];
-	for (var i = 0; i < h; i++) {
-		var row = {};
-		for (var j = 0; j < w; j++) {
-			var prop = headers[j];
-			var val  = vals[i][j];
-			if (val !== "") {
-				row[prop] = val;
-			} 
-		}
-		arr.push(row);
-	}  
-	return arr;
+  var h    = rangeObj.getHeight();
+  var w    = rangeObj.getWidth();
+  var vals = rangeObj.getValues();
+  var arr  = [];
+  for (var i = 0; i < h; i++) {
+    var row = {};
+    for (var j = 0; j < w; j++) {
+      var prop = headers[j];
+      var val  = vals[i][j];
+      if (val !== "") {
+        row[prop] = val;
+      } 
+    }
+    arr.push(row);
+  }  
+  return arr;
 }
 ```
-
 
 #### Array of Objects from Sheet
 ```javascript
 function arrObjSheet(sheetObj, hRow){
-
-	var lColNum     = sheetObj.getLastColumn();
-	var lColABC     = numCol(lColNum);
-	var lRow        = sheetObj.getLastRow();
-	var hRangeObj   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow)
-	var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow)
-	var arrHeaders  = arrHeadFrom(hRangeObj);
-	return arrObjFrom(valRangeObj, arrHeaders)
+  var lColNum     = sheetObj.getLastColumn();
+  var lColABC     = numCol(lColNum);
+  var lRow        = sheetObj.getLastRow();
+  var hRangeObj   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow)
+  var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow)
+  var arrHeaders  = arrHeadFrom(hRangeObj);
+  return arrObjFrom(valRangeObj, arrHeaders)
 }
 
 var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
@@ -969,45 +967,42 @@ Logger.log(ex_aos);
 #### Array of Objects from Range
 ```javascript
 function arrObjRange(sheetObj, a1Notation) {
-
-	function hRangeNotation(a1Notation) {
-		var arr  = a1Notation.split(":");
-		var col0 = arr[0].match(/\D/g,'');
-		var col1 = arr[1].match(/\D/g,'');
-		var row  = arr[0].match(/\d+/g);
-		return col0 + row + ":" + col1 + row;
-	}
-
-	function valRangeNotation(a1Notation) {
-		var arr  = a1Notation.split(":");
-		var col0 = arr[0].match(/\D/g,'');
-		var row0 = arr[0].match(/\d+/g);
-		var col1 = arr[1].match(/\D/g,'');
-		var row1 = arr[1].match(/\d+/g);
-		return col0 + (Number(row0) + 1) + ":" + col1 + row1;
-	}
-
-	var hRange      = hRangeNotation(a1Notation);
-	var hRangeObj   = sheetObj.getRange(hRange);
-	var valRange    = valRangeNotation(a1Notation);
-	var valRangeObj = sheetObj.getRange(valRange);
-	var arrHeaders = arrHeadFrom(hRangeObj);
-	return arrObjFrom(valRangeObj, arrHeaders);
+  function hRangeNotation(a1Notation) {
+    var arr  = a1Notation.split(":");
+    var col0 = arr[0].match(/\D/g,'');
+    var col1 = arr[1].match(/\D/g,'');
+    var row  = arr[0].match(/\d+/g);
+    return col0 + row + ":" + col1 + row;
+  }
+  function valRangeNotation(a1Notation) {
+    var arr  = a1Notation.split(":");
+    var col0 = arr[0].match(/\D/g,'');
+    var row0 = arr[0].match(/\d+/g);
+    var col1 = arr[1].match(/\D/g,'');
+    var row1 = arr[1].match(/\d+/g);
+    return col0 + (Number(row0) + 1) + ":" + col1 + row1;
+  }
+  var hRange      = hRangeNotation(a1Notation);
+  var hRangeObj   = sheetObj.getRange(hRange);
+  var valRange    = valRangeNotation(a1Notation);
+  var valRangeObj = sheetObj.getRange(valRange);
+  var arrHeaders = arrHeadFrom(hRangeObj);
+  return arrObjFrom(valRangeObj, arrHeaders);
 }
 ```
 
 #### Array of Objects from Two Columns
 ```javascript
 function arrObjTwoCol(sheetObj, a1Notation) {
-	var range  = sheetObj.getRange(a1Notation);
-	var height = range.getHeight();
-	var width  = range.getWidth();
-	var values = range.getValues();
-	var obj    = new Object();
-	for (var i = 0; i < values.length; i++) {
-		obj[values[i][0]] = values[i][1];
-	} 
-	return obj;
+  var range  = sheetObj.getRange(a1Notation);
+  var height = range.getHeight();
+  var width  = range.getWidth();
+  var values = range.getValues();
+  var obj    = new Object();
+  for (var i = 0; i < values.length; i++) {
+    obj[values[i][0]] = values[i][1];
+  } 
+  return obj;
 }
 
 var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
