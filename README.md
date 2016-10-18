@@ -346,12 +346,53 @@ Logger.log("current quarter ➡ " + acdQ);
 
 #### Create or Verify Folder Path
 ```javascript
+  function createVerifyPath(path) {
+  var arr = path.split('/');
+  var fldr;
+  for (i = 0; i < arr.length; i++) {
+    if (i == 0) {
+      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      if(!(fi.hasNext())) {
+        DriveApp.createFolder(arr[i]);
+        fi = DriveApp.getFoldersByName(arry[i]);
+      } 
+      fldr = fi.next();
+    } else if (i >= 1) {
+      fi = fldr.getFoldersByName(arr[i]);
+      if(!(fi.hasNext())) {
+        fldr.createFolder(arr[i]);
+        fi = DriveApp.getFoldersByName(arr[i]);
+      } 
+      fldr = fi.next();
+    }
+  } 
+  return fldr;
+}
+
+var ex_cov = createVerifyPath("google-apps-script-cheat-sheet/A/B/C");
+Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_cov.getId());
 
 ```
 
 #### Last Folder in Folder Path
 ```javascript
+function lastFolderIn(path) {
+  var arr = path.split('/');
+  var fldr;
+  for (i = 0; i < arr.length; i++) {
+    if (i == 0) {
+      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      if(fi.hasNext()) {fldr = fi.next();} else { return null;}
+    } else if (i >= 1) {
+      fi = fldr.getFoldersByName(arr[i]);
+      if(fi.hasNext()) {fldr = fi.next();} else { return null;}
+    }
+  } 
+  return fldr;
+}
 
+var ex_lfi = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
+Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_lfi.getId());
 ```
 
 #### Array of All Folders in a Folder, at Root or in Drive
