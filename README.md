@@ -51,7 +51,6 @@
   * [Array of Objects from Sheet](#array-of-objects-from-sheet)
   * [Array of Objects from Range](#array-of-objects-from-range)
   * [Array of Objects from Two Columns](#array-of-object-from-two-columns)
-  * [Grid Object](#grid-object)
 
 ##[Docs](#docs)
 * [Managing Document Files](#managing-document-files)
@@ -1014,95 +1013,6 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 var ex_vg    = arrObjTwoCol(sheet_vg, "D1:F5");
 Logger.log(ex_vg);
-```
-
-#### Grid Object
-```javascript
-function Grid(sheetObj, hRow) {
-
-	function HVal(i, header) {
-		this.header = header;
-
-		Object.defineProperty(this, "colIndex", {
-get: function() {
-return i + 1;
-}
-});
-
-Object.defineProperty(this, "colIndexABC", {
-get: function() {
-return numCol(this.colIndex);
-}
-});
-}
-
-function RVal(i, hRow) {
-	Object.defineProperty(this, "rowIndex", {
-get: function() {
-return i + hRow;
-}
-});
-}
-
-var lColNum     = sheetObj.getLastColumn();
-var lColABC     = numCol(lColNum);
-var lRow        = sheetObj.getLastRow();
-var hRangeObj   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow)
-var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow)
-
-function buildArrayOfHValObjs(hRangeObj){
-	var mArr    = hRangeObj.getValues();
-	var arrHVal = [];
-	for (var i = 0; i < mArr[0].length; i++) {
-		var val  = mArr[0][i];
-		var hObj = new HVal(i, val);
-		arrHVal.push(hObj);
-	} 
-	return arrHVal;
-}
-
-var arrHValObj  = buildArrayOfHValObjs(hRangeObj);
-
-function buildArrayOfRValObjs(valRangeObj, arrHValObj){
-	var h       = valRangeObj.getHeight();
-	var w       = valRangeObj.getWidth();
-	var mArr    = valRangeObj.getValues();
-	var arrRVal = [];
-	for (var i = 0; i < h; i++) {
-		var rVal = new RVal(i, hRow);
-		for (var j = 0; j < w; j++) {
-			var prop = arrHValObj[j].header;
-			var val  = mArr[i][j];
-			if (val !== "") {
-				rVal[prop] = val;
-			} 
-		}
-		arrRVal.push(rVal);
-	}  
-	return arrRVal;
-}
-
-var arrRValObj = buildArrayOfRValObjs(valRangeObj, arrHValObj);
-
-Object.defineProperty(this, "arrHValObj", {
-get: function() {
-return arrHValObj;
-}
-});
-
-Object.defineProperty(this, "arrRValObj", {
-get: function() {
-return arrRValObj;
-}
-});
-}
-
-var ss_g    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_Grid = new Grid(ss_g, 1);
-var ex_arrRValObj = ex_Grid.arrRValObj;
-var ex_arrHValObj = ex_Grid.arrHValObj;
-Logger.log(ex_arrRValObj);
-Logger.log(ex_arrHValObj);
 ```
 
 ## Docs
