@@ -716,3 +716,105 @@ var ex_mf    = moveFile(file_mf, fldr_mf2);
 Logger.log("'" + ex_mf + "' " + "has been moved to " + parentFolderOf(ex_mf));
 ```
 
+## Sheets
+
+### Managing Spreadsheet Files
+
+#### Create or Verify Spreadsheet in a Folder or at Root
+```javascript
+
+```
+
+### Utility Functions for Sheets
+#### Convert Column Number to a Letter
+```javascript
+
+```
+
+#### Convert Column Letter to a Number
+```javascript
+
+```
+
+#### Replicating Import Range
+```javascript
+
+```
+
+#### Evaluating True or False
+```javascript
+
+```
+
+### Range as Array of Objects
+```javascript
+
+```
+
+#### Array of Objects by Sheet
+```javascript
+
+```
+
+#### Array of Objects from Range
+```javascript
+
+```
+
+#### Array of Objects from Two Columns
+```javascript
+
+```
+
+#### Grid Object
+```javascript
+
+```
+
+## Docs
+
+### Managing Document Files
+
+#### Create or Verify Document in a Folder or at Root
+```javascript
+
+```
+
+### Utility Functions for Docs
+
+#### Access Document Body
+```javascript
+
+```
+
+#### Clear Document Body
+```javascript
+
+```
+
+## Gmail
+
+### Send Email 
+
+#### Comma Separated List of Recipients
+```javascript
+
+```
+
+#### HTML in Email Body
+```javascript
+
+```
+
+#### Mail Merge
+```javascript
+
+```
+
+## Other
+
+### Regex Only Numbers or Letters
+```javascript
+
+```
+

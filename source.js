@@ -34,6 +34,7 @@
 //   | -- Create or Verify Spreadsheet in a Folder or at Root
 //   | - Utility Functions for Sheets
 //   | -- Convert Column Number to a Letter
+//   | -- Convert Column Letter to a Number
 //   | -- Replicating Import Range
 //   | -- Evaluating True and False
 //   | - Range as Array of Objects
