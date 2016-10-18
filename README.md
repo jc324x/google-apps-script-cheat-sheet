@@ -20,11 +20,26 @@
 * [Dates and Times](#dates-and-times)
   * [Formatted Timestamps](#formatted-timestamps)
   * [Match a Date to a Range](#match-a-date-to-a-range)
+
 ##[Drive](#drive)
 * [Folders](#folders)
   * [Create or Verify Folder Path](#create-or-verify-folder-path)
   * [Last Folder in Folder Path](#last-folder-in-folder-path)
-  * [Array of All Folders in a Folder, at Root or in Drive](#array-of-all-folders-in-a-folder,-at-root-or-in-drive)
+  * [Array of All Folders](#array-of-all-folders-in-a-folder,-at-root-or-in-drive)
+  * [Array of All Folder Names](#array-of-all-folder-names)
+  * [Find a Folder](#find-a-folder)
+  * [Create or Verify Folders in a Folder or at Root](#create-or-verify-folders-in-a-folder-or-at-root)
+* [Files](#files)
+  * [Array of All Files](#array-of-all-files)
+  * [Array of All File Names](#array-of-all-file-names)
+  * [Find a File](#find-a-file)
+  * [Parent Folder for a File](#parent-folder-for-a-file)
+  * [Copy a File to a Folder](#copy-a-file-to-a-folder)
+  * [Move a File to a Folder](#move-a-flie-to-a-folder)
+
+##[Sheets](#sheets)
+* [Managing Spreadsheet Files](#managing-spreadsheet-files)
+  * [Create or Verify Spreadsheet in a Folder or at Root](#create-or-verify-spreadsheet-in-a-folder-or-at-root)
 
 ## General
 

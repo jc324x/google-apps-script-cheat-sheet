@@ -18,14 +18,14 @@
 //   | - Folders
 //   | -- Create or Verify Folder Path
 //   | -- Last Folder in Folder Path
-//   | -- Array of All Folders in a Folder, at Root or in Drive
+//   | -- Array of All Folders
 //   | -- Array of All Folder Names
-//   | -- Find a Folder in a Folder, at Root or in Drive
+//   | -- Find a Folder
 //   | -- Create or Verify Folders in a Folder or at Root
 //   | - Files
-//   | -- Array of All Files in a Folder, at Root or in Drive
+//   | -- Array of All Files
 //   | -- Array of All File Names
-//   | -- Find a File in a Folder, at Root or in Drive 
+//   | -- Find a File
 //   | -- Parent Folder for a File
 //   | -- Copy a File to a Folder 
 //   | -- Move a File to a Folder
