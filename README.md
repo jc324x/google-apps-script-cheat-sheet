@@ -168,15 +168,15 @@ Logger.log("arrObj sorted by 'a' value ⬇ ");
 Logger.log(ex_arrObj);
 
 function dynSortM() {
-	var props = arguments;
-	return function (obj1, obj2) {
-		var i = 0, result = 0, numberOfProperties = props.length;
-		while(result === 0 && i < numberOfProperties) {
-			result = dynSort(props[i])(obj1, obj2);
-			i++;
-		}
-		return result;
-	}
+  var props = arguments;
+  return function (obj1, obj2) {
+    var i = 0, result = 0, numberOfProperties = props.length;
+    while(result === 0 && i < numberOfProperties) {
+      result = dynSort(props[i])(obj1, obj2);
+      i++;
+    }
+    return result;
+  }
 }
 
 ex_arrObj.sort(dynSortM("b", "c"));
@@ -188,14 +188,14 @@ Logger.log(ex_arrObj);
 
 ```javascript
 function findObjIn(arrObj, pQuery, val) {
-	for (var i = 0; i < arrObj.length; i++) {
-		var obj = arrObj[i];
-		for (var prop in obj) {
-			if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
-				return obj;
-			}
-		}
-	}
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
+        return obj;
+      }
+    }
+  }
 }
 
 
@@ -204,14 +204,14 @@ var ex_foi = findObjIn(ex_arrObj, "a", 1000);
 Logger.log(ex_foi);
 
 function findObjValIn(arrObj, pQuery, val, pReturn) {
-	for (var i = 0; i < arrObj.length; i++) {
-		var obj = arrObj[i];
-		for (var prop in obj) {
-			if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
-				return obj[pReturn];
-			}
-		}
-	}
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
+        return obj[pReturn];
+      }
+    }
+  }
 }
 
 Logger.log("find obj with 'c' value of 500 and return its 'a' value ⬇ ");
