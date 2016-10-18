@@ -375,3 +375,13 @@ Logger.log("current quarter ➡ " + acdQ);
 ```
 
 ### Files
+
+#### Array of All Files in a Folder, at Root or in Drive
+```javascript
+
+```
+
+#### Array of All File Names
+```javascript
+
+```
