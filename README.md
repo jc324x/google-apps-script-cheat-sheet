@@ -772,13 +772,42 @@ Logger.log("'" + ex_mf + "' " + "has been moved to " + parentFolderOf(ex_mf));
 
 #### Create or Verify Spreadsheet
 ```javascript
+// --- Create or Verify Spreadsheet in a Folder
 
+function createVerifySSIn(fldr, name) {
+  var files = filesIn(fldr);
+  var names = fileNames(files);
+  if (!(checkValIn(names, name))) {
+    var ss   = SpreadsheetApp.create(name).getId();
+    var file = DriveApp.getFileById(ss);
+    moveFile(file, fldr);
+  }
+  return findFileIn(fldr, name);
+}
+
+var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet");
+var ex_cvssi   = createVerifySSIn(fldr_cvssi, "example_sheet");
+Logger.log("The Id of '" + ex_cvssi + "' in " + parentFolderOf(ex_cvssi) + " is '" + ex_cvssi.getId());
+
+// --- Create or Verify Spreadsheet at Root
+
+function createVerifySSAtRoot(name) {
+  var files = rootFiles();
+  var names = fileNames(files);
+  if (!(checkValIn(names, name))) {
+    var ss = SpreadsheetApp.create(name);
+  }
+  return findFileAtRoot(name);
+}
+
+var ex_cvssar = createVerifySSAtRoot("example_sheet");
+Logger.log("The Id of '" + ex_cvssar + "' at root is '" + ex_cvssar.getId());
 ```
 
 ### Utility Functions for Sheets
+
 #### Convert Column Number to a Letter
 ```javascript
-
 ```
 
 #### Convert Column Letter to a Number
