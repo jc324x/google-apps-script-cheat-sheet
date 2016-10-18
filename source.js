@@ -38,9 +38,8 @@
 //   | -- Replicating Import Range
 //   | -- Evaluating True and False
 //   | - Range as Array of Objects
-//   | -- Supporting Functions
-//   | --- Array of Headers from Range
-//   | --- Build Array of Objects
+//   | -- Build Array of Headers
+//   | -- Build Array of Objects
 //   | -- Array of Objects from Sheet
 //   | -- Array of Objects from Range
 //   | -- Array of Objects from Two Columns
@@ -882,9 +881,7 @@ function checkTF(input) {
 
 // - Range as Array of Objects
 
-// -- Supporting Functions
-
-// --- Build Header Array from Range Object
+// -- Build Array of Headers
 
 function arrHeadFrom(rangeObj){
 	var vals = rangeObj.getValues();
@@ -896,7 +893,7 @@ function arrHeadFrom(rangeObj){
 	return arr;
 }
 
-// --- Build Array of Objects from Range
+// -- Build Array of Objects
 
 function arrObjFrom(rangeObj, headers){
 	var h    = rangeObj.getHeight();
@@ -930,9 +927,9 @@ function arrObjSheet(sheetObj, hRow){
 	return arrObjFrom(valRangeObj, arrHeaders)
 }
 
-var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_aos = arrObjSheet(ss_aos, 1);
-Logger.log(ex_aos);
+// var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var ex_aos = arrObjSheet(ss_aos, 1);
+// Logger.log(ex_aos);
 
 // -- Array of Objects from Range 
 
@@ -981,9 +978,9 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 	return obj;
 }
 
-// var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_vg    = arrObjTwoCol(sheet_vg, "D1:F5");
-// Logger.log(ex_vg);
+var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_vg    = arrObjTwoCol(sheet_vg, "D1:F5");
+Logger.log(ex_vg);
 
 // -- Grid Object
 
