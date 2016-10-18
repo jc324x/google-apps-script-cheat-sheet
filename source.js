@@ -808,7 +808,7 @@ function numCol(num) {
 function ex_nc() {
 	for (var i = 1; i <= 104; i++) {
 		var j = numCol(i);
-		// Logger.log(i + " - " + j);
+		Logger.log(i + " - " + j);
 	}
 }
 
@@ -831,11 +831,11 @@ function colNum(col) {
 function ex_cn() {
 	for (var i = 0; i <= 25; i++) {
 		var abc = String.fromCharCode(97 + i).toUpperCase();
-		// Logger.log(abc + " - " + colNum(abc));
+		Logger.log(abc + " - " + colNum(abc));
 	}
 	for (var i = 26; i <= 51; i++) {
 		var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
-		// Logger.log(abc + " - " + colNum(abc));
+		Logger.log(abc + " - " + colNum(abc));
 	}
 }
 

@@ -808,21 +808,103 @@ Logger.log("The Id of '" + ex_cvssar + "' at root is '" + ex_cvssar.getId());
 
 #### Convert Column Number to a Letter
 ```javascript
+function numCol(num) {
+	var num = num - 1, chr;
+	if (num <= 25) {
+		chr = String.fromCharCode(97 + num).toUpperCase();
+		return chr;
+	} else if (num >= 26 && num <= 51) {
+		num -= 26;
+		chr = String.fromCharCode(97 + num).toUpperCase();
+		return "A" + chr;
+	} else if (num >= 52 && num <= 77) {
+		num -= 52;
+		chr = String.fromCharCode(97 + num).toUpperCase();
+		return "B" + chr;
+	} else if (num >= 78 && num <= 103) {
+		num -= 78;
+		chr = String.fromCharCode(97 + num).toUpperCase();
+		return "C" + chr;
+	}
+}
+
+function ex_nc() {
+	for (var i = 1; i <= 104; i++) {
+		var j = numCol(i);
+		Logger.log(i + " - " + j);
+	}
+}
+
+ex_nc();
 ```
 
 #### Convert Column Letter to a Number
 ```javascript
+function colNum(col) {
+	var col = col.toUpperCase();
+	if (col.length === 1)  {
+		var chr0 = col.charCodeAt(0) - 64;
+		return chr0;
+	} else if (col.length === 2) {
+		var chr0 = (col.charCodeAt(0) - 64) * 26;
+		var chr1 = col.charCodeAt(1) - 64;
+		return chr0 + chr1;
+	}
+}
+
+function ex_cn() {
+	for (var i = 0; i <= 25; i++) {
+		var abc = String.fromCharCode(97 + i).toUpperCase();
+		Logger.log(abc + " - " + colNum(abc));
+	}
+	for (var i = 26; i <= 51; i++) {
+		var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
+		Logger.log(abc + " - " + colNum(abc));
+	}
+}
+
+ex_cn();
 
 ```
 
 #### Replicating Import Range
 ```javascript
+// trigger -> getSet : From spreadsheet : On edit
 
+var sheet_oe = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+
+function getSet(){
+	var get = sheet_oe.getRange("G2:G5").getValues();
+	var set = sheet_oe.getRange("H2:H5").setValues(get);
+}
 ```
 
 #### Evaluating True or False
 ```javascript
+// true:  1, t*, T*, y*, Y*
+// false: 0, !t || !y
 
+function checkTF(input) {
+	if (isNaN(input)) {
+		var first_letter = input.charAt(0).toLowerCase();
+		if (first_letter === 't' || first_letter === 'y') {
+			return true 
+		} else {
+			return false
+		}
+	} else {
+		if (input === 1) {
+			return true
+		} else { 
+			return false;
+		}
+	}
+}
+
+var ex_ctf1 = "Yes";
+var ex_ctf2 = "No";
+Logger.log(checkTF(ex_ctf1));
+Logger.log(checkTF(ex_ctf2));
 ```
 
 ### Range as Array of Objects
