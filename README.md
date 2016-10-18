@@ -557,10 +557,75 @@ Logger.log(rootFolders());
 
 #### Array of All Files in a Folder, at Root or in Drive
 ```javascript
+// --- All Files in a Folder
 
+function filesIn(fldr) {
+  var fi  = fldr.getFiles();
+  var arr = [];
+  while (fi.hasNext()) {
+    var file = fi.next();
+    arr.push(file);
+  } 
+  return arr;
+}
+
+var fldr_fin = lastFolderIn("google-apps-script-cheat-sheet");
+var ex_afi   = filesIn(fldr_fin);
+Logger.log(ex_afi);
+
+// --- All Files at Root
+
+function rootFiles() {
+  var rf = DriveApp.getRootFolder();
+  var fi = rf.getFiles();
+  var arr = [];
+  while (fi.hasNext()) {
+    var file = fi.next();
+    arr.push(file);
+  } 
+  return arr;
+}
+
+var ex_arf = rootFiles();
+Logger.log(ex_arf);
+
+// --- All Files in Drive
+
+function allFiles() {
+  var fi = DriveApp.getFiles();
+  var arr  = [];
+  while (fi.hasNext()) {
+    var file = fi.next();
+    arr.push(file);
+  } 
+  return arr;
+}
+
+var ex_afid = allFiles();
+Logger.log(ex_afid);
 ```
 
 #### Array of All File Names
+```javascript
+
+```
+
+#### Find a File in a Folder, at Root or in Drive
+```javascript
+
+```
+
+#### Parent Folder for a File 
+```javascript
+
+```
+
+#### Copy a File to a Folder
+```javascript
+
+```
+
+#### Move a File to a Folder
 ```javascript
 
 ```
