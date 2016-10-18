@@ -1,4 +1,4 @@
-*Note:* Drop source.js into a Sheet or form.js into a Form for a quickstart! This README is a digestable version of source.js / form.js
+*Note:* Drop source.js into a Sheet or form.js into a Form for a quickstart!
 
 ---
 
