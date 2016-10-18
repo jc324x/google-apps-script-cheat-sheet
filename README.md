@@ -46,6 +46,9 @@
   * [Replicating Import Range](#replicating-import-range)
   * [Evaluating True and False](#evaluating-true-and-false)
 * [Range as Array of Objects](#range-as-array-of-objects)
+  * [Supporting Functions](#supporting-functions)
+    * [Build Array of Headers from Range](#build-array-of-headers-from-range)
+    * [Build Array of Objects](#build-array-of-objects)
   * [Array of Objects from Sheet](#array-of-objects-from-sheet)
   * [Array of Objects from Range](#array-of-objects-from-range)
   * [Array of Objects from Two Columns](#array-of-object-from-two-columns)
@@ -909,116 +912,52 @@ Logger.log(checkTF(ex_ctf2));
 
 ### Range as Array of Objects
 
+#### Supporting Functions
+
+##### Build Header Array from Range Object
+
+```javascript
+function arrHeadFrom(rangeObj){
+	var vals = rangeObj.getValues();
+	var arr  = [];
+	for (var i = 0; i < vals[0].length; i++) {
+		var val  = vals[0][i];
+		arr.push(val);
+	} 
+	return arr;
+}
+```
+
+##### Build Array of Objects from Range
+
+```javascript
+function arrObjFrom(rangeObj, headers){
+	var h    = rangeObj.getHeight();
+	var w    = rangeObj.getWidth();
+	var vals = rangeObj.getValues();
+	var arr  = [];
+	for (var i = 0; i < h; i++) {
+		var row = {};
+		for (var j = 0; j < w; j++) {
+			var prop = headers[j];
+			var val  = vals[i][j];
+			if (val !== "") {
+				row[prop] = val;
+			} 
+		}
+		arr.push(row);
+	}  
+	return arr;
+}
+```
+
+
 #### Array of Objects from Sheet
 ```javascript
-function arrObjSheet(sheetObj, hRow){
-
-  var lColNum     = sheetObj.getLastColumn();
-  var lColABC     = numCol(lColNum);
-  var lRow        = sheetObj.getLastRow();
-  var hRangeObj   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow)
-  var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow)
-
-  function getHeaders(hRangeObj){
-    var values = hRangeObj.getValues();
-    var arr    = [];
-    for (var i = 0; i < values[0].length; i++) {
-      var val  = values[0][i];
-      arr.push(val);
-    } 
-    return arr;
-  }
-
-	var headers  = getHeaders(hRangeObj);
-
-  function arrObj(valRangeObj){
-    var h       = valRangeObj.getHeight();
-    var w       = valRangeObj.getWidth();
-    var mArr    = valRangeObj.getValues();
-    var arrRVal = [];
-    for (var i = 0; i < h; i++) {
-      var rVal = {};
-      for (var j = 0; j < w; j++) {
-        var prop = headers[j];
-        var val  = mArr[i][j];
-        if (val !== "") {
-          rVal[prop] = val;
-        } 
-      }
-      arrRVal.push(rVal);
-    }  
-    return arrRVal;
-    }
-    return arrObj(valRangeObj);
-  }
-
-var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_aos = arrObjSheet(ss_aos, 1);
-Logger.log(ex_aos);
 ```
 
 #### Array of Objects from Range
 ```javascript
-function arrObjRange(sheetObj, a1Notation) {
-
-	function hRangeNotation(a1Notation) {
-		var arr  = a1Notation.split(":");
-		var col0 = arr[0].match(/\D/g,'');
-		var col1 = arr[1].match(/\D/g,'');
-		var row  = arr[0].match(/\d+/g);
-		return col0 + row + ":" + col1 + row;
-	}
-
-	function valRangeNotation(a1Notation) {
-		var arr  = a1Notation.split(":");
-		var col0 = arr[0].match(/\D/g,'');
-		var row0 = arr[0].match(/\d+/g);
-		var col1 = arr[1].match(/\D/g,'');
-		var row1 = arr[1].match(/\d+/g);
-		return col0 + (Number(row0) + 1) + ":" + col1 + row1;
-	}
-
-	var hRange      = hRangeNotation(a1Notation);
-	var hRangeObj   = sheetObj.getRange(hRange);
-	var valRange    = valRangeNotation(a1Notation);
-	var valRangeObj = sheetObj.getRange(valRange);
-
-	function getHeaders(hRangeObj){
-		var values = hRangeObj.getValues();
-		var arr    = [];
-		for (var i = 0; i < values[0].length; i++) {
-			var val  = values[0][i];
-			arr.push(val);
-		} 
-		return arr;
-	}
-
-	var headers  = getHeaders(hRangeObj);
-
-	function arrObj(valRangeObj){
-		var h       = valRangeObj.getHeight();
-		var w       = valRangeObj.getWidth();
-		var mArr    = valRangeObj.getValues();
-		var arrRVal = [];
-		for (var i = 0; i < h; i++) {
-			var rVal = {};
-			for (var j = 0; j < w; j++) {
-				var prop = headers[j];
-				var val  = mArr[i][j];
-				if (val !== "") {
-					rVal[prop] = val;
-				} 
-			}
-			arrRVal.push(rVal);
-		}  
-		return arrRVal;
-	}
-	return arrObj(valRangeObj);
-}
-
-var ss_aor = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_aor = arrObjRange(ss_aor, "A1:B5");
-Logger.log(ex_aor);
 ```
 
 #### Array of Objects from Two Columns

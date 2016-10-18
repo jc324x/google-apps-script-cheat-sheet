@@ -38,7 +38,10 @@
 //   | -- Replicating Import Range
 //   | -- Evaluating True and False
 //   | - Range as Array of Objects
-//   | -- Array Of Objects from Sheet
+//   | -- Supporting Functions
+//   | --- Array of Headers from Range
+//   | --- Build Array of Objects
+//   | -- Array of Objects from Sheet
 //   | -- Array of Objects from Range
 //   | -- Array of Objects from Two Columns
 //   | -- Grid Object
@@ -111,8 +114,8 @@ function rmEmptyVal(x){
 
 var arr_rev  = ["a",,"b",,,"c"];
 var ex_rev = arr_rev.filter(rmEmptyVal);
-Logger.log("rmEmpty input ➡ " + arr_rev);
-Logger.log("rmEmpty output ➡ " + ex_rev);
+// Logger.log("rmEmpty input ➡ " + arr_rev);
+// Logger.log("rmEmpty output ➡ " + ex_rev);
 
 // -- Get Count of Values in Array
 // ➡  array of objects
@@ -262,8 +265,8 @@ function filterObjIn(arrObj, pQuery, val) {
 }
 
 var ex_foi = filterObjIn(ex_arrObj, "b", 2);
-Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
-Logger.log(ex_foi);
+// Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
+// Logger.log(ex_foi);
 
 // - Object
 // -- Array of Matching Property Values
@@ -550,8 +553,8 @@ function createVerifyFoldersIn(fldr, names) {
 var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet");
 var arr_cvfi  = ["X", "Y", "Z"];
 var ex_cfi = createVerifyFoldersIn(fldr_cvfi, arr_cvfi);
-Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ+ ⬇ ");
-Logger.log(foldersIn(ex_cfi));
+// Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ+ ⬇ ");
+// Logger.log(foldersIn(ex_cfi));
 
 // --- Create or Verify Folders at Root
 
@@ -568,8 +571,8 @@ function createVerifyFoldersAtRoot(names) {
 
 var arr_cvfar = ["1", "2", "3"];
 var ex_cvfar  = createVerifyFoldersAtRoot(arr_cvfar);
-Logger.log("all folders at Root ⬇ ");
-Logger.log(rootFolders());
+// Logger.log("all folders at Root ⬇ ");
+// Logger.log(rootFolders());
 
 // - Files
 
@@ -872,14 +875,49 @@ function checkTF(input) {
 	}
 }
 
-var ex_ctf1 = "Yes";
-var ex_ctf2 = "No";
+// var ex_ctf1 = "Yes";
+// var ex_ctf2 = "No";
 // Logger.log(checkTF(ex_ctf1));
 // Logger.log(checkTF(ex_ctf2));
 
 // - Range as Array of Objects
 
-// -- Array Of Objects from Sheet
+// -- Supporting Functions
+
+// --- Build Header Array from Range Object
+
+function arrHeadFrom(rangeObj){
+	var vals = rangeObj.getValues();
+	var arr  = [];
+	for (var i = 0; i < vals[0].length; i++) {
+		var val  = vals[0][i];
+		arr.push(val);
+	} 
+	return arr;
+}
+
+// --- Build Array of Objects from Range
+
+function arrObjFrom(rangeObj, headers){
+	var h    = rangeObj.getHeight();
+	var w    = rangeObj.getWidth();
+	var vals = rangeObj.getValues();
+	var arr  = [];
+	for (var i = 0; i < h; i++) {
+		var row = {};
+		for (var j = 0; j < w; j++) {
+			var prop = headers[j];
+			var val  = vals[i][j];
+			if (val !== "") {
+				row[prop] = val;
+			} 
+		}
+		arr.push(row);
+	}  
+	return arr;
+}
+
+// -- Array of Objects from Sheet
 
 function arrObjSheet(sheetObj, hRow){
 
@@ -888,45 +926,15 @@ function arrObjSheet(sheetObj, hRow){
 	var lRow        = sheetObj.getLastRow();
 	var hRangeObj   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow)
 	var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow)
-
-	function getHeaders(hRangeObj){
-		var values = hRangeObj.getValues();
-		var arr    = [];
-		for (var i = 0; i < values[0].length; i++) {
-			var val  = values[0][i];
-			arr.push(val);
-		} 
-		return arr;
-	}
-
-	var headers  = getHeaders(hRangeObj);
-
-	function arrObj(valRangeObj){
-		var h       = valRangeObj.getHeight();
-		var w       = valRangeObj.getWidth();
-		var mArr    = valRangeObj.getValues();
-		var arrRVal = [];
-		for (var i = 0; i < h; i++) {
-			var rVal = {};
-			for (var j = 0; j < w; j++) {
-				var prop = headers[j];
-				var val  = mArr[i][j];
-				if (val !== "") {
-					rVal[prop] = val;
-				} 
-			}
-			arrRVal.push(rVal);
-		}  
-		return arrRVal;
-	}
-	return arrObj(valRangeObj);
+	var arrHeaders  = arrHeadFrom(hRangeObj);
+	return arrObjFrom(valRangeObj, arrHeaders)
 }
 
-// var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_aos = arrObjSheet(ss_aos, 1);
-// Logger.log(ex_aos);
+var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_aos = arrObjSheet(ss_aos, 1);
+Logger.log(ex_aos);
 
-// -- Array of Objects from Range
+// -- Array of Objects from Range 
 
 function arrObjRange(sheetObj, a1Notation) {
 
@@ -951,43 +959,13 @@ function arrObjRange(sheetObj, a1Notation) {
 	var hRangeObj   = sheetObj.getRange(hRange);
 	var valRange    = valRangeNotation(a1Notation);
 	var valRangeObj = sheetObj.getRange(valRange);
-
-	function getHeaders(hRangeObj){
-		var values = hRangeObj.getValues();
-		var arr    = [];
-		for (var i = 0; i < values[0].length; i++) {
-			var val  = values[0][i];
-			arr.push(val);
-		} 
-		return arr;
-	}
-
-	var headers  = getHeaders(hRangeObj);
-
-	function arrObj(valRangeObj){
-		var h       = valRangeObj.getHeight();
-		var w       = valRangeObj.getWidth();
-		var mArr    = valRangeObj.getValues();
-		var arrRVal = [];
-		for (var i = 0; i < h; i++) {
-			var rVal = {};
-			for (var j = 0; j < w; j++) {
-				var prop = headers[j];
-				var val  = mArr[i][j];
-				if (val !== "") {
-					rVal[prop] = val;
-				} 
-			}
-			arrRVal.push(rVal);
-		}  
-		return arrRVal;
-	}
-	return arrObj(valRangeObj);
+	var arrHeaders = arrHeadFrom(hRangeObj);
+	return arrObjFrom(valRangeObj, arrHeaders);
 }
 
-// var ss_aor = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_aor = arrObjRange(ss_aor, "A1:B5");
-// Logger.log(ex_aor);
+var ss_aor = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_aor = arrObjRange(ss_aor, "A1:B5");
+Logger.log(ex_aor);
 
 // -- Array of Objects from Two Columns
 
@@ -1003,9 +981,9 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 	return obj;
 }
 
-var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_vg    = arrObjTwoCol(sheet_vg, "D1:F5");
-Logger.log(ex_vg);
+// var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var ex_vg    = arrObjTwoCol(sheet_vg, "D1:F5");
+// Logger.log(ex_vg);
 
 // -- Grid Object
 
@@ -1088,12 +1066,12 @@ return arrRValObj;
 });
 }
 
-var ss_g    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_Grid = new Grid(ss_g, 1);
-var ex_arrRValObj = ex_Grid.arrRValObj;
-var ex_arrHValObj = ex_Grid.arrHValObj;
-Logger.log(ex_arrRValObj);
-Logger.log(ex_arrHValObj);
+// var ss_g    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var ex_Grid = new Grid(ss_g, 1);
+// var ex_arrRValObj = ex_Grid.arrRValObj;
+// var ex_arrHValObj = ex_Grid.arrHValObj;
+// Logger.log(ex_arrRValObj);
+// Logger.log(ex_arrHValObj);
 
 // Docs
 
