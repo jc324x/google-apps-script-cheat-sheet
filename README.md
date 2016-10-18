@@ -607,11 +607,66 @@ Logger.log(ex_afid);
 
 #### Array of All File Names
 ```javascript
+function fileNames(files) {
+	var arr = [];
+	for (var i = 0; i < files.length; i++) {
+		var name = files[i].getName();
+		arr.push(name);
+	}
+	return arr;
+}
 
+var fldr_fnam = lastFolderIn("google-apps-script-cheat-sheet");
+var arr_fnam  = filesIn(fldr_fnam);
+var ex_fnam   = fileNames(arr_fnam);
+Logger.log(ex_fnam);
 ```
 
 #### Find a File in a Folder, at Root or in Drive
 ```javascript
+// --- Find a File in a Folder, at Root or Search All of Drive 
+
+function findFileIn(fldr, name) {
+  var files = filesIn(fldr);
+  var names = fileNames(files);
+  if (checkValIn(names, name)) {
+    var file = fldr.getFilesByName(name).next();
+    return file;
+  }
+}
+
+var fldr_ffli = lastFolderIn("google-apps-script-cheat-sheet");
+var ex_ffli   = findFileIn(fldr_ffli, "example_file");
+Logger.log(" Id of 'example_file' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffi.getId());
+
+// --- Find a File at Root
+
+function findFileAtRoot(name) {
+  var rf    = DriveApp.getRootFolder();
+  var files = rootFiles();
+  var names = fileNames(files);
+  if (checkValIn(names, name)) {
+    var file = rf.getFilesByName(name).next();
+    return file;
+  }
+}
+
+var file_ffar = findFileAtRoot("NAME-OF-YOUR-FILE-GOES-HERE");
+Logger.log(" Id of '" + file_ffar + "' at root ➡ " + file_ffar.getId());
+
+// --- Find a File in Drive
+
+function findFileInDrive(name) {
+  var fi = DriveApp.getFilesByName(name);
+  while (fi.hasNext()){
+    var file = fi.next();
+    return file;
+  }
+}
+
+var file_ffid = findFileInDrive("example_file");
+Logger.log(" Id of '" + file_ffid + "' in " + parentFolderOf(file_ffid) + " ➡ " + file_ffid.getId());
+
 
 ```
 
