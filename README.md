@@ -908,28 +908,225 @@ Logger.log(checkTF(ex_ctf2));
 ```
 
 ### Range as Array of Objects
-```javascript
-
-```
 
 #### Array of Objects from Sheet
 ```javascript
+function arrObjSheet(sheetObj, hRow){
 
+	var lColNum     = sheetObj.getLastColumn();
+	var lColABC     = numCol(lColNum);
+	var lRow        = sheetObj.getLastRow();
+	var hRangeObj   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow)
+	var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow)
+
+	function getHeaders(hRangeObj){
+		var values = hRangeObj.getValues();
+		var arr    = [];
+		for (var i = 0; i < values[0].length; i++) {
+			var val  = values[0][i];
+			arr.push(val);
+		} 
+		return arr;
+	}
+
+	var headers  = getHeaders(hRangeObj);
+
+	function arrObj(valRangeObj){
+		var h       = valRangeObj.getHeight();
+		var w       = valRangeObj.getWidth();
+		var mArr    = valRangeObj.getValues();
+		var arrRVal = [];
+		for (var i = 0; i < h; i++) {
+			var rVal = {};
+			for (var j = 0; j < w; j++) {
+				var prop = headers[j];
+				var val  = mArr[i][j];
+				if (val !== "") {
+					rVal[prop] = val;
+				} 
+			}
+			arrRVal.push(rVal);
+		}  
+		return arrRVal;
+	}
+	return arrObj(valRangeObj);
+}
+
+var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_aos = arrObjSheet(ss_aos, 1);
+Logger.log(ex_aos);
 ```
 
 #### Array of Objects from Range
 ```javascript
+function arrObjRange(sheetObj, a1Notation) {
 
+	function hRangeNotation(a1Notation) {
+		var arr  = a1Notation.split(":");
+		var col0 = arr[0].match(/\D/g,'');
+		var col1 = arr[1].match(/\D/g,'');
+		var row  = arr[0].match(/\d+/g);
+		return col0 + row + ":" + col1 + row;
+	}
+
+	function valRangeNotation(a1Notation) {
+		var arr  = a1Notation.split(":");
+		var col0 = arr[0].match(/\D/g,'');
+		var row0 = arr[0].match(/\d+/g);
+		var col1 = arr[1].match(/\D/g,'');
+		var row1 = arr[1].match(/\d+/g);
+		return col0 + (Number(row0) + 1) + ":" + col1 + row1;
+	}
+
+	var hRange      = hRangeNotation(a1Notation);
+	var hRangeObj   = sheetObj.getRange(hRange);
+	var valRange    = valRangeNotation(a1Notation);
+	var valRangeObj = sheetObj.getRange(valRange);
+
+	function getHeaders(hRangeObj){
+		var values = hRangeObj.getValues();
+		var arr    = [];
+		for (var i = 0; i < values[0].length; i++) {
+			var val  = values[0][i];
+			arr.push(val);
+		} 
+		return arr;
+	}
+
+	var headers  = getHeaders(hRangeObj);
+
+	function arrObj(valRangeObj){
+		var h       = valRangeObj.getHeight();
+		var w       = valRangeObj.getWidth();
+		var mArr    = valRangeObj.getValues();
+		var arrRVal = [];
+		for (var i = 0; i < h; i++) {
+			var rVal = {};
+			for (var j = 0; j < w; j++) {
+				var prop = headers[j];
+				var val  = mArr[i][j];
+				if (val !== "") {
+					rVal[prop] = val;
+				} 
+			}
+			arrRVal.push(rVal);
+		}  
+		return arrRVal;
+	}
+	return arrObj(valRangeObj);
+}
+
+var ss_aor = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_aor = arrObjRange(ss_aor, "A1:B5");
+Logger.log(ex_aor);
 ```
 
 #### Array of Objects from Two Columns
 ```javascript
+function arrObjTwoCol(sheetObj, a1Notation) {
+	var range  = sheetObj.getRange(a1Notation);
+	var height = range.getHeight();
+	var width  = range.getWidth();
+	var values = range.getValues();
+	var obj    = new Object();
+	for (var i = 0; i < values.length; i++) {
+		obj[values[i][0]] = values[i][1];
+	} 
+	return obj;
+}
 
+var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_vg    = arrObjTwoCol(sheet_vg, "D1:F5");
+Logger.log(ex_vg);
 ```
 
 #### Grid Object
 ```javascript
+function Grid(sheetObj, hRow) {
 
+	function HVal(i, header) {
+		this.header = header;
+
+		Object.defineProperty(this, "colIndex", {
+get: function() {
+return i + 1;
+}
+});
+
+Object.defineProperty(this, "colIndexABC", {
+get: function() {
+return numCol(this.colIndex);
+}
+});
+}
+
+function RVal(i, hRow) {
+	Object.defineProperty(this, "rowIndex", {
+get: function() {
+return i + hRow;
+}
+});
+}
+
+var lColNum     = sheetObj.getLastColumn();
+var lColABC     = numCol(lColNum);
+var lRow        = sheetObj.getLastRow();
+var hRangeObj   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow)
+var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow)
+
+function buildArrayOfHValObjs(hRangeObj){
+	var mArr    = hRangeObj.getValues();
+	var arrHVal = [];
+	for (var i = 0; i < mArr[0].length; i++) {
+		var val  = mArr[0][i];
+		var hObj = new HVal(i, val);
+		arrHVal.push(hObj);
+	} 
+	return arrHVal;
+}
+
+var arrHValObj  = buildArrayOfHValObjs(hRangeObj);
+
+function buildArrayOfRValObjs(valRangeObj, arrHValObj){
+	var h       = valRangeObj.getHeight();
+	var w       = valRangeObj.getWidth();
+	var mArr    = valRangeObj.getValues();
+	var arrRVal = [];
+	for (var i = 0; i < h; i++) {
+		var rVal = new RVal(i, hRow);
+		for (var j = 0; j < w; j++) {
+			var prop = arrHValObj[j].header;
+			var val  = mArr[i][j];
+			if (val !== "") {
+				rVal[prop] = val;
+			} 
+		}
+		arrRVal.push(rVal);
+	}  
+	return arrRVal;
+}
+
+var arrRValObj = buildArrayOfRValObjs(valRangeObj, arrHValObj);
+
+Object.defineProperty(this, "arrHValObj", {
+get: function() {
+return arrHValObj;
+}
+});
+
+Object.defineProperty(this, "arrRValObj", {
+get: function() {
+return arrRValObj;
+}
+});
+}
+
+var ss_g    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_Grid = new Grid(ss_g, 1);
+var ex_arrRValObj = ex_Grid.arrRValObj;
+var ex_arrHValObj = ex_Grid.arrHValObj;
+Logger.log(ex_arrRValObj);
+Logger.log(ex_arrHValObj);
 ```
 
 ## Docs

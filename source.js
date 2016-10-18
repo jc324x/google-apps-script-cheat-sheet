@@ -1003,9 +1003,9 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 	return obj;
 }
 
-// var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_vg    = arrObjTwoCol(sheet_vg, "D1:F5");
-// Logger.log(ex_vg);
+var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_vg    = arrObjTwoCol(sheet_vg, "D1:F5");
+Logger.log(ex_vg);
 
 // -- Grid Object
 
@@ -1088,12 +1088,12 @@ return arrRValObj;
 });
 }
 
-// var ss_g    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_Grid = new Grid(ss_g, 1);
-// var ex_arrRValObj = ex_Grid.arrRValObj;
-// var ex_arrHValObj = ex_Grid.arrHValObj;
-// Logger.log(ex_arrRValObj);
-// Logger.log(ex_arrHValObj);
+var ss_g    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_Grid = new Grid(ss_g, 1);
+var ex_arrRValObj = ex_Grid.arrRValObj;
+var ex_arrHValObj = ex_Grid.arrHValObj;
+Logger.log(ex_arrRValObj);
+Logger.log(ex_arrHValObj);
 
 // Docs
 
