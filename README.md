@@ -460,15 +460,56 @@ function folderNames(fldrs) {
   return arr;
 }
 
-// var fldr_fn = lastFolderIn("google-apps-script-cheat-sheet");
-// var arr_fn  = foldersIn(fldr_fn);
-// var ex_fn   = folderNames(arr_fn)
-// Logger.log("'google-apps-script-cheat-sheet' has top level folders " + ex_fn);
+var fldr_fn = lastFolderIn("google-apps-script-cheat-sheet");
+var arr_fn  = foldersIn(fldr_fn);
+var ex_fn   = folderNames(arr_fn)
+Logger.log("'google-apps-script-cheat-sheet' has top level folders " + ex_fn);
 ```
 
 #### Find a Folder in a Folder, at Root or in Drive
 ```javascript
+// --- Find a Folder in a Folder
 
+function findFolderIn(fldr, name) {
+  var fldrs = foldersIn(fldr);
+  var names = folderNames(fldrs);
+  if (checkValIn(names, name)) {
+    var _fldr = fldr.getFoldersByName(name).next();
+    return _fldr;
+  }
+}
+
+var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet");
+var ex_ffi = findFolderIn(fldr_ffi, "A");
+Logger.log(" Id of 'A' in 'google-apps-script-cheat-sheet' is ➡ " + ex_ffi.getId());
+
+// --- Find a Folder at Root
+
+function findFolderAtRoot(name) {
+  var rf    = DriveApp.getRootFolder();
+  var fldrs = rootFolders();
+  var names = folderNames(fldrs);
+  if (checkValIn(names, name)) {
+    var fldr = rf.getFoldersByName(name).next();
+    return fldr;
+  }
+}
+
+var ex_ffar = findFolderAtRoot("google-apps-script-cheat-sheet");
+Logger.log(" Id of 'google-apps-script-cheat-sheet' at root ➡ " + ex_ffar.getId());
+
+// --- Find a Folder in Drive
+
+function findFolderInDrive(name) {
+  var fi = DriveApp.getFoldersByName(name);
+  while (fi.hasNext()){
+    var fldr = fi.next();
+    return fldr;
+  }
+}
+
+var ex_ffid = findFolderInDrive("google-apps-script-cheat-sheet");
+Logger.log(" Id of 'google-apps-script-cheat-sheet' at root ➡ " + ex_ffid.getId());
 ```
 
 #### Create or Verify Folders in a Folder or at Root
