@@ -20,12 +20,11 @@
 * [Dates and Times](#dates-and-times)
   * [Formatted Timestamps](#formatted-timestamps)
   * [Match a Date to a Range](#match-a-date-to-a-range)
-
 ##[Drive](#drive)
 * [Folders](#folders)
   * [Create or Verify Folder Path](#create-or-verify-folder-path)
   * [Last Folder in Folder Path](#last-folder-in-folder-path)
-  * [Array of All Folders in a Folder, at Root or in Drive](#array-of-all-folders-in-a-folder-at-root-or-in-drive)
+  * [Array of All Folders in a Folder, at Root or in Drive](#array-of-all-folders-in-a-folder,-at-root-or-in-drive)
 
 ## General
 
@@ -405,7 +404,7 @@ var ex_lfi = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
 Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_lfi.getId());
 ```
 
-#### Array of All Folders in a Folder at Root or in Drive
+#### Array of All Folders in a Folder, at Root or in Drive
 ```javascript
 // --- All Folders in a Folder
 
