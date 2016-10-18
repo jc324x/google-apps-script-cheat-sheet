@@ -913,44 +913,44 @@ Logger.log(checkTF(ex_ctf2));
 ```javascript
 function arrObjSheet(sheetObj, hRow){
 
-	var lColNum     = sheetObj.getLastColumn();
-	var lColABC     = numCol(lColNum);
-	var lRow        = sheetObj.getLastRow();
-	var hRangeObj   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow)
-	var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow)
+  var lColNum     = sheetObj.getLastColumn();
+  var lColABC     = numCol(lColNum);
+  var lRow        = sheetObj.getLastRow();
+  var hRangeObj   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow)
+  var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow)
 
-	function getHeaders(hRangeObj){
-		var values = hRangeObj.getValues();
-		var arr    = [];
-		for (var i = 0; i < values[0].length; i++) {
-			var val  = values[0][i];
-			arr.push(val);
-		} 
-		return arr;
-	}
+  function getHeaders(hRangeObj){
+    var values = hRangeObj.getValues();
+    var arr    = [];
+    for (var i = 0; i < values[0].length; i++) {
+      var val  = values[0][i];
+      arr.push(val);
+    } 
+    return arr;
+  }
 
 	var headers  = getHeaders(hRangeObj);
 
-	function arrObj(valRangeObj){
-		var h       = valRangeObj.getHeight();
-		var w       = valRangeObj.getWidth();
-		var mArr    = valRangeObj.getValues();
-		var arrRVal = [];
-		for (var i = 0; i < h; i++) {
-			var rVal = {};
-			for (var j = 0; j < w; j++) {
-				var prop = headers[j];
-				var val  = mArr[i][j];
-				if (val !== "") {
-					rVal[prop] = val;
-				} 
-			}
-			arrRVal.push(rVal);
-		}  
-		return arrRVal;
-	}
-	return arrObj(valRangeObj);
-}
+  function arrObj(valRangeObj){
+    var h       = valRangeObj.getHeight();
+    var w       = valRangeObj.getWidth();
+    var mArr    = valRangeObj.getValues();
+    var arrRVal = [];
+    for (var i = 0; i < h; i++) {
+      var rVal = {};
+      for (var j = 0; j < w; j++) {
+        var prop = headers[j];
+        var val  = mArr[i][j];
+        if (val !== "") {
+          rVal[prop] = val;
+        } 
+      }
+      arrRVal.push(rVal);
+    }  
+    return arrRVal;
+    }
+    return arrObj(valRangeObj);
+  }
 
 var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 var ex_aos = arrObjSheet(ss_aos, 1);
