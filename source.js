@@ -913,20 +913,20 @@ function valueRange(sheetObj, a1Notation) {
 	return sheetObj.getRange(a1);
 }
 
-// --- Array of Headers
+// --- Header Values
 // ➡  array
 
-function arrHeadersFrom(rangeObj){
+function headerVal(rangeObj){
 	var vals = rangeObj.getValues();
 	var arr  = [];
 	for (var i = 0; i < vals[0].length; i++) {
-		var val  = vals[0][i];
+		var val = vals[0][i];
 		arr.push(val);
 	} 
 	return arr;
 }
 
-// -- Values by Row
+// --- Values by Row
 // ➡  array of objects
 
 function valByRow(rangeObj, headers){
@@ -951,13 +951,13 @@ function valByRow(rangeObj, headers){
 // -- Array of Objects from Sheet
 
 function arrObjSheet(sheetObj, hRow){
-	var lColNum     = sheetObj.getLastColumn();
-	var lColABC     = numCol(lColNum);
-	var lRow        = sheetObj.getLastRow();
-	var hRangeObj   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow)
-	var valRangeObj = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow)
-	var arrHeaders  = arrHeadersFrom(hRangeObj);
-	return valByRow(valRangeObj, arrHeaders)
+	var lColNum = sheetObj.getLastColumn();
+	var lColABC = numCol(lColNum);
+	var lRow    = sheetObj.getLastRow();
+	var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+	var vRange  = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow);
+	var headers = headerVal(hRange);
+	return valByRow(vRange, headers)
 }
 
 // var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
@@ -967,15 +967,15 @@ function arrObjSheet(sheetObj, hRow){
 // -- Array of Objects from Range 
 
 function arrObjRange(sheetObj, a1Notation) {
-	var hRangeObj   = headerRange(sheetObj, a1Notation);
-	var valRangeObj = valueRange(sheetObj, a1Notation);
-	var arrHeaders  = arrHeadersFrom(hRangeObj);
-	return valByRow(valRangeObj, arrHeaders);
+	var hRange  = headerRange(sheetObj, a1Notation);
+	var vRange  = valueRange(sheetObj, a1Notation);
+	var headers = headerVal(hRange);
+	return valByRow(vRange, headers);
 }
 
-// var ss_aor = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_aor = arrObjRange(ss_aor, "A1:B5");
-// Logger.log(ex_aor);
+var ss_aor = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_aor = arrObjRange(ss_aor, "A1:B5");
+Logger.log(ex_aor);
 
 // -- Array of Objects from Two Columns
 
