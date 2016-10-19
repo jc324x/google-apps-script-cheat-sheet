@@ -913,9 +913,65 @@ Logger.log(checkTF(ex_ctf2));
 #### Utility Functions for Array of Objects
 
 ##### Header Range Object
+
+```javascript
+function headerRange(sheetObj, a1Notation) {
+	var arr  = a1Notation.split(":");
+	var col0 = arr[0].match(/\D/g,'');
+	var col1 = arr[1].match(/\D/g,'');
+	var row  = arr[0].match(/\d+/g);
+	var a1   = col0 + row + ":" + col1 + row;
+	return sheetObj.getRange(a1);
+}
+```
+
 ##### Value Range Object
+```javascript
+function valueRange(sheetObj, a1Notation) {
+	var arr  = a1Notation.split(":");
+	var col0 = arr[0].match(/\D/g,'');
+	var row0 = arr[0].match(/\d+/g);
+	var col1 = arr[1].match(/\D/g,'');
+	var row1 = arr[1].match(/\d+/g);
+	var a1   = col0 + (Number(row0) + 1) + ":" + col1 + row1;
+	return sheetObj.getRange(a1);
+}
+```
+ 
 ##### Array of Headers
+```javascript
+function arrHeadersFrom(rangeObj){
+	var vals = rangeObj.getValues();
+	var arr  = [];
+	for (var i = 0; i < vals[0].length; i++) {
+		var val  = vals[0][i];
+		arr.push(val);
+	} 
+	return arr;
+}
+```
+
 ##### Values by Row
+```javascript
+function valByRow(rangeObj, headers){
+	var h    = rangeObj.getHeight();
+	var w    = rangeObj.getWidth();
+	var vals = rangeObj.getValues();
+	var arr  = [];
+	for (var i = 0; i < h; i++) {
+		var row = {};
+		for (var j = 0; j < w; j++) {
+			var prop = headers[j];
+			var val  = vals[i][j];
+			if (val !== "") {
+				row[prop] = val;
+			} 
+		}
+		arr.push(row);
+	}  
+	return arr;
+}
+```
 
 #### Array of Objects from Sheet
 ```javascript
