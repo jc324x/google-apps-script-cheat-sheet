@@ -45,7 +45,7 @@
   * [Convert Column Letter to a Number](#convert-column-letter-to-a-number)
   * [Replicating Import Range](#replicating-import-range)
   * [Evaluating True and False](#evaluating-true-and-false)
-* [Range as Array of Objects](#range-as-array-of-objects)
+* [Array of Objects](#array-of-objects)
   * [Utility Functions for Array of Objects](#utility-functions-for-array-of-objects)
     * [Header Range](#header-range)
     * [Value Range](#value-range)
@@ -915,7 +915,7 @@ Logger.log(checkTF(ex_ctf2));
 
 #### Utility Functions for Array of Objects
 
-##### Header Range Object
+##### Header Range
 
 ```javascript
 function headerRange(sheetObj, a1Notation) {
@@ -928,7 +928,7 @@ function headerRange(sheetObj, a1Notation) {
 }
 ```
 
-##### Value Range Object
+##### Value Range
 ```javascript
 function valueRange(sheetObj, a1Notation) {
 	var arr  = a1Notation.split(":");
