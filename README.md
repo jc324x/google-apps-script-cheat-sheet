@@ -64,7 +64,7 @@
 
 ##[Gmail](#gmail)
 * [Send Email](#send-email)
-  * [Comma Seperated List of Recipients](#comma-seperated-list-of-recipients)
+  * [Comma Separated List of Recipients](#comma-separated-list-of-recipients)
   * [Mail Merge](#mail-merge)
 
 ##[Other](#other)
