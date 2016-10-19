@@ -55,7 +55,6 @@
 //   | Gmail
 //   | - Send Email
 //   | -- Comma Separated List of Recipients
-//   | -- HTML in Email Body
 //   | -- Mail Merge
 //   | Other
 //   | -- Regex Only Numbers or Letters
@@ -1036,17 +1035,17 @@ function createVerifyDocAtRoot(name) {
 
 // -- Access Document Body
 
-// var fldr_adb = lastFolderIn("google-apps-script-cheat-sheet");
-// var doc_adb  = findFileIn(fldr_adb, "example_doc").getId();
-// var body     = DocumentApp.openById(doc_adb).getBody();
+var fldr_adb = lastFolderIn("google-apps-script-cheat-sheet");
+var doc_adb  = findFileIn(fldr_adb, "example_doc").getId();
+var body     = DocumentApp.openById(doc_adb).getBody();
 
 // body.appendParagraph("Hello, world!");
 
 // -- Clear Document Body
 
-// var fldr_cdb = lastFolderIn("google-apps-script-cheat-sheet");
-// var doc_cdb  = findFileIn(fldr_cdb, "example_doc").getId();
-// var body     = DocumentApp.openById(doc_cdb).getBody();
+var fldr_cdb = lastFolderIn("google-apps-script-cheat-sheet");
+var doc_cdb  = findFileIn(fldr_cdb, "example_doc").getId();
+var body     = DocumentApp.openById(doc_cdb).getBody();
 // body.clear();
 
 // Gmail
@@ -1065,8 +1064,8 @@ function commaListFrom(arr){
   return str;
 }
 
-// var arr_clf = ["a@gmail.com", "b@gmail.com", "z@gmail.com", "z@gmail.com", "h@gmail.com"]
-// var ex_clf  = commaListFrom(arr_clf);
+var arr_clf = ["a@gmail.com", "b@gmail.com", "z@gmail.com", "z@gmail.com", "h@gmail.com"]
+var ex_clf  = commaListFrom(arr_clf);
 // Logger.log(ex_clf);
 
 // -- Mail Merge
@@ -1089,8 +1088,8 @@ function mailMerge(arrObj) {
   }
 }
 
-// var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_mm = arrObjSheet(ss_mm, 1);
+var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_mm = arrObjSheet(ss_mm, 1);
 // mailMerge(ex_mm);
 
 // Other

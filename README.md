@@ -53,7 +53,7 @@
     * [Values by Row](#values-by-row)
   * [Array of Objects from Sheet](#array-of-objects-from-sheet)
   * [Array of Objects from Range](#array-of-objects-from-range)
-  * [Array of Objects from Two Columns](#array-of-object-from-two-columns)
+  * [Array of Objects from Two Columns](#array-of-objects-from-two-columns)
 
 ##[Docs](#docs)
 * [Managing Document Files](#managing-document-files)
@@ -65,7 +65,6 @@
 ##[Gmail](#gmail)
 * [Send Email](#send-email)
   * [Comma Seperated List of Recipients](#comma-seperated-list-of-recipients)
-  * [HTML in Email Body](#html-in-email-body)
   * [Mail Merge](#mail-merge)
 
 ##[Other](#other)
@@ -1033,6 +1032,37 @@ Logger.log(ex_vg);
 #### Create or Verify Document
 ```javascript
 
+// --- Create or Verify Document in a Folder
+
+function createVerifyDocIn(fldr, name) {
+	var files = filesIn(fldr);
+	var names = fileNames(files);
+	if (!(checkValIn(names, name))) {
+		var doc  = DocumentApp.create(name).getId();
+		var file = DriveApp.getFileById(doc);
+		moveFile(file, fldr);
+	}
+	return findFileIn(fldr, name);
+}
+
+var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet");
+var ex_cvdi   = createVerifyDocIn(fldr_cvdi, "example_doc");
+Logger.log("The Id of '" + ex_cvdi + "' in " + parentFolderOf(ex_cvdi) + " is '" + ex_cvdi.getId());
+
+// --- Create or Verify Document at Root
+
+function createVerifyDocAtRoot(name) {
+	var files = rootFiles();
+	var names = fileNames(files);
+	if (!(checkValIn(names, name))) {
+		var ss = DocumentApp.create(name);
+	}
+	return findFileAtRoot(name);
+}
+
+var ex_cvdar = createVerifyDocAtRoot("example_doc");
+Logger.log("The Id of '" + ex_cvdar + "' at root is '" + ex_cvdar.getId());
+
 ```
 
 ### Utility Functions for Docs
@@ -1040,11 +1070,19 @@ Logger.log(ex_vg);
 #### Access Document Body
 ```javascript
 
+var fldr_adb = lastFolderIn("google-apps-script-cheat-sheet");
+var doc_adb  = findFileIn(fldr_adb, "example_doc").getId();
+var body     = DocumentApp.openById(doc_adb).getBody();
+
+body.appendParagraph("Hello, world!");
 ```
 
 #### Clear Document Body
 ```javascript
-
+var fldr_cdb = lastFolderIn("google-apps-script-cheat-sheet");
+var doc_cdb  = findFileIn(fldr_cdb, "example_doc").getId();
+var body     = DocumentApp.openById(doc_cdb).getBody();
+body.clear();
 ```
 
 ## Gmail
@@ -1053,23 +1091,55 @@ Logger.log(ex_vg);
 
 #### Comma Separated List of Recipients
 ```javascript
+function commaListFrom(arr){
+  var _arr = rmDuplicatesFrom(arr).sort();
+  var str  = "";
+  for (var i = 0; i < _arr.length; i++) {
+		str += _arr[i] + ", "
+  }
+  str = str.slice(0, -2);
+  return str;
+}
 
-```
-
-#### HTML in Email Body
-```javascript
-
+var arr_clf = ["a@gmail.com", "b@gmail.com", "z@gmail.com", "z@gmail.com", "h@gmail.com"]
+var ex_clf  = commaListFrom(arr_clf);
+Logger.log(ex_clf);
 ```
 
 #### Mail Merge
 ```javascript
+function mailMerge(arrObj) {
+	var subj = "test mail merge";
+	var body =
+	"<p>this is some text</p>" + "<p>pulling in some data " + 
+	arrObj[i]["A"] + " </p>";
 
+  for (var i =0; i < arrObj.length; i++){
+    var email = arrObj[i]["Email"];
+		if (email) {
+			MailApp.sendEmail({
+				to: email,
+				subject: subj,
+				htmlBody: body
+			});
+		}
+  }
+}
+
+var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_mm = arrObjSheet(ss_mm, 1);
+mailMerge(ex_mm);
 ```
 
 ## Other
 
 ### Regex Only Numbers or Letters
 ```javascript
+var re     = "123ABC234XYZ"
+var ex_num = re.match(/\d+/g);
+var ex_abc = re.replace(/\d/g, "");
 
+Logger.log(ex_num);
+Logger.log(ex_abc);
 ```
 
