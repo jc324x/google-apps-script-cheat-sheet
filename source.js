@@ -407,10 +407,18 @@ function lastFolderIn(path) {
 	for (i = 0; i < arr.length; i++) {
 		if (i == 0) {
 			var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
-			if(fi.hasNext()) {fldr = fi.next();} else { return null;}
-		} else if (i >= 1) {
-			fi = fldr.getFoldersByName(arr[i]);
-			if(fi.hasNext()) {fldr = fi.next();} else { return null;}
+			if (fi.hasNext()) {
+				fldr = fi.next();
+				} else { 
+					return null;
+				}
+			} else if (i >= 1) {
+				fi = fldr.getFoldersByName(arr[i]);
+				if (fi.hasNext()) {
+					fldr = fi.next();
+				} else { 
+					return null;
+				}
 		}
 	} 
 	return fldr;
