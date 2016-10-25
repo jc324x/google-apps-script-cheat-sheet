@@ -263,12 +263,17 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 
 // -- Flatten Multidimensional Array
 
-function flattenMultidimensionalArray(multidimensionalArray){
-  var flat = multidimensionalArray.reduce(function(a, b) {
+function flattenMultiArr(multiArr){
+  var arr = multiArr.reduce(function(a, b) {
     return a.concat(b);
   });
-  return flat;
+  return arr;
 }
+
+var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var val_fma = ss_fma.getRange("G2:H5").getValues();
+var ex_fma  = flattenMultiArr(val_fma).sort();
+Logger.log(ex_fma);
 
 // -- Filter by Property Value
 // ➡  array of objects
@@ -1038,9 +1043,9 @@ function createVerifyDocIn(fldr, name) {
 	return findFileIn(fldr, name);
 }
 
-var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet");
-var ex_cvdi   = createVerifyDocIn(fldr_cvdi, "example_doc");
-Logger.log("The Id of '" + ex_cvdi + "' in " + parentFolderOf(ex_cvdi) + " is '" + ex_cvdi.getId());
+// var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet");
+// var ex_cvdi   = createVerifyDocIn(fldr_cvdi, "example_doc");
+// Logger.log("The Id of '" + ex_cvdi + "' in " + parentFolderOf(ex_cvdi) + " is '" + ex_cvdi.getId());
 
 // --- Create or Verify Document at Root
 
@@ -1080,44 +1085,44 @@ function createVerifyDocAtRoot(name) {
 
 // -- Single Division List
 
-var ss_ohl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_ohl = arrObjSheet(ss_ohl, 2);
-var fldr_ohl   = createVerifyPath("google-apps-script-cheat-sheet");
-var docId_ohl  = createVerifyDocIn(fldr_cvdi, "example_doc").getId();
-var body_ohl   = DocumentApp.openById(docId_ohl).getBody();
+var ss_sdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_sdl = arrObjSheet(ss_sdl, 2);
+var fldr_sdl   = createVerifyPath("google-apps-script-cheat-sheet");
+var docId_sdl  = createVerifyDocIn(fldr_sdl, "example_doc").getId();
+var body_sdl   = DocumentApp.openById(docId_sdl).getBody();
 
 (function(){
-	arrObj_ohl.sort(dynSortM("Last", "First"));
-	var sectionHeader = body_ohl.appendParagraph("Students");
+	arrObj_sdl.sort(dynSortM("Last", "First"));
+	var sectionHeader = body_sdl.appendParagraph("Students");
 	sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-	for (var i in arrObj_ohl) {
-		body_ohl.appendListItem(arrObj_ohl[i]["Last"] + ", " + arrObj_ohl[i]["First"]);
+	for (var i in arrObj_sdl) {
+		body_sdl.appendListItem(arrObj_sdl[i]["Last"] + ", " + arrObj_sdl[i]["First"]);
 	}
 })();
 
 // -- Multi Division List
 
-var ss_mhl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_mhl = arrObjSheet(ss_mhl, 2);
-var fldr_mhl   = createVerifyPath("google-apps-script-cheat-sheet");
-var docId_mhl  = createVerifyDocIn(fldr_cvdi, "example_doc").getId();
-var body_mhl   = DocumentApp.openById(docId_mhl).getBody();
+var ss_mdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_mdl = arrObjSheet(ss_mdl, 2);
+var fldr_mdl   = createVerifyPath("google-apps-script-cheat-sheet");
+var docId_mdl  = createVerifyDocIn(fldr_mdl, "example_doc").getId();
+var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
 
 (function(){
-	arrObj_mhl.sort(dynSortM("Homeroom", "Last", "First"));
-	var sectionHeader = body_mhl.appendParagraph("Homerooms and Students");
+	arrObj_mdl.sort(dynSortM("Homeroom", "Last", "First"));
+	var sectionHeader = body_mdl.appendParagraph("Homerooms and Students");
 	sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-	var homeroom = arrObj_mhl[0]["Homeroom"];
-	body_mhl.appendListItem(homeroom);
-	for (var i in arrObj_mhl) {
-		if (arrObj_mhl[i]["Homeroom"] === homeroom) {
-			body_mhl.appendListItem(arrObj_mhl[i]["First"] + " " + arrObj_mhl[i]["Last"])
+	var homeroom = arrObj_mdl[0]["Homeroom"];
+	body_mdl.appendListItem(homeroom);
+	for (var i in arrObj_mdl) {
+		if (arrObj_mdl[i]["Homeroom"] === homeroom) {
+			body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
 			.setNestingLevel(1).setIndentStart(10)
 			.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
 		} else {
-			homeroom = arrObj_mhl[i]["Homeroom"];
-			body_mhl.appendListItem(homeroom);
-			body_mhl.appendListItem(arrObj_mhl[i]["First"] + " " + arrObj_mhl[i]["Last"])
+			homeroom = arrObj_mdl[i]["Homeroom"];
+			body_mdl.appendListItem(homeroom);
+			body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
 			.setNestingLevel(1).setIndentStart(10)
 			.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
 		}
