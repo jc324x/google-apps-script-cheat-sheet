@@ -997,8 +997,8 @@ function arrObjSheet(sheetObj, hRow){
   return valByRow(vRange, headers)
 }
 
-var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_aos = arrObjSheet(ss_aos, 1);
+var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var ex_aos = arrObjSheet(ss_aos, 2);
 Logger.log(ex_aos);
 ```
 
@@ -1011,8 +1011,8 @@ function arrObjRange(sheetObj, a1Notation) {
   return valByRow(vRange, headers);
 }
 
-var ss_aor = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_aor = arrObjRange(ss_aor, "A1:B5");
+var ss_aor = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var ex_aor = arrObjRange(ss_aor, "A2:E7");
 Logger.log(ex_aor);
 ```
 
@@ -1031,7 +1031,7 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 }
 
 var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_vg    = arrObjTwoCol(sheet_vg, "D1:F5");
+var ex_vg    = arrObjTwoCol(sheet_vg, "D2:E5");
 Logger.log(ex_vg);
 ```
 

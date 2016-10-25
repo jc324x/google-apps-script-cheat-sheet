@@ -1,63 +1,69 @@
-//   | General 
-// * | - Array
-// * | -- Check for a Value In Array
-// * | -- Remove Duplicates
-// * | -- Remove Empty Values
-// * | -- Get Count of Values in Array
-// * | -- Intersect of Two Arrays
-// * | - Array of Objects
-// * | -- Sort by Property or Properties
-// * | -- Find Object With Unique Property Value
-// * | -- Filter by Property Value
-// * | - Object
-// * | -- Array of Matching Property Values
-// * | - Dates and Times
-// * | -- Formatted Timestamps
-// * | -- Match a Date to a Range
-//   |  Drive 
-//   | - Folders
-//   | -- Create or Verify Folder Path
-//   | -- Last Folder in Folder Path
-//   | -- Array of All Folders
-//   | -- Array of All Folder Names
-//   | -- Find a Folder
-//   | -- Create or Verify Folders
-//   | - Files
-//   | -- Array of All Files
-//   | -- Array of All File Names
-//   | -- Find a File
-//   | -- Parent Folder of a File
-//   | -- Copy a File to a Folder 
-//   | -- Move a File to a Folder
-//   | Sheets
-//   | - Managing Spreadsheet Files
-//   | -- Create or Verify Spreadsheet
-//   | - Utility Functions for Sheets
-//   | -- Convert Column Number to a Letter
-//   | -- Convert Column Letter to a Number
-//   | -- Replicating Import Range
-//   | -- Evaluating True and False
-//   | -  Array of Objects
-//   | -- Utility Functions for Array of Objects 
-//   | --- Header Range
-//   | --- Value Range
-//   | --- Header Values
-//   | --- Values by Row 
-//   | -- Array of Objects from Sheet
-//   | -- Array of Objects from Range
-//   | -- Array of Objects from Two Columns
-//   | Docs
-//   | - Managing Document Files
-//   | -- Create or Verify Document
-//   | - Utility Functions for Docs
-//   | -- Access Document Body
-//   | -- Clear Document Body
-//   | Gmail
-//   | - Send Email
-//   | -- Comma Separated List of Recipients
-//   | -- Mail Merge
-//   | Other
-//   | -- Regex Only Numbers or Letters
+//     | General
+//     | - Array
+//     | -- Check for a Value In Array
+//     | -- Remove Duplicates
+//     | -- Remove Empty Values
+//     | -- Get Count of Values in Array
+//     | -- Intersect of Two Arrays
+//     | - Array of Objects
+//     | -- Sort by Property or Properties
+//     | -- Find Object With Unique Property Value
+//     | -- Filter by Property Value
+// 1.1 | - Multidimensional Array
+// 1.1 | -- Flatten Multidimensional Array
+//     | - Object
+//     | -- Array of Matching Property Values
+//     | - Dates and Times
+//     | -- Formatted Timestamps
+//     | -- Match a Date to a Range
+//     | Drive
+//     | - Folders
+// 1.1 | -- Create or Verify Folder Path
+// 1.1 | -- Last Folder in Folder Path
+//     | -- Array of All Folders
+//     | -- Array of All Folder Names
+//     | -- Find a Folder
+//     | -- Create or Verify Folders
+//     | - Files
+//     | -- Array of All Files
+//     | -- Array of All File Names
+//     | -- Find a File
+//     | -- Parent Folder of a File
+//     | -- Copy a File to a Folder
+//     | -- Move a File to a Folder
+//     | Sheets
+//     | - Managing Spreadsheet Files
+//     | -- Create or Verify Spreadsheet
+//     | - Utility Functions for Sheets
+//     | -- Convert Column Number to a Letter
+//     | -- Convert Column Letter to a Number
+// 1.1 | -- Replicating Import Range
+//     | -- Evaluating True and False
+//     | -  Array of Objects
+//     | -- Utility Functions for Array of Objects
+//     | --- Header Range
+//     | --- Value Range
+//     | --- Header Values
+//     | --- Values by Row
+// 1.1 | -- Array of Objects from Sheet
+// 1.1 | -- Array of Objects from Range
+// 1.1 | -- Array of Objects from Two Columns
+//     | Docs
+//     | - Managing Document Files
+//     | -- Create or Verify Document
+//     | - Utility Functions for Docs
+//     | -- Access Document Body
+//     | -- Clear Document Body
+// 1.1 | Sheets and Docs
+// 1.1 | - Bulleted Lists
+// 1.1 | -- Single Header List
+// 1.1 | -- Sub Header List
+//     | Gmail
+//     | - Send Email
+//     | -- Comma Separated List of Recipients
+//     | -- Mail Merge
+//     | Other
+//     | -- Regex Only Numbers or Letters
 
 // Future: 
 // Timestamp on Cell Change, Moving / Copying Folders, Grid - Set Values / Add / Remove, Array of Arrays, Count Val arrObj, arrFolderObj(name + obj), Parent of Folder
@@ -380,7 +386,7 @@ function createVerifyPath(path) {
 			var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
 			if(!(fi.hasNext())) {
 				DriveApp.createFolder(arr[i]);
-				fi = DriveApp.getFoldersByName(arry[i]);
+				fi = DriveApp.getFoldersByName(arr[i]);
 			} 
 			fldr = fi.next();
 		} else if (i >= 1) {
@@ -558,9 +564,9 @@ function createVerifyFoldersIn(fldr, names) {
 	return fldr;
 }
 
-var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet");
-var arr_cvfi  = ["X", "Y", "Z"];
-var ex_cfi = createVerifyFoldersIn(fldr_cvfi, arr_cvfi);
+// var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet");
+// var arr_cvfi  = ["X", "Y", "Z"];
+// var ex_cfi = createVerifyFoldersIn(fldr_cvfi, arr_cvfi);
 // Logger.log("all folders in 'google-apps-script-cheat-sheet' = AXYZ+ ⬇ ");
 // Logger.log(foldersIn(ex_cfi));
 
@@ -857,11 +863,11 @@ function ex_cn() {
 // -- Replicating Import Range
 // trigger -> getSet : From spreadsheet : On edit
 
-var sheet_oe = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var sheet_gs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 
 function getSet(){
-	var get = sheet_oe.getRange("G2:G5").getValues();
-	var set = sheet_oe.getRange("H2:H5").setValues(get);
+	var get = sheet_gs.getRange("A2:A5").getValues();
+	var set = sheet_gs.getRange("B2:B5").setValues(get);
 }
 
 // -- Evaluating True and False
@@ -967,8 +973,8 @@ function arrObjSheet(sheetObj, hRow){
 	return valByRow(vRange, headers)
 }
 
-// var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_aos = arrObjSheet(ss_aos, 1);
+// var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var ex_aos = arrObjSheet(ss_aos, 2);
 // Logger.log(ex_aos);
 
 // -- Array of Objects from Range 
@@ -980,9 +986,9 @@ function arrObjRange(sheetObj, a1Notation) {
 	return valByRow(vRange, headers);
 }
 
-var ss_aor = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_aor = arrObjRange(ss_aor, "A1:B5");
-Logger.log(ex_aor);
+// var ss_aor = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var ex_aor = arrObjRange(ss_aor, "A2:E7");
+// Logger.log(ex_aor);
 
 // -- Array of Objects from Two Columns
 
@@ -999,7 +1005,7 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 }
 
 // var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_vg    = arrObjTwoCol(sheet_vg, "D1:F5");
+// var ex_vg    = arrObjTwoCol(sheet_vg, "D2:E5");
 // Logger.log(ex_vg);
 
 // Docs
@@ -1043,17 +1049,18 @@ function createVerifyDocAtRoot(name) {
 
 // -- Access Document Body
 
-var fldr_adb = lastFolderIn("google-apps-script-cheat-sheet");
-var doc_adb  = findFileIn(fldr_adb, "example_doc").getId();
-var body     = DocumentApp.openById(doc_adb).getBody();
+// var fldr_adb = lastFolderIn("google-apps-script-cheat-sheet");
+// var doc_adb  = findFileIn(fldr_adb, "example_doc").getId();
+// var body     = DocumentApp.openById(doc_adb).getBody();
 
 // body.appendParagraph("Hello, world!");
 
 // -- Clear Document Body
 
-var fldr_cdb = lastFolderIn("google-apps-script-cheat-sheet");
-var doc_cdb  = findFileIn(fldr_cdb, "example_doc").getId();
-var body     = DocumentApp.openById(doc_cdb).getBody();
+// var fldr_cdb = lastFolderIn("google-apps-script-cheat-sheet");
+// var doc_cdb  = findFileIn(fldr_cdb, "example_doc").getId();
+// var body     = DocumentApp.openById(doc_cdb).getBody();
+
 // body.clear();
 
 // Sheets and Docs
@@ -1062,33 +1069,33 @@ var body     = DocumentApp.openById(doc_cdb).getBody();
 
 // -- One Header List
 
-val.sort(dynamicSortMultiple("Last", "First"));
-var sectionHeader = body.appendParagraph("Students");
-sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-for (var i in val) {
-	body.appendListItem(val[i]["Last"] + ", " + val[i]["First"]);
-}
+// val.sort(dynamicSortMultiple("Last", "First"));
+// var sectionHeader = body.appendParagraph("Students");
+// sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+// for (var i in val) {
+// 	body.appendListItem(val[i]["Last"] + ", " + val[i]["First"]);
+// }
 
 // -- Multi Header List
 
-val.sort(dynamicSortMultiple("Advisory", "Last", "First"));
-var sectionHeader = body.appendParagraph("Advisories and Students");
-sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-var advisory = val[0]["Advisory"];
-body.appendListItem(advisory);
-for (var i in val) {
-	if (val[i]["Advisory"] === advisory) {
-		body.appendListItem(val[i]["First"] + " " + val[i]["Last"])
-		.setNestingLevel(1).setIndentStart(10)
-		.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
-	} else {
-		advisory = val[i]["Advisory"];
-		body.appendListItem(advisory);
-		body.appendListItem(val[i]["First"] + " " + val[i]["Last"])
-		.setNestingLevel(1).setIndentStart(10)
-		.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
-	}
-}
+// val.sort(dynamicSortMultiple("Advisory", "Last", "First"));
+// var sectionHeader = body.appendParagraph("Advisories and Students");
+// sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+// var advisory = val[0]["Advisory"];
+// body.appendListItem(advisory);
+// for (var i in val) {
+// 	if (val[i]["Advisory"] === advisory) {
+// 		body.appendListItem(val[i]["First"] + " " + val[i]["Last"])
+// 		.setNestingLevel(1).setIndentStart(10)
+// 		.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+// 	} else {
+// 		advisory = val[i]["Advisory"];
+// 		body.appendListItem(advisory);
+// 		body.appendListItem(val[i]["First"] + " " + val[i]["Last"])
+// 		.setNestingLevel(1).setIndentStart(10)
+// 		.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+// 	}
+// }
 
 // Gmail
 
