@@ -998,8 +998,36 @@ var body     = DocumentApp.openById(doc_cdb).getBody();
 // Sheets and Docs
 
 // - Bulleted Lists
-// -- Single Category
-// -- Multi Category
+
+// -- One Header List
+
+val.sort(dynamicSortMultiple("Last", "First"));
+var sectionHeader = body.appendParagraph("Students");
+sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+for (var i in val) {
+	body.appendListItem(val[i]["Last"] + ", " + val[i]["First"]);
+}
+
+// -- Multi Header List
+
+val.sort(dynamicSortMultiple("Advisory", "Last", "First"));
+var sectionHeader = body.appendParagraph("Advisories and Students");
+sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+var advisory = val[0]["Advisory"];
+body.appendListItem(advisory);
+for (var i in val) {
+	if (val[i]["Advisory"] === advisory) {
+		body.appendListItem(val[i]["First"] + " " + val[i]["Last"])
+		.setNestingLevel(1).setIndentStart(10)
+		.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+	} else {
+		advisory = val[i]["Advisory"];
+		body.appendListItem(advisory);
+		body.appendListItem(val[i]["First"] + " " + val[i]["Last"])
+		.setNestingLevel(1).setIndentStart(10)
+		.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+	}
+}
 
 // Gmail
 
