@@ -11,6 +11,8 @@
   * [Sort by Property or Properties](#sort-by-property-or-properties)
   * [Find Object With Unique Property Value](#find-object-with-unique-property-value)
   * [Filter by Property Value](#filter-by-property-value)
+* [Multidimensional Array](#multidimensional-array)
+  * [Flatten Multidimensional Array](#flatten-multidimensional-array)
 * [Object](#object)
   * [Array of Matching Property Values](#array-of-matching-property-values)
 * [Dates and Times](#dates-and-times)
@@ -1146,7 +1148,6 @@ var body_mhl   = DocumentApp.openById(docId_mhl).getBody();
 	}
 })();
 ```
-
 
 ## Gmail
 

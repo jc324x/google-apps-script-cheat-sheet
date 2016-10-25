@@ -259,6 +259,17 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 // var ex_fovi = findObjValIn(ex_arrObj, "c", 500, "a");
 // Logger.log(ex_fovi);
 
+// - Multidimensional Array
+
+// -- Flatten Multidimensional Array
+
+function flattenMultidimensionalArray(multidimensionalArray){
+  var flat = multidimensionalArray.reduce(function(a, b) {
+    return a.concat(b);
+  });
+  return flat;
+}
+
 // -- Filter by Property Value
 // ➡  array of objects
 
