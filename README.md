@@ -63,6 +63,7 @@
   * [Clear Document Body](#clear-document-body)
 
 ##[Sheets and Docs](#sheets-and-docs)
+* [Bulleted Lists] (#bulleted-lists)
 
 ##[Gmail](#gmail)
 * [Send Email](#send-email)

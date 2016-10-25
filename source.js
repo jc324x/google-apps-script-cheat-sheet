@@ -995,6 +995,12 @@ var doc_cdb  = findFileIn(fldr_cdb, "example_doc").getId();
 var body     = DocumentApp.openById(doc_cdb).getBody();
 // body.clear();
 
+// Sheets and Docs
+
+// - Bulleted Lists
+// -- Single Category
+// -- Multi Category
+
 // Gmail
 
 // - Send Email
