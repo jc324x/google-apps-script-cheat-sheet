@@ -62,6 +62,8 @@
   * [Access Document Body](#access-document-body)
   * [Clear Document Body](#clear-document-body)
 
+##[Sheets and Docs](#sheets-and-docs)
+
 ##[Gmail](#gmail)
 * [Send Email](#send-email)
   * [Comma Separated List of Recipients](#comma-separated-list-of-recipients)
@@ -430,20 +432,27 @@ Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_co
 #### Last Folder in Folder Path
 ```javascript
 function lastFolderIn(path) {
-  var arr = path.split('/');
-  var fldr;
-  for (i = 0; i < arr.length; i++) {
-    if (i == 0) {
-      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
-      if(fi.hasNext()) {fldr = fi.next();} else { return null;}
-    } else if (i >= 1) {
-      fi = fldr.getFoldersByName(arr[i]);
-      if(fi.hasNext()) {fldr = fi.next();} else { return null;}
-    }
-  } 
-  return fldr;
+	var arr = path.split('/');
+	var fldr;
+	for (i = 0; i < arr.length; i++) {
+		if (i == 0) {
+			var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+			if (fi.hasNext()) {
+				fldr = fi.next();
+			} else { 
+				return null;
+			}
+		} else if (i >= 1) {
+				fi = fldr.getFoldersByName(arr[i]);
+				if (fi.hasNext()) {
+					fldr = fi.next();
+				} else { 
+					return null;
+				}
+		}
+	} 
+	return fldr;
 }
-
 var ex_lfi = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
 Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_lfi.getId());
 ```
