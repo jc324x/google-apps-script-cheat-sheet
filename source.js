@@ -1,3 +1,64 @@
+//   | General 
+// * | - Array
+// * | -- Check for a Value In Array
+// * | -- Remove Duplicates
+// * | -- Remove Empty Values
+// * | -- Get Count of Values in Array
+// * | -- Intersect of Two Arrays
+// * | - Array of Objects
+// * | -- Sort by Property or Properties
+// * | -- Find Object With Unique Property Value
+// * | -- Filter by Property Value
+// * | - Object
+// * | -- Array of Matching Property Values
+// * | - Dates and Times
+// * | -- Formatted Timestamps
+// * | -- Match a Date to a Range
+//   |  Drive 
+//   | - Folders
+//   | -- Create or Verify Folder Path
+//   | -- Last Folder in Folder Path
+//   | -- Array of All Folders
+//   | -- Array of All Folder Names
+//   | -- Find a Folder
+//   | -- Create or Verify Folders
+//   | - Files
+//   | -- Array of All Files
+//   | -- Array of All File Names
+//   | -- Find a File
+//   | -- Parent Folder of a File
+//   | -- Copy a File to a Folder 
+//   | -- Move a File to a Folder
+//   | Sheets
+//   | - Managing Spreadsheet Files
+//   | -- Create or Verify Spreadsheet
+//   | - Utility Functions for Sheets
+//   | -- Convert Column Number to a Letter
+//   | -- Convert Column Letter to a Number
+//   | -- Replicating Import Range
+//   | -- Evaluating True and False
+//   | -  Array of Objects
+//   | -- Utility Functions for Array of Objects 
+//   | --- Header Range
+//   | --- Value Range
+//   | --- Header Values
+//   | --- Values by Row 
+//   | -- Array of Objects from Sheet
+//   | -- Array of Objects from Range
+//   | -- Array of Objects from Two Columns
+//   | Docs
+//   | - Managing Document Files
+//   | -- Create or Verify Document
+//   | - Utility Functions for Docs
+//   | -- Access Document Body
+//   | -- Clear Document Body
+//   | Gmail
+//   | - Send Email
+//   | -- Comma Separated List of Recipients
+//   | -- Mail Merge
+//   | Other
+//   | -- Regex Only Numbers or Letters
+
 // Future: 
 // Timestamp on Cell Change, Moving / Copying Folders, Grid - Set Values / Add / Remove, Array of Arrays, Count Val arrObj, arrFolderObj(name + obj), Parent of Folder
 
