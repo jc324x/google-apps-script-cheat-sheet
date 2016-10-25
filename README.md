@@ -1,7 +1,3 @@
-*Note:* Drop source.js into a Sheet or form.js into a Form for a quickstart!
-
----
-
 # Google Apps Script Cheat Sheet
 
 ##[General](#general)
@@ -64,6 +60,8 @@
 
 ##[Sheets and Docs](#sheets-and-docs)
 * [Bulleted Lists] (#bulleted-lists)
+  * [Single Division List](#single-division-list)
+  * [Multi Division List](#multi-division-list)
 
 ##[Gmail](#gmail)
 * [Send Email](#send-email)
@@ -1094,6 +1092,57 @@ var doc_cdb  = findFileIn(fldr_cdb, "example_doc").getId();
 var body     = DocumentApp.openById(doc_cdb).getBody();
 body.clear();
 ```
+
+## Sheets and Docs
+
+### Bulleted Lists
+
+#### Single Division List
+
+```javascript
+var ss_ohl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_ohl = arrObjSheet(ss_ohl, 2);
+var fldr_ohl   = createVerifyPath("google-apps-script-cheat-sheet");
+var docId_ohl  = createVerifyDocIn(fldr_cvdi, "example_doc").getId();
+var body_ohl   = DocumentApp.openById(docId_ohl).getBody();
+
+arrObj_ohl.sort(dynSortM("Last", "First"));
+var sectionHeader = body_ohl.appendParagraph("Students");
+sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+for (var i in arrObj_ohl) {
+	body_ohl.appendListItem(arrObj_ohl[i]["Last"] + ", " + arrObj_ohl[i]["First"]);
+}
+```
+
+#### Multi Division List
+
+```javascript
+var ss_mhl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_mhl = arrObjSheet(ss_mhl, 2);
+var fldr_mhl   = createVerifyPath("google-apps-script-cheat-sheet");
+var docId_mhl  = createVerifyDocIn(fldr_cvdi, "example_doc").getId();
+var body_mhl   = DocumentApp.openById(docId_mhl).getBody();
+
+arrObj_mhl.sort(dynSortM("Homeroom", "Last", "First"));
+var sectionHeader = body_mhl.appendParagraph("Homerooms and Students");
+sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+var homeroom = arrObj_mhl[0]["Homeroom"];
+body_mhl.appendListItem(homeroom);
+for (var i in arrObj_mhl) {
+	if (arrObj_mhl[i]["Homeroom"] === homeroom) {
+		body_mhl.appendListItem(arrObj_mhl[i]["First"] + " " + arrObj_mhl[i]["Last"])
+		.setNestingLevel(1).setIndentStart(10)
+		.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+	} else {
+		homeroom = arrObj_mhl[i]["Homeroom"];
+		body_mhl.appendListItem(homeroom);
+		body_mhl.appendListItem(arrObj_mhl[i]["First"] + " " + arrObj_mhl[i]["Last"])
+		.setNestingLevel(1).setIndentStart(10)
+		.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+	}
+}
+```
+
 
 ## Gmail
 
