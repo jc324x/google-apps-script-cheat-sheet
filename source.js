@@ -9,10 +9,13 @@
 //     | -- Sort by Property or Properties
 //     | -- Find Object With Unique Property Value
 //     | -- Filter by Property Value
+// 1.1 | -- Unify Property for Array of Objects
 // 1.1 | - Multidimensional Array
 // 1.1 | -- Flatten Multidimensional Array
 //     | - Object
 //     | -- Array of Matching Property Values
+// 1.1 | -- Unify Object Properties
+// 1.1 | -- Merge Two Objects 
 //     | - Dates and Times
 //     | -- Formatted Timestamps
 //     | -- Match a Date to a Range
@@ -259,6 +262,27 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 // var ex_fovi = findObjValIn(ex_arrObj, "c", 500, "a");
 // Logger.log(ex_fovi);
 
+// -- Unify Property for Array of Objects
+
+function mergeObjProp_Arr(arrObj, arrProp, newProp){
+  for (var h = 0; h < arrObj.length; h++){
+    var item = arrObj[h];
+    for (var i = 0; i < arrProp.length; i++) {
+      for (var prop in item) {
+        // item.hasOwnProperty is unecessary???
+        if (item.hasOwnProperty(prop)){
+          if (prop == arrProp[i]){
+            if (item[prop] != "") {
+              item[newProp] = item[prop];
+            }
+          }
+        }
+      }
+    }
+  }
+  return arrObj;
+}
+
 // - Multidimensional Array
 
 // -- Flatten Multidimensional Array
@@ -317,6 +341,40 @@ var obj_fvi = {
 // var arr_fvi = ["a", "b", "d"];
 // var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
 // Logger.log(ex_fvi);
+
+// -- Unify Object Properties
+
+function mergeObjProp(obj, arrProp, newProp){
+  for (var i = 0; i < arrProp.length; i++) {
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)){
+        if (prop == arrProp[i]){
+          if (obj[prop] != "") {
+            obj[newProp] = obj[prop];
+            return obj[prop];
+          }
+        }
+      }
+    }
+  }
+}
+
+// -- Merge Two Objects 
+
+function mergeTwoObjs_Selective(full, partial, arrProp) {
+    var newObj = {};
+    for (var prop in full) { 
+      newObj[prop] = full[prop]; 
+    }
+    for (var prop in partial) { 
+      for (var i = 0; i < arrProp.length; i++){
+        if (prop == arrProp[i]) {
+          newObj[prop] = partial[prop];
+        }
+      }
+    }
+  return newObj;
+}
 
 // - Dates and Times
 
