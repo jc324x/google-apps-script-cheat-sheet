@@ -69,7 +69,13 @@
 //     | -- Regex Only Numbers or Letters
 
 // Future: 
-// Timestamp on Cell Change, Moving / Copying Folders, Grid - Set Values / Add / Remove, Array of Arrays, Count Val arrObj, arrFolderObj(name + obj), Parent of Folder
+// Timestamp on Cell Change
+// Moving / Copying Folders
+// Grid - Data mgmt
+// Array of Arrays
+// Count Val arrObj
+// Parent of Folder
+// Copy Formulas Down on Form Submit
 
 function testEverything() {}
 
