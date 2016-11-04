@@ -4,7 +4,7 @@ var form = FormApp.getActiveForm();
 
 // *   | Forms
 // *   | - Form Management
-// 1.1 | -- Get Spreadsheet Id
+// 1.1 | -- Get Form Id
 // *   | -- Array of Form Items
 // *   | -- Get Form Item by Name
 // *   | -- Set Item Choices
@@ -19,6 +19,10 @@ function testEverything() {}
 // - Form Management
 
 // -- Get Form Id
+
+function getFormId() {
+  Logger.log(FormApp.getActiveForm().getId());
+} 
 
 // -- Array of Form Items
 
