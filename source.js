@@ -18,6 +18,7 @@
 // 1.1 | -- Merge Two Objects 
 //     | - Dates and Times
 //     | -- Formatted Timestamps
+// 1.1 | -- New Date Object from String
 //     | -- Match a Date to a Range
 //     | Drive
 //     | - Folders
@@ -426,6 +427,23 @@ function fmat12DT() {
 
 // var ex_dt12 = fmat12DT();
 // Logger.log("current date + time (12 hour) ➡ " + ex_dt12);
+
+// -- New Date Object from String
+// format -> 'February 17, 2016 13:00:00 -0500';
+// given 2016-02-17
+
+function dateObjectFromString(str) {
+	var arr    = str.split("-");
+	var months = ["January", "February", "March", "April", "May", "June",
+	  "July", "August", "September", "October", "November", "December"
+		];
+	Logger.log(months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
+	return new Date (months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
+}
+
+var ex_ds   = "2016-02-17";
+var ex_dofs = dateObjectFromString(ex_ds);
+Logger.log(ex_dofs);
 
 // -- Match a Date to a Range
 
