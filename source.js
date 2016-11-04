@@ -38,6 +38,7 @@
 //     | Sheets
 //     | - Managing Spreadsheet Files
 //     | -- Create or Verify Spreadsheet
+// 1.1 | -- Get Spreadsheet Id
 //     | - Utility Functions for Sheets
 //     | -- Convert Column Number to a Letter
 //     | -- Convert Column Letter to a Number
@@ -55,6 +56,7 @@
 //     | Docs
 //     | - Managing Document Files
 //     | -- Create or Verify Document
+// 1.1 | -- Get Document Id
 //     | - Utility Functions for Docs
 //     | -- Access Document Body
 //     | -- Clear Document Body
@@ -896,6 +898,8 @@ function createVerifySSAtRoot(name) {
 // var ex_cvssar = createVerifySSAtRoot("example_sheet");
 // Logger.log("The Id of '" + ex_cvssar + "' at root is '" + ex_cvssar.getId());
 
+// -- Get Spreadsheet Id
+
 // - Utility Functions for Sheets
 
 // -- Convert Column Number to a Letter
@@ -1142,6 +1146,8 @@ function createVerifyDocAtRoot(name) {
 
 // var ex_cvdar = createVerifyDocAtRoot("example_doc");
 // Logger.log("The Id of '" + ex_cvdar + "' at root is '" + ex_cvdar.getId());
+
+// -- Get Document Id
 
 // - Utility Functions for Docs
 
