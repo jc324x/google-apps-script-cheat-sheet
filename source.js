@@ -1,75 +1,75 @@
-//     | General
-//     | - Array
-//     | -- Check for a Value In Array
-//     | -- Remove Duplicates
-//     | -- Remove Empty Values
-//     | -- Get Count of Values in Array
-//     | -- Intersect of Two Arrays
-//     | - Array of Objects
-//     | -- Sort by Property or Properties
-//     | -- Find Object With Unique Property Value
-//     | -- Filter by Property Value
-// 1.1 | -- Unify Property for Array of Objects
-// 1.1 | - Multidimensional Array
-// 1.1 | -- Flatten Multidimensional Array
-//     | - Object
-//     | -- Array of Matching Property Values
-// 1.1 | -- Unify Object Properties
-// 1.1 | -- Merge Two Objects 
-//     | - Dates and Times
-//     | -- Formatted Timestamps
-// 1.1 | -- New Date Object from String
-//     | -- Match a Date to a Range
-//     | Drive
-//     | - Folders
-// 1.1 | -- Create or Verify Folder Path
-// 1.1 | -- Last Folder in Folder Path
-//     | -- Array of All Folders
-//     | -- Array of All Folder Names
-//     | -- Find a Folder
-//     | -- Create or Verify Folders
-//     | - Files
-//     | -- Array of All Files
-//     | -- Array of All File Names
-//     | -- Find a File
-//     | -- Parent Folder of a File
-//     | -- Copy a File to a Folder
-//     | -- Move a File to a Folder
-//     | Sheets
-//     | - Managing Spreadsheet Files
-//     | -- Create or Verify Spreadsheet
-// 1.1 | -- Get Spreadsheet Id
-//     | - Utility Functions for Sheets
-//     | -- Convert Column Number to a Letter
-//     | -- Convert Column Letter to a Number
-// 1.1 | -- Replicating Import Range
-//     | -- Evaluating True and False
-//     | -  Array of Objects
-//     | -- Utility Functions for Array of Objects
-//     | --- Header Range
-//     | --- Value Range
-//     | --- Header Values
-//     | --- Values by Row
-// 1.1 | -- Array of Objects from Sheet
-// 1.1 | -- Array of Objects from Range
-// 1.1 | -- Array of Objects from Two Columns
-//     | Docs
-//     | - Managing Document Files
-//     | -- Create or Verify Document
-// 1.1 | -- Get Document Id
-//     | - Utility Functions for Docs
-//     | -- Access Document Body
-//     | -- Clear Document Body
-// 1.1 | Sheets and Docs
-// 1.1 | - Bulleted Lists
-// 1.1 | -- Single Header List
-// 1.1 | -- Sub Header List
-//     | Gmail
-//     | - Send Email
-//     | -- Comma Separated List of Recipients
-//     | -- Mail Merge
-//     | Other
-//     | -- Regex Only Numbers or Letters
+//       | General
+//       | - Array
+//       | -- Check for a Value In Array
+//       | -- Remove Duplicates
+//       | -- Remove Empty Values
+//       | -- Get Count of Values in Array
+//       | -- Intersect of Two Arrays
+//       | - Array of Objects
+//       | -- Sort by Property or Properties
+//       | -- Find Object With Unique Property Value
+//       | -- Filter by Property Value
+// 0.9.0 | -- Unify Property for Array of Objects
+// 0.9.0 | - Multidimensional Array
+// 0.9.0 | -- Flatten Multidimensional Array
+//       | - Object
+//       | -- Array of Matching Property Values
+// 0.9.0 | -- Unify Object Properties
+// 0.9.0 | -- Merge Two Objects
+//       | - Dates and Times
+//       | -- Formatted Timestamps
+// 0.9.0 | -- New Date Object from String
+//       | -- Match a Date to a Range
+//       | Drive
+//       | - Folders
+// 0.9.0 | -- Create or Verify Folder Path
+// 0.9.0 | -- Last Folder in Folder Path
+//       | -- Array of All Folders
+//       | -- Array of All Folder Names
+//       | -- Find a Folder
+//       | -- Create or Verify Folders
+//       | - Files
+//       | -- Array of All Files
+//       | -- Array of All File Names
+//       | -- Find a File
+//       | -- Parent Folder of a File
+//       | -- Copy a File to a Folder
+//       | -- Move a File to a Folder
+//       | Sheets
+//       | - Managing Spreadsheet Files
+//       | -- Create or Verify Spreadsheet
+// 0.9.0 | -- Get Spreadsheet Id
+//       | - Utility Functions for Sheets
+//       | -- Convert Column Number to a Letter
+//       | -- Convert Column Letter to a Number
+// 0.9.0 | -- Replicating Import Range
+//       | -- Evaluating True and False
+//       | -  Array of Objects
+//       | -- Utility Functions for Array of Objects
+//       | --- Header Range
+//       | --- Value Range
+//       | --- Header Values
+//       | --- Values by Row
+// 0.9.0 | -- Array of Objects from Sheet
+// 0.9.0 | -- Array of Objects from Range
+// 0.9.0 | -- Array of Objects from Two Columns
+//       | Docs
+//       | - Managing Document Files
+//       | -- Create or Verify Document
+// 0.9.0 | -- Get Document Id
+//       | - Utility Functions for Docs
+//       | -- Access Document Body
+//       | -- Clear Document Body
+// 0.9.0 | Sheets and Docs
+// 0.9.0 | - Bulleted Lists
+// 0.9.0 | -- Single Header List
+// 0.9.0 | -- Sub Header List
+//       | Gmail
+//       | - Send Email
+//       | -- Comma Separated List of Recipients
+//       | -- Mail Merge
+//       | Other
+//       | -- Regex Only Numbers or Letters
 
 // Future: 
 // Timestamp on Cell Change
