@@ -72,7 +72,7 @@
 //       | -- Regex Only Numbers or Letters
 
 // Roadmap: 
-// 0.9.0 - Strong additions
+// 0.9.0 - Additions and cleanup
 // 0.9.1 - Count of Value in Array of Objects
 // 0.9.1 - Timestamp on Cell Change
 // 0.9.1 - Moving / Copying Folders
@@ -274,12 +274,17 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 
 // -- Unify Property for Array of Objects
 
+
+
+
+
+
 function mergeObjProp_Arr(arrObj, arrProp, newProp){
   for (var h = 0; h < arrObj.length; h++){
     var item = arrObj[h];
     for (var i = 0; i < arrProp.length; i++) {
       for (var prop in item) {
-        // item.hasOwnProperty is unecessary???
+				// FLAG - item.hasOwnProperty required?
         if (item.hasOwnProperty(prop)){
           if (prop == arrProp[i]){
             if (item[prop] != "") {
@@ -352,7 +357,7 @@ var obj_fvi = {
 // var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
 // Logger.log(ex_fvi);
 
-// ! CLEAN UP !
+// + FLAG
 // -- Unify Object Properties
 
 function mergeObjProp(obj, arrProp, newProp){
