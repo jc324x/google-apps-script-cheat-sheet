@@ -72,13 +72,12 @@
 //       | -- Regex Only Numbers or Letters
 
 // Future: 
-// Timestamp on Cell Change
-// Moving / Copying Folders
-// Grid - Data mgmt
-// Array of Arrays
-// Count Val arrObj
-// Parent of Folder
-// Copy Formulas Down on Form Submit
+// 0.9.1 - Count of Value in Array of Objects
+// 0.9.1 - Timestamp on Cell Change
+// 0.9.1 - Moving / Copying Folders
+// 0.9.2 - Grid Objects (Modifying Sheet)
+// 0.9.2 - Copy Down Formulas on Form Submit
+// 0.9.3 - Return Types / Verify README
 
 function testEverything() {}
 
