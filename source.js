@@ -71,13 +71,15 @@
 //       | Other
 //       | -- Regex Only Numbers or Letters
 
-// Future: 
+// Roadmap: 
+// 0.9.0 - Strong additions
 // 0.9.1 - Count of Value in Array of Objects
 // 0.9.1 - Timestamp on Cell Change
 // 0.9.1 - Moving / Copying Folders
 // 0.9.2 - Grid Objects (Modifying Sheet)
-// 0.9.2 - Copy Down Formulas on Form Submit
-// 0.9.3 - Return Types / Verify README
+// 0.9.3 -Copy Down Formulas on Form Submit
+// 0.9.9 - Write in return types, verify README, dependencies
+// 1.0.0 - Link to templates on jcodesmn blog
 
 function testEverything() {}
 
