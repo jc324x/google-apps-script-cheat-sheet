@@ -90,7 +90,7 @@ chkbox.setChoiceValues(choices);
 // BUG FIX: form is a global object in this sheet...not actually using argument...
 
 function lastResponse(formObj) {
-  var all  = form.getResponses();
+  var all  = formObj.getResponses();
   var last = all[all.length - 1];
   var rsps = last.getItemResponses();
   var j = {};
