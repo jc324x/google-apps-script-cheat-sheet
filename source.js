@@ -1241,9 +1241,9 @@ var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
 // --- Document
 
 var obj_nfp = { 
-	name:       "Jon",
-	state:      "MN",
-  employment: "IT"
+	name:  "Jon",
+	state: "MN",
+  job:   "IT"
 };
 
 function nameFromProp(obj, name){
@@ -1265,7 +1265,7 @@ function nameFromProp(obj, name){
   return _arr.join(" ");
 }
 
-var ex_nfp = nameFromProp(obj_nfp, "name - state - employment");
+var ex_nfp = nameFromProp(obj_nfp, "name: name - state: state - job: job");
 Logger.log(ex_nfp);
 
 // function mergeDataArrObjDoc(arrObj, doc, name, timestamp) {
