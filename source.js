@@ -357,7 +357,6 @@ var obj_fvi = {
 // var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
 // Logger.log(ex_fvi);
 
-// + FLAG
 // -- Unify Object Properties
 
 function mergeObjProp(obj, arrProp, newProp){
@@ -1234,7 +1233,38 @@ var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
 
 // - Merge
 
-// -- Merge Document
+// -- Merge Data in Array of Objects
+
+// --- Document
+
+// function mergeObjProp(obj, arrProp, newProp){
+//   for (var i = 0; i < arrProp.length; i++) {
+//     for (var prop in obj) {
+//       if (obj.hasOwnProperty(prop)){
+//         if (prop == arrProp[i]){
+//           if (obj[prop] != "") {
+//             obj[newProp] = obj[prop];
+//             return obj[prop];
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+function mergeDataArrObjDoc(arrObj, doc, naming, timestamp) {
+ for (var i = 0; i < arrObj.length; i++) {
+   var docName = val; 
+   
+   // for every 
+   
+ }  
+} 
+
+mergeDataArrObjDoc(myData, docTemplate, "$first - $last")
+
+
+// --- Spreadsheet
 
 // -- Cell Shading
 
