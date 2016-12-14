@@ -28,6 +28,7 @@
 //       | -- Array of All Folder Names
 //       | -- Find a Folder
 //       | -- Create or Verify Folders
+// 0.9.0 | -- Rename a Folder
 //       | - Files
 //       | -- Array of All Files
 //       | -- Array of All File Names
@@ -35,6 +36,7 @@
 //       | -- Parent Folder of a File
 //       | -- Copy a File to a Folder
 //       | -- Move a File to a Folder
+// 0.9.0 | -- Rename a File
 //       | Sheets
 //       | - Managing Spreadsheet Files
 //       | -- Create or Verify Spreadsheet
@@ -864,6 +866,14 @@ function moveFile(file, fldr) {
 // var fldr_mf2 = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
 // var ex_mf    = moveFile(file_mf, fldr_mf2);
 // Logger.log("'" + ex_mf + "' " + "has been moved to " + parentFolderOf(ex_mf));
+
+// -- Rename a File
+// ➡  file
+
+function renameFile(file, name) {
+  file.setName(name)
+  return file;
+} 
 
 // Sheets
 
