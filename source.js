@@ -62,8 +62,11 @@
 //       | -- Clear Document Body
 // 0.9.0 | Sheets and Docs
 // 0.9.0 | - Bulleted Lists
-// 0.9.0 | -- Single Header List
-// 0.9.0 | -- Sub Header List
+// 0.9.0 | -- Single Division List
+// 0.9.0 | -- Multi Division List
+// 0.9.0 | - Merge
+// 0.9.0 | -- Merge Document
+// 0.9.0 | -- Cell Shading
 //       | Gmail
 //       | - Send Email
 //       | -- Comma Separated List of Recipients
@@ -77,7 +80,7 @@
 // 0.9.1 - Timestamp on Cell Change
 // 0.9.1 - Moving / Copying Folders
 // 0.9.2 - Grid Objects (Modifying Sheet)
-// 0.9.3 -Copy Down Formulas on Form Submit
+// 0.9.3 - Copy Down Formulas on Form Submit
 // 0.9.9 - Write in return types, verify README, dependencies
 // 1.0.0 - Link to templates on jcodesmn blog
 
@@ -273,11 +276,6 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 // Logger.log(ex_fovi);
 
 // -- Unify Property for Array of Objects
-
-
-
-
-
 
 function mergeObjProp_Arr(arrObj, arrProp, newProp){
   for (var h = 0; h < arrObj.length; h++){
@@ -1223,6 +1221,12 @@ var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
 		}
 	}
 })();
+
+// - Merge
+
+// -- Merge Document
+
+// -- Cell Shading
 
 // Gmail
 
