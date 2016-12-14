@@ -312,7 +312,7 @@ function flattenMultiArr(multiArr){
 var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 var val_fma = ss_fma.getRange("G2:H5").getValues();
 var ex_fma  = flattenMultiArr(val_fma).sort();
-Logger.log(ex_fma);
+// Logger.log(ex_fma);
 
 // -- Filter by Property Value
 // ➡  array of objects
@@ -358,6 +358,9 @@ var obj_fvi = {
 // Logger.log(ex_fvi);
 
 // -- Unify Object Properties
+
+// -- FLAG --
+// if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
 
 function mergeObjProp(obj, arrProp, newProp){
   for (var i = 0; i < arrProp.length; i++) {
@@ -445,13 +448,13 @@ function dateObjectFromString(str) {
 	var months = ["January", "February", "March", "April", "May", "June",
 	  "July", "August", "September", "October", "November", "December"
 		];
-	Logger.log(months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
+	// Logger.log(months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
 	return new Date (months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
 }
 
 var ex_ds   = "2016-02-17";
 var ex_dofs = dateObjectFromString(ex_ds);
-Logger.log(ex_dofs);
+// Logger.log(ex_dofs);
 
 // -- Match a Date to a Range
 
@@ -942,7 +945,7 @@ function numCol(num) {
 function ex_nc() {
 	for (var i = 1; i <= 104; i++) {
 		var j = numCol(i);
-		Logger.log(i + " - " + j);
+		// Logger.log(i + " - " + j);
 	}
 }
 
@@ -966,11 +969,11 @@ function colNum(col) {
 function ex_cn() {
 	for (var i = 0; i <= 25; i++) {
 		var abc = String.fromCharCode(97 + i).toUpperCase();
-		Logger.log(abc + " - " + colNum(abc));
+		// Logger.log(abc + " - " + colNum(abc));
 	}
 	for (var i = 26; i <= 51; i++) {
 		var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
-		Logger.log(abc + " - " + colNum(abc));
+		// Logger.log(abc + " - " + colNum(abc));
 	}
 }
 
@@ -1237,32 +1240,42 @@ var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
 
 // --- Document
 
-// function mergeObjProp(obj, arrProp, newProp){
-//   for (var i = 0; i < arrProp.length; i++) {
-//     for (var prop in obj) {
-//       if (obj.hasOwnProperty(prop)){
-//         if (prop == arrProp[i]){
-//           if (obj[prop] != "") {
-//             obj[newProp] = obj[prop];
-//             return obj[prop];
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
+var obj_nfp = { 
+	name:       "Jon",
+	state:      "MN",
+  employment: "IT"
+};
 
-function mergeDataArrObjDoc(arrObj, doc, naming, timestamp) {
- for (var i = 0; i < arrObj.length; i++) {
-   var docName = val; 
-   
-   // for every 
-   
- }  
-} 
+function nameFromProp(obj, name){
+  var arr  = name.split(" ");
+  var _arr = [];
+  for (var i = 0; i < arr.length; i++) {
+    var str = arr[i]; 
+    for (var prop in obj){
+      if (obj.hasOwnProperty(str)){
+        _arr.push(obj[str]);
+        // break;
+      } else {
+        _arr.push(str);
+        // break;
+      }
+      break;
+    }
+  } 
+  return _arr.join(" ");
+}
 
-mergeDataArrObjDoc(myData, docTemplate, "$first - $last")
+var ex_nfp = nameFromProp(obj_nfp, "name - state - employment");
+Logger.log(ex_nfp);
 
+// function mergeDataArrObjDoc(arrObj, doc, name, timestamp) {
+//  for (var i = 0; i < arrObj.length; i++) {
+//    var obj = arrObj[i];
+//    var 
+//    // for every 
+//  }  
+// } 
+// mergeDataArrObjDoc(myData, docTemplate, "first - last")
 
 // --- Spreadsheet
 
