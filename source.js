@@ -1335,6 +1335,19 @@ function mergeSheetByObj(sheet, obj) {
   sheet.getDataRange().setValues(values);
 }
 
+function replaceInSheet(sheet, to_replace, replace_with) {
+  var values = sheet.getDataRange().getValues();
+  for(var row in values){
+    var replaced_values = values[row].map(function(original_value){
+      return original_value.toString().replace(to_replace,replace_with);
+    });
+    values[row] = replaced_values;
+  }
+  sheet.getDataRange().setValues(values);
+}
+
+
+
 // -- FLAG --
 // create ex
 
@@ -1346,7 +1359,10 @@ function mergeDataArrObjSheet(arrObj, template, naming, fldr, ts) {
     if (ts == true) name += " - " + fmat12DT();
     var sheetId = copyFile(template, fldr).setName(name).getId()
     var sheet   = SpreadsheetApp.openById(sheetId);
-    mergeSheetByObj(sheet, obj);
+    var search  = "<<First>>";
+    var replace = obj["First"];
+    replaceInSheet(sheet, search, replace);
+    // mergeSheetByObj(sheet, obj);
     }
 } 
 
