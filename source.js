@@ -1323,13 +1323,10 @@ function mergeSheetByObj(sheet, obj) {
   for(var row in values){
     var update = values[row].map(function(original){
       var text = original.toString();
-      Logger.log("original = " + text);
       for (var prop in obj) {
         var query = "<<"+prop+">>"
           if (text.indexOf(query) !== -1) {
-            Logger.log("I found something!");
-            text.replace(query, obj[prop])
-            Logger.log("replaced = " + text);
+            text = text.replace(query, obj[prop]);
             break;
           }
       } 
@@ -1344,8 +1341,7 @@ function mergeSheetByObj(sheet, obj) {
 // create ex
 
 function mergeDataArrObjSheet(arrObj, template, naming, fldr, ts) {
-  // for (var i = 0; i < arrObj.length; i++) {
-  for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
     var name = strFromProp(obj, naming);
     if (ts == true) name += " - " + fmat12DT();
@@ -1353,7 +1349,6 @@ function mergeDataArrObjSheet(arrObj, template, naming, fldr, ts) {
     var sheet   = SpreadsheetApp.openById(sheetId);
     var search  = "<<First>>";
     var replace = obj["First"];
-    // replaceInSheet(sheet, search, replace);
     mergeSheetByObj(sheet, obj);
     }
 } 
