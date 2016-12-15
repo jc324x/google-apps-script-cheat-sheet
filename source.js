@@ -1276,8 +1276,8 @@ var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<jo
 
 // --- Find and Replace Text in Document from Object Properties
 
-function mergeDocByObj(doc, obj) {
-  var body = doc.getBody(); 
+function mergeDocByObj(docObj, obj) {
+  var body = docObj.getBody(); 
   for (var prop in obj) {
     var query = "<<" + prop + ">>"
     var val   = obj[prop];
@@ -1318,8 +1318,8 @@ var name_mdaod    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
 
 // --- Spreadsheet
 
-function mergeSheetByObj(sheet, obj) {
-  var values = sheet.getDataRange().getValues();
+function mergeSheetByObj(sheetObj, obj) {
+  var values = sheetObj.getDataRange().getValues();
   for(var row in values){
     var update = values[row].map(function(original){
       var text = original.toString();
@@ -1334,7 +1334,7 @@ function mergeSheetByObj(sheet, obj) {
     });
     values[row] = update;
   }
-  sheet.getDataRange().setValues(values);
+  sheetObj.getDataRange().setValues(values);
 }
 
 // -- FLAG --
@@ -1357,13 +1357,24 @@ var ss_mdaos      = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2
 var arrObj_mdaos  = arrObjSheet(ss_mdaod, 2);
 var main_mdaos    = lastFolderIn("google-apps-script-cheat-sheet");
 var exports_mdaos = createVerifyPath("google-apps-script-cheat-sheet/Merge Exports");
-var sheet_mdaos     = findFileIn(main_mdaod, "merge_template_sheet");
+var sheet_mdaos   = findFileIn(main_mdaod, "merge_template_sheet");
 var name_mdaos    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
 
 mergeDataArrObjSheet(arrObj_mdaos, sheet_mdaos, name_mdaos, exports_mdaod, true)
 
-
 // -- Cell Shading
+
+function shadeCells(sheetObj, colLetter, obj, hexStr) {
+  // array of all values in col = ex. 1
+  // index in array = relative position in sheet
+  // find match in array -> matching value in obj -> A1...B1 (grey)
+  
+ var ss    = SpreadsheetApp.getActiveSpreadsheet();
+ var sheet = ss.getSheets()[0];
+ var range = sheet.getRange("B2:D5");
+ range.setBackground("red");
+
+}
 
 // Gmail
 
