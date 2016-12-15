@@ -1276,7 +1276,7 @@ var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<jo
 
 // --- Find and Replace Text in Document from Object Properties
 
-function mergePropInDoc(obj, doc) {
+function mergeDocByObj(doc, obj) {
   var body = doc.getBody(); 
   for (var prop in obj) {
     var query = "<<" + prop + ">>"
@@ -1284,6 +1284,9 @@ function mergePropInDoc(obj, doc) {
     body.replaceText(query, val);
   } 
 } 
+
+// -- FLAG --
+// add in ex
 
 // --- Find and Replace Text in Google Sheet from Object Properties
 
@@ -1295,12 +1298,8 @@ function mergeDataArrObjDoc(arrObj, template, naming, fldr, ts) {
     var name = strFromProp(obj, naming);
     if (ts == true) name += " - " + fmat12DT();
     var docId = copyFile(template, fldr).setName(name).getId()
-    var body  = DocumentApp.openById(docId).getBody();
-    for (var prop in obj) {
-      var query = "<<" + prop + ">>"
-      var val   = obj[prop];
-      body.replaceText(query, val);
-      } 
+    var doc   = DocumentApp.openById(docId);
+    mergeDocByObj(doc, obj);
     }
 } 
 
@@ -1313,31 +1312,52 @@ var exports_mdaod = createVerifyPath("google-apps-script-cheat-sheet/Merge Expor
 var doc_mdaod     = findFileIn(main_mdaod, "merge_template_doc");
 var name_mdaod    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
 
-mergeDataArrObjDoc(arrObj_mdaod, doc_mdaod, name_mdaod, exports_mdaod, true)
+// mergeDataArrObjDoc(arrObj_mdaod, doc_mdaod, name_mdaod, exports_mdaod, true)
 
 // --------------------------------------------------------------
 
 // --- Spreadsheet
 
-function replaceInSheet(sheet, to_replace, replace_with) {
-  //get the current data range values as an array
+function mergeSheetByObj(sheet, obj) {
   var values = sheet.getDataRange().getValues();
-
-  //loop over the rows in the array
   for(var row in values){
-
-    //use Array.map to execute a replace call on each of the cells in the row.
-    var replaced_values = values[row].map(function(original_value){
-      return original_value.toString().replace(to_replace,replace_with);
+    var update = values[row].map(function(original){
+      var search; 
+      for (var prop in obj) {
+        var query = "<<" + prop + ">>"
+        var val   = obj[prop];
+        search.toString().replace(query, val)
+      } 
+      return search;
     });
-
-    //replace the original row values with the replaced values
-    values[row] = replaced_values;
+    values[row] = update;
   }
-
-  //write the updated values to the sheet
   sheet.getDataRange().setValues(values);
 }
+
+// -- FLAG --
+// create ex
+
+function mergeDataArrObjSheet(arrObj, template, naming, fldr, ts) {
+  // for (var i = 0; i < arrObj.length; i++) {
+  for (var i = 0; i < 3; i++) {
+    var obj  = arrObj[i];
+    var name = strFromProp(obj, naming);
+    if (ts == true) name += " - " + fmat12DT();
+    var sheetId = copyFile(template, fldr).setName(name).getId()
+    var sheet   = SpreadsheetApp.openById(sheetId);
+    mergeSheetByObj(sheet, obj);
+    }
+} 
+
+var ss_mdaos      = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_mdaos  = arrObjSheet(ss_mdaod, 2);
+var main_mdaos    = lastFolderIn("google-apps-script-cheat-sheet");
+var exports_mdaos = createVerifyPath("google-apps-script-cheat-sheet/Merge Exports");
+var sheet_mdaos     = findFileIn(main_mdaod, "merge_template_sheet");
+var name_mdaos    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
+
+mergeDataArrObjSheet(arrObj_mdaos, sheet_mdaos, name_mdaos, exports_mdaod, true)
 
 
 // -- Cell Shading
