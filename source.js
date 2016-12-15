@@ -1273,23 +1273,29 @@ var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<jo
 
 // -- Merge Data in Array of Objects
 
-function mergeDataArrObjDoc(arrObj, template, naming, fldr, timestamp) {
+function mergeDataArrObjDoc(arrObj, template, naming, fldr, ts) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
     var name = strFromProp(obj, naming);
-    (timestamp ? name += " - " + fmat12DT() : Logger.log("No timestamp"))
-    copyFile(template, fldr).setName(naming)
- }  
+    if (ts == true) name += " - " + fmat12DT();
+    var docId = copyFile(template, fldr).setName(name).getId()
+    var body  = DocumentApp.openById(docId).getBody();
+    for (var prop in obj) {
+      var query = "<<" + prop + ">>"
+      var val   = obj[prop];
+      body.replaceText(query, val);
+      } 
+    }
 } 
 
 // --------------------------------------------------------------
 
 var ss_mdaod      = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_mdaod   = arrObjSheet(ss_mdaod, 2);
+var arrObj_mdaod  = arrObjSheet(ss_mdaod, 2);
 var main_mdaod    = lastFolderIn("google-apps-script-cheat-sheet");
 var exports_mdaod = createVerifyPath("google-apps-script-cheat-sheet/Merge Exports");
 var doc_mdaod     = findFileIn(main_mdaod, "merge_template_doc");
-var name_mdaod    = "Name: <<First>> <<Last>> <<Grade>>";
+var name_mdaod    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
 
 mergeDataArrObjDoc(arrObj_mdaod, doc_mdaod, name_mdaod, exports_mdaod, true)
 
