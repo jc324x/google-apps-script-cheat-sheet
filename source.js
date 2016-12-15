@@ -986,6 +986,9 @@ function ex_cn() {
 
 // ex_cn();
 
+// -- FLAG --
+// -- All Values in Column as Array
+
 // -- Replicating Import Range
 // trigger -> getSet : From spreadsheet : On edit
 
@@ -1365,15 +1368,34 @@ mergeDataArrObjSheet(arrObj_mdaos, sheet_mdaos, name_mdaos, exports_mdaod, true)
 // -- Cell Shading
 
 function shadeCells(sheetObj, colLetter, obj, hexStr) {
-  // array of all values in col = ex. 1
-  // index in array = relative position in sheet
-  // find match in array -> matching value in obj -> A1...B1 (grey)
-  
- var ss    = SpreadsheetApp.getActiveSpreadsheet();
- var sheet = ss.getSheets()[0];
- var range = sheet.getRange("B2:D5");
- range.setBackground("red");
+	var lRow   = SheetObj.getLastRow();
+	var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
 
+  function valForCol(rangeObj){
+    var h    = rangeObj.getHeight();
+    var w    = rangeObj.getWidth();
+    var vals = rangeObj.getValues();
+    var arr  = [];
+    for (var i = 0; i < h; i++) {
+      var row = {};
+      for (var j = 0; j < w; j++) {
+        var prop = headers[j];
+        var val  = vals[i][j];
+        if (val !== "") {
+          row[prop] = val;
+        } 
+      }
+      arr.push(row);
+    }  
+    return arr;
+  }
+
+
+
+	var ss    = SpreadsheetApp.getActiveSpreadsheet();
+	var sheet = ss.getSheets()[0];
+	var range = sheet.getRange("B2:D5");
+	range.setBackground("red");
 }
 
 // Gmail
