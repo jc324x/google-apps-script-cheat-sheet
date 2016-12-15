@@ -1,3 +1,5 @@
+Logger.log("Start");
+
 //       | General
 //       | - Array
 //       | -- Check for a Value In Array
@@ -1240,7 +1242,7 @@ var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
 
 // -- Utility Functions
 
-// --- Dynamically Build File Name
+// --- String From Object Properties
 
 var obj_nfp = { 
 	name:  "Jon",
@@ -1248,7 +1250,7 @@ var obj_nfp = {
   job:   "IT"
 };
 
-function stringFromObjProp(obj, str){
+function strFromProp(obj, str){
   var arr  = str.split(" ");
   var _arr = [];
   for (var i = 0; i < arr.length; i++) {
@@ -1266,23 +1268,32 @@ function stringFromObjProp(obj, str){
   return _arr.join(" ");
 }
 
-var ex_nfp = stringFromObjProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
-Logger.log(ex_nfp);
+var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
+// Logger.log(ex_nfp);
 
 // -- Merge Data in Array of Objects
 
-function mergeDataArrObjDoc(arrObj, doc, name, timestamp) {
- for (var i = 0; i < arrObj.length; i++) {
-   var obj   = arrObj[i];
-   var _name = nameFromProp(obj, name);
-   Console.log(_name);
-   // have the name...(timestamp?)...copy the doc
-   // get the new doc...set the name
-   // find and replace in doc
+function mergeDataArrObjDoc(arrObj, template, naming, fldr, timestamp) {
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj  = arrObj[i];
+    var name = strFromProp(obj, naming);
+    (timestamp ? name += " - " + fmat12DT() : Logger.log("No timestamp"))
+    copyFile(template, fldr).setName(naming)
  }  
 } 
 
-// mergeDataArrObjDoc(myData, docTemplate, "first: first - last: last")
+// --------------------------------------------------------------
+
+var ss_mdaod      = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_mdaod   = arrObjSheet(ss_mdaod, 2);
+var main_mdaod    = lastFolderIn("google-apps-script-cheat-sheet");
+var exports_mdaod = createVerifyPath("google-apps-script-cheat-sheet/Merge Exports");
+var doc_mdaod     = findFileIn(main_mdaod, "merge_template_doc");
+var name_mdaod    = "Name: <<First>> <<Last>> <<Grade>>";
+
+mergeDataArrObjDoc(arrObj_mdaod, doc_mdaod, name_mdaod, exports_mdaod, true)
+
+// --------------------------------------------------------------
 
 // --- Spreadsheet
 
@@ -1342,3 +1353,5 @@ var ex_abc = re.replace(/\d/g, "");
 
 // Logger.log(ex_num);
 // Logger.log(ex_abc);
+
+Logger.log("End");
