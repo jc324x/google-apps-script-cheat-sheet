@@ -67,6 +67,8 @@
 // 0.9.0 | -- Single Division List
 // 0.9.0 | -- Multi Division List
 // 0.9.0 | - Merge
+//       | -- Utility Functions for Merging
+// 0.9.0 | --- Dynamically Create File Name
 // 0.9.0 | -- Merge Document
 // 0.9.0 | -- Cell Shading
 //       | Gmail
@@ -1236,9 +1238,9 @@ var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
 
 // - Merge
 
-// -- Merge Data in Array of Objects
+// -- Utility Functions
 
-// --- Document
+// --- Dynamically Build File Name
 
 var obj_nfp = { 
 	name:  "Jon",
@@ -1246,18 +1248,17 @@ var obj_nfp = {
   job:   "IT"
 };
 
-function nameFromProp(obj, name){
-  var arr  = name.split(" ");
+function stringFromObjProp(obj, str){
+  var arr  = str.split(" ");
   var _arr = [];
   for (var i = 0; i < arr.length; i++) {
     var str = arr[i]; 
     for (var prop in obj){
-      if (obj.hasOwnProperty(str)){
-        _arr.push(obj[str]);
-        // break;
+      var mod = str.substr(0, str.length-2).substr(2);
+      if (obj.hasOwnProperty(mod)){
+        _arr.push(obj[mod]);
       } else {
         _arr.push(str);
-        // break;
       }
       break;
     }
@@ -1265,17 +1266,23 @@ function nameFromProp(obj, name){
   return _arr.join(" ");
 }
 
-var ex_nfp = nameFromProp(obj_nfp, "name: name - state: state - job: job");
+var ex_nfp = stringFromObjProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
 Logger.log(ex_nfp);
 
-// function mergeDataArrObjDoc(arrObj, doc, name, timestamp) {
-//  for (var i = 0; i < arrObj.length; i++) {
-//    var obj = arrObj[i];
-//    var 
-//    // for every 
-//  }  
-// } 
-// mergeDataArrObjDoc(myData, docTemplate, "first - last")
+// -- Merge Data in Array of Objects
+
+function mergeDataArrObjDoc(arrObj, doc, name, timestamp) {
+ for (var i = 0; i < arrObj.length; i++) {
+   var obj   = arrObj[i];
+   var _name = nameFromProp(obj, name);
+   Console.log(_name);
+   // have the name...(timestamp?)...copy the doc
+   // get the new doc...set the name
+   // find and replace in doc
+ }  
+} 
+
+// mergeDataArrObjDoc(myData, docTemplate, "first: first - last: last")
 
 // --- Spreadsheet
 
