@@ -283,6 +283,9 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 
 // -- Unify Property for Array of Objects
 
+// -- FLAG --
+// merge = combine
+
 function mergeObjProp_Arr(arrObj, arrProp, newProp){
   for (var h = 0; h < arrObj.length; h++){
     var item = arrObj[h];
@@ -1271,6 +1274,19 @@ function strFromProp(obj, str){
 var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
 // Logger.log(ex_nfp);
 
+// --- Find and Replace Text in Document from Object Properties
+
+function mergePropInDoc(obj, doc) {
+  var body = doc.getBody(); 
+  for (var prop in obj) {
+    var query = "<<" + prop + ">>"
+    var val   = obj[prop];
+    body.replaceText(query, val);
+  } 
+} 
+
+// --- Find and Replace Text in Google Sheet from Object Properties
+
 // -- Merge Data in Array of Objects
 
 function mergeDataArrObjDoc(arrObj, template, naming, fldr, ts) {
@@ -1302,6 +1318,27 @@ mergeDataArrObjDoc(arrObj_mdaod, doc_mdaod, name_mdaod, exports_mdaod, true)
 // --------------------------------------------------------------
 
 // --- Spreadsheet
+
+function replaceInSheet(sheet, to_replace, replace_with) {
+  //get the current data range values as an array
+  var values = sheet.getDataRange().getValues();
+
+  //loop over the rows in the array
+  for(var row in values){
+
+    //use Array.map to execute a replace call on each of the cells in the row.
+    var replaced_values = values[row].map(function(original_value){
+      return original_value.toString().replace(to_replace,replace_with);
+    });
+
+    //replace the original row values with the replaced values
+    values[row] = replaced_values;
+  }
+
+  //write the updated values to the sheet
+  sheet.getDataRange().setValues(values);
+}
+
 
 // -- Cell Shading
 
