@@ -1322,31 +1322,18 @@ function mergeSheetByObj(sheet, obj) {
   var values = sheet.getDataRange().getValues();
   for(var row in values){
     var update = values[row].map(function(original){
-      // var search = original; 
+      var text = original.toString();
       for (var prop in obj) {
         var query = "<<" + prop + ">>"
         var val   = obj[prop];
-        original.toString().replace(query, val)
+        text.replace(query, val);
       } 
-      return original;
+      return val;
     });
     values[row] = update;
   }
   sheet.getDataRange().setValues(values);
 }
-
-function replaceInSheet(sheet, to_replace, replace_with) {
-  var values = sheet.getDataRange().getValues();
-  for(var row in values){
-    var replaced_values = values[row].map(function(original_value){
-      return original_value.toString().replace(to_replace,replace_with);
-    });
-    values[row] = replaced_values;
-  }
-  sheet.getDataRange().setValues(values);
-}
-
-
 
 // -- FLAG --
 // create ex
@@ -1361,8 +1348,8 @@ function mergeDataArrObjSheet(arrObj, template, naming, fldr, ts) {
     var sheet   = SpreadsheetApp.openById(sheetId);
     var search  = "<<First>>";
     var replace = obj["First"];
-    replaceInSheet(sheet, search, replace);
-    // mergeSheetByObj(sheet, obj);
+    // replaceInSheet(sheet, search, replace);
+    mergeSheetByObj(sheet, obj);
     }
 } 
 
