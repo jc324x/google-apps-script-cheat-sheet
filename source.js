@@ -1322,13 +1322,13 @@ function mergeSheetByObj(sheet, obj) {
   var values = sheet.getDataRange().getValues();
   for(var row in values){
     var update = values[row].map(function(original){
-      var search; 
+      // var search = original; 
       for (var prop in obj) {
         var query = "<<" + prop + ">>"
         var val   = obj[prop];
-        search.toString().replace(query, val)
+        original.toString().replace(query, val)
       } 
-      return search;
+      return original;
     });
     values[row] = update;
   }
