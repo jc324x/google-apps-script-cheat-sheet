@@ -1411,7 +1411,7 @@ var obj_sc = {
 };
 
 var ss_sc = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
-shadeCells(ss_sc, "A", obj_sc, "#AAA000");
+shadeCells(ss_sc, "A", obj_sc, "#D3D3D3");
 
 // Gmail
 
