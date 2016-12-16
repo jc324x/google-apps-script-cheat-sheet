@@ -1392,13 +1392,16 @@ function shadeCells(sheetObj, colLetter, obj, hexStr) {
 	var lRow   = sheetObj.getLastRow();
 	var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
   var arrVal = arrForCol(vRange);
-  var index = colNum(colLetter)
-  Logger.log(index);
+  var index  = colNum(colLetter)
   for (var i = 0; i < arrVal.length; i++) {
     for (var prop in obj) {
       if (prop == arrVal[i]) {
-        Logger.log(obj[prop]);
-        Logger.log(prop);
+        var letter = numCol(index + obj[prop]);
+        var sRange = sheetObj.getRange(letter + (1+i));
+        sRange.setBackground("gray");
+        // Logger.log(sRange.getA1Notation());
+        // Logger.log(obj[prop]);
+        // Logger.log(prop);
       }
     } 
   } 
