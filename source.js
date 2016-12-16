@@ -1101,12 +1101,13 @@ function arrObjSheet(sheetObj, hRow){
 	var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
 	var vRange  = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow);
 	var headers = headerVal(hRange);
+  Logger.log(headers);
 	return valByRow(vRange, headers)
 }
 
-// var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var ex_aos = arrObjSheet(ss_aos, 2);
-// Logger.log(ex_aos);
+var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var ex_aos = arrObjSheet(ss_aos, 2);
+Logger.log(ex_aos);
 
 // -- Array of Objects from Range 
 
@@ -1147,7 +1148,21 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 
 // --- By Header Value 
 
+// function arrForColName(sheetObj, name){
+// 	var lColNum = sheetObj.getLastColumn();
+// 	var lColABC = numCol(lColNum);
+// 	var lRow    = sheetObj.getLastRow();
+// 	var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+// 	var vRange  = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow);
+// 	var headers = headerVal(hRange);
+// 	return valByRow(vRange, headers)
+// }
+
 // --- By Column Index
+
+// function arrForColNo(sheetObj, number){
+// }
+
 
 // Docs
 
