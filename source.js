@@ -1388,7 +1388,7 @@ var colVal_vfc = arrForCol(range_vfc);
 
 // --- Cell Shading
 
-function shadeCells(sheetObj, colLetter, obj, hexStr) {
+function shadeCells(sheetObj, colLetter, obj, color) {
 	var lRow   = sheetObj.getLastRow();
 	var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
   var arrVal = arrForCol(vRange);
@@ -1398,14 +1398,10 @@ function shadeCells(sheetObj, colLetter, obj, hexStr) {
       if (prop == arrVal[i]) {
         var letter = numCol(index + obj[prop]);
         var sRange = sheetObj.getRange(letter + (1+i));
-        sRange.setBackground("gray");
-        // Logger.log(sRange.getA1Notation());
-        // Logger.log(obj[prop]);
-        // Logger.log(prop);
+        sRange.setBackground(color);
       }
     } 
   } 
-	// range.setBackground("red");
 }
 
 var obj_sc = { 
