@@ -57,6 +57,8 @@ Logger.log("Start");
 // 0.9.0 | -- Array of Objects from Sheet
 // 0.9.0 | -- Array of Objects from Range
 // 0.9.0 | -- Array of Objects from Two Columns
+// 0.9.0 | - Array of Values
+// 0.9.0 | -- Array of Values for Column
 //       | Docs
 //       | - Managing Document Files
 //       | -- Create or Verify Document
@@ -169,11 +171,11 @@ function countOfValIn(arr){
 	return _arr;
 }
 
-// var arr_covi  = ["A", "B", "C", "A", "B", "C", "D", "A"];
-// var ex_covi = countOfValIn(arr_covi);
-// Logger.log("countVal input ➡ " + arr_covi);
-// Logger.log("countVal out ⬇ ");
-// Logger.log(ex_covi);
+var arr_covi  = ["A", "B", "C", "A", "B", "C", "D", "A"];
+var ex_covi = countOfValIn(arr_covi);
+Logger.log("countVal input ➡ " + arr_covi);
+Logger.log("countVal out ⬇ ");
+Logger.log(ex_covi);
 
 // -- Intersect of Two Arrays
 // ➡  array 
@@ -194,9 +196,9 @@ function intersectOf(arrA, arrB) {
   return _arr;
 }
 
-// var arr1_io = [1, 2, 3];
-// var arr2_io = [3, 4, 5];
-// Logger.log(intersectOf(arr1_io, arr2_io));
+var arr1_io = [1, 2, 3];
+var arr2_io = [3, 4, 5];
+Logger.log(intersectOf(arr1_io, arr2_io));
 
 // - Array of Objects
 
@@ -1136,6 +1138,16 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 // var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var ex_vg    = arrObjTwoCol(sheet_vg, "D2:E5");
 // Logger.log(ex_vg);
+
+// -- FLAG --
+
+// - Array of Values
+
+// -- Array of Values for Column
+
+// --- By Header Value 
+
+// --- By Column Index
 
 // Docs
 
