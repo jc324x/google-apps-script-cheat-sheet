@@ -1363,40 +1363,56 @@ var exports_mdaos = createVerifyPath("google-apps-script-cheat-sheet/Merge Expor
 var sheet_mdaos   = findFileIn(main_mdaod, "merge_template_sheet");
 var name_mdaos    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
 
-mergeDataArrObjSheet(arrObj_mdaos, sheet_mdaos, name_mdaos, exports_mdaod, true)
+// mergeDataArrObjSheet(arrObj_mdaos, sheet_mdaos, name_mdaos, exports_mdaod, true)
 
 // -- Cell Shading
 
-function shadeCells(sheetObj, colLetter, obj, hexStr) {
-	var lRow   = SheetObj.getLastRow();
-	var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
+// -- FLAG --
+// needs documentatian
 
-  function valForCol(rangeObj){
-    var h    = rangeObj.getHeight();
-    var w    = rangeObj.getWidth();
-    var vals = rangeObj.getValues();
-    var arr  = [];
-    for (var i = 0; i < h; i++) {
-      var row = {};
-      for (var j = 0; j < w; j++) {
-        var prop = headers[j];
-        var val  = vals[i][j];
-        if (val !== "") {
-          row[prop] = val;
-        } 
-      }
-      arr.push(row);
-    }  
-    return arr;
+function arrForCol(rangeObj){
+  var h    = rangeObj.getHeight();
+  var w    = rangeObj.getWidth();
+  var vals = rangeObj.getValues();
+  var arr  = [];
+  for (var i = 0; i < h; i++) {
+    arr.push(vals[i][0]);
   }
-
-
-
-	var ss    = SpreadsheetApp.getActiveSpreadsheet();
-	var sheet = ss.getSheets()[0];
-	var range = sheet.getRange("B2:D5");
-	range.setBackground("red");
+  return arr;
 }
+
+var ss_vfc    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
+var range_vfc = ss_vfc.getRange("A1:A5");
+var colVal_vfc = arrForCol(range_vfc);
+// Logger.log(colVal_vfc);
+
+// --- Cell Shading
+
+function shadeCells(sheetObj, colLetter, obj, hexStr) {
+	var lRow   = sheetObj.getLastRow();
+	var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
+  var arrVal = arrForCol(vRange);
+  var index = colNum(colLetter)
+  Logger.log(index);
+  for (var i = 0; i < arrVal.length; i++) {
+    for (var prop in obj) {
+      if (prop == arrVal[i]) {
+        Logger.log(obj[prop]);
+        Logger.log(prop);
+      }
+    } 
+  } 
+	// range.setBackground("red");
+}
+
+var obj_sc = { 
+	"Student Has Good Study Habits":       1,
+	"Student is Organized":                2,
+  "Student Gets Along Well With Others": 5
+};
+
+var ss_sc = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
+shadeCells(ss_sc, "A", obj_sc, "#AAA000");
 
 // Gmail
 
