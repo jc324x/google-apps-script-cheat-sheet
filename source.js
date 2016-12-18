@@ -173,9 +173,9 @@ function countOfValIn(arr){
 
 var arr_covi  = ["A", "B", "C", "A", "B", "C", "D", "A"];
 var ex_covi = countOfValIn(arr_covi);
-Logger.log("countVal input ➡ " + arr_covi);
-Logger.log("countVal out ⬇ ");
-Logger.log(ex_covi);
+// Logger.log("countVal input ➡ " + arr_covi);
+// Logger.log("countVal out ⬇ ");
+// Logger.log(ex_covi);
 
 // -- Intersect of Two Arrays
 // ➡  array 
@@ -198,7 +198,7 @@ function intersectOf(arrA, arrB) {
 
 var arr1_io = [1, 2, 3];
 var arr2_io = [3, 4, 5];
-Logger.log(intersectOf(arr1_io, arr2_io));
+// Logger.log(intersectOf(arr1_io, arr2_io));
 
 // - Array of Objects
 
@@ -1099,15 +1099,14 @@ function arrObjSheet(sheetObj, hRow){
 	var lColABC = numCol(lColNum);
 	var lRow    = sheetObj.getLastRow();
 	var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
-	var vRange  = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow);
 	var headers = headerVal(hRange);
-  Logger.log(headers);
+	var vRange  = sheetObj.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
 	return valByRow(vRange, headers)
 }
 
 var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 var ex_aos = arrObjSheet(ss_aos, 2);
-Logger.log(ex_aos);
+// Logger.log(ex_aos);
 
 // -- Array of Objects from Range 
 
@@ -1148,17 +1147,39 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 
 // --- By Header Value 
 
-// function arrForColName(sheetObj, name){
-// 	var lColNum = sheetObj.getLastColumn();
-// 	var lColABC = numCol(lColNum);
-// 	var lRow    = sheetObj.getLastRow();
-// 	var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
-// 	var vRange  = sheetObj.getRange("A" + (hRow +1 ) + ":" + lColABC + lRow);
-// 	var headers = headerVal(hRange);
-// 	return valByRow(vRange, headers)
-// }
+function arrForColName(sheetObj, hRow, name){
+	var lColNum = sheetObj.getLastColumn();
+	var lColABC = numCol(lColNum);
+	var lRow    = sheetObj.getLastRow();
+	var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+  var headers = headerVal(hRange);
+  var tColABC = numCol(headers.indexOf(name) + 1);
+	var vRange  = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
 
-// --- By Column Index
+	var h    = rangeObj.getHeight();
+	var w    = rangeObj.getWidth();
+	var vals = rangeObj.getValues();
+	var arr  = [];
+	for (var i = 0; i < h; i++) {
+		var row = {};
+		for (var j = 0; j < w; j++) {
+			var prop = headers[j];
+			var val  = vals[i][j];
+			if (val !== "") {
+				row[prop] = val;
+			} 
+		}
+		arr.push(row);
+	}  
+	return arr;
+}
+
+var ss_afcn = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var ex_afcn = arrForColName(ss_afcn, 2, "First");
+// Logger.log(ex_afcn);
+
+
+// --- By Column Number
 
 // function arrForColNo(sheetObj, number){
 // }
