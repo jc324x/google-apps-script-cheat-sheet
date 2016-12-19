@@ -179,6 +179,7 @@ var ex_covi = countOfValIn(arr_covi);
 
 // -- Intersect of Two Arrays
 // ➡  array 
+// -- FLAG -- -> sort arrays...
 
 function intersectOf(arrA, arrB) {
 	var a = 0;
@@ -199,6 +200,22 @@ function intersectOf(arrA, arrB) {
 var arr1_io = [1, 2, 3];
 var arr2_io = [3, 4, 5];
 // Logger.log(intersectOf(arr1_io, arr2_io));
+
+// -- FLAG --
+// -- Remove Items from Array
+
+function rmFrom(arr, arrOfItemsToRemove) {
+  for (var i = 0; i < arr.length; i++) {
+    var index = arr.indexOf(arrOfItemsToRemove[i]);
+    if (index !== -1) arr.splice(index, 1);
+  } 
+  return arr;
+} 
+
+var arr_rf  = [1,2,3,4,5,6,7];
+var arrR_rf = [2,4,6,8];
+var ex_rf   = rmFrom(arr_rf, arrR_rf);
+Logger.log(ex_rf);
 
 // - Array of Objects
 
@@ -1148,42 +1165,32 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 // --- By Header Value 
 
 function arrForColName(sheetObj, hRow, name){
-	var lColNum = sheetObj.getLastColumn();
-	var lColABC = numCol(lColNum);
-	var lRow    = sheetObj.getLastRow();
-	var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
-  var headers = headerVal(hRange);
-  var tColABC = numCol(headers.indexOf(name) + 1);
-	var vRange  = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
-
-	var h    = rangeObj.getHeight();
-	var w    = rangeObj.getWidth();
-	var vals = rangeObj.getValues();
-	var arr  = [];
+  var lColNum  = sheetObj.getLastColumn();
+  var lColABC  = numCol(lColNum);
+  var lRow     = sheetObj.getLastRow();
+  var hRange   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+  var headers  = headerVal(hRange);
+  var tColABC  = numCol(headers.indexOf(name) + 1);
+  var rangeObj = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
+  var h        = rangeObj.getHeight();
+	var vals     = rangeObj.getValues();
+	var arr      = [];
 	for (var i = 0; i < h; i++) {
-		var row = {};
-		for (var j = 0; j < w; j++) {
-			var prop = headers[j];
-			var val  = vals[i][j];
-			if (val !== "") {
-				row[prop] = val;
-			} 
-		}
-		arr.push(row);
+			var val  = vals[i][0];
+      arr.push(String(val));
 	}  
 	return arr;
 }
 
 var ss_afcn = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 var ex_afcn = arrForColName(ss_afcn, 2, "First");
-// Logger.log(ex_afcn);
-
+Logger.log(ex_afcn);
 
 // --- By Column Number
+// -- FLAG --
 
 // function arrForColNo(sheetObj, number){
 // }
-
 
 // Docs
 
