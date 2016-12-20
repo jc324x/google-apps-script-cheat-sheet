@@ -10,7 +10,7 @@ Logger.log("Start");
 //       | - Array of Objects
 //       | -- Sort by Property or Properties
 //       | -- Find Object With Unique Property Value
-//       | -- Filter by Property Value
+// 0.9.0 | -- Filter by Property Value or Values
 // 0.9.0 | -- Unify Property for Array of Objects
 // 0.9.0 | - Multidimensional Array
 // 0.9.0 | -- Flatten Multidimensional Array
@@ -215,7 +215,7 @@ function rmFrom(arr, arrOfItemsToRemove) {
 var arr_rf  = [1,2,3,4,5,6,7];
 var arrR_rf = [2,4,6,8];
 var ex_rf   = rmFrom(arr_rf, arrR_rf);
-Logger.log(ex_rf);
+// Logger.log(ex_rf);
 
 // - Array of Objects
 
@@ -340,7 +340,7 @@ var val_fma = ss_fma.getRange("G2:H5").getValues();
 var ex_fma  = flattenMultiArr(val_fma).sort();
 // Logger.log(ex_fma);
 
-// -- Filter by Property Value
+// -- Filter by Property Value or Values
 // ➡  array of objects
 
 function filterObjIn(arrObj, pQuery, val) {
@@ -354,6 +354,21 @@ function filterObjIn(arrObj, pQuery, val) {
 var ex_foi = filterObjIn(ex_arrObj, "b", 2);
 // Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
 // Logger.log(ex_foi);
+
+function filterObjsIn(arrObj, pQuery, arrVal) {
+  var _arr = [];
+  for (var i = 0; i < arrVal.length; i++) {
+    var val = arrVal[i]; 
+    for (var j=0; j < arrObj.length; j++) {
+      if (arrObj[j][pQuery] == val) _arr.push(arrObj[j]);
+    }
+  } 
+  return _arr;
+} 
+
+var ex_fosi = filterObjsIn(ex_arrObj, "c", [5, 500]);
+// Logger.log("filter arrObjs with 'c' value of 5 or 500 ⬇ ");
+// Logger.log(ex_fosi);
 
 // - Object
 // -- Array of Matching Property Values
@@ -1184,7 +1199,7 @@ function arrForColName(sheetObj, hRow, name){
 
 var ss_afcn = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 var ex_afcn = arrForColName(ss_afcn, 2, "First");
-Logger.log(ex_afcn);
+// Logger.log(ex_afcn);
 
 // --- By Column Number
 // -- FLAG --
