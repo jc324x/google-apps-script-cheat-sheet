@@ -201,8 +201,8 @@ var arr1_io = [1, 2, 3];
 var arr2_io = [3, 4, 5];
 // Logger.log(intersectOf(arr1_io, arr2_io));
 
-// -- FLAG --
-// -- Remove Items from Array
+// -- FLAG -- -> add to top
+// -- Remove Item or Items from Array
 
 function rmFrom(arr, arrOfItemsToRemove) {
   for (var i = 0; i < arr.length; i++) {
@@ -263,6 +263,19 @@ function dynSortM() {
 // Logger.log("arrObj sorted by 'b' and 'c' values ⬇ ");
 // Logger.log(ex_arrObj);
 
+// -- Find Latest Object by Date (Timestamp)
+
+function lastEntry(arrObj) {
+  if (arrObj.length >= 2) {
+    var sorted = arrObj.sort(function(a,b){
+      return new Date(b.Timestamp) - new Date(a.Timestamp);
+    });
+    return sorted[0];
+  } else {
+    return arrObj[0];
+  }
+} 
+
 // -- Find Object With Unique Property Value
 // ➡  object 
 
@@ -276,6 +289,17 @@ function findObjIn(arrObj, pQuery, val) {
 		}
 	}
 }
+
+// -- FLAG --
+// maybe unecessary?
+
+function findObjWithSubstringProperty(arrObj, subStr) {
+  
+}  
+
+function findObjWithSubstringValue(arrObj, subStr) {
+  
+} 
 
 
 // Logger.log("find obj with 'a' value of 1000 ⬇ ");
@@ -300,6 +324,8 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 // var ex_fovi = findObjValIn(ex_arrObj, "c", 500, "a");
 // Logger.log(ex_fovi);
 
+// -- Merge Array of Objects to a Single Object
+
 // -- Unify Property for Array of Objects
 
 // -- FLAG --
@@ -323,6 +349,8 @@ function mergeObjProp_Arr(arrObj, arrProp, newProp){
   }
   return arrObj;
 }
+
+// -- FLAG -- ADD TO TOP
 
 // - Multidimensional Array
 
@@ -1125,6 +1153,8 @@ function valByRow(rangeObj, headers){
 }
 
 // -- Array of Objects from Sheet
+// -- FLAG -- -> change to arrRowObjSheet  
+} 
 
 function arrObjSheet(sheetObj, hRow){
 	var lColNum = sheetObj.getLastColumn();
