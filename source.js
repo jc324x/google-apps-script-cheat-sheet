@@ -1,96 +1,94 @@
 Logger.log("Start");
 
-//       | General
-//       | - Array
-//       | -- Check for a Value In Array
-//       | -- Remove Duplicates
-//       | -- Remove Empty Values
-//       | -- Get Count of Values in Array
-//       | -- Intersect of Two Arrays
-//       | - Array of Objects
-//       | -- Sort by Property or Properties
-//       | -- Find Object With Unique Property Value
-// 0.9.0 | -- Filter by Property Value or Values
-// 0.9.0 | -- Unify Property for Array of Objects
-// 0.9.0 | - Multidimensional Array
-// 0.9.0 | -- Flatten Multidimensional Array
-//       | - Object
-//       | -- Array of Matching Property Values
-// 0.9.0 | -- Unify Object Properties
-// 0.9.0 | -- Merge Two Objects
-//       | - Dates and Times
-//       | -- Formatted Timestamps
-// 0.9.0 | -- New Date Object from String
-//       | -- Match a Date to a Range
-//       | Drive
-//       | - Folders
-// 0.9.0 | -- Create or Verify Folder Path
-// 0.9.0 | -- Last Folder in Folder Path
-//       | -- Array of All Folders
-//       | -- Array of All Folder Names
-//       | -- Find a Folder
-//       | -- Create or Verify Folders
-// 0.9.0 | -- Rename a Folder
-//       | - Files
-//       | -- Array of All Files
-//       | -- Array of All File Names
-//       | -- Find a File
-//       | -- Parent Folder of a File
-//       | -- Copy a File to a Folder
-//       | -- Move a File to a Folder
-// 0.9.0 | -- Rename a File
-//       | Sheets
-//       | - Managing Spreadsheet Files
-//       | -- Create or Verify Spreadsheet
-// 0.9.0 | -- Get Spreadsheet Id
-//       | - Utility Functions for Sheets
-//       | -- Convert Column Number to a Letter
-//       | -- Convert Column Letter to a Number
-// 0.9.0 | -- Replicating Import Range
-//       | -- Evaluating True and False
-//       | -  Array of Objects
-//       | -- Utility Functions for Array of Objects
-//       | --- Header Range
-//       | --- Value Range
-//       | --- Header Values
-//       | --- Values by Row
-// 0.9.0 | -- Array of Objects from Sheet
-// 0.9.0 | -- Array of Objects from Range
-// 0.9.0 | -- Array of Objects from Two Columns
-// 0.9.0 | - Array of Values
-// 0.9.0 | -- Array of Values for Column
-//       | Docs
-//       | - Managing Document Files
-//       | -- Create or Verify Document
-// 0.9.0 | -- Get Document Id
-//       | - Utility Functions for Docs
-//       | -- Access Document Body
-//       | -- Clear Document Body
-// 0.9.0 | Sheets and Docs
-// 0.9.0 | - Bulleted Lists
-// 0.9.0 | -- Single Division List
-// 0.9.0 | -- Multi Division List
-// 0.9.0 | - Merge
-//       | -- Utility Functions for Merging
-// 0.9.0 | --- Dynamically Create File Name
-// 0.9.0 | -- Merge Document
-// 0.9.0 | -- Cell Shading
-//       | Gmail
-//       | - Send Email
-//       | -- Comma Separated List of Recipients
-//       | -- Mail Merge
-//       | Other
-//       | -- Regex Only Numbers or Letters
+//  | General
+//  | - Array
+//  | -- Check for a Value In Array
+//  | -- Remove Duplicates
+//  | -- Remove Empty Values
+//  | -- Get Count of Values in Array
+//  | -- Intersect of Two Arrays
+//  | -- Remove Item From Array
+//  | -- Compare Two Arrays
+//  | - Array of Objects
+//  | -- Sort by Property or Properties
+//  | -- Find Object With Unique Property Value
+//  | -- Filter by Property Value or Values *
+//  | -- Unify Property for Array of Objects *
+//  | - Multidimensional Array *
+//  | -- Flatten Multidimensional Array *
+//  | - Object
+//  | -- Array of Matching Property Values
+//  | -- Unify Object Properties *
+//  | -- Merge Two Objects *
+//  | - Dates and Times
+//  | -- Formatted Timestamps
+//  | -- New Date Object from String *
+//  | -- Match a Date to a Range
+//  | Drive
+//  | - Folders
+//  | -- Create or Verify Folder Path *
+//  | -- Last Folder in Folder Path *
+//  | -- Array of All Folders
+//  | -- Array of All Folder Names
+//  | -- Find a Folder
+//  | -- Create or Verify Folders
+//  | -- Rename a Folder *
+//  | - Files
+//  | -- Array of All Files
+//  | -- Array of All File Names
+//  | -- Find a File
+//  | -- Parent Folder of a File
+//  | -- Copy a File to a Folder
+//  | -- Move a File to a Folder
+//  | -- Rename a File *
+//  | Sheets
+//  | - Managing Spreadsheet Files
+//  | -- Create or Verify Spreadsheet
+//  | -- Get Spreadsheet Id *
+//  | - Utility Functions for Sheets
+//  | -- Convert Column Number to a Letter
+//  | -- Convert Column Letter to a Number
+//  | -- Replicating Import Range *
+//  | -- Evaluating True and False
+//  | -  Array of Objects
+//  | -- Utility Functions for Array of Objects
+//  | --- Header Range
+//  | --- Value Range
+//  | --- Header Values
+//  | --- Values by Row
+//  | -- Array of Objects from Sheet *
+//  | -- Array of Objects from Range *
+//  | -- Array of Objects from Two Columns *
+//  | - Array of Values *
+//  | -- Array of Values for Column *
+//  | Docs
+//  | - Managing Document Files
+//  | -- Create or Verify Document
+//  | -- Get Document Id *
+//  | - Utility Functions for Docs
+//  | -- Access Document Body
+//  | -- Clear Document Body
+//  | Sheets and Docs *
+//  | - Bulleted Lists *
+//  | -- Single Division List *
+//  | -- Multi Division List *
+//  | - Merge *
+//  | -- Utility Functions for Merging
+//  | --- Dynamically Create File Name *
+//  | -- Merge Document *
+//  | -- Cell Shading *
+//  | Gmail
+//  | - Send Email
+//  | -- Comma Separated List of Recipients
+//  | -- Mail Merge
+//  | Other
+//  | -- Regex Only Numbers or Letters
 
-// Roadmap: 
-// 0.9.0 - Additions and cleanup
-// 0.9.1 - Count of Value in Array of Objects
-// 0.9.1 - Timestamp on Cell Change
-// 0.9.1 - Moving / Copying Folders
-// 0.9.2 - Grid Objects (Modifying Sheet)
-// 0.9.3 - Copy Down Formulas on Form Submit
-// 0.9.9 - Write in return types, verify README, dependencies
-// 1.0.0 - Link to templates on jcodesmn blog
+// Future Additions: 
+// * Count of Value in Array of Objects
+// * Timestamp on Cell Change
+// * Moving / Copying Folders
+// * Copy Formulas Down
 
 function testEverything() {}
 
@@ -99,7 +97,7 @@ function testEverything() {}
 // - Array 
 
 // -- Check for a Value in Array
-// ➡  boolean
+// return: boolean
 
 function checkValIn(arr, val) { 
 	return arr.indexOf(val) > -1; 
@@ -114,7 +112,7 @@ function checkValIn(arr, val) {
 // }
 
 // -- Remove Duplicates 
-// ➡  array
+// return: array
 
 function rmDuplicatesFrom(arr) {
 	var check  = {};
@@ -136,7 +134,7 @@ function rmDuplicatesFrom(arr) {
 // Logger.log("rmDup output ➡ " + ex_rdf);
 
 // -- Remove Empty Values
-// ➡  array
+// return: array
 
 function rmEmptyVal(x){
 	return (x !== (undefined || ''));
@@ -148,7 +146,7 @@ var ex_rev = arr_rev.filter(rmEmptyVal);
 // Logger.log("rmEmpty output ➡ " + ex_rev);
 
 // -- Get Count of Values in Array
-// ➡  array of objects
+// return: array of objects
 
 function countOfValIn(arr){
 	var _arr = [];
@@ -162,10 +160,10 @@ function countOfValIn(arr){
 			}
 		}
 		if (myCount > 0) {
-			var a = new Object();
-			a.value = arr[i];
-			a.count = myCount;
-			_arr.push(a);
+			var obj = new Object();
+			obj.value = arr[i];
+			obj.count = myCount;
+			_arr.push(obj);
 		}
 	}
 	return _arr;
@@ -178,8 +176,8 @@ var ex_covi = countOfValIn(arr_covi);
 // Logger.log(ex_covi);
 
 // -- Intersect of Two Arrays
-// ➡  array 
-// -- FLAG -- -> sort arrays...
+// note: sort both arrays before calling this function 
+// return: array
 
 function intersectOf(arrA, arrB) {
 	var a = 0;
@@ -201,21 +199,32 @@ var arr1_io = [1, 2, 3];
 var arr2_io = [3, 4, 5];
 // Logger.log(intersectOf(arr1_io, arr2_io));
 
-// -- FLAG -- -> add to top
-// -- Remove Item or Items from Array
-
-function rmFrom(arr, arrOfItemsToRemove) {
-  for (var i = 0; i < arr.length; i++) {
-    var index = arr.indexOf(arrOfItemsToRemove[i]);
-    if (index !== -1) arr.splice(index, 1);
-  } 
-  return arr;
-} 
+// -- Remove Item From Array
+// return: array
+// -- FLAG --
+  
+function rmFrom(arr, element) {
+    var index = arr.indexOf(element);
+    if (index !== -1) {
+        arr.splice(index, 1);
+    }
+}
 
 var arr_rf  = [1,2,3,4,5,6,7];
 var arrR_rf = [2,4,6,8];
 var ex_rf   = rmFrom(arr_rf, arrR_rf);
 // Logger.log(ex_rf);
+
+// -- Compare Two Arrays
+// return: boolean
+
+function compareArr(arr1, arr2) {
+    if(arr1.length !== arr2.length) return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i]) return false;
+    }
+    return true;
+}
 
 // - Array of Objects
 
@@ -290,18 +299,6 @@ function findObjIn(arrObj, pQuery, val) {
 	}
 }
 
-// -- FLAG --
-// maybe unecessary?
-
-function findObjWithSubstringProperty(arrObj, subStr) {
-  
-}  
-
-function findObjWithSubstringValue(arrObj, subStr) {
-  
-} 
-
-
 // Logger.log("find obj with 'a' value of 1000 ⬇ ");
 // var ex_foi = findObjIn(ex_arrObj, "a", 1000);
 // Logger.log(ex_foi);
@@ -371,6 +368,8 @@ var ex_fma  = flattenMultiArr(val_fma).sort();
 // -- Filter by Property Value or Values
 // ➡  array of objects
 
+// -- FLAG -- if _arr.length = 0, return nothing...
+
 function filterObjIn(arrObj, pQuery, val) {
 	var _arr = [];
 	for (var i=0; i < arrObj.length; i++) {
@@ -383,6 +382,7 @@ var ex_foi = filterObjIn(ex_arrObj, "b", 2);
 // Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
 // Logger.log(ex_foi);
 
+// -- FLAG -- if _arr.length = 0, return nothing...
 function filterObjsIn(arrObj, pQuery, arrVal) {
   var _arr = [];
   for (var i = 0; i < arrVal.length; i++) {
@@ -446,8 +446,22 @@ function mergeObjProp(obj, arrProp, newProp){
   }
 }
 
-// -- Merge Two Objects 
 
+// all objects merged into first
+
+function mergeObjs() {
+  var obj = arguments[0];
+  for (i = 1; i < arguments.length; i++) {
+    var src = arguments[i]; 
+    for (var key in src) {
+      if (src.hasOwnProperty(key)) obj[key] = src[key];
+    }
+  } 
+  return obj;
+} 
+
+// -- Merge Two Objects 
+// -- FLAG -- This is dumb...merge any number of argument objects...
 function mergeTwoObjs_Selective(full, partial, arrProp) {
     var newObj = {};
     for (var prop in full) { 
@@ -1421,7 +1435,9 @@ var name_mdaod    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
 
 // --- Spreadsheet
 
-function mergeSheetByObj(sheetObj, obj) {
+// -- FLAG -- needs a better name
+// function mergeObjValInSheet
+function mergeObjInSheet(obj, sheetObj) {
   var values = sheetObj.getDataRange().getValues();
   for(var row in values){
     var update = values[row].map(function(original){
@@ -1468,7 +1484,7 @@ var name_mdaos    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
 // -- Cell Shading
 
 // -- FLAG --
-// needs documentatian
+// needs documentation
 
 function arrForCol(rangeObj){
   var h    = rangeObj.getHeight();
