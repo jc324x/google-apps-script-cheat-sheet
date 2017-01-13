@@ -1,88 +1,89 @@
+function test() {
 Logger.log("Start");
 
-//  | General
-//  | - Array
-//  | -- Check for a Value In Array
-//  | -- Remove Duplicates
-//  | -- Remove Empty Values
-//  | -- Get Count of Values in Array
-//  | -- Intersect of Two Arrays
-//  | -- Remove Item From Array
-//  | -- Compare Two Arrays
-//  | - Array of Objects
-//  | -- Sort by Property or Properties
-//  | -- Find Object With Unique Property Value
-//  | -- Filter by Property Value or Values *
-//  | -- Unify Property for Array of Objects *
-//  | - Multidimensional Array *
-//  | -- Flatten Multidimensional Array *
-//  | - Object
-//  | -- Array of Matching Property Values
-//  | -- Unify Object Properties *
-//  | -- Merge Two Objects *
-//  | - Dates and Times
-//  | -- Formatted Timestamps
-//  | -- New Date Object from String *
-//  | -- Match a Date to a Range
-//  | Drive
-//  | - Folders
-//  | -- Create or Verify Folder Path *
-//  | -- Last Folder in Folder Path *
-//  | -- Array of All Folders
-//  | -- Array of All Folder Names
-//  | -- Find a Folder
-//  | -- Create or Verify Folders
-//  | -- Rename a Folder *
-//  | - Files
-//  | -- Array of All Files
-//  | -- Array of All File Names
-//  | -- Find a File
-//  | -- Parent Folder of a File
-//  | -- Copy a File to a Folder
-//  | -- Move a File to a Folder
-//  | -- Rename a File *
-//  | Sheets
-//  | - Managing Spreadsheet Files
-//  | -- Create or Verify Spreadsheet
-//  | -- Get Spreadsheet Id *
-//  | - Utility Functions for Sheets
-//  | -- Convert Column Number to a Letter
-//  | -- Convert Column Letter to a Number
-//  | -- Replicating Import Range *
-//  | -- Evaluating True and False
-//  | -  Array of Objects
-//  | -- Utility Functions for Array of Objects
-//  | --- Header Range
-//  | --- Value Range
-//  | --- Header Values
-//  | --- Values by Row
-//  | -- Array of Objects from Sheet *
-//  | -- Array of Objects from Range *
-//  | -- Array of Objects from Two Columns *
-//  | - Array of Values *
-//  | -- Array of Values for Column *
-//  | Docs
-//  | - Managing Document Files
-//  | -- Create or Verify Document
-//  | -- Get Document Id *
-//  | - Utility Functions for Docs
-//  | -- Access Document Body
-//  | -- Clear Document Body
-//  | Sheets and Docs *
-//  | - Bulleted Lists *
-//  | -- Single Division List *
-//  | -- Multi Division List *
-//  | - Merge *
-//  | -- Utility Functions for Merging
-//  | --- Dynamically Create File Name *
-//  | -- Merge Document *
-//  | -- Cell Shading *
-//  | Gmail
-//  | - Send Email
-//  | -- Comma Separated List of Recipients
-//  | -- Mail Merge
-//  | Other
-//  | -- Regex Only Numbers or Letters
+// | General
+// | - Array
+// | -- Check for a Value
+// | -- Remove Duplicates
+// | -- Remove Empty Values
+// | -- Get Count of Values
+// | -- Intersect of Two Arrays
+// | -- Remove an Item by Value
+// | -- Compare Two Arrays
+// | - Array of Objects
+// | -- Sort by Property or Properties
+// | -- Find Object With Unique Property Value
+// | -- Filter by Property Value or Values *
+// | -- Unify Property for Array of Objects *
+// | - Multidimensional Array *
+// | -- Flatten Multidimensional Array *
+// | - Object
+// | -- Array of Matching Property Values
+// | -- Unify Object Properties *
+// | -- Merge Two Objects *
+// | - Dates and Times
+// | -- Formatted Timestamps
+// | -- New Date Object from String *
+// | -- Match a Date to a Range
+// | Drive
+// | - Folders
+// | -- Create or Verify Folder Path *
+// | -- Last Folder in Folder Path *
+// | -- Array of All Folders
+// | -- Array of All Folder Names
+// | -- Find a Folder
+// | -- Create or Verify Folders
+// | -- Rename a Folder *
+// | - Files
+// | -- Array of All Files
+// | -- Array of All File Names
+// | -- Find a File
+// | -- Parent Folder of a File
+// | -- Copy a File to a Folder
+// | -- Move a File to a Folder
+// | -- Rename a File *
+// | Sheets
+// | - Managing Spreadsheet Files
+// | -- Create or Verify Spreadsheet
+// | -- Get Spreadsheet Id *
+// | - Utility Functions for Sheets
+// | -- Convert Column Number to a Letter
+// | -- Convert Column Letter to a Number
+// | -- Replicating Import Range *
+// | -- Evaluating True and False
+// | -  Array of Objects
+// | -- Utility Functions for Array of Objects
+// | --- Header Range
+// | --- Value Range
+// | --- Header Values
+// | --- Values by Row
+// | -- Array of Objects from Sheet *
+// | -- Array of Objects from Range *
+// | -- Array of Objects from Two Columns *
+// | - Array of Values *
+// | -- Array of Values for Column *
+// | Docs
+// | - Managing Document Files
+// | -- Create or Verify Document
+// | -- Get Document Id *
+// | - Utility Functions for Docs
+// | -- Access Document Body
+// | -- Clear Document Body
+// | Sheets and Docs *
+// | - Bulleted Lists *
+// | -- Single Division List *
+// | -- Multi Division List *
+// | - Merge *
+// | -- Utility Functions for Merging
+// | --- Dynamically Create File Name *
+// | -- Merge Document *
+// | -- Cell Shading *
+// | Gmail
+// | - Send Email
+// | -- Comma Separated List of Recipients
+// | -- Mail Merge
+// | Other
+// | -- Regex Only Numbers or Letters
 
 // Future Additions: 
 // * Count of Value in Array of Objects
@@ -90,13 +91,11 @@ Logger.log("Start");
 // * Moving / Copying Folders
 // * Copy Formulas Down
 
-function testEverything() {}
-
 // General
 
 // - Array 
 
-// -- Check for a Value in Array
+// -- Check for a Value
 // return: boolean
 
 function checkValIn(arr, val) { 
@@ -106,9 +105,9 @@ function checkValIn(arr, val) {
 // var arr_cvi = [1,2,3,4];
 
 // if (checkValIn(arr_cvi, 99)) {
-//     Logger.log("check value in ➡ 99 is in the array"); 
+//     Logger.log("99 is in the array"); 
 //   } else {
-//     Logger.log("check value in ➡ 99 is not in the array");
+//     Logger.log("99 is not in the array");
 // }
 
 // -- Remove Duplicates 
@@ -145,7 +144,7 @@ var ex_rev = arr_rev.filter(rmEmptyVal);
 // Logger.log("rmEmpty input ➡ " + arr_rev);
 // Logger.log("rmEmpty output ➡ " + ex_rev);
 
-// -- Get Count of Values in Array
+// -- Get Count of Values
 // return: array of objects
 
 function countOfValIn(arr){
@@ -199,7 +198,7 @@ var arr1_io = [1, 2, 3];
 var arr2_io = [3, 4, 5];
 // Logger.log(intersectOf(arr1_io, arr2_io));
 
-// -- Remove Item From Array
+// -- Remove an Item by Value
 // return: array
 // -- FLAG --
   
@@ -1585,3 +1584,4 @@ var ex_abc = re.replace(/\d/g, "");
 // Logger.log(ex_abc);
 
 Logger.log("End");
+}
