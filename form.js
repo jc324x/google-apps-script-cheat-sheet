@@ -34,6 +34,7 @@ function arrItemsIn(formObj) {
     j.index = i;
     j.title = items[i].getTitle();
     j.id    = items[i].getId();
+    j.type  = items[i].getType();
     j.item  = items[i];
     _arr.push(j);
   }

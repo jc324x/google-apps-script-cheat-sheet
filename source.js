@@ -1,5 +1,5 @@
-function test() {
 Logger.log("Start");
+function test() {}
 
 // | General
 // | - Array
@@ -8,7 +8,6 @@ Logger.log("Start");
 // | -- Remove Empty Values
 // | -- Get Count of Values
 // | -- Intersect of Two Arrays
-// | -- Remove an Item by Value
 // | -- Compare Two Arrays
 // | - Array of Objects
 // | -- Sort by Property or Properties
@@ -139,8 +138,8 @@ function rmEmptyVal(x){
 	return (x !== (undefined || ''));
 }
 
-var arr_rev  = ["a",,"b",,,"c"];
-var ex_rev = arr_rev.filter(rmEmptyVal);
+// var arr_rev  = ["a",,"b",,,"c"];
+// var ex_rev = arr_rev.filter(rmEmptyVal);
 // Logger.log("rmEmpty input ➡ " + arr_rev);
 // Logger.log("rmEmpty output ➡ " + ex_rev);
 
@@ -168,14 +167,14 @@ function countOfValIn(arr){
 	return _arr;
 }
 
-var arr_covi  = ["A", "B", "C", "A", "B", "C", "D", "A"];
-var ex_covi = countOfValIn(arr_covi);
+// var arr_covi  = ["A", "B", "C", "A", "B", "C", "D", "A"];
+// var ex_covi = countOfValIn(arr_covi);
 // Logger.log("countVal input ➡ " + arr_covi);
 // Logger.log("countVal out ⬇ ");
 // Logger.log(ex_covi);
 
 // -- Intersect of Two Arrays
-// note: sort both arrays before calling this function 
+// *note* sort both arrays before calling this function 
 // return: array
 
 function intersectOf(arrA, arrB) {
@@ -194,25 +193,9 @@ function intersectOf(arrA, arrB) {
   return _arr;
 }
 
-var arr1_io = [1, 2, 3];
-var arr2_io = [3, 4, 5];
-// Logger.log(intersectOf(arr1_io, arr2_io));
-
-// -- Remove an Item by Value
-// return: array
-// -- FLAG --
-  
-function rmFrom(arr, element) {
-    var index = arr.indexOf(element);
-    if (index !== -1) {
-        arr.splice(index, 1);
-    }
-}
-
-var arr_rf  = [1,2,3,4,5,6,7];
-var arrR_rf = [2,4,6,8];
-var ex_rf   = rmFrom(arr_rf, arrR_rf);
-// Logger.log(ex_rf);
+// var arr1_io = [1, 2, 3];
+// var arr2_io = [3, 4, 5];
+// Logger.log(intersectOf(arr1_io, arr2_io) + " is the intersect");
 
 // -- Compare Two Arrays
 // return: boolean
@@ -224,6 +207,12 @@ function compareArr(arr1, arr2) {
     }
     return true;
 }
+
+// var arr1_ca = [1,2,3,4,5]
+// var arr2_ca = [1,2,3,4,5]
+// var arr3_ca = ["a","b","c","d","e"]
+// Logger.log("arr1 / arr2 " + compareArr(arr1_ca, arr2_ca));
+// Logger.log("arr2 / arr3 " + compareArr(arr2_ca, arr3_ca));
 
 // - Array of Objects
 
@@ -1167,7 +1156,6 @@ function valByRow(rangeObj, headers){
 
 // -- Array of Objects from Sheet
 // -- FLAG -- -> change to arrRowObjSheet  
-} 
 
 function arrObjSheet(sheetObj, hRow){
 	var lColNum = sheetObj.getLastColumn();
@@ -1584,4 +1572,3 @@ var ex_abc = re.replace(/\d/g, "");
 // Logger.log(ex_abc);
 
 Logger.log("End");
-}
