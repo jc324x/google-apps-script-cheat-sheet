@@ -9,13 +9,14 @@ function test() {}
 // | -- Get Count of Values
 // | -- Intersect of Two Arrays
 // | -- Compare Two Arrays
+// | - Multidimensional Array
+// | -- Flatten Multidimensional Array
 // | - Array of Objects
 // | -- Sort by Property or Properties
 // | -- Find Object With Unique Property Value
-// | -- Filter by Property Value or Values *
-// | -- Unify Property for Array of Objects *
-// | - Multidimensional Array *
-// | -- Flatten Multidimensional Array *
+// | -- Find Oldest or Youngest Object by Timestamp
+// | -- Filter by Property Value or Values
+// | -- Unify Property for Array of Objects
 // | - Object
 // | -- Array of Matching Property Values
 // | -- Unify Object Properties *
@@ -94,8 +95,7 @@ function test() {}
 
 // - Array 
 
-// -- Check for a Value
-// return: boolean
+// -- Check for a Value | return: boolean
 
 function checkValIn(arr, val) { 
 	return arr.indexOf(val) > -1; 
@@ -109,8 +109,7 @@ function checkValIn(arr, val) {
 //     Logger.log("99 is not in the array");
 // }
 
-// -- Remove Duplicates 
-// return: array
+// -- Remove Duplicates | return: array 
 
 function rmDuplicatesFrom(arr) {
 	var check  = {};
@@ -131,8 +130,7 @@ function rmDuplicatesFrom(arr) {
 // Logger.log("rmDup input ➡ " + arr_rdf);
 // Logger.log("rmDup output ➡ " + ex_rdf);
 
-// -- Remove Empty Values
-// return: array
+// -- Remove Empty Values | return: array
 
 function rmEmptyVal(x){
 	return (x !== (undefined || ''));
@@ -143,8 +141,7 @@ function rmEmptyVal(x){
 // Logger.log("rmEmpty input ➡ " + arr_rev);
 // Logger.log("rmEmpty output ➡ " + ex_rev);
 
-// -- Get Count of Values
-// return: array of objects
+// -- Get Count of Values | return: array of objects
 
 function countOfValIn(arr){
 	var _arr = [];
@@ -173,9 +170,8 @@ function countOfValIn(arr){
 // Logger.log("countVal out ⬇ ");
 // Logger.log(ex_covi);
 
-// -- Intersect of Two Arrays
-// *note* sort both arrays before calling this function 
-// return: array
+// -- Intersect of Two Arrays | return: array
+// *note* sort both arrays prior
 
 function intersectOf(arrA, arrB) {
 	var a = 0;
@@ -197,8 +193,7 @@ function intersectOf(arrA, arrB) {
 // var arr2_io = [3, 4, 5];
 // Logger.log(intersectOf(arr1_io, arr2_io) + " is the intersect");
 
-// -- Compare Two Arrays
-// return: boolean
+// -- Compare Two Arrays | return: boolean
 
 function compareArr(arr1, arr2) {
     if(arr1.length !== arr2.length) return false;
@@ -214,9 +209,25 @@ function compareArr(arr1, arr2) {
 // Logger.log("arr1 / arr2 " + compareArr(arr1_ca, arr2_ca));
 // Logger.log("arr2 / arr3 " + compareArr(arr2_ca, arr3_ca));
 
+// - Multidimensional Array
+
+// -- Flatten Multidimensional Array
+
+function flattenMultiArr(multiArr){
+  var arr = multiArr.reduce(function(a, b) {
+    return a.concat(b);
+  });
+  return arr;
+}
+
+var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var val_fma = ss_fma.getRange("G2:H5").getValues();
+var ex_fma  = flattenMultiArr(val_fma).sort();
+Logger.log(ex_fma);
+
 // - Array of Objects
 
-// example array of objects
+// ex. array of objects
 
 var ex_arrObj = [
 {a: 1000, b: 1, c: 5}, 
@@ -225,8 +236,7 @@ var ex_arrObj = [
 {a: 1, b: 1, c: 50}
 ]
 
-// -- Sort by Property or Properties
-// ➡  array of objects
+// -- Sort by Property or Properties | return: array of objects
 
 function dynSort(prop) {
 	var sortOrder = 1;
@@ -260,21 +270,7 @@ function dynSortM() {
 // Logger.log("arrObj sorted by 'b' and 'c' values ⬇ ");
 // Logger.log(ex_arrObj);
 
-// -- Find Latest Object by Date (Timestamp)
-
-function lastEntry(arrObj) {
-  if (arrObj.length >= 2) {
-    var sorted = arrObj.sort(function(a,b){
-      return new Date(b.Timestamp) - new Date(a.Timestamp);
-    });
-    return sorted[0];
-  } else {
-    return arrObj[0];
-  }
-} 
-
-// -- Find Object With Unique Property Value
-// ➡  object 
+// -- Find Object With Unique Property Value | return: object / value
 
 function findObjIn(arrObj, pQuery, val) {
 	for (var i = 0; i < arrObj.length; i++) {
@@ -291,9 +287,6 @@ function findObjIn(arrObj, pQuery, val) {
 // var ex_foi = findObjIn(ex_arrObj, "a", 1000);
 // Logger.log(ex_foi);
 
-// -- Return Single Value
-// ➡  value  
-
 function findObjValIn(arrObj, pQuery, val, pReturn) {
 	for (var i = 0; i < arrObj.length; i++) {
 		var obj = arrObj[i];
@@ -309,13 +302,33 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 // var ex_fovi = findObjValIn(ex_arrObj, "c", 500, "a");
 // Logger.log(ex_fovi);
 
-// -- Merge Array of Objects to a Single Object
+// -- FLAG --
+// -- Find First or Last Object by Timestamp | return: object
 
-// -- Unify Property for Array of Objects
+// function lastObject
+function lastEntry(arrObj) {
+  if (arrObj.length >= 2) {
+    var sorted = arrObj.sort(function(a,b){
+      return new Date(b.Timestamp) - new Date(a.Timestamp);
+    });
+    return sorted[0];
+  } else {
+    return arrObj[0];
+  }
+} 
+
+// function firstObj
+function firstEntry(arrObj){
+
+}
 
 // -- FLAG --
-// merge = combine
+// -- Filter by Property Value or Values
 
+// -- FLAG --
+// -- Unify Property for Array of Objects
+
+// function unifyPropIn(arrObj, arrProp, unifiedProp)
 function mergeObjProp_Arr(arrObj, arrProp, newProp){
   for (var h = 0; h < arrObj.length; h++){
     var item = arrObj[h];
@@ -334,24 +347,6 @@ function mergeObjProp_Arr(arrObj, arrProp, newProp){
   }
   return arrObj;
 }
-
-// -- FLAG -- ADD TO TOP
-
-// - Multidimensional Array
-
-// -- Flatten Multidimensional Array
-
-function flattenMultiArr(multiArr){
-  var arr = multiArr.reduce(function(a, b) {
-    return a.concat(b);
-  });
-  return arr;
-}
-
-var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var val_fma = ss_fma.getRange("G2:H5").getValues();
-var ex_fma  = flattenMultiArr(val_fma).sort();
-// Logger.log(ex_fma);
 
 // -- Filter by Property Value or Values
 // ➡  array of objects
