@@ -16,7 +16,7 @@ function test() {}
 // | -- Find Object With Unique Property Value
 // | -- Find Oldest or Youngest Object by Timestamp
 // | -- Filter by Property Value or Values
-// | -- Unify Property for Array of Objects
+// | -- Unify Properties for Array of Objects
 // | - Object
 // | -- Array of Matching Property Values
 // | -- Unify Object Properties *
@@ -326,27 +326,30 @@ function firstEntry(arrObj){
 // -- Filter by Property Value or Values
 
 // -- FLAG --
-// -- Unify Property for Array of Objects
+// -- Unify Properties for Array of Objects | return: arrObj
 
-// function unifyPropIn(arrObj, arrProp, unifiedProp)
-function mergeObjProp_Arr(arrObj, arrProp, newProp){
-  for (var h = 0; h < arrObj.length; h++){
-    var item = arrObj[h];
-    for (var i = 0; i < arrProp.length; i++) {
-      for (var prop in item) {
-				// FLAG - item.hasOwnProperty required?
-        if (item.hasOwnProperty(prop)){
-          if (prop == arrProp[i]){
-            if (item[prop] != "") {
+function unifyPropForArrObj(arrObj, arrProp, newProp){
+  for (var i = 0; i < arrObj.length; i++){
+    var obj = arrObj[i];
+    for (var h = 0; h < arrProp.length; h++) {
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop) && prop == arrProp[h] && obj[prop] != ""){
               item[newProp] = item[prop];
-            }
-          }
         }
       }
     }
   }
   return arrObj;
 }
+
+var arrObj_upfao  = [
+{x: 123},
+{y: 234},
+{z: 345},
+];
+
+var ex_epfao = unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new");
+Logger.log(ex_epfao);
 
 // -- Filter by Property Value or Values
 // ➡  array of objects
@@ -413,6 +416,8 @@ var obj_fvi = {
 
 // -- FLAG --
 // if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
+
+// function unifyPropForObj(arrObj, arrProp, newProp){
 
 function mergeObjProp(obj, arrProp, newProp){
   for (var i = 0; i < arrProp.length; i++) {
