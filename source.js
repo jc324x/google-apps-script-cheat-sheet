@@ -19,8 +19,8 @@ function test() {}
 // | -- Unify Properties for Array of Objects
 // | - Object
 // | -- Array of Matching Property Values
-// | -- Unify Object Properties *
-// | -- Merge Two Objects *
+// | -- Unify Object Properties  
+// | -- Merge Two Objects  
 // | - Dates and Times
 // | -- Formatted Timestamps
 // | -- New Date Object from String *
@@ -220,10 +220,10 @@ function flattenMultiArr(multiArr){
   return arr;
 }
 
-var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var val_fma = ss_fma.getRange("G2:H5").getValues();
-var ex_fma  = flattenMultiArr(val_fma).sort();
-Logger.log(ex_fma);
+// var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var val_fma = ss_fma.getRange("G2:H5").getValues();
+// var ex_fma  = flattenMultiArr(val_fma).sort();
+// Logger.log(ex_fma);
 
 // - Array of Objects
 
@@ -319,13 +319,29 @@ function lastEntry(arrObj) {
 
 // function firstObj
 function firstEntry(arrObj){
-
 }
 
-// -- FLAG --
-// -- Filter by Property Value or Values
+// -- Filter by Property Value or Values | return: array of objects
 
-// -- FLAG --
+function filterObjIn(arrObj, pQuery, arrVal) {
+  var _arrObj = [];
+  for (var i = 0; i < arrVal.length; i++) {
+    var val = arrVal[i]; 
+    for (var j = 0; j < arrObj.length; j++) {
+      if (arrObj[j][pQuery] == val) _arrObj.push(arrObj[j]);
+    }
+  } 
+  return _arrObj;
+}
+
+// var ex1_foi = filterObjIn(ex_arrObj, "b", [2]);
+// Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
+// Logger.log(ex1_foi);
+
+// var ex2_foi = filterObjIn(ex_arrObj, "c", [5, 500]);
+// Logger.log("filter arrObjs with 'c' value of 5 or 500 ⬇ ");
+// Logger.log(ex2_foi);
+
 // -- Unify Properties for Array of Objects | return: arrObj
 
 function unifyPropForArrObj(arrObj, arrProp, newProp){
@@ -334,7 +350,7 @@ function unifyPropForArrObj(arrObj, arrProp, newProp){
     for (var h = 0; h < arrProp.length; h++) {
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop) && prop == arrProp[h] && obj[prop] != ""){
-              item[newProp] = item[prop];
+              obj[newProp] = obj[prop];
         }
       }
     }
@@ -348,41 +364,8 @@ var arrObj_upfao  = [
 {z: 345},
 ];
 
-var ex_epfao = unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new");
-Logger.log(ex_epfao);
-
-// -- Filter by Property Value or Values
-// ➡  array of objects
-
-// -- FLAG -- if _arr.length = 0, return nothing...
-
-function filterObjIn(arrObj, pQuery, val) {
-	var _arr = [];
-	for (var i=0; i < arrObj.length; i++) {
-		if (arrObj[i][pQuery] == val) _arr.push(arrObj[i]);
-	}
-	return _arr;
-}
-
-var ex_foi = filterObjIn(ex_arrObj, "b", 2);
-// Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
-// Logger.log(ex_foi);
-
-// -- FLAG -- if _arr.length = 0, return nothing...
-function filterObjsIn(arrObj, pQuery, arrVal) {
-  var _arr = [];
-  for (var i = 0; i < arrVal.length; i++) {
-    var val = arrVal[i]; 
-    for (var j=0; j < arrObj.length; j++) {
-      if (arrObj[j][pQuery] == val) _arr.push(arrObj[j]);
-    }
-  } 
-  return _arr;
-} 
-
-var ex_fosi = filterObjsIn(ex_arrObj, "c", [5, 500]);
-// Logger.log("filter arrObjs with 'c' value of 5 or 500 ⬇ ");
-// Logger.log(ex_fosi);
+// var ex_epfao = unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new");
+// Logger.log(ex_epfao);
 
 // - Object
 // -- Array of Matching Property Values
