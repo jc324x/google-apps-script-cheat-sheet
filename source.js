@@ -317,9 +317,27 @@ function lastEntry(arrObj) {
   }
 } 
 
+// var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet4");
+// var arrObj_le = arrObjRange(ss_le, "A1:B4");
+// var ex_le     = lastEntry(arrObj_le);
+// Logger.log(ex_le);
+
 // function firstObj
 function firstEntry(arrObj){
+  if (arrObj.length >= 2) {
+    var sorted = arrObj.sort(function(a,b){
+      return new Date(a.Timestamp) - new Date(b.Timestamp);
+    });
+    return sorted[0];
+  } else {
+    return arrObj[0];
+  }
 }
+
+// var ss_fe     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet4");
+// var arrObj_fe = arrObjRange(ss_le, "A1:B4");
+// var ex_fe     = firstEntry(arrObj_le);
+// Logger.log(ex_fe);
 
 // -- Filter by Property Value or Values | return: array of objects
 
