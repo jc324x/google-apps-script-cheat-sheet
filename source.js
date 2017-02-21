@@ -20,7 +20,8 @@ function test() {}
 // | - Object
 // | -- Array of Matching Property Values
 // | -- Unify Object Properties  
-// | -- Merge Two Objects  
+// | -- Merge Two or More Objects 
+// | -- Selectively Merge Two or More Objects
 // | - Dates and Times
 // | -- Formatted Timestamps
 // | -- New Date Object from String *
@@ -409,34 +410,28 @@ var obj_fvi = {
 	c: 3
 };
 
-// var arr_fvi = ["a", "b", "d"];
-// var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
-// Logger.log(ex_fvi);
+var arr_fvi = ["a", "b", "d"];
+var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
+Logger.log(ex_fvi);
 
 // -- Unify Object Properties
 
-// -- FLAG --
+// -- FLAG -- | needs example...and test
 // if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
 
-// function unifyPropForObj(arrObj, arrProp, newProp){
-
-function mergeObjProp(obj, arrProp, newProp){
+function unifyPropForObj(obj, arrProp, newProp){
   for (var i = 0; i < arrProp.length; i++) {
     for (var prop in obj) {
-      if (obj.hasOwnProperty(prop)){
-        if (prop == arrProp[i]){
-          if (obj[prop] != "") {
-            obj[newProp] = obj[prop];
-            return obj[prop];
-          }
-        }
+      if (obj.hasOwnProperty(prop) && prop == arrProp[i] && obj[prop] != "" ) {
+        obj[newProp] = obj[prop];
+        return obj[prop];
       }
     }
   }
 }
 
-
-// all objects merged into first
+// -- FLAG -- | needs example
+// Merge Objects Completely | return: object
 
 function mergeObjs() {
   var obj = arguments[0];
@@ -449,9 +444,10 @@ function mergeObjs() {
   return obj;
 } 
 
-// -- Merge Two Objects 
-// -- FLAG -- This is dumb...merge any number of argument objects...
-function mergeTwoObjs_Selective(full, partial, arrProp) {
+// -- Merge Objects Selectively | return: object
+
+// function mergeObjsSelective(mainObj, arrObjs, arrProp) {
+function mergeObjsSelective(full, partial, arrProp) {
     var newObj = {};
     for (var prop in full) { 
       newObj[prop] = full[prop]; 
@@ -468,8 +464,7 @@ function mergeTwoObjs_Selective(full, partial, arrProp) {
 
 // - Dates and Times
 
-// -- Formatted Timestamps 
-// ➡  string
+// -- Formatted Timestamps | return: string
 
 function fmatD() {
 	var n = new Date();
@@ -511,7 +506,7 @@ function fmat12DT() {
 // var ex_dt12 = fmat12DT();
 // Logger.log("current date + time (12 hour) ➡ " + ex_dt12);
 
-// -- New Date Object from String
+// -- New Date Object from String | return: date
 // format -> 'February 17, 2016 13:00:00 -0500';
 // given 2016-02-17
 
