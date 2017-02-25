@@ -1157,8 +1157,9 @@ function valByRow(rangeObj, headers){
 	return arr;
 }
 
-// -- Array of Objects from Sheet
 // -- FLAG -- -> change to arrRowObjSheet  
+// -- Array of Objects from Sheet | return: arrObj
+// dependencies: numCol, headerVal, valByRow
 
 function arrObjSheet(sheetObj, hRow){
 	var lColNum = sheetObj.getLastColumn();
@@ -1174,7 +1175,8 @@ var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 var ex_aos = arrObjSheet(ss_aos, 2);
 // Logger.log(ex_aos);
 
-// -- Array of Objects from Range 
+// -- Array of Objects from Range | return: arrObj
+// dependencies: headerVal, valByRow
 
 function arrObjRange(sheetObj, a1Notation) {
 	var hRange  = headerRange(sheetObj, a1Notation);
@@ -1204,8 +1206,6 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 // var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var ex_vg    = arrObjTwoCol(sheet_vg, "D2:E5");
 // Logger.log(ex_vg);
-
-// -- FLAG --
 
 // - Array of Values
 
