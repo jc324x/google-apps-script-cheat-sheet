@@ -1,4 +1,4 @@
-# Google Apps Script Cheat Sheet
+# Google Apps Script Library
 
 ##[General](#general)
 * [Array](#array)

@@ -1,3 +1,5 @@
+// status -> 308
+
 Logger.log("Start");
 function test() {}
 
@@ -11,6 +13,7 @@ function test() {}
 // | -- Compare Two Arrays
 // | - Multidimensional Array
 // | -- Flatten Multidimensional Array
+// | -- Create Multidimensional Array of Values *
 // | - Array of Objects
 // | -- Sort by Property or Properties
 // | -- Find Object With Unique Property Value
@@ -26,6 +29,7 @@ function test() {}
 // | -- Formatted Timestamps
 // | -- New Date Object from String *
 // | -- Match a Date to a Range
+// | -- New Date Object
 // | Drive
 // | - Folders
 // | -- Create or Verify Folder Path *
@@ -171,8 +175,7 @@ function countOfValIn(arr){
 // Logger.log("countVal out ⬇ ");
 // Logger.log(ex_covi);
 
-// -- Intersect of Two Arrays | return: array
-// *note* sort both arrays prior
+// -- Intersect of Two Arrays | return: array | note: sort arrays prior
 
 function intersectOf(arrA, arrB) {
 	var a = 0;
@@ -212,7 +215,7 @@ function compareArr(arr1, arr2) {
 
 // - Multidimensional Array
 
-// -- Flatten Multidimensional Array
+// -- Flatten Multidimensional Array | return: array
 
 function flattenMultiArr(multiArr){
   var arr = multiArr.reduce(function(a, b) {
@@ -307,6 +310,7 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 // -- Find First or Last Object by Timestamp | return: object
 
 // function lastObject
+
 function lastEntry(arrObj) {
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
@@ -323,7 +327,8 @@ function lastEntry(arrObj) {
 // var ex_le     = lastEntry(arrObj_le);
 // Logger.log(ex_le);
 
-// function firstObj
+// function firstObj | return: object
+
 function firstEntry(arrObj){
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
@@ -387,6 +392,8 @@ var arrObj_upfao  = [
 // Logger.log(ex_epfao);
 
 // - Object
+
+// -- FLAG -- | return?
 // -- Array of Matching Property Values
 
 function filterValIn(obj, props) {
