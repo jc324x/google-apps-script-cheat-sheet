@@ -938,8 +938,7 @@ function renameFile(file, name) {
 
 // - Managing Spreadsheet Files
 
-// -- Create or Verify Spreadsheet in a Folder or at Root
-// ➡  spreadsheet
+// -- Create or Verify Spreadsheet | return: spreadsheet
 
 // --- Create or Verify Spreadsheet in a Folder
 
@@ -972,12 +971,12 @@ function createVerifySSAtRoot(name) {
 // var ex_cvssar = createVerifySSAtRoot("example_sheet");
 // Logger.log("The Id of '" + ex_cvssar + "' at root is '" + ex_cvssar.getId());
 
+// -- FLAG -- | nothing here...
 // -- Get Spreadsheet Id
 
 // - Utility Functions for Sheets
 
-// -- Convert Column Number to a Letter
-// ➡  string
+// -- Convert Column Number to a Letter | return: string
 
 function numCol(num) {
 	var num = num - 1, chr;
@@ -999,16 +998,17 @@ function numCol(num) {
 	}
 }
 
-function ex_nc() {
-	for (var i = 1; i <= 104; i++) {
-		var j = numCol(i);
-		// Logger.log(i + " - " + j);
-	}
-}
+// function ex_nc() {
+// 	for (var i = 1; i <= 104; i++) {
+// 		var j = numCol(i);
+// 		Logger.log(i + " - " + j);
+// 	}
+// }
 
 // ex_nc();
 
-// -- Convert Column Letter to a Number
+// -- FLAG -- | integer?
+// -- Convert Column Letter to a Number | return: integer 
 // ➡  integer
 
 function colNum(col) {
@@ -1036,10 +1036,10 @@ function ex_cn() {
 
 // ex_cn();
 
-// -- FLAG --
+// -- FLAG -- | nothing here...
 // -- All Values in Column as Array
 
-// -- Replicating Import Range
+// -- Replicating Import Range | return: nil
 // trigger -> getSet : From spreadsheet : On edit
 
 var sheet_gs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
@@ -1049,7 +1049,7 @@ function getSet(){
 	var set = sheet_gs.getRange("B2:B5").setValues(get);
 }
 
-// -- Evaluating True and False
+// -- Evaluating True and False | return: boolean
 // true:  1, t*, T*, y*, Y*
 // false: 0, !t || !y
 // ➡  boolean
@@ -1080,8 +1080,7 @@ function checkTF(input) {
 
 // -- Utility Functions for Array of Objects
 
-// --- Header Range
-// ➡  range object
+// --- Header Range | return: range
 
 function headerRange(sheetObj, a1Notation) {
 	var arr  = a1Notation.split(":");
@@ -1092,8 +1091,7 @@ function headerRange(sheetObj, a1Notation) {
 	return sheetObj.getRange(a1);
 }
 
-// --- Value Range
-// ➡  range object
+// --- Value Range | return: range
 
 function valueRange(sheetObj, a1Notation) {
 	var arr  = a1Notation.split(":");
@@ -1105,8 +1103,7 @@ function valueRange(sheetObj, a1Notation) {
 	return sheetObj.getRange(a1);
 }
 
-// --- Header Values
-// ➡  array
+// --- Header Values | array
 
 function headerVal(rangeObj){
 	var vals = rangeObj.getValues();
@@ -1118,8 +1115,7 @@ function headerVal(rangeObj){
 	return arr;
 }
 
-// --- Values by Row
-// ➡  array of objects
+// --- Values by Row | array (objects)
 
 function valByRow(rangeObj, headers){
 	var h    = rangeObj.getHeight();
