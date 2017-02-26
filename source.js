@@ -438,7 +438,6 @@ function unifyPropForObj(obj, arrProp, newProp){
 // var ex_upfo = unifyPropForObj(obj_upfo, arr_upfo, "z"); 
 // Logger.log(ex_upfo);
 
-// -- FLAG -- | needs example
 // Merge Objects | return: object
 
 function mergeObjs() {
@@ -452,21 +451,24 @@ function mergeObjs() {
   return obj;
 } 
 
-var objA_mo = {
-	a: 1, 
-	b: 2, 
-	c: 3
-}; 
+// var objA_mo = {
+// 	a: 1, 
+// 	b: 2, 
+// 	c: 3
+// }; 
 
-var objB_mo = {
-  c: 4,
-	d: 5, 
-	e: 6, 
-	f: 7
+// var objB_mo = {
+//   c: 4,
+// 	d: 5, 
+// 	e: 6, 
+// 	f: 7
 
-}; 
+// }; 
 
+// var ex_mo = mergeObjs(objA_mo, objB_mo); 
+// Logger.log(ex_mo);
 
+// -- FLAG -- | change prop
 // -- Merge Objects Selectively | return: object
 
 // function mergeObjsSelective(mainObj, arrObjs, arrProp) {
