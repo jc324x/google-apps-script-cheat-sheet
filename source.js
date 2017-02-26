@@ -1,4 +1,4 @@
-// status -> 308
+// status -> 389
 
 Logger.log("Start");
 function test() {}
@@ -306,28 +306,7 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 // var ex_fovi = findObjValIn(ex_arrObj, "c", 500, "a");
 // Logger.log(ex_fovi);
 
-// -- FLAG --
 // -- Find First or Last Object by Timestamp | return: object
-
-// function lastObject
-
-function lastEntry(arrObj) {
-  if (arrObj.length >= 2) {
-    var sorted = arrObj.sort(function(a,b){
-      return new Date(b.Timestamp) - new Date(a.Timestamp);
-    });
-    return sorted[0];
-  } else {
-    return arrObj[0];
-  }
-} 
-
-// var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet4");
-// var arrObj_le = arrObjRange(ss_le, "A1:B4");
-// var ex_le     = lastEntry(arrObj_le);
-// Logger.log(ex_le);
-
-// function firstObj | return: object
 
 function firstEntry(arrObj){
   if (arrObj.length >= 2) {
@@ -344,6 +323,22 @@ function firstEntry(arrObj){
 // var arrObj_fe = arrObjRange(ss_le, "A1:B4");
 // var ex_fe     = firstEntry(arrObj_le);
 // Logger.log(ex_fe);
+
+function lastEntry(arrObj) {
+  if (arrObj.length >= 2) {
+    var sorted = arrObj.sort(function(a,b){
+      return new Date(b.Timestamp) - new Date(a.Timestamp);
+    });
+    return sorted[0];
+  } else {
+    return arrObj[0];
+  }
+} 
+
+// var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet4");
+// var arrObj_le = arrObjRange(ss_le, "A1:B4");
+// var ex_le     = lastEntry(arrObj_le);
+// Logger.log(ex_le);
 
 // -- Filter by Property Value or Values | return: array of objects
 
@@ -382,19 +377,18 @@ function unifyPropForArrObj(arrObj, arrProp, newProp){
   return arrObj;
 }
 
-var arrObj_upfao  = [
-{x: 123},
-{y: 234},
-{z: 345},
-];
+// var arrObj_upfao  = [
+// {x: 123},
+// {y: 234},
+// {z: 345},
+// ];
 
 // var ex_epfao = unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new");
 // Logger.log(ex_epfao);
 
 // - Object
 
-// -- FLAG -- | return?
-// -- Array of Matching Property Values
+// -- Array of Matching Property Values | return: array
 
 function filterValIn(obj, props) {
 	var arr  = [];
@@ -411,34 +405,41 @@ function filterValIn(obj, props) {
 	return arr;
 }
 
-var obj_fvi = { 
-	a: 1, 
-	b: 2, 
-	c: 3
-};
+// var obj_fvi = { 
+// 	a: 1, 
+// 	b: 2, 
+// 	c: 3
+// };
 
-var arr_fvi = ["a", "b", "d"];
-var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
-Logger.log(ex_fvi);
+// var arr_fvi = ["a", "b", "d"];
+// var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
+// Logger.log(ex_fvi);
 
 // -- Unify Object Properties
-
-// -- FLAG -- | needs example...and test
-// if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
 
 function unifyPropForObj(obj, arrProp, newProp){
   for (var i = 0; i < arrProp.length; i++) {
     for (var prop in obj) {
       if (obj.hasOwnProperty(prop) && prop == arrProp[i] && obj[prop] != "" ) {
         obj[newProp] = obj[prop];
-        return obj[prop];
+        return obj;
       }
     }
   }
 }
 
+// var obj_upfo = { 
+// 	a: 1, 
+// 	b: 2, 
+// 	c: 3
+// };
+
+// var arr_upfo = ["c", "d", "e"];
+// var ex_upfo = unifyPropForObj(obj_upfo, arr_upfo, "z"); 
+// Logger.log(ex_upfo);
+
 // -- FLAG -- | needs example
-// Merge Objects Completely | return: object
+// Merge Objects | return: object
 
 function mergeObjs() {
   var obj = arguments[0];
@@ -450,6 +451,21 @@ function mergeObjs() {
   } 
   return obj;
 } 
+
+var objA_mo = {
+	a: 1, 
+	b: 2, 
+	c: 3
+}; 
+
+var objB_mo = {
+  c: 4,
+	d: 5, 
+	e: 6, 
+	f: 7
+
+}; 
+
 
 // -- Merge Objects Selectively | return: object
 
