@@ -23,8 +23,7 @@ function test() {}
 // | - Object
 // | -- Array of Matching Property Values
 // | -- Unify Object Properties  
-// | -- Merge Two or More Objects 
-// | -- Selectively Merge Two or More Objects
+// | -- Merge Objects
 // | - Dates and Times
 // | -- Formatted Timestamps
 // | -- New Date Object from String *
@@ -354,11 +353,11 @@ function filterObjIn(arrObj, pQuery, arrVal) {
 }
 
 // var ex1_foi = filterObjIn(ex_arrObj, "b", [2]);
-// Logger.log("filter arrObjs with 'b' value of 2 ⬇ ");
+// Logger.log("filter arrObj with 'b' value of 2 ⬇ ");
 // Logger.log(ex1_foi);
 
 // var ex2_foi = filterObjIn(ex_arrObj, "c", [5, 500]);
-// Logger.log("filter arrObjs with 'c' value of 5 or 500 ⬇ ");
+// Logger.log("filter arrObj with 'c' value of 5 or 500 ⬇ ");
 // Logger.log(ex2_foi);
 
 // -- Unify Properties for Array of Objects | return: arrObj
@@ -467,25 +466,6 @@ function mergeObjs() {
 
 // var ex_mo = mergeObjs(objA_mo, objB_mo); 
 // Logger.log(ex_mo);
-
-// -- FLAG -- | change prop
-// -- Merge Objects Selectively | return: object
-
-// function mergeObjsSelective(mainObj, arrObjs, arrProp) {
-function mergeObjsSelective(full, partial, arrProp) {
-    var newObj = {};
-    for (var prop in full) { 
-      newObj[prop] = full[prop]; 
-    }
-    for (var prop in partial) { 
-      for (var i = 0; i < arrProp.length; i++){
-        if (prop == arrProp[i]) {
-          newObj[prop] = partial[prop];
-        }
-      }
-    }
-  return newObj;
-}
 
 // - Dates and Times
 
