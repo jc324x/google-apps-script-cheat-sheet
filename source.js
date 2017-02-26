@@ -144,7 +144,7 @@ function rmEmptyVal(x){
 // Logger.log("rmEmpty input ➡ " + arr_rev);
 // Logger.log("rmEmpty output ➡ " + ex_rev);
 
-// -- Get Count of Values | return: array of objects
+// -- Get Count of Values | return: array (objects)
 
 function countOfValIn(arr){
 	var _arr = [];
@@ -238,7 +238,7 @@ var ex_arrObj = [
 {a: 1, b: 1, c: 50}
 ]
 
-// -- Sort by Property or Properties | return: array of objects
+// -- Sort by Property or Properties | return: array (objects)
 
 function dynSort(prop) {
 	var sortOrder = 1;
@@ -338,7 +338,7 @@ function lastEntry(arrObj) {
 // var ex_le     = lastEntry(arrObj_le);
 // Logger.log(ex_le);
 
-// -- Filter by Property Value or Values | return: array of objects
+// -- Filter by Property Value or Values | return: array (objects)
 
 function filterObjIn(arrObj, pQuery, arrVal) {
   var _arrObj = [];
@@ -359,7 +359,7 @@ function filterObjIn(arrObj, pQuery, arrVal) {
 // Logger.log("filter arrObj with 'c' value of 5 or 500 ⬇ ");
 // Logger.log(ex2_foi);
 
-// -- Unify Properties for Array of Objects | return: arrObj
+// -- Unify Properties for Array of Objects | return: array (objects)
 
 function unifyPropForArrObj(arrObj, arrProp, newProp){
   for (var i = 0; i < arrObj.length; i++){
@@ -608,10 +608,9 @@ function lastFolderIn(path) {
 // var ex_lfi = lastFolderIn("google-apps-script-cheat-sheet/A/B/C");
 // Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_lfi.getId());
 
-// -- Array of All Folders
-// ➡  array of folders
+// -- Array of All Folders | return: array (folders)
 
-// --- All Folders in a Folder
+// --- All Folders in a Folder 
 
 function foldersIn(fldr) {
 	var fi  = fldr.getFolders();
@@ -660,8 +659,7 @@ function allFolders() {
 // Logger.log("all folders in Drive ⬇ ");
 // Logger.log(ex_af);
 
-// -- Array of Folder Names
-// ➡  array of folder names
+// -- Array of Folder Names | return: array (strings)
 
 function folderNames(fldrs) {
 	var arr = [];
@@ -677,8 +675,7 @@ function folderNames(fldrs) {
 // var ex_fn   = folderNames(arr_fn)
 // Logger.log("'google-apps-script-cheat-sheet' has top level folders " + ex_fn);
 
-// -- Find a Folder
-// ➡  folder 
+// -- Find a Folder | return: folder
 
 // --- Find a Folder in a Folder
 
@@ -723,8 +720,7 @@ function findFolderInDrive(name) {
 // var ex_ffid = findFolderInDrive("google-apps-script-cheat-sheet");
 // Logger.log(" Id of 'google-apps-script-cheat-sheet' at root ➡ " + ex_ffid.getId());
 
-// -- Create or Verify Folders
-// ➡  folder
+// -- Create or Verify Folders | return: folder
 
 // --- Create or Verify Folders in a Folder
 
@@ -765,7 +761,8 @@ function createVerifyFoldersAtRoot(names) {
 
 // - Files
 
-// fn to create scratch file for examples below
+// -- FLAG -- | need to change path
+// checkForExFile is akin to `touch`, it creates an example file
 
 function checkForExFile() {
 	var fldr = createVerifyPath("google-apps-script-cheat-sheet");
@@ -777,8 +774,7 @@ function checkForExFile() {
 var chkFile = checkForExFile();
 // Logger.log(chkFile);
 
-// -- Array of All Files
-// ➡  array of files
+// -- Array of All Files | array (files) 
 
 // --- All Files in a Folder
 
@@ -827,8 +823,7 @@ function allFiles() {
 // var ex_afid = allFiles();
 // Logger.log(ex_afid);
 
-// -- Array of File Names 
-// ➡  array of file names
+// -- Array of File Names | return: array (strings)
 
 function fileNames(files) {
 	var arr = [];
@@ -844,8 +839,7 @@ function fileNames(files) {
 // var ex_fnam   = fileNames(arr_fnam);
 // Logger.log(ex_fnam);
 
-// -- Find a File
-// ➡  file
+// -- Find a File | return: file 
 
 // --- Find a File in a Folder
 
@@ -901,8 +895,7 @@ function parentFolderOf(file) {
 // var ex_pfo   = parentFolderOf(file_pfo);
 // Logger.log("The parent folder of '" + file_pfo + "' is '" + ex_pfo + "'");
 
-// -- Copy a File to a Folder
-// ➡  file
+// -- Copy a File to a Folder | return: file
 
 function copyFile(file, fldr) {
 	var name = file.getName();
@@ -917,8 +910,7 @@ function copyFile(file, fldr) {
 // var ex_cf    = copyFile(file_cf, fldr_cf2);
 // Logger.log("'" + ex_cf + "' " + "has been copied to " + parentFolderOf(ex_cf));
 
-// -- Move a File to a Folder
-// ➡  file
+// -- Move a File to a Folder | return: file
 
 function moveFile(file, fldr) {
 	var name = file.getName();
@@ -935,8 +927,7 @@ function moveFile(file, fldr) {
 // var ex_mf    = moveFile(file_mf, fldr_mf2);
 // Logger.log("'" + ex_mf + "' " + "has been moved to " + parentFolderOf(ex_mf));
 
-// -- Rename a File
-// ➡  file
+// -- Rename a File | return: file
 
 function renameFile(file, name) {
   file.setName(name)
@@ -1150,7 +1141,7 @@ function valByRow(rangeObj, headers){
 }
 
 // -- FLAG -- -> change to arrRowObjSheet  
-// -- Array of Objects from Sheet | return: arrObj
+// -- Array of Objects from Sheet | return: array (objects)
 // dependencies: numCol, headerVal, valByRow
 
 function arrObjSheet(sheetObj, hRow){
@@ -1167,7 +1158,7 @@ var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 var ex_aos = arrObjSheet(ss_aos, 2);
 // Logger.log(ex_aos);
 
-// -- Array of Objects from Range | return: arrObj
+// -- Array of Objects from Range | return: array (objects)
 // dependencies: headerVal, valByRow
 
 function arrObjRange(sheetObj, a1Notation) {
