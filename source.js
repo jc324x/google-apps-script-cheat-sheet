@@ -1,4 +1,4 @@
-// status -> 389
+// status -> Dates and Times | 470
 
 Logger.log("Start");
 function test() {}
@@ -26,9 +26,8 @@ function test() {}
 // | -- Merge Objects
 // | - Dates and Times
 // | -- Formatted Timestamps
-// | -- New Date Object from String *
+// | -- Date Object from String
 // | -- Match a Date to a Range
-// | -- New Date Object
 // | Drive
 // | - Folders
 // | -- Create or Verify Folder Path *
@@ -511,24 +510,21 @@ function fmat12DT() {
 // var ex_dt12 = fmat12DT();
 // Logger.log("current date + time (12 hour) ➡ " + ex_dt12);
 
-// -- New Date Object from String | return: date
-// format -> 'February 17, 2016 13:00:00 -0500';
-// given 2016-02-17
+// -- Date Object from String | return: date
 
-function dateObjectFromString(str) {
+function dateObjectFrom(str) {
 	var arr    = str.split("-");
 	var months = ["January", "February", "March", "April", "May", "June",
 	  "July", "August", "September", "October", "November", "December"
 		];
-	// Logger.log(months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
 	return new Date (months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
 }
 
-var ex_ds   = "2016-02-17";
-var ex_dofs = dateObjectFromString(ex_ds);
+// var ex_ds   = "2016-02-17";
+// var ex_dofs = dateObjectFrom(ex_ds);
 // Logger.log(ex_dofs);
 
-// -- Match a Date to a Range
+// -- Match a Date to a Range | return: integer
 
 var quarterDates = [
 	["08/01/2016", "10/28/2016"],
@@ -556,8 +552,7 @@ function academicQuarter() {
 
 // - Folders
 
-// -- Create or Verify Folder Path 
-// ➡  folder
+// -- Create or Verify Folder Path  | return: folder
 
 function createVerifyPath(path) {
 	var arr = path.split('/');
@@ -585,8 +580,7 @@ function createVerifyPath(path) {
 // var ex_cov = createVerifyPath("google-apps-script-cheat-sheet/A/B/C");
 // Logger.log("Id of 'C' in 'google-apps-script-cheat-sheet/A/B/C' is ➡ " + ex_cov.getId());
 
-// -- Get the Last Folder in Folder Path
-// ➡  folder
+// -- Get the Last Folder in Folder Path | return: folder
 
 function lastFolderIn(path) {
 	var arr = path.split('/');
