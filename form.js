@@ -18,11 +18,14 @@ function testEverything() {}
 
 // - Form Management
 
+// -- FLAG --
 // -- Get Form Id
 
-function getFormId() {
-  Logger.log(FormApp.getActiveForm().getId());
+function formId() {
+  var _id = FormApp.getActiveForm().getId();
 } 
+
+Logger.log(formId());
 
 // -- Array of Form Items
 

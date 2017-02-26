@@ -1,4 +1,4 @@
-// status -> Dates and Times | 470
+// status -> 1041
 
 Logger.log("Start");
 function test() {}
@@ -761,18 +761,17 @@ function createVerifyFoldersAtRoot(names) {
 
 // - Files
 
-// -- FLAG -- | need to change path
-// checkForExFile is akin to `touch`, it creates an example file
+// checkForExFile is akin to `touch`, it just creates an example file
 
 function checkForExFile() {
-	var fldr = createVerifyPath("google-apps-script-cheat-sheet");
+	var fldr = createVerifyPath("google-apps-script-library");
 	var file = findFileIn(fldr, "example_file");
 	if (!(file)){fldr.createFile("example_file", "stuff!");}
 	return findFileIn(fldr, "example_file");
 }
 
 var chkFile = checkForExFile();
-// Logger.log(chkFile);
+Logger.log(chkFile);
 
 // -- Array of All Files | array (files) 
 
@@ -884,7 +883,7 @@ function findFileInDrive(name) {
 // var file_ffid = findFileInDrive("example_file");
 // Logger.log(" Id of '" + file_ffid + "' in " + parentFolderOf(file_ffid) + " ➡ " + file_ffid.getId());
 
-// -- Parent Folder of a File
+// -- Parent Folder of a File | return: folder
 
 function parentFolderOf(file) {
 	var fi = file.getParents();
@@ -971,8 +970,15 @@ function createVerifySSAtRoot(name) {
 // var ex_cvssar = createVerifySSAtRoot("example_sheet");
 // Logger.log("The Id of '" + ex_cvssar + "' at root is '" + ex_cvssar.getId());
 
-// -- FLAG -- | nothing here...
-// -- Get Spreadsheet Id
+// -- Get Spreadsheet Id | return: string
+
+function ssId() {
+  var _ss = SpreadsheetApp.getActiveSpreadsheet();
+  var id  = _ss.getId();
+  return id;
+}
+
+// Logger.log(ssId());
 
 // - Utility Functions for Sheets
 
@@ -1004,12 +1010,9 @@ function numCol(num) {
 // 		Logger.log(i + " - " + j);
 // 	}
 // }
-
 // ex_nc();
 
-// -- FLAG -- | integer?
 // -- Convert Column Letter to a Number | return: integer 
-// ➡  integer
 
 function colNum(col) {
 	var col = col.toUpperCase();
@@ -1023,17 +1026,16 @@ function colNum(col) {
 	}
 }
 
-function ex_cn() {
-	for (var i = 0; i <= 25; i++) {
-		var abc = String.fromCharCode(97 + i).toUpperCase();
-		// Logger.log(abc + " - " + colNum(abc));
-	}
-	for (var i = 26; i <= 51; i++) {
-		var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
-		// Logger.log(abc + " - " + colNum(abc));
-	}
-}
-
+// function ex_cn() {
+// 	for (var i = 0; i <= 25; i++) {
+// 		var abc = String.fromCharCode(97 + i).toUpperCase();
+// 		Logger.log(abc + " - " + colNum(abc));
+// 	}
+// 	for (var i = 26; i <= 51; i++) {
+// 		var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
+// 		Logger.log(abc + " - " + colNum(abc));
+// 	}
+// }
 // ex_cn();
 
 // -- FLAG -- | nothing here...
