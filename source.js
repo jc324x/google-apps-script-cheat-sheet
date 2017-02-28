@@ -1,4 +1,4 @@
-// status -> 1041
+// ex files in one fldr? changed name?
 
 Logger.log("Start");
 function test() {}
@@ -65,7 +65,7 @@ function test() {}
 // | - Array 
 // | -- Array of Values for Column
 // | - Multidimensional Array
-// | -- Build Multidimensional Array for Array of Objects
+// | -- Multidimensional Array from Array of Objects
 // | - Object
 // | -- Build Object From X Columns
 // | Docs
@@ -1189,7 +1189,7 @@ var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 var ex_vg    = arrObjTwoCol(sheet_vg, "D2:E5");
 Logger.log(ex_vg);
 
-// - Array of Values
+// - Array 
 
 // -- Array of Values for Column
 
@@ -1217,17 +1217,27 @@ var ss_afcn = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 var ex_afcn = arrForColName(ss_afcn, 2, "First");
 // Logger.log(ex_afcn);
 
+// -- FLAG -- | haven't written this yet...
 // --- By Column Number
-// -- FLAG --
 
-// function arrForColNo(sheetObj, number){
+// function arrForColNo(sheetObj, colIndex){
 // }
+
+// - Multidimensional Array
+
+// -- FLAG -- | haven't written this yet...
+// -- Multidimensional Array from Array of Objects | return: multidimensional array
+
+// function multiArrFromArrObj(arrObj, prop) {
+  
+// } 
 
 // Docs
 
 // - Managing Document Files
 
-// -- Create or Verify Document in a Folder or at Root
+// -- Create or Verify Document in a Folder or at Root | return: file
+// dependencies: filesIn, rootFiles, fileNames, findFileIn
 
 // --- Create or Verify Document in a Folder
 
@@ -1260,6 +1270,7 @@ function createVerifyDocAtRoot(name) {
 // var ex_cvdar = createVerifyDocAtRoot("example_doc");
 // Logger.log("The Id of '" + ex_cvdar + "' at root is '" + ex_cvdar.getId());
 
+// -- FLAG -- | fill in the blank 
 // -- Get Document Id
 
 // - Utility Functions for Docs
@@ -1286,49 +1297,49 @@ function createVerifyDocAtRoot(name) {
 
 // -- Single Division List
 
-var ss_sdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_sdl = arrObjSheet(ss_sdl, 2);
-var fldr_sdl   = createVerifyPath("google-apps-script-cheat-sheet");
-var docId_sdl  = createVerifyDocIn(fldr_sdl, "example_doc").getId();
-var body_sdl   = DocumentApp.openById(docId_sdl).getBody();
+// var ss_sdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_sdl = arrObjSheet(ss_sdl, 2);
+// var fldr_sdl   = createVerifyPath("google-apps-script-cheat-sheet");
+// var docId_sdl  = createVerifyDocIn(fldr_sdl, "example_doc").getId();
+// var body_sdl   = DocumentApp.openById(docId_sdl).getBody();
 
-(function(){
-	arrObj_sdl.sort(dynSortM("Last", "First"));
-	var sectionHeader = body_sdl.appendParagraph("Students");
-	sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-	for (var i in arrObj_sdl) {
-		body_sdl.appendListItem(arrObj_sdl[i]["Last"] + ", " + arrObj_sdl[i]["First"]);
-	}
-})();
+// (function(){
+// 	arrObj_sdl.sort(dynSortM("Last", "First"));
+// 	var sectionHeader = body_sdl.appendParagraph("Students");
+// 	sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+// 	for (var i in arrObj_sdl) {
+// 		body_sdl.appendListItem(arrObj_sdl[i]["Last"] + ", " + arrObj_sdl[i]["First"]);
+// 	}
+// })();
 
 // -- Multi Division List
 
-var ss_mdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_mdl = arrObjSheet(ss_mdl, 2);
-var fldr_mdl   = createVerifyPath("google-apps-script-cheat-sheet");
-var docId_mdl  = createVerifyDocIn(fldr_mdl, "example_doc").getId();
-var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
+// var ss_mdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_mdl = arrObjSheet(ss_mdl, 2);
+// var fldr_mdl   = createVerifyPath("google-apps-script-cheat-sheet");
+// var docId_mdl  = createVerifyDocIn(fldr_mdl, "example_doc").getId();
+// var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
 
-(function(){
-	arrObj_mdl.sort(dynSortM("Homeroom", "Last", "First"));
-	var sectionHeader = body_mdl.appendParagraph("Homerooms and Students");
-	sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-	var homeroom = arrObj_mdl[0]["Homeroom"];
-	body_mdl.appendListItem(homeroom);
-	for (var i in arrObj_mdl) {
-		if (arrObj_mdl[i]["Homeroom"] === homeroom) {
-			body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
-			.setNestingLevel(1).setIndentStart(10)
-			.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
-		} else {
-			homeroom = arrObj_mdl[i]["Homeroom"];
-			body_mdl.appendListItem(homeroom);
-			body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
-			.setNestingLevel(1).setIndentStart(10)
-			.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
-		}
-	}
-})();
+// (function(){
+// 	arrObj_mdl.sort(dynSortM("Homeroom", "Last", "First"));
+// 	var sectionHeader = body_mdl.appendParagraph("Homerooms and Students");
+// 	sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+// 	var homeroom = arrObj_mdl[0]["Homeroom"];
+// 	body_mdl.appendListItem(homeroom);
+// 	for (var i in arrObj_mdl) {
+// 		if (arrObj_mdl[i]["Homeroom"] === homeroom) {
+// 			body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
+// 			.setNestingLevel(1).setIndentStart(10)
+// 			.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+// 		} else {
+// 			homeroom = arrObj_mdl[i]["Homeroom"];
+// 			body_mdl.appendListItem(homeroom);
+// 			body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
+// 			.setNestingLevel(1).setIndentStart(10)
+// 			.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+// 		}
+// 	}
+// })();
 
 // - Merge
 
@@ -1363,6 +1374,7 @@ function strFromProp(obj, str){
 var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
 // Logger.log(ex_nfp);
 
+// -- FLAG -- | example?
 // --- Find and Replace Text in Document from Object Properties
 
 function mergeDocByObj(docObj, obj) {
@@ -1374,9 +1386,7 @@ function mergeDocByObj(docObj, obj) {
   } 
 } 
 
-// -- FLAG --
-// add in ex
-
+// -- FLAG -- | clean?
 // --- Find and Replace Text in Google Sheet from Object Properties
 
 // -- Merge Data in Array of Objects
