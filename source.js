@@ -1,7 +1,7 @@
 // ex files in one fldr? changed name?
 
+function test() {
 Logger.log("Start");
-function test() {}
 
 // | General
 // | - Array
@@ -1567,3 +1567,4 @@ var ex_abc = re.replace(/\d/g, "");
 // Logger.log(ex_abc);
 
 Logger.log("End");
+}
