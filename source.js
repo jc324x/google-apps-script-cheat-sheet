@@ -48,11 +48,11 @@ function test() {}
 // | Sheets
 // | - Managing Spreadsheet Files
 // | -- Create or Verify Spreadsheet
-// | -- Get Spreadsheet Id *
+// | -- Get Spreadsheet Id
 // | - Utility Functions for Sheets
 // | -- Convert Column Number to a Letter
 // | -- Convert Column Letter to a Number
-// | -- Replicating Import Range *
+// | -- Replicating Import Range
 // | -- Evaluating True and False
 // | -  Array of Objects
 // | -- Utility Functions for Array of Objects
@@ -60,15 +60,18 @@ function test() {}
 // | --- Value Range
 // | --- Header Values
 // | --- Values by Row
-// | -- Array of Objects from Sheet *
-// | -- Array of Objects from Range *
-// | -- Array of Objects from Two Columns *
-// | - Array of Values *
-// | -- Array of Values for Column *
+// | -- Array of Objects from Sheet
+// | -- Array of Objects from Range
+// | - Array 
+// | -- Array of Values for Column
+// | - Multidimensional Array
+// | -- Build Multidimensional Array for Array of Objects
+// | - Object
+// | -- Build Object From X Columns
 // | Docs
 // | - Managing Document Files
 // | -- Create or Verify Document
-// | -- Get Document Id *
+// | -- Get Document Id
 // | - Utility Functions for Docs
 // | -- Access Document Body
 // | -- Clear Document Body
@@ -1038,9 +1041,6 @@ function colNum(col) {
 // }
 // ex_cn();
 
-// -- FLAG -- | nothing here...
-// -- All Values in Column as Array
-
 // -- Replicating Import Range | return: nil
 // trigger -> getSet : From spreadsheet : On edit
 
@@ -1170,8 +1170,9 @@ function arrObjRange(sheetObj, a1Notation) {
 // var ex_aor = arrObjRange(ss_aor, "A2:E7");
 // Logger.log(ex_aor);
 
-// -- Array of Objects from Two Columns
-
+// -- FLAG -- 
+// -- Object from X Columns
+// function objFromXCol()
 function arrObjTwoCol(sheetObj, a1Notation) {
 	var range  = sheetObj.getRange(a1Notation);
 	var height = range.getHeight();
@@ -1184,9 +1185,9 @@ function arrObjTwoCol(sheetObj, a1Notation) {
 	return obj;
 }
 
-// var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_vg    = arrObjTwoCol(sheet_vg, "D2:E5");
-// Logger.log(ex_vg);
+var sheet_vg = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ex_vg    = arrObjTwoCol(sheet_vg, "D2:E5");
+Logger.log(ex_vg);
 
 // - Array of Values
 
