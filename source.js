@@ -1,6 +1,6 @@
-// ex files in one fldr? changed name?
+// 1250 Docs
 
-function test() {
+function test() {}
 Logger.log("Start");
 
 // | General
@@ -72,7 +72,6 @@ Logger.log("Start");
 // | Docs
 // | - Managing Document Files
 // | -- Create or Verify Document
-// | -- Get Document Id
 // | - Utility Functions for Docs
 // | -- Access Document Body
 // | -- Clear Document Body
@@ -783,7 +782,6 @@ function createVerifyFoldersAtRoot(names) {
 
 // - Files
 
-// -- FLAG -- | dependencies
 // checkForExFile is akin to `touch`, it just creates an example file
 
 function checkForExFile() {
@@ -1061,13 +1059,10 @@ function colNum(col) {
 // }
 // ex_cn();
 
-// -- FLAG -- | test
 // -- Replicating Import Range | return: nil
-// trigger -> getSet > From spreadsheet > On edit
+// trigger -> importRange > From spreadsheet > On edit
 
-var sheet_gs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-
-function getSet(){
+function importRange(){
 	var get = sheet_gs.getRange("A2:A5").getValues();
 	var set = sheet_gs.getRange("B2:B5").setValues(get);
 }
@@ -1252,6 +1247,19 @@ function arrForColNo(sheetObj, hRow, colIndex){
 
 // Docs
 
+function checkForExDoc() {
+	var fldr  = createVerifyPath("google-apps-script-library");
+	var exDoc = findFileIn(fldr, "example_doc");
+	if (!(exDoc)){
+    DocumentApp.create("example_doc");
+    exDoc = moveFile(findFileAtRoot("example_doc"), fldr);
+  }
+  return exDoc;
+}
+
+var chkDoc = checkForExDoc();
+// Logger.log(chkDoc);
+
 // - Managing Document Files
 
 // -- Create or Verify Document in a Folder or at Root | return: file
@@ -1287,9 +1295,6 @@ function createVerifyDocAtRoot(name) {
 
 // var ex_cvdar = createVerifyDocAtRoot("example_doc");
 // Logger.log("The Id of '" + ex_cvdar + "' at root is '" + ex_cvdar.getId());
-
-// -- FLAG -- | fill in the blank 
-// -- Get Document Id
 
 // - Utility Functions for Docs
 
@@ -1585,4 +1590,3 @@ var ex_abc = re.replace(/\d/g, "");
 // Logger.log(ex_abc);
 
 Logger.log("End");
-}
