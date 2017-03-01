@@ -80,8 +80,9 @@ Logger.log("Start");
 // | -- Single Division List *
 // | -- Multi Division List *
 // | - Merge *
-// | -- Utility Functions for Merging
-// | --- Dynamically Create File Name *
+// | -- Utility Functions for Merges
+// | --- String From Object Properties
+// | --- Find and Replace Text from Object Properties
 // | -- Merge Document *
 // | -- Cell Shading *
 // | Gmail
@@ -483,9 +484,9 @@ function objFromRange(sheetObj, a1Notation) {
 	return obj;
 }
 
-var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_ofr    = objFromRange(sheet_ofr, "D2:E5");
-Logger.log(ex_ofr);
+// var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var ex_ofr    = objFromRange(sheet_ofr, "D2:E5");
+// Logger.log(ex_ofr);
 
 // - Dates and Times
 
@@ -1258,14 +1259,12 @@ function checkForExDoc() {
 }
 
 var chkDoc = checkForExDoc();
-Logger.log(chkDoc);
 
 // - Managing Document Files
 
 // -- Create or Verify Document in a Folder or at Root | return: file
 // dependencies: filesIn, rootFiles, fileNames, findFileIn
 
-// -- FLAG -- | look at checkForEx...
 // --- Create or Verify Document in a Folder
 
 function createVerifyDocIn(fldr, name) {
@@ -1297,7 +1296,6 @@ function createVerifyDocAtRoot(name) {
 // var ex_cvdar = createVerifyDocAtRoot("example_doc");
 // Logger.log("The Id of '" + ex_cvdar + "' at root is '" + ex_cvdar.getId());
 
-// -- FLAG -- | lastFolderIn...?
 // - Utility Functions for Docs
 
 // -- Access Document Body
@@ -1305,7 +1303,6 @@ function createVerifyDocAtRoot(name) {
 // var fldr_adb = lastFolderIn("google-apps-script-library");
 // var doc_adb  = findFileIn(fldr_adb, "example_doc").getId();
 // var body     = DocumentApp.openById(doc_adb).getBody();
-
 // body.appendParagraph("Hello, world!");
 
 // -- Clear Document Body
@@ -1313,7 +1310,6 @@ function createVerifyDocAtRoot(name) {
 // var fldr_cdb = lastFolderIn("google-apps-script-library");
 // var doc_cdb  = findFileIn(fldr_cdb, "example_doc").getId();
 // var body     = DocumentApp.openById(doc_cdb).getBody();
-
 // body.clear();
 
 // Sheets and Docs
@@ -1368,7 +1364,16 @@ function createVerifyDocAtRoot(name) {
 
 // - Merge
 
-// -- Utility Functions
+// | -- Merge Document *
+// | -- Cell Shading *
+// | Gmail
+// | - Send Email
+// | -- Comma Separated List of Recipients
+// | -- Mail Merge
+
+
+
+// -- Utility Functions for Merges
 
 // --- String From Object Properties
 
@@ -1397,9 +1402,11 @@ function strFromProp(obj, str){
 }
 
 var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
-// Logger.log(ex_nfp);
+Logger.log(ex_nfp);
 
 // -- FLAG -- | example?
+// --- Find and Replace Text from Object Properties
+//
 // --- Find and Replace Text in Document from Object Properties
 
 function mergeDocByObj(docObj, obj) {
@@ -1432,7 +1439,7 @@ function mergeDataArrObjDoc(arrObj, template, naming, fldr, ts) {
 var ss_mdaod      = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 var arrObj_mdaod  = arrObjFromSheet(ss_mdaod, 2);
 var main_mdaod    = lastFolderIn("google-apps-script-library");
-var exports_mdaod = createVerifyPath("google-apps-script-library/Merge Exports");
+// var exports_mdaod = createVerifyPath("google-apps-script-library/Merge Exports");
 var doc_mdaod     = findFileIn(main_mdaod, "merge_template_doc");
 var name_mdaod    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
 
