@@ -1258,13 +1258,14 @@ function checkForExDoc() {
 }
 
 var chkDoc = checkForExDoc();
-// Logger.log(chkDoc);
+Logger.log(chkDoc);
 
 // - Managing Document Files
 
 // -- Create or Verify Document in a Folder or at Root | return: file
 // dependencies: filesIn, rootFiles, fileNames, findFileIn
 
+// -- FLAG -- | look at checkForEx...
 // --- Create or Verify Document in a Folder
 
 function createVerifyDocIn(fldr, name) {
@@ -1296,6 +1297,7 @@ function createVerifyDocAtRoot(name) {
 // var ex_cvdar = createVerifyDocAtRoot("example_doc");
 // Logger.log("The Id of '" + ex_cvdar + "' at root is '" + ex_cvdar.getId());
 
+// -- FLAG -- | lastFolderIn...?
 // - Utility Functions for Docs
 
 // -- Access Document Body
