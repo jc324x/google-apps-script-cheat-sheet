@@ -322,7 +322,7 @@ function firstEntry(arrObj){
 }
 
 // var ss_fe     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet4");
-// var arrObj_fe = arrObjRange(ss_le, "A1:B4");
+// var arrObj_fe = arrObjFromRange(ss_le, "A1:B4");
 // var ex_fe     = firstEntry(arrObj_le);
 // Logger.log(ex_fe);
 
@@ -338,7 +338,7 @@ function lastEntry(arrObj) {
 } 
 
 // var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet4");
-// var arrObj_le = arrObjRange(ss_le, "A1:B4");
+// var arrObj_le = arrObjFromRange(ss_le, "A1:B4");
 // var ex_le     = lastEntry(arrObj_le);
 // Logger.log(ex_le);
 
@@ -783,6 +783,7 @@ function createVerifyFoldersAtRoot(names) {
 
 // - Files
 
+// -- FLAG -- | dependencies
 // checkForExFile is akin to `touch`, it just creates an example file
 
 function checkForExFile() {
@@ -1060,8 +1061,9 @@ function colNum(col) {
 // }
 // ex_cn();
 
+// -- FLAG -- | test
 // -- Replicating Import Range | return: nil
-// trigger -> getSet : From spreadsheet : On edit
+// trigger -> getSet > From spreadsheet > On edit
 
 var sheet_gs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 
@@ -1157,11 +1159,10 @@ function valByRow(rangeObj, headers){
 	return arr;
 }
 
-// -- FLAG -- -> change to arrRowObjSheet  
 // -- Array of Objects from Sheet | return: array (objects)
 // dependencies: numCol, headerVal, valByRow
 
-function arrObjSheet(sheetObj, hRow){
+function arrObjFromSheet(sheetObj, hRow){
 	var lColNum = sheetObj.getLastColumn();
 	var lColABC = numCol(lColNum);
 	var lRow    = sheetObj.getLastRow();
@@ -1171,23 +1172,23 @@ function arrObjSheet(sheetObj, hRow){
 	return valByRow(vRange, headers)
 }
 
-var ss_aos = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var ex_aos = arrObjSheet(ss_aos, 2);
-// Logger.log(ex_aos);
+// var ss_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var ex_aofs = arrObjFromSheet(ss_aofs, 2);
+// Logger.log(ex_aofs);
 
 // -- Array of Objects from Range | return: array (objects)
 // dependencies: headerVal, valByRow
 
-function arrObjRange(sheetObj, a1Notation) {
+function arrObjFromRange(sheetObj, a1Notation) {
 	var hRange  = headerRange(sheetObj, a1Notation);
 	var vRange  = valueRange(sheetObj, a1Notation);
 	var headers = headerVal(hRange);
 	return valByRow(vRange, headers);
 }
 
-// var ss_aor = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var ex_aor = arrObjRange(ss_aor, "A2:E7");
-// Logger.log(ex_aor);
+// var ss_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var ex_aofr = arrObjFromRange(ss_aofr, "A2:E7");
+// Logger.log(ex_aofr);
 
 // - Array 
 
@@ -1213,15 +1214,32 @@ function arrForColName(sheetObj, hRow, name){
 	return arr;
 }
 
-var ss_afcn = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var ex_afcn = arrForColName(ss_afcn, 2, "First");
-// Logger.log(ex_afcn);
+// var ss_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var ex_afcna = arrForColName(ss_afcna, 2, "First");
+// Logger.log(ex_afcna);
 
-// -- FLAG -- | haven't written this yet...
 // --- By Column Number
 
-// function arrForColNo(sheetObj, colIndex){
-// }
+function arrForColNo(sheetObj, hRow, colIndex){
+  var lColNum  = sheetObj.getLastColumn();
+  var lColABC  = numCol(lColNum);
+  var lRow     = sheetObj.getLastRow();
+  var hRange   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+  var tColABC  = numCol(colIndex);
+  var rangeObj = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
+  var h        = rangeObj.getHeight();
+	var vals     = rangeObj.getValues();
+	var arr      = [];
+	for (var i = 0; i < h; i++) {
+			var val  = vals[i][0];
+      arr.push(String(val));
+	}  
+	return arr;
+}
+
+// var ss_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
+// var ex_afcno = arrForColNo(ss_afcno, 2, 2);
+// Logger.log(ex_afcno);
 
 // - Multidimensional Array
 
@@ -1298,7 +1316,7 @@ function createVerifyDocAtRoot(name) {
 // -- Single Division List
 
 // var ss_sdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_sdl = arrObjSheet(ss_sdl, 2);
+// var arrObj_sdl = arrObjFromSheet(ss_sdl, 2);
 // var fldr_sdl   = createVerifyPath("google-apps-script-library");
 // var docId_sdl  = createVerifyDocIn(fldr_sdl, "example_doc").getId();
 // var body_sdl   = DocumentApp.openById(docId_sdl).getBody();
@@ -1315,7 +1333,7 @@ function createVerifyDocAtRoot(name) {
 // -- Multi Division List
 
 // var ss_mdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_mdl = arrObjSheet(ss_mdl, 2);
+// var arrObj_mdl = arrObjFromSheet(ss_mdl, 2);
 // var fldr_mdl   = createVerifyPath("google-apps-script-library");
 // var docId_mdl  = createVerifyDocIn(fldr_mdl, "example_doc").getId();
 // var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
@@ -1405,7 +1423,7 @@ function mergeDataArrObjDoc(arrObj, template, naming, fldr, ts) {
 // --------------------------------------------------------------
 
 var ss_mdaod      = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_mdaod  = arrObjSheet(ss_mdaod, 2);
+var arrObj_mdaod  = arrObjFromSheet(ss_mdaod, 2);
 var main_mdaod    = lastFolderIn("google-apps-script-library");
 var exports_mdaod = createVerifyPath("google-apps-script-library/Merge Exports");
 var doc_mdaod     = findFileIn(main_mdaod, "merge_template_doc");
@@ -1441,7 +1459,7 @@ function mergeObjInSheet(obj, sheetObj) {
 // -- FLAG --
 // create ex
 
-function mergeDataArrObjSheet(arrObj, template, naming, fldr, ts) {
+function mergeDataarrObjFromSheet(arrObj, template, naming, fldr, ts) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
     var name = strFromProp(obj, naming);
@@ -1455,13 +1473,13 @@ function mergeDataArrObjSheet(arrObj, template, naming, fldr, ts) {
 } 
 
 var ss_mdaos      = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_mdaos  = arrObjSheet(ss_mdaod, 2);
+var arrObj_mdaos  = arrObjFromSheet(ss_mdaod, 2);
 var main_mdaos    = lastFolderIn("google-apps-script-library");
 var exports_mdaos = createVerifyPath("google-apps-script-library/Merge Exports");
 var sheet_mdaos   = findFileIn(main_mdaod, "merge_template_sheet");
 var name_mdaos    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
 
-// mergeDataArrObjSheet(arrObj_mdaos, sheet_mdaos, name_mdaos, exports_mdaod, true)
+// mergeDataarrObjFromSheet(arrObj_mdaos, sheet_mdaos, name_mdaos, exports_mdaod, true)
 
 // -- Cell Shading
 
@@ -1552,7 +1570,7 @@ function mailMerge(arrObj) {
 }
 
 var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_mm = arrObjSheet(ss_mm, 1);
+var ex_mm = arrObjFromSheet(ss_mm, 1);
 // mailMerge(ex_mm);
 
 // Other
