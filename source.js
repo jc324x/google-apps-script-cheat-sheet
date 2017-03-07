@@ -1,5 +1,3 @@
-// 1250 Docs
-
 function test() {}
 Logger.log("Start");
 
@@ -13,7 +11,7 @@ Logger.log("Start");
 // | -- Compare Two Arrays
 // | - Multidimensional Array
 // | -- Flatten Multidimensional Array
-// | -- Create Multidimensional Array of Values *
+// | -- Create Multidimensional Array of Values
 // | - Array of Objects
 // | -- Sort by Property or Properties
 // | -- Find Object With Unique Property Value
@@ -23,7 +21,7 @@ Logger.log("Start");
 // | - Object
 // | -- Array of Matching Property Values
 // | -- Unify Object Properties  
-// | -- Merge Objects
+// | -- Merge Objects -> Combine Objects
 // | -- Object from Range 
 // | - Dates and Times
 // | -- Formatted Timestamps
@@ -31,13 +29,13 @@ Logger.log("Start");
 // | -- Match a Date to a Range
 // | Drive
 // | - Folders
-// | -- Create or Verify Folder Path *
-// | -- Last Folder in Folder Path *
+// | -- Create or Verify Folder Path
+// | -- Last Folder in Folder Path
 // | -- Array of All Folders
 // | -- Array of All Folder Names
 // | -- Find a Folder
 // | -- Create or Verify Folders
-// | -- Rename a Folder *
+// | -- Rename a Folder
 // | - Files
 // | -- Array of All Files
 // | -- Array of All File Names
@@ -45,7 +43,7 @@ Logger.log("Start");
 // | -- Parent Folder of a File
 // | -- Copy a File to a Folder
 // | -- Move a File to a Folder
-// | -- Rename a File *
+// | -- Rename a File
 // | Sheets
 // | - Managing Spreadsheet Files
 // | -- Create or Verify Spreadsheet
@@ -75,20 +73,22 @@ Logger.log("Start");
 // | - Utility Functions for Docs
 // | -- Access Document Body
 // | -- Clear Document Body
-// | Sheets and Docs *
-// | - Bulleted Lists *
-// | -- Single Division List *
-// | -- Multi Division List *
-// | - Merge *
-// | -- Utility Functions for Merges
-// | --- String From Object Properties
-// | --- Find and Replace Text from Object Properties
-// | -- Merge Document *
-// | -- Cell Shading *
-// | Gmail
-// | - Send Email
+// | Merges
+// | - Utility Functions for Merges
+// | -- String from Object Properties
 // | -- Comma Separated List of Recipients
-// | -- Mail Merge
+// | - Docs
+// | -- Find and Replace in Doc by Object Properties
+// | -- Create Merged Documents From a Template Document
+// | -- Shade Cells in Table
+// | -- Create Bulleted List from Array of Objects
+// | - Sheets
+// | -- Find and Replace in Sheet by Object Properties
+// | -- Create Merged Sheets From a Template Spreadsheet
+// | -- Shade Cells in Sheet
+// | -- Set Range of Values in Sheet 
+// | - Gmail
+// | -- Mail Merge from Array of Objects
 // | Other
 // | -- Regex Only Numbers or Letters
 
@@ -1362,20 +1362,21 @@ function createVerifyDocAtRoot(name) {
 // 	}
 // })();
 
-// - Merge
-
-// | -- Merge Document *
-// | -- Cell Shading *
+// | - Merge
+// | -- String from Object Properties
+// | -- Replace Text from Obj Prop in Doc / Sheet
+// | -- Find and Replace in Doc 
+// | -- Shade Cells in Sheet
+// | -- Shade Cells in Doc
 // | Gmail
-// | - Send Email
 // | -- Comma Separated List of Recipients
 // | -- Mail Merge
+// | Other
+// | -- Regex Only Numbers or Letters
 
+// - Merge
 
-
-// -- Utility Functions for Merges
-
-// --- String From Object Properties
+// -- String From Object Properties
 
 var obj_nfp = { 
 	name:  "Jon",
@@ -1401,12 +1402,12 @@ function strFromProp(obj, str){
   return _arr.join(" ");
 }
 
-// var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
-// Logger.log(ex_nfp);
+var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
+Logger.log(ex_nfp);
 
 // -- FLAG -- | example?
 // --- Find and Replace Text from Object Properties
-//
+
 // --- Find and Replace Text in Document from Object Properties
 
 function mergeDocByObj(docObj, obj) {
@@ -1599,3 +1600,6 @@ var ex_abc = re.replace(/\d/g, "");
 // Logger.log(ex_abc);
 
 Logger.log("End");
+
+// ----------------------------------------------------------------------------------------------
+
