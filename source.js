@@ -321,10 +321,10 @@ function firstEntry(arrObj){
   }
 }
 
-// var ss_fe     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet4");
-// var arrObj_fe = arrObjFromRange(ss_le, "A1:B4");
-// var ex_fe     = firstEntry(arrObj_le);
-// Logger.log(ex_fe);
+var ss_fe     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var arrObj_fe = arrObjFromRange(ss_fe, "J1:K4");
+var ex_fe     = firstEntry(arrObj_fe);
+Logger.log(ex_fe);
 
 function lastEntry(arrObj) {
   if (arrObj.length >= 2) {
@@ -337,10 +337,10 @@ function lastEntry(arrObj) {
   }
 } 
 
-// var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet4");
-// var arrObj_le = arrObjFromRange(ss_le, "A1:B4");
-// var ex_le     = lastEntry(arrObj_le);
-// Logger.log(ex_le);
+var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var arrObj_le = arrObjFromRange(ss_le, "J1:K4");
+var ex_le     = lastEntry(arrObj_le);
+Logger.log(ex_le);
 
 // -- Filter by Property Value or Values | return: array (objects)
 
@@ -1401,8 +1401,8 @@ function strFromProp(obj, str){
   return _arr.join(" ");
 }
 
-var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
-Logger.log(ex_nfp);
+// var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
+// Logger.log(ex_nfp);
 
 // -- FLAG -- | example?
 // --- Find and Replace Text from Object Properties
