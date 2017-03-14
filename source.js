@@ -9,6 +9,8 @@ Logger.log("Start");
 // | -- Get Count of Values
 // | -- Intersect of Two Arrays
 // | -- Compare Two Arrays
+// | -- Array as Delimited String
+// | -- Array as Modified Delimited String
 // | - Multidimensional Array
 // | -- Flatten Multidimensional Array
 // | -- Create Multidimensional Array of Values
@@ -76,7 +78,6 @@ Logger.log("Start");
 // | Merges
 // | - Utility Functions for Merges
 // | -- String from Object Properties
-// | -- Comma Separated List of Recipients
 // | - Docs
 // | -- Find and Replace in Doc by Object Properties
 // | -- Create Merged Documents From a Template Document
@@ -230,6 +231,41 @@ function flattenMultiArr(multiArr){
 // var val_fma = ss_fma.getRange("G2:H5").getValues();
 // var ex_fma  = flattenMultiArr(val_fma).sort();
 // Logger.log(ex_fma);
+
+// -- Array as Delimited String
+
+function delimited(arr, delimiter){
+  var _arr = rmDuplicatesFrom(arr).sort();
+  var str  = "";
+  for (var i = 0; i < _arr.length; i++) {
+		str += _arr[i] + ", "
+  }
+  str = str.slice(0, -2);
+  return str;
+}
+
+var arr_clf = ["a@gmail.com", "b@gmail.com", "z@gmail.com", "z@gmail.com", "h@gmail.com"];
+var ex_clf  = commaListFrom(arr_clf);
+// Logger.log(ex_clf);
+
+// --- Array as Modified Delimited String
+
+function delimitedModified(arr, delimiter, modification) {
+  var _arr = rmDuplicatesFrom(arr).sort();
+  var str  = "";
+  for (var i = 0; i < _arr.length; i++) {
+		str += _arr[i] + alt + ", "
+  }
+  str = str.slice(0, -2);
+  return str;
+}
+
+var arr_clfd = ["a_user", "b_user", "c_user", "a_user"];
+var ex_clfd = commaListForDomain(arr_clfd, "@example.com");
+Logger.log(ex_clfd);
+
+// var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
+// Logger.log(ex_nfp);
 
 // - Array of Objects
 
@@ -1362,19 +1398,9 @@ function createVerifyDocAtRoot(name) {
 // 	}
 // })();
 
-// | - Merge
-// | -- String from Object Properties
-// | -- Replace Text from Obj Prop in Doc / Sheet
-// | -- Find and Replace in Doc 
-// | -- Shade Cells in Sheet
-// | -- Shade Cells in Doc
-// | Gmail
-// | -- Comma Separated List of Recipients
-// | -- Mail Merge
-// | Other
-// | -- Regex Only Numbers or Letters
+// Merges
 
-// - Merge
+// - Utility Functions for Merges
 
 // -- String From Object Properties
 
@@ -1401,9 +1427,6 @@ function strFromProp(obj, str){
   } 
   return _arr.join(" ");
 }
-
-// var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
-// Logger.log(ex_nfp);
 
 // -- FLAG -- | example?
 // --- Find and Replace Text from Object Properties
