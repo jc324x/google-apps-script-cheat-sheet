@@ -17,7 +17,7 @@ Logger.log("Start");
 // | - Array of Objects
 // | -- Sort by Property or Properties
 // | -- Find Object With Unique Property Value
-// | -- Find Oldest or Youngest Object by Timestamp
+// | -- Find Oldest or Youngest Object by Timestamp * 
 // | -- Filter by Property Value or Values
 // | -- Unify Properties for Array of Objects
 // | - Object
@@ -1535,8 +1535,8 @@ function arrForCol(rangeObj){
   return arr;
 }
 
-var ss_vfc    = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
-var range_vfc = ss_vfc.getRange("A1:A5");
+var ss_vfc     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
+var range_vfc  = ss_vfc.getRange("A1:A5");
 var colVal_vfc = arrForCol(range_vfc);
 // Logger.log(colVal_vfc);
 
@@ -1643,4 +1643,12 @@ var ex_abc = re.replace(/\d/g, "");
 Logger.log("End");
 
 // ----------------------------------------------------------------------------------------------
+
+
+function timerCheck(start, end) {
+  var elapsed = ((((new Date().getTime()) - start.getTime() ) / 1000).toFixed(2));
+  // var elapsed = (new Date().getTime()) - start.getTime() ;
+    Logger.log(elapsed + " / " + end);
+    return elapsed < end;
+} 
 
