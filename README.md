@@ -1,6 +1,6 @@
 # Google Apps Script Library
 
-#[General](#general)
+[General](#general)
 * [Array](#array)
   * [Check for a Value](#check-for-a-value)
   * [Remove Duplicates](#remove-duplicates)
