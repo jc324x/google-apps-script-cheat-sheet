@@ -1,16 +1,5 @@
 # Google Apps Script Library
 
-// | General
-// | - Array
-// | -- Check for a Value
-// | -- Remove Duplicates
-// | -- Remove Empty Values
-// | -- Get Count of Values
-// | -- Intersect of Two Arrays
-// | -- Compare Two Arrays
-// | -- Array as Delimited String
-// | -- Array as Modified Delimited String
-
 ##[General](#general)
 * [Array](#array)
   * [Check for a Value](#check-for-a-value)
@@ -21,7 +10,6 @@
   * [Compare Two Arrays](#compare-two-arrays)
   * [Array as Delimited String](#array-as-delimited-string)
   * [Array as Modified Delimited String](#array-as-modified-delimited-string)
-
 
 ## General
 
@@ -37,4 +25,39 @@ function checkValIn(arr, val) {
 var arr_cvi = [1,2,3,4];
 var ex_cvi  = checkValIn(arr_cvi);
 Logger.log(ex_cvi); // false
+```
+
+#### Remove Duplicates | return: `array`
+
+```javascript
+```
+
+#### Remove Empty Values | return: `array`
+
+```javascript
+```
+
+#### Get Count of Values | return: `array (objects)`
+
+```javascript
+```
+
+#### Intersect of Two Arrays | return: `array`
+
+```javascript
+```
+
+#### Compare Two Arrays | return: `boolean`
+
+```javascript
+```
+
+#### Array as Delimited String | return: `string`
+
+```javascript
+```
+
+#### Array as Modified Delimited String | return: `string`
+
+```javascript
 ```

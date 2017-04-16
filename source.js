@@ -131,7 +131,7 @@ function rmDuplicatesFrom(arr) {
 
 var arr_rdf = [1,2,3,1,2,3,4,];
 var ex_rdf  = rmDuplicatesFrom(arr_rdf);
-Logger.log(ex_rdf); // VALUE
+Logger.log(ex_rdf); // [1,2,3,4] 
 
 // -- Remove Empty Values | return: `array`
 
@@ -139,10 +139,9 @@ function rmEmptyVal(x){
 	return (x !== (undefined || ''));
 }
 
-// var arr_rev  = ["a",,"b",,,"c"];
-// var ex_rev = arr_rev.filter(rmEmptyVal);
-// Logger.log("rmEmpty input ➡ " + arr_rev);
-// Logger.log("rmEmpty output ➡ " + ex_rev);
+var arr_rev = ["a",,"b",,,"c"];
+var ex_rev  = arr_rev.filter(rmEmptyVal);
+Logger.log(ex_rev); // ["a","b","c"]
 
 // -- Get Count of Values | return: array (objects)
 
@@ -169,11 +168,10 @@ function countOfValIn(arr){
 
 // var arr_covi  = ["A", "B", "C", "A", "B", "C", "D", "A"];
 // var ex_covi = countOfValIn(arr_covi);
-// Logger.log("countVal input ➡ " + arr_covi);
-// Logger.log("countVal out ⬇ ");
-// Logger.log(ex_covi);
+// Logger.log(ex_covi); // VALUE
 
-// -- Intersect of Two Arrays | return: array | note: sort arrays prior
+// -- Intersect of Two Arrays | return: array 
+// NOTE: sort arrays prior
 
 function intersectOf(arrA, arrB) {
 	var a = 0;
@@ -258,9 +256,6 @@ function delimitedModified(arr, delimiter, modification) {
 var arr_clfd = ["a_user", "b_user", "c_user", "a_user"];
 var ex_clfd = commaListForDomain(arr_clfd, "@example.com");
 Logger.log(ex_clfd);
-
-// var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
-// Logger.log(ex_nfp);
 
 // - Array of Objects
 
@@ -1405,6 +1400,7 @@ var obj_nfp = {
   job:   "IT"
 };
 
+// -- FLAG -- good?
 function strFromProp(obj, str){
   var arr  = str.split(" ");
   var _arr = [];
@@ -1423,7 +1419,9 @@ function strFromProp(obj, str){
   return _arr.join(" ");
 }
 
-// -- FLAG -- | example?
+// var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
+// Logger.log(ex_nfp);
+
 // --- Find and Replace Text from Object Properties
 
 // --- Find and Replace Text in Document from Object Properties
