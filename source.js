@@ -103,21 +103,17 @@ Logger.log("Start");
 
 // - Array 
 
-// -- Check for a Value | return: boolean
+// -- Check for a Value | return: `boolean`
 
 function checkValIn(arr, val) { 
 	return arr.indexOf(val) > -1; 
 }
 
-// var arr_cvi = [1,2,3,4];
-
-// if (checkValIn(arr_cvi, 99)) {
-//     Logger.log("99 is in the array"); 
-//   } else {
-//     Logger.log("99 is not in the array");
-// }
-
-// -- Remove Duplicates | return: array 
+var arr_cvi = [1,2,3,4];
+var ex_cvi  = checkValIn(arr_cvi);
+Logger.log(ex_cvi); // false
+  
+// -- Remove Duplicates | return: `array`
 
 function rmDuplicatesFrom(arr) {
 	var check  = {};
@@ -133,12 +129,11 @@ function rmDuplicatesFrom(arr) {
 	return _arr;
 }
 
-// var arr_rdf  = [1,2,3,1,2,3,4,];
-// var ex_rdf = rmDuplicatesFrom(arr_rdf);
-// Logger.log("rmDup input ➡ " + arr_rdf);
-// Logger.log("rmDup output ➡ " + ex_rdf);
+var arr_rdf = [1,2,3,1,2,3,4,];
+var ex_rdf  = rmDuplicatesFrom(arr_rdf);
+Logger.log(ex_rdf); // VALUE
 
-// -- Remove Empty Values | return: array
+// -- Remove Empty Values | return: `array`
 
 function rmEmptyVal(x){
 	return (x !== (undefined || ''));
