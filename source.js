@@ -251,8 +251,6 @@ var val_fma = ss_fma.getRange("G2:H5").getValues();
 
 // - Array of Objects
 
-// ex. array of objects
-
 var ex_arrObj = [
 {a: 1000, b: 1, c: 5}, 
 {a: 10000, b: 2, c: 5000}, 
@@ -274,9 +272,8 @@ function dynSort(prop) {
   }
 }
 
-// ex_arrObj.sort(dynSort("a"));
-// Logger.log("arrObj sorted by 'a' value ⬇ ");
-// Logger.log(ex_arrObj);
+// Logger.log(ex_arrObj.sort(dynSort("a"))); 
+// [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 function dynSortM() {
   var props = arguments;
@@ -290,9 +287,8 @@ function dynSortM() {
   }
 }
 
-// ex_arrObj.sort(dynSortM("b", "c"));
-// Logger.log("arrObj sorted by 'b' and 'c' values ⬇ ");
-// Logger.log(ex_arrObj);
+// Logger.log(ex_arrObj.sort(dynSortM("b", "c"))); 
+// [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 // -- Find Object With Unique Property Value | return: object / value
 

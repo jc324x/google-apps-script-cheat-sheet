@@ -20,7 +20,7 @@
 ```javascript
 function checkValIn(arr, val) { 
   return arr.indexOf(val) > -1; 
-}
+
 
 var arr_cvi = [1,2,3,4];
 Logger.log(checkValIn(arr_cvi,5)); // false
@@ -164,7 +164,7 @@ Logger.log(delimitedModified(arr_clfd, "@example.com", ",")); // x@example.com, 
 
 ### Multidimensional Array
 
-#### Flatten Multidimensional Array| return: `array`
+#### Flatten Multidimensional Array | return: `array`
 
 ```javascript
 function flattenMultiArr(multiArr){
@@ -177,4 +177,49 @@ function flattenMultiArr(multiArr){
 var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 var val_fma = ss_fma.getRange("G2:H5").getValues();
 Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+### Array of Objects
+
+```javascript
+var ex_arrObj = [
+{a: 1000, b: 1, c: 5}, 
+{a: 10000, b: 2, c: 5000}, 
+{a: 10, b: 2, c: 500},
+{a: 1, b: 1, c: 50}
+]
+```
+
+#### Sort by Property or Properties | return: `array (objects)`
+
+```javascript
+function dynSort(prop) {
+  var sortOrder = 1;
+  if(prop[0] === "-") {
+    sortOrder = -1;
+    prop = prop.substr(1);
+  }
+  return function (a,b) {
+    var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
+    return result * sortOrder;
+  }
+}
+
+Logger.log(ex_arrObj.sort(dynSort("a"))); 
+// [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}]
+
+function dynSortM() {
+  var props = arguments;
+  return function (obj1, obj2) {
+    var i = 0, result = 0, numberOfProperties = props.length;
+    while(result === 0 && i < numberOfProperties) {
+      result = dynSort(props[i])(obj1, obj2);
+      i++;
+    }
+    return result;
+  }
+}
+
+Logger.log(ex_arrObj.sort(dynSortM("b", "c"))); 
+// [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 ```
