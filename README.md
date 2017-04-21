@@ -19,7 +19,7 @@
 
 ```javascript
 function checkValIn(arr, val) { 
-	return arr.indexOf(val) > -1; 
+  return arr.indexOf(val) > -1; 
 }
 
 var arr_cvi = [1,2,3,4];
@@ -30,17 +30,17 @@ Logger.log(checkValIn(arr_cvi,5)); // false
 
 ```javascript
 function rmDuplicatesFrom(arr) {
-	var check  = {};
-	var _arr = [];
-	var j = 0;
-	for(var i = 0; i < arr.length; i++) {
-		var item = arr[i];
-		if(check[item] !== 1) {
-			check[item] = 1;
-			_arr[j++] = item;
-		}
-	}
-	return _arr;
+  var check  = {};
+  var _arr = [];
+  var j = 0;
+  for(var i = 0; i < arr.length; i++) {
+    var item = arr[i];
+    if(check[item] !== 1) {
+      check[item] = 1;
+      _arr[j++] = item;
+    }
+  }
+  return _arr;
 }
 
 var arr_rdf = [1,2,3,1,2,3,4,];
@@ -51,7 +51,7 @@ Logger.log(rmDuplicatesFrom(arr_rdf)); // [1,2,3,4]
 
 ```javascript
 function rmEmptyVal(x){
-	return (x !== (undefined || ''));
+  return (x !== (undefined || ''));
 }
 
 var arr_rev = ["a",,"b",,,"c"];
@@ -62,24 +62,24 @@ Logger.log(arr_rev.filter(rmEmptyVal)); // [a,b,c]
 
 ```javascript
 function countOfValIn(arr){
-	var _arr = [];
-	var copy = arr.slice(0);
-	for (var i = 0; i < arr.length; i++) {
-		var myCount = 0;	
-		for (var w = 0; w < copy.length; w++) {
-			if (arr[i] == copy[w]) {
-				myCount++;
-				delete copy[w];
-			}
-		}
-		if (myCount > 0) {
-			var obj = new Object();
-			obj.value = arr[i];
-			obj.count = myCount;
-			_arr.push(obj);
-		}
-	}
-	return _arr;
+  var _arr = [];
+  var copy = arr.slice(0);
+  for (var i = 0; i < arr.length; i++) {
+    var myCount = 0;  
+    for (var w = 0; w < copy.length; w++) {
+      if (arr[i] == copy[w]) {
+        myCount++;
+        delete copy[w];
+      }
+    }
+    if (myCount > 0) {
+      var obj = new Object();
+      obj.value = arr[i];
+      obj.count = myCount;
+      _arr.push(obj);
+    }
+  }
+  return _arr;
 }
 
 var arr_covi  = ["A", "B", "C", "A", "B", "C", "A"];
@@ -90,8 +90,8 @@ Logger.log(countOfValIn(arr_covi)); // {count=3.0, value=A}, {count=2.0, value=B
 
 ```javascript
 function intersectOf(arrA, arrB) {
-	var a = 0;
-	var b = 0;
+  var a = 0;
+  var b = 0;
   var _arr = [];
   while( a < arrA.length && b < arrB.length ) {
      if (arrA[a] < arrB[b] ) { a++; }
@@ -135,7 +135,7 @@ function delimited(arr, delimiter){
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-		str += _arr[i] + delimiter + "  ";
+    str += _arr[i] + delimiter + "  ";
   }
   str = str.slice(0, -2);
   return str;
@@ -152,7 +152,7 @@ function delimitedModified(arr, extension, delimiter) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-		str += _arr[i] + extension + delimiter + " "; 
+    str += _arr[i] + extension + delimiter + " "; 
   }
   str = str.slice(0, -2);
   return str;

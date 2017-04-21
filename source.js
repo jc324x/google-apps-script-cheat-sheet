@@ -106,7 +106,7 @@ Logger.log("Start");
 // -- Check for a Value | return: `boolean`
 
 function checkValIn(arr, val) { 
-	return arr.indexOf(val) > -1; 
+  return arr.indexOf(val) > -1; 
 }
 
 var arr_cvi = [1,2,3,4];
@@ -115,17 +115,17 @@ var arr_cvi = [1,2,3,4];
 // -- Remove Duplicates | return: `array`
 
 function rmDuplicatesFrom(arr) {
-	var check  = {};
-	var _arr = [];
-	var j = 0;
-	for(var i = 0; i < arr.length; i++) {
-		var item = arr[i];
-		if(check[item] !== 1) {
-			check[item] = 1;
-			_arr[j++] = item;
-		}
-	}
-	return _arr;
+  var check  = {};
+  var _arr = [];
+  var j = 0;
+  for(var i = 0; i < arr.length; i++) {
+    var item = arr[i];
+    if(check[item] !== 1) {
+      check[item] = 1;
+      _arr[j++] = item;
+    }
+  }
+  return _arr;
 }
 
 var arr_rdf = [1,2,3,1,2,3,4,];
@@ -134,7 +134,7 @@ var arr_rdf = [1,2,3,1,2,3,4,];
 // -- Remove Empty Values | return: `array`
 
 function rmEmptyVal(x){
-	return (x !== (undefined || ''));
+  return (x !== (undefined || ''));
 }
 
 var arr_rev = ["a",,"b",,,"c"];
@@ -143,24 +143,24 @@ var arr_rev = ["a",,"b",,,"c"];
 // -- Get Count of Values | return: array (objects)
 
 function countOfValIn(arr){
-	var _arr = [];
-	var copy = arr.slice(0);
-	for (var i = 0; i < arr.length; i++) {
-		var myCount = 0;	
-		for (var w = 0; w < copy.length; w++) {
-			if (arr[i] == copy[w]) {
-				myCount++;
-				delete copy[w];
-			}
-		}
-		if (myCount > 0) {
-			var obj = new Object();
-			obj.value = arr[i];
-			obj.count = myCount;
-			_arr.push(obj);
-		}
-	}
-	return _arr;
+  var _arr = [];
+  var copy = arr.slice(0);
+  for (var i = 0; i < arr.length; i++) {
+    var myCount = 0;  
+    for (var w = 0; w < copy.length; w++) {
+      if (arr[i] == copy[w]) {
+        myCount++;
+        delete copy[w];
+      }
+    }
+    if (myCount > 0) {
+      var obj = new Object();
+      obj.value = arr[i];
+      obj.count = myCount;
+      _arr.push(obj);
+    }
+  }
+  return _arr;
 }
 
 var arr_covi  = ["A", "B", "C", "A", "B", "C", "A"];
@@ -169,8 +169,8 @@ var arr_covi  = ["A", "B", "C", "A", "B", "C", "A"];
 // -- Intersect of Two Arrays | return: array 
 
 function intersectOf(arrA, arrB) {
-	var a = 0;
-	var b = 0;
+  var a = 0;
+  var b = 0;
   var _arr = [];
   while( a < arrA.length && b < arrB.length ) {
      if (arrA[a] < arrB[b] ) { a++; }
@@ -210,7 +210,7 @@ function delimited(arr, delimiter){
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-		str += _arr[i] + delimiter + "  ";
+    str += _arr[i] + delimiter + "  ";
   }
   str = str.slice(0, -2);
   return str;
@@ -225,7 +225,7 @@ function delimitedModified(arr, extension, delimiter) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-		str += _arr[i] + extension + delimiter + " "; 
+    str += _arr[i] + extension + delimiter + " "; 
   }
   str = str.slice(0, -2);
   return str;
@@ -245,7 +245,7 @@ function flattenMultiArr(multiArr){
   return arr;
 }
 
-var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
 var val_fma = ss_fma.getRange("G2:H5").getValues();
 // Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -263,15 +263,15 @@ var ex_arrObj = [
 // -- Sort by Property or Properties | return: array (objects)
 
 function dynSort(prop) {
-	var sortOrder = 1;
-	if(prop[0] === "-") {
-		sortOrder = -1;
-		prop = prop.substr(1);
-	}
-	return function (a,b) {
-		var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
-		return result * sortOrder;
-	}
+  var sortOrder = 1;
+  if(prop[0] === "-") {
+    sortOrder = -1;
+    prop = prop.substr(1);
+  }
+  return function (a,b) {
+    var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
+    return result * sortOrder;
+  }
 }
 
 // ex_arrObj.sort(dynSort("a"));
@@ -279,15 +279,15 @@ function dynSort(prop) {
 // Logger.log(ex_arrObj);
 
 function dynSortM() {
-	var props = arguments;
-	return function (obj1, obj2) {
-		var i = 0, result = 0, numberOfProperties = props.length;
-		while(result === 0 && i < numberOfProperties) {
-			result = dynSort(props[i])(obj1, obj2);
-			i++;
-		}
-		return result;
-	}
+  var props = arguments;
+  return function (obj1, obj2) {
+    var i = 0, result = 0, numberOfProperties = props.length;
+    while(result === 0 && i < numberOfProperties) {
+      result = dynSort(props[i])(obj1, obj2);
+      i++;
+    }
+    return result;
+  }
 }
 
 // ex_arrObj.sort(dynSortM("b", "c"));
@@ -297,14 +297,14 @@ function dynSortM() {
 // -- Find Object With Unique Property Value | return: object / value
 
 function findObjIn(arrObj, pQuery, val) {
-	for (var i = 0; i < arrObj.length; i++) {
-		var obj = arrObj[i];
-		for (var prop in obj) {
-			if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
-				return obj;
-			}
-		}
-	}
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
+        return obj;
+      }
+    }
+  }
 }
 
 // Logger.log("find obj with 'a' value of 1000 ⬇ ");
@@ -312,14 +312,14 @@ function findObjIn(arrObj, pQuery, val) {
 // Logger.log(ex_foi);
 
 function findObjValIn(arrObj, pQuery, val, pReturn) {
-	for (var i = 0; i < arrObj.length; i++) {
-		var obj = arrObj[i];
-		for (var prop in obj) {
-			if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
-				return obj[pReturn];
-			}
-		}
-	}
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
+        return obj[pReturn];
+      }
+    }
+  }
 }
 
 // Logger.log("find obj with 'c' value of 500 and return its 'a' value ⬇ ");
@@ -411,24 +411,24 @@ function unifyPropForArrObj(arrObj, arrProp, newProp){
 // -- Array of Matching Property Values | return: array
 
 function filterValIn(obj, props) {
-	var arr  = [];
-	var keys = intersectOf(Object.keys(obj), props);
-	for (var i = 0; i < keys.length; i++) {
-		var key = keys[i];
-		for (var prop in obj) {
-			if (obj.hasOwnProperty(key)) {
-				arr.push(obj[key]);
-				break;
-			}
-		}
-	}
-	return arr;
+  var arr  = [];
+  var keys = intersectOf(Object.keys(obj), props);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(key)) {
+        arr.push(obj[key]);
+        break;
+      }
+    }
+  }
+  return arr;
 }
 
 // var obj_fvi = { 
-// 	a: 1, 
-// 	b: 2, 
-// 	c: 3
+//  a: 1, 
+//  b: 2, 
+//  c: 3
 // };
 
 // var arr_fvi = ["a", "b", "d"];
@@ -449,9 +449,9 @@ function unifyPropForObj(obj, arrProp, newProp){
 }
 
 // var obj_upfo = { 
-// 	a: 1, 
-// 	b: 2, 
-// 	c: 3
+//  a: 1, 
+//  b: 2, 
+//  c: 3
 // };
 
 // var arr_upfo = ["c", "d", "e"];
@@ -472,16 +472,16 @@ function mergeObjs() {
 } 
 
 // var objA_mo = {
-// 	a: 1, 
-// 	b: 2, 
-// 	c: 3
+//  a: 1, 
+//  b: 2, 
+//  c: 3
 // }; 
 
 // var objB_mo = {
 //   c: 4,
-// 	d: 5, 
-// 	e: 6, 
-// 	f: 7
+//  d: 5, 
+//  e: 6, 
+//  f: 7
 
 // }; 
 
@@ -491,15 +491,15 @@ function mergeObjs() {
 // -- Object from Range | return: object
 
 function objFromRange(sheetObj, a1Notation) {
-	var range  = sheetObj.getRange(a1Notation);
-	var height = range.getHeight();
-	var width  = range.getWidth();
-	var values = range.getValues();
-	var obj    = new Object();
-	for (var i = 0; i < values.length; i++) {
-		obj[values[i][0]] = values[i][1];
-	} 
-	return obj;
+  var range  = sheetObj.getRange(a1Notation);
+  var height = range.getHeight();
+  var width  = range.getWidth();
+  var values = range.getValues();
+  var obj    = new Object();
+  for (var i = 0; i < values.length; i++) {
+    obj[values[i][0]] = values[i][1];
+  } 
+  return obj;
 }
 
 // var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
@@ -511,40 +511,40 @@ function objFromRange(sheetObj, a1Notation) {
 // -- Formatted Timestamps | return: string
 
 function fmatD() {
-	var n = new Date();
-	var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
-		return d.join("/");
+  var n = new Date();
+  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
+    return d.join("/");
 }
 
 // var ex_fd = fmatD();
 // Logger.log("current date ➡ " + ex_fd);
 
 function fmat24T(){
-	var n  = new Date();
-	var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
-		for ( var i = 1; i < 3; i++ ) {
-			if ( t[i] < 10 ) {
-				t[i] = "0" + t[i];
-			}
-			return t.join(":");
-		}
+  var n  = new Date();
+  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+    for ( var i = 1; i < 3; i++ ) {
+      if ( t[i] < 10 ) {
+        t[i] = "0" + t[i];
+      }
+      return t.join(":");
+    }
 }
 
 // var ex_24T = fmat24T();
 // Logger.log("current time (24 hour) ➡ " + ex_24T);
 
 function fmat12DT() {
-	var n = new Date();
-	var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
-		var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
-		var s = ( t[0] < 12 ) ? "AM" : "PM";
-	t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
-	for ( var i = 1; i < 3; i++ ) {
-		if ( t[i] < 10 ) {
-			t[i] = "0" + t[i];
-		}
-	}
-	return d.join("/") + " " + t.join(":") + " " + s;
+  var n = new Date();
+  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
+    var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+    var s = ( t[0] < 12 ) ? "AM" : "PM";
+  t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
+  for ( var i = 1; i < 3; i++ ) {
+    if ( t[i] < 10 ) {
+      t[i] = "0" + t[i];
+    }
+  }
+  return d.join("/") + " " + t.join(":") + " " + s;
 }
 
 // var ex_dt12 = fmat12DT();
@@ -553,11 +553,11 @@ function fmat12DT() {
 // -- Date Object from String | return: date
 
 function dateObjectFrom(str) {
-	var arr    = str.split("-");
-	var months = ["January", "February", "March", "April", "May", "June",
-	  "July", "August", "September", "October", "November", "December"
-		];
-	return new Date (months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
+  var arr    = str.split("-");
+  var months = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+    ];
+  return new Date (months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
 }
 
 // var ex_ds   = "2016-02-17";
@@ -567,22 +567,22 @@ function dateObjectFrom(str) {
 // -- Match a Date to a Range | return: integer
 
 var quarterDates = [
-	["08/01/2016", "10/28/2016"],
-	["11/02/2016", "1/9/2017"],
-	["1/15/2017", "3/19/2017"],
-	["3/21/2017", "6/15/2017"],
+  ["08/01/2016", "10/28/2016"],
+  ["11/02/2016", "1/9/2017"],
+  ["1/15/2017", "3/19/2017"],
+  ["3/21/2017", "6/15/2017"],
 ];
 
 function academicQuarter() {
-	var d = new Date();
-	for (i = 0; i < 4; i++){
-		var s = new Date(quarterDates[i][0]);
-		var e = new Date(quarterDates[i][1]);
-		if (d >= s && d <= e ) {
-			var q =  i + 1;
-		} 
-	}
-	if (q) { return q } else { return "date outside of academic calendar"}
+  var d = new Date();
+  for (i = 0; i < 4; i++){
+    var s = new Date(quarterDates[i][0]);
+    var e = new Date(quarterDates[i][1]);
+    if (d >= s && d <= e ) {
+      var q =  i + 1;
+    } 
+  }
+  if (q) { return q } else { return "date outside of academic calendar"}
 }
 
 // var acdQ = academicQuarter();
@@ -595,26 +595,26 @@ function academicQuarter() {
 // -- Create or Verify Folder Path  | return: folder
 
 function createVerifyPath(path) {
-	var arr = path.split('/');
-	var fldr;
-	for (i = 0; i < arr.length; i++) {
-		if (i == 0) {
-			var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
-			if(!(fi.hasNext())) {
-				DriveApp.createFolder(arr[i]);
-				fi = DriveApp.getFoldersByName(arr[i]);
-			} 
-			fldr = fi.next();
-		} else if (i >= 1) {
-			fi = fldr.getFoldersByName(arr[i]);
-			if(!(fi.hasNext())) {
-				fldr.createFolder(arr[i]);
-				fi = DriveApp.getFoldersByName(arr[i]);
-			} 
-			fldr = fi.next();
-		}
-	} 
-	return fldr;
+  var arr = path.split('/');
+  var fldr;
+  for (i = 0; i < arr.length; i++) {
+    if (i == 0) {
+      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      if(!(fi.hasNext())) {
+        DriveApp.createFolder(arr[i]);
+        fi = DriveApp.getFoldersByName(arr[i]);
+      } 
+      fldr = fi.next();
+    } else if (i >= 1) {
+      fi = fldr.getFoldersByName(arr[i]);
+      if(!(fi.hasNext())) {
+        fldr.createFolder(arr[i]);
+        fi = DriveApp.getFoldersByName(arr[i]);
+      } 
+      fldr = fi.next();
+    }
+  } 
+  return fldr;
 }
 
 // var ex_cov = createVerifyPath("google-apps-script-library/A/B/C");
@@ -623,26 +623,26 @@ function createVerifyPath(path) {
 // -- Get the Last Folder in Folder Path | return: folder
 
 function lastFolderIn(path) {
-	var arr = path.split('/');
-	var fldr;
-	for (i = 0; i < arr.length; i++) {
-		if (i == 0) {
-			var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
-			if (fi.hasNext()) {
-				fldr = fi.next();
-			} else { 
-				return null;
-			}
-		} else if (i >= 1) {
-				fi = fldr.getFoldersByName(arr[i]);
-				if (fi.hasNext()) {
-					fldr = fi.next();
-				} else { 
-					return null;
-				}
-		}
-	} 
-	return fldr;
+  var arr = path.split('/');
+  var fldr;
+  for (i = 0; i < arr.length; i++) {
+    if (i == 0) {
+      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      if (fi.hasNext()) {
+        fldr = fi.next();
+      } else { 
+        return null;
+      }
+    } else if (i >= 1) {
+        fi = fldr.getFoldersByName(arr[i]);
+        if (fi.hasNext()) {
+          fldr = fi.next();
+        } else { 
+          return null;
+        }
+    }
+  } 
+  return fldr;
 }
 
 // var ex_lfi = lastFolderIn("google-apps-script-library/A/B/C");
@@ -653,13 +653,13 @@ function lastFolderIn(path) {
 // --- All Folders in a Folder 
 
 function foldersIn(fldr) {
-	var fi  = fldr.getFolders();
-	var arr = [];
-	while (fi.hasNext()) {
-		var _fldr = fi.next();
-		arr.push(_fldr);
-	} 
-	return arr;
+  var fi  = fldr.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var _fldr = fi.next();
+    arr.push(_fldr);
+  } 
+  return arr;
 }
 
 // var fldr_fi = lastFolderIn("google-apps-script-library");
@@ -669,14 +669,14 @@ function foldersIn(fldr) {
 // --- All Folders at Root
 
 function rootFolders() {
-	var rf  = DriveApp.getRootFolder();
-	var fi  = rf.getFolders();
-	var arr = [];
-	while (fi.hasNext()) {
-		var fldr = fi.next();
-		arr.push(fldr);
-	} 
-	return arr;
+  var rf  = DriveApp.getRootFolder();
+  var fi  = rf.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var fldr = fi.next();
+    arr.push(fldr);
+  } 
+  return arr;
 }
 
 // var ex_rf  = rootFolders();
@@ -686,13 +686,13 @@ function rootFolders() {
 // --- All Folders in Drive
 
 function allFolders() {
-	var fi  = DriveApp.getFolders();
-	var arr = [];
-	while (fi.hasNext()) {
-		var fldr = fi.next();
-		arr.push(fldr);
-	} 
-	return arr;
+  var fi  = DriveApp.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var fldr = fi.next();
+    arr.push(fldr);
+  } 
+  return arr;
 }
 
 // var ex_af = allFolders();
@@ -702,12 +702,12 @@ function allFolders() {
 // -- Array of Folder Names | return: array (strings)
 
 function folderNames(fldrs) {
-	var arr = [];
-	for (var i = 0; i < fldrs.length; i++) {
-		var name = fldrs[i].getName();
-		arr.push(name);
-	}
-	return arr;
+  var arr = [];
+  for (var i = 0; i < fldrs.length; i++) {
+    var name = fldrs[i].getName();
+    arr.push(name);
+  }
+  return arr;
 }
 
 // var fldr_fn = lastFolderIn("google-apps-script-library");
@@ -720,12 +720,12 @@ function folderNames(fldrs) {
 // --- Find a Folder in a Folder
 
 function findFolderIn(fldr, name) {
-	var fldrs = foldersIn(fldr);
-	var names = folderNames(fldrs);
-	if (checkValIn(names, name)) {
-		var _fldr = fldr.getFoldersByName(name).next();
-		return _fldr;
-	}
+  var fldrs = foldersIn(fldr);
+  var names = folderNames(fldrs);
+  if (checkValIn(names, name)) {
+    var _fldr = fldr.getFoldersByName(name).next();
+    return _fldr;
+  }
 }
 
 // var fldr_ffi = lastFolderIn("google-apps-script-library");
@@ -735,13 +735,13 @@ function findFolderIn(fldr, name) {
 // --- Find a Folder at Root
 
 function findFolderAtRoot(name) {
-	var rf    = DriveApp.getRootFolder();
-	var fldrs = rootFolders();
-	var names = folderNames(fldrs);
-	if (checkValIn(names, name)) {
-		var fldr = rf.getFoldersByName(name).next();
-		return fldr;
-	}
+  var rf    = DriveApp.getRootFolder();
+  var fldrs = rootFolders();
+  var names = folderNames(fldrs);
+  if (checkValIn(names, name)) {
+    var fldr = rf.getFoldersByName(name).next();
+    return fldr;
+  }
 }
 
 // var ex_ffar = findFolderAtRoot("google-apps-script-library");
@@ -750,11 +750,11 @@ function findFolderAtRoot(name) {
 // --- Find a Folder in Drive
 
 function findFolderInDrive(name) {
-	var fi = DriveApp.getFoldersByName(name);
-	while (fi.hasNext()){
-		var fldr = fi.next();
-		return fldr;
-	}
+  var fi = DriveApp.getFoldersByName(name);
+  while (fi.hasNext()){
+    var fldr = fi.next();
+    return fldr;
+  }
 }
 
 // var ex_ffid = findFolderInDrive("google-apps-script-library");
@@ -765,14 +765,14 @@ function findFolderInDrive(name) {
 // --- Create or Verify Folders in a Folder
 
 function createVerifyFoldersIn(fldr, names) {
-	var fldrs  = foldersIn(fldr);
-	var _names = folderNames(fldrs);
-	for (i = 0; i < names.length; i++) {
-		if (!(checkValIn(_names, names[i]))) {
-			fldr.createFolder(names[i]);
-		}
-	}
-	return fldr;
+  var fldrs  = foldersIn(fldr);
+  var _names = folderNames(fldrs);
+  for (i = 0; i < names.length; i++) {
+    if (!(checkValIn(_names, names[i]))) {
+      fldr.createFolder(names[i]);
+    }
+  }
+  return fldr;
 }
 
 // var fldr_cvfi = lastFolderIn("google-apps-script-library");
@@ -784,14 +784,14 @@ function createVerifyFoldersIn(fldr, names) {
 // --- Create or Verify Folders at Root
 
 function createVerifyFoldersAtRoot(names) {
-	var rfs    = rootFolders();
-	var _names = folderNames(rfs);
-	for (i=0; i < names.length; i++) {
-		if (!(checkValIn(_names, names[i]))) {
-			DriveApp.createFolder(names[i]);
-		}
-	} 
-	return DriveApp.getRootFolder();
+  var rfs    = rootFolders();
+  var _names = folderNames(rfs);
+  for (i=0; i < names.length; i++) {
+    if (!(checkValIn(_names, names[i]))) {
+      DriveApp.createFolder(names[i]);
+    }
+  } 
+  return DriveApp.getRootFolder();
 }
 
 // var arr_cvfar = ["1", "2", "3"];
@@ -804,10 +804,10 @@ function createVerifyFoldersAtRoot(names) {
 // checkForExFile is akin to `touch`, it just creates an example file
 
 function checkForExFile() {
-	var fldr = createVerifyPath("google-apps-script-library");
-	var file = findFileIn(fldr, "example_file");
-	if (!(file)){fldr.createFile("example_file", "stuff!");}
-	return findFileIn(fldr, "example_file");
+  var fldr = createVerifyPath("google-apps-script-library");
+  var file = findFileIn(fldr, "example_file");
+  if (!(file)){fldr.createFile("example_file", "stuff!");}
+  return findFileIn(fldr, "example_file");
 }
 
 // var chkFile = checkForExFile();
@@ -818,13 +818,13 @@ function checkForExFile() {
 // --- All Files in a Folder
 
 function filesIn(fldr) {
-	var fi  = fldr.getFiles();
-	var arr = [];
-	while (fi.hasNext()) {
-		var file = fi.next();
-		arr.push(file);
-	} 
-	return arr;
+  var fi  = fldr.getFiles();
+  var arr = [];
+  while (fi.hasNext()) {
+    var file = fi.next();
+    arr.push(file);
+  } 
+  return arr;
 }
 
 // var fldr_fin = lastFolderIn("google-apps-script-library");
@@ -834,14 +834,14 @@ function filesIn(fldr) {
 // --- All Files at Root
 
 function rootFiles() {
-	var rf = DriveApp.getRootFolder();
-	var fi = rf.getFiles();
-	var arr = [];
-	while (fi.hasNext()) {
-		var file = fi.next();
-		arr.push(file);
-	} 
-	return arr;
+  var rf = DriveApp.getRootFolder();
+  var fi = rf.getFiles();
+  var arr = [];
+  while (fi.hasNext()) {
+    var file = fi.next();
+    arr.push(file);
+  } 
+  return arr;
 }
 
 // var ex_arf = rootFiles();
@@ -850,13 +850,13 @@ function rootFiles() {
 // --- All Files in Drive
 
 function allFiles() {
-	var fi = DriveApp.getFiles();
-	var arr  = [];
-	while (fi.hasNext()) {
-		var file = fi.next();
-		arr.push(file);
-	} 
-	return arr;
+  var fi = DriveApp.getFiles();
+  var arr  = [];
+  while (fi.hasNext()) {
+    var file = fi.next();
+    arr.push(file);
+  } 
+  return arr;
 }
 
 // var ex_afid = allFiles();
@@ -865,12 +865,12 @@ function allFiles() {
 // -- Array of File Names | return: array (strings)
 
 function fileNames(files) {
-	var arr = [];
-	for (var i = 0; i < files.length; i++) {
-		var name = files[i].getName();
-		arr.push(name);
-	}
-	return arr;
+  var arr = [];
+  for (var i = 0; i < files.length; i++) {
+    var name = files[i].getName();
+    arr.push(name);
+  }
+  return arr;
 }
 
 // var fldr_fnam = lastFolderIn("google-apps-script-library");
@@ -883,12 +883,12 @@ function fileNames(files) {
 // --- Find a File in a Folder
 
 function findFileIn(fldr, name) {
-	var files = filesIn(fldr);
-	var names = fileNames(files);
-	if (checkValIn(names, name)) {
-		var file = fldr.getFilesByName(name).next();
-		return file;
-	}
+  var files = filesIn(fldr);
+  var names = fileNames(files);
+  if (checkValIn(names, name)) {
+    var file = fldr.getFilesByName(name).next();
+    return file;
+  }
 }
 
 // var fldr_ffli = lastFolderIn("google-apps-script-library");
@@ -898,13 +898,13 @@ function findFileIn(fldr, name) {
 // --- Find a File at Root
 
 function findFileAtRoot(name) {
-	var rf    = DriveApp.getRootFolder();
-	var files = rootFiles();
-	var names = fileNames(files);
-	if (checkValIn(names, name)) {
-		var file = rf.getFilesByName(name).next();
-		return file;
-	}
+  var rf    = DriveApp.getRootFolder();
+  var files = rootFiles();
+  var names = fileNames(files);
+  if (checkValIn(names, name)) {
+    var file = rf.getFilesByName(name).next();
+    return file;
+  }
 }
 
 // var file_ffar = findFileAtRoot("NAME-OF-YOUR-FILE-GOES-HERE");
@@ -913,11 +913,11 @@ function findFileAtRoot(name) {
 // --- Find a File in Drive
 
 function findFileInDrive(name) {
-	var fi = DriveApp.getFilesByName(name);
-	while (fi.hasNext()){
-		var file = fi.next();
-		return file;
-	}
+  var fi = DriveApp.getFilesByName(name);
+  while (fi.hasNext()){
+    var file = fi.next();
+    return file;
+  }
 }
 
 // var file_ffid = findFileInDrive("example_file");
@@ -926,8 +926,8 @@ function findFileInDrive(name) {
 // -- Parent Folder of a File | return: folder
 
 function parentFolderOf(file) {
-	var fi = file.getParents();
-	return fi.next();
+  var fi = file.getParents();
+  return fi.next();
 }
 
 // var file_pfo = findFileInDrive("example_file");
@@ -937,10 +937,10 @@ function parentFolderOf(file) {
 // -- Copy a File to a Folder | return: file
 
 function copyFile(file, fldr) {
-	var name = file.getName();
-	var dest = findFileIn(fldr, name);
-	if (dest === undefined) { file.makeCopy(name, fldr) }
-	return findFileIn(fldr, name);
+  var name = file.getName();
+  var dest = findFileIn(fldr, name);
+  if (dest === undefined) { file.makeCopy(name, fldr) }
+  return findFileIn(fldr, name);
 }
 
 // var fldr_cf1 = lastFolderIn("google-apps-script-library");
@@ -952,12 +952,12 @@ function copyFile(file, fldr) {
 // -- Move a File to a Folder | return: file
 
 function moveFile(file, fldr) {
-	var name = file.getName();
-	var dest = findFileIn(fldr, name);
-	if (dest === undefined) { file.makeCopy(name, fldr) }
-	var _file = findFileIn(fldr, name);
-	if (_file !== undefined) { file.setTrashed(true) }
-	return _file;
+  var name = file.getName();
+  var dest = findFileIn(fldr, name);
+  if (dest === undefined) { file.makeCopy(name, fldr) }
+  var _file = findFileIn(fldr, name);
+  if (_file !== undefined) { file.setTrashed(true) }
+  return _file;
 }
 
 // var fldr_mf1 = lastFolderIn("google-apps-script-library");
@@ -982,14 +982,14 @@ function renameFile(file, name) {
 // --- Create or Verify Spreadsheet in a Folder
 
 function createVerifySSIn(fldr, name) {
-	var files = filesIn(fldr);
-	var names = fileNames(files);
-	if (!(checkValIn(names, name))) {
-		var ss   = SpreadsheetApp.create(name).getId();
-		var file = DriveApp.getFileById(ss);
-		moveFile(file, fldr);
-	}
-	return findFileIn(fldr, name);
+  var files = filesIn(fldr);
+  var names = fileNames(files);
+  if (!(checkValIn(names, name))) {
+    var ss   = SpreadsheetApp.create(name).getId();
+    var file = DriveApp.getFileById(ss);
+    moveFile(file, fldr);
+  }
+  return findFileIn(fldr, name);
 }
 
 // var fldr_cvssi = createVerifyPath("google-apps-script-library");
@@ -999,12 +999,12 @@ function createVerifySSIn(fldr, name) {
 // --- Create or Verify Spreadsheet at Root
 
 function createVerifySSAtRoot(name) {
-	var files = rootFiles();
-	var names = fileNames(files);
-	if (!(checkValIn(names, name))) {
-		var ss = SpreadsheetApp.create(name);
-	}
-	return findFileAtRoot(name);
+  var files = rootFiles();
+  var names = fileNames(files);
+  if (!(checkValIn(names, name))) {
+    var ss = SpreadsheetApp.create(name);
+  }
+  return findFileAtRoot(name);
 }
 
 // var ex_cvssar = createVerifySSAtRoot("example_sheet");
@@ -1025,56 +1025,56 @@ function ssId() {
 // -- Convert Column Number to a Letter | return: string
 
 function numCol(num) {
-	var num = num - 1, chr;
-	if (num <= 25) {
-		chr = String.fromCharCode(97 + num).toUpperCase();
-		return chr;
-	} else if (num >= 26 && num <= 51) {
-		num -= 26;
-		chr = String.fromCharCode(97 + num).toUpperCase();
-		return "A" + chr;
-	} else if (num >= 52 && num <= 77) {
-		num -= 52;
-		chr = String.fromCharCode(97 + num).toUpperCase();
-		return "B" + chr;
-	} else if (num >= 78 && num <= 103) {
-		num -= 78;
-		chr = String.fromCharCode(97 + num).toUpperCase();
-		return "C" + chr;
-	}
+  var num = num - 1, chr;
+  if (num <= 25) {
+    chr = String.fromCharCode(97 + num).toUpperCase();
+    return chr;
+  } else if (num >= 26 && num <= 51) {
+    num -= 26;
+    chr = String.fromCharCode(97 + num).toUpperCase();
+    return "A" + chr;
+  } else if (num >= 52 && num <= 77) {
+    num -= 52;
+    chr = String.fromCharCode(97 + num).toUpperCase();
+    return "B" + chr;
+  } else if (num >= 78 && num <= 103) {
+    num -= 78;
+    chr = String.fromCharCode(97 + num).toUpperCase();
+    return "C" + chr;
+  }
 }
 
 // function ex_nc() {
-// 	for (var i = 1; i <= 104; i++) {
-// 		var j = numCol(i);
-// 		Logger.log(i + " - " + j);
-// 	}
+//  for (var i = 1; i <= 104; i++) {
+//    var j = numCol(i);
+//    Logger.log(i + " - " + j);
+//  }
 // }
 // ex_nc();
 
 // -- Convert Column Letter to a Number | return: integer 
 
 function colNum(col) {
-	var col = col.toUpperCase();
-	if (col.length === 1)  {
-		var chr0 = col.charCodeAt(0) - 64;
-		return chr0;
-	} else if (col.length === 2) {
-		var chr0 = (col.charCodeAt(0) - 64) * 26;
-		var chr1 = col.charCodeAt(1) - 64;
-		return chr0 + chr1;
-	}
+  var col = col.toUpperCase();
+  if (col.length === 1)  {
+    var chr0 = col.charCodeAt(0) - 64;
+    return chr0;
+  } else if (col.length === 2) {
+    var chr0 = (col.charCodeAt(0) - 64) * 26;
+    var chr1 = col.charCodeAt(1) - 64;
+    return chr0 + chr1;
+  }
 }
 
 // function ex_cn() {
-// 	for (var i = 0; i <= 25; i++) {
-// 		var abc = String.fromCharCode(97 + i).toUpperCase();
-// 		Logger.log(abc + " - " + colNum(abc));
-// 	}
-// 	for (var i = 26; i <= 51; i++) {
-// 		var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
-// 		Logger.log(abc + " - " + colNum(abc));
-// 	}
+//  for (var i = 0; i <= 25; i++) {
+//    var abc = String.fromCharCode(97 + i).toUpperCase();
+//    Logger.log(abc + " - " + colNum(abc));
+//  }
+//  for (var i = 26; i <= 51; i++) {
+//    var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
+//    Logger.log(abc + " - " + colNum(abc));
+//  }
 // }
 // ex_cn();
 
@@ -1082,8 +1082,8 @@ function colNum(col) {
 // trigger -> importRange > From spreadsheet > On edit
 
 function importRange(){
-	var get = sheet_gs.getRange("A2:A5").getValues();
-	var set = sheet_gs.getRange("B2:B5").setValues(get);
+  var get = sheet_gs.getRange("A2:A5").getValues();
+  var set = sheet_gs.getRange("B2:B5").setValues(get);
 }
 
 // -- Evaluating True and False | return: boolean
@@ -1092,20 +1092,20 @@ function importRange(){
 // ➡  boolean
 
 function checkTF(input) {
-	if (isNaN(input)) {
-		var first_letter = input.charAt(0).toLowerCase();
-		if (first_letter === 't' || first_letter === 'y') {
-			return true 
-		} else {
-			return false
-		}
-	} else {
-		if (input === 1) {
-			return true
-		} else { 
-			return false;
-		}
-	}
+  if (isNaN(input)) {
+    var first_letter = input.charAt(0).toLowerCase();
+    if (first_letter === 't' || first_letter === 'y') {
+      return true 
+    } else {
+      return false
+    }
+  } else {
+    if (input === 1) {
+      return true
+    } else { 
+      return false;
+    }
+  }
 }
 
 // var ex_ctf1 = "Yes";
@@ -1120,70 +1120,70 @@ function checkTF(input) {
 // --- Header Range | return: range
 
 function headerRange(sheetObj, a1Notation) {
-	var arr  = a1Notation.split(":");
-	var col0 = arr[0].match(/\D/g,'');
-	var col1 = arr[1].match(/\D/g,'');
-	var row  = arr[0].match(/\d+/g);
-	var a1   = col0 + row + ":" + col1 + row;
-	return sheetObj.getRange(a1);
+  var arr  = a1Notation.split(":");
+  var col0 = arr[0].match(/\D/g,'');
+  var col1 = arr[1].match(/\D/g,'');
+  var row  = arr[0].match(/\d+/g);
+  var a1   = col0 + row + ":" + col1 + row;
+  return sheetObj.getRange(a1);
 }
 
 // --- Value Range | return: range
 
 function valueRange(sheetObj, a1Notation) {
-	var arr  = a1Notation.split(":");
-	var col0 = arr[0].match(/\D/g,'');
-	var row0 = arr[0].match(/\d+/g);
-	var col1 = arr[1].match(/\D/g,'');
-	var row1 = arr[1].match(/\d+/g);
-	var a1   = col0 + (Number(row0) + 1) + ":" + col1 + row1;
-	return sheetObj.getRange(a1);
+  var arr  = a1Notation.split(":");
+  var col0 = arr[0].match(/\D/g,'');
+  var row0 = arr[0].match(/\d+/g);
+  var col1 = arr[1].match(/\D/g,'');
+  var row1 = arr[1].match(/\d+/g);
+  var a1   = col0 + (Number(row0) + 1) + ":" + col1 + row1;
+  return sheetObj.getRange(a1);
 }
 
 // --- Header Values | array
 
 function headerVal(rangeObj){
-	var vals = rangeObj.getValues();
-	var arr  = [];
-	for (var i = 0; i < vals[0].length; i++) {
-		var val = vals[0][i];
-		arr.push(val);
-	} 
-	return arr;
+  var vals = rangeObj.getValues();
+  var arr  = [];
+  for (var i = 0; i < vals[0].length; i++) {
+    var val = vals[0][i];
+    arr.push(val);
+  } 
+  return arr;
 }
 
 // --- Values by Row | array (objects)
 
 function valByRow(rangeObj, headers){
-	var h    = rangeObj.getHeight();
-	var w    = rangeObj.getWidth();
-	var vals = rangeObj.getValues();
-	var arr  = [];
-	for (var i = 0; i < h; i++) {
-		var row = {};
-		for (var j = 0; j < w; j++) {
-			var prop = headers[j];
-			var val  = vals[i][j];
-			if (val !== "") {
-				row[prop] = val;
-			} 
-		}
-		arr.push(row);
-	}  
-	return arr;
+  var h    = rangeObj.getHeight();
+  var w    = rangeObj.getWidth();
+  var vals = rangeObj.getValues();
+  var arr  = [];
+  for (var i = 0; i < h; i++) {
+    var row = {};
+    for (var j = 0; j < w; j++) {
+      var prop = headers[j];
+      var val  = vals[i][j];
+      if (val !== "") {
+        row[prop] = val;
+      } 
+    }
+    arr.push(row);
+  }  
+  return arr;
 }
 
 // -- Array of Objects from Sheet | return: array (objects)
 // dependencies: numCol, headerVal, valByRow
 
 function arrObjFromSheet(sheetObj, hRow){
-	var lColNum = sheetObj.getLastColumn();
-	var lColABC = numCol(lColNum);
-	var lRow    = sheetObj.getLastRow();
-	var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
-	var headers = headerVal(hRange);
-	var vRange  = sheetObj.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
-	return valByRow(vRange, headers)
+  var lColNum = sheetObj.getLastColumn();
+  var lColABC = numCol(lColNum);
+  var lRow    = sheetObj.getLastRow();
+  var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+  var headers = headerVal(hRange);
+  var vRange  = sheetObj.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
+  return valByRow(vRange, headers)
 }
 
 // var ss_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
@@ -1194,10 +1194,10 @@ function arrObjFromSheet(sheetObj, hRow){
 // dependencies: headerVal, valByRow
 
 function arrObjFromRange(sheetObj, a1Notation) {
-	var hRange  = headerRange(sheetObj, a1Notation);
-	var vRange  = valueRange(sheetObj, a1Notation);
-	var headers = headerVal(hRange);
-	return valByRow(vRange, headers);
+  var hRange  = headerRange(sheetObj, a1Notation);
+  var vRange  = valueRange(sheetObj, a1Notation);
+  var headers = headerVal(hRange);
+  return valByRow(vRange, headers);
 }
 
 // var ss_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
@@ -1219,13 +1219,13 @@ function arrForColName(sheetObj, hRow, name){
   var tColABC  = numCol(headers.indexOf(name) + 1);
   var rangeObj = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
   var h        = rangeObj.getHeight();
-	var vals     = rangeObj.getValues();
-	var arr      = [];
-	for (var i = 0; i < h; i++) {
-			var val  = vals[i][0];
+  var vals     = rangeObj.getValues();
+  var arr      = [];
+  for (var i = 0; i < h; i++) {
+      var val  = vals[i][0];
       arr.push(String(val));
-	}  
-	return arr;
+  }  
+  return arr;
 }
 
 // var ss_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
@@ -1242,13 +1242,13 @@ function arrForColNo(sheetObj, hRow, colIndex){
   var tColABC  = numCol(colIndex);
   var rangeObj = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
   var h        = rangeObj.getHeight();
-	var vals     = rangeObj.getValues();
-	var arr      = [];
-	for (var i = 0; i < h; i++) {
-			var val  = vals[i][0];
+  var vals     = rangeObj.getValues();
+  var arr      = [];
+  for (var i = 0; i < h; i++) {
+      var val  = vals[i][0];
       arr.push(String(val));
-	}  
-	return arr;
+  }  
+  return arr;
 }
 
 // var ss_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
@@ -1267,9 +1267,9 @@ function arrForColNo(sheetObj, hRow, colIndex){
 // Docs
 
 function checkForExDoc() {
-	var fldr  = createVerifyPath("google-apps-script-library");
-	var exDoc = findFileIn(fldr, "example_doc");
-	if (!(exDoc)){
+  var fldr  = createVerifyPath("google-apps-script-library");
+  var exDoc = findFileIn(fldr, "example_doc");
+  if (!(exDoc)){
     DocumentApp.create("example_doc");
     exDoc = moveFile(findFileAtRoot("example_doc"), fldr);
   }
@@ -1286,14 +1286,14 @@ var chkDoc = checkForExDoc();
 // --- Create or Verify Document in a Folder
 
 function createVerifyDocIn(fldr, name) {
-	var files = filesIn(fldr);
-	var names = fileNames(files);
-	if (!(checkValIn(names, name))) {
-		var doc  = DocumentApp.create(name).getId();
-		var file = DriveApp.getFileById(doc);
-		moveFile(file, fldr);
-	}
-	return findFileIn(fldr, name);
+  var files = filesIn(fldr);
+  var names = fileNames(files);
+  if (!(checkValIn(names, name))) {
+    var doc  = DocumentApp.create(name).getId();
+    var file = DriveApp.getFileById(doc);
+    moveFile(file, fldr);
+  }
+  return findFileIn(fldr, name);
 }
 
 // var fldr_cvdi = createVerifyPath("google-apps-script-library");
@@ -1303,12 +1303,12 @@ function createVerifyDocIn(fldr, name) {
 // --- Create or Verify Document at Root
 
 function createVerifyDocAtRoot(name) {
-	var files = rootFiles();
-	var names = fileNames(files);
-	if (!(checkValIn(names, name))) {
-		var ss = DocumentApp.create(name);
-	}
-	return findFileAtRoot(name);
+  var files = rootFiles();
+  var names = fileNames(files);
+  if (!(checkValIn(names, name))) {
+    var ss = DocumentApp.create(name);
+  }
+  return findFileAtRoot(name);
 }
 
 // var ex_cvdar = createVerifyDocAtRoot("example_doc");
@@ -1343,12 +1343,12 @@ function createVerifyDocAtRoot(name) {
 // var body_sdl   = DocumentApp.openById(docId_sdl).getBody();
 
 // (function(){
-// 	arrObj_sdl.sort(dynSortM("Last", "First"));
-// 	var sectionHeader = body_sdl.appendParagraph("Students");
-// 	sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-// 	for (var i in arrObj_sdl) {
-// 		body_sdl.appendListItem(arrObj_sdl[i]["Last"] + ", " + arrObj_sdl[i]["First"]);
-// 	}
+//  arrObj_sdl.sort(dynSortM("Last", "First"));
+//  var sectionHeader = body_sdl.appendParagraph("Students");
+//  sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+//  for (var i in arrObj_sdl) {
+//    body_sdl.appendListItem(arrObj_sdl[i]["Last"] + ", " + arrObj_sdl[i]["First"]);
+//  }
 // })();
 
 // -- Multi Division List
@@ -1360,24 +1360,24 @@ function createVerifyDocAtRoot(name) {
 // var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
 
 // (function(){
-// 	arrObj_mdl.sort(dynSortM("Homeroom", "Last", "First"));
-// 	var sectionHeader = body_mdl.appendParagraph("Homerooms and Students");
-// 	sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-// 	var homeroom = arrObj_mdl[0]["Homeroom"];
-// 	body_mdl.appendListItem(homeroom);
-// 	for (var i in arrObj_mdl) {
-// 		if (arrObj_mdl[i]["Homeroom"] === homeroom) {
-// 			body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
-// 			.setNestingLevel(1).setIndentStart(10)
-// 			.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
-// 		} else {
-// 			homeroom = arrObj_mdl[i]["Homeroom"];
-// 			body_mdl.appendListItem(homeroom);
-// 			body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
-// 			.setNestingLevel(1).setIndentStart(10)
-// 			.setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
-// 		}
-// 	}
+//  arrObj_mdl.sort(dynSortM("Homeroom", "Last", "First"));
+//  var sectionHeader = body_mdl.appendParagraph("Homerooms and Students");
+//  sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+//  var homeroom = arrObj_mdl[0]["Homeroom"];
+//  body_mdl.appendListItem(homeroom);
+//  for (var i in arrObj_mdl) {
+//    if (arrObj_mdl[i]["Homeroom"] === homeroom) {
+//      body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
+//      .setNestingLevel(1).setIndentStart(10)
+//      .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+//    } else {
+//      homeroom = arrObj_mdl[i]["Homeroom"];
+//      body_mdl.appendListItem(homeroom);
+//      body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
+//      .setNestingLevel(1).setIndentStart(10)
+//      .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+//    }
+//  }
 // })();
 
 // Merges
@@ -1387,8 +1387,8 @@ function createVerifyDocAtRoot(name) {
 // -- String From Object Properties
 
 var obj_nfp = { 
-	name:  "Jon",
-	state: "MN",
+  name:  "Jon",
+  state: "MN",
   job:   "IT"
 };
 
@@ -1528,8 +1528,8 @@ var colVal_vfc = arrForCol(range_vfc);
 // --- Cell Shading
 
 function shadeCells(sheetObj, colLetter, obj, color) {
-	var lRow   = sheetObj.getLastRow();
-	var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
+  var lRow   = sheetObj.getLastRow();
+  var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
   var arrVal = arrForCol(vRange);
   var index  = colNum(colLetter)
   for (var i = 0; i < arrVal.length; i++) {
@@ -1544,8 +1544,8 @@ function shadeCells(sheetObj, colLetter, obj, color) {
 }
 
 var obj_sc = { 
-	"Student Has Good Study Habits":       1,
-	"Student is Organized":                2,
+  "Student Has Good Study Habits":       1,
+  "Student is Organized":                2,
   "Student Gets Along Well With Others": 5
 };
 
@@ -1564,7 +1564,7 @@ function commaListFrom(arr){
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-		str += _arr[i] + ", "
+    str += _arr[i] + ", "
   }
   str = str.slice(0, -2);
   return str;
@@ -1580,7 +1580,7 @@ function commaListForDomain(arr, domain) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-		str += _arr[i] + domain + ", "
+    str += _arr[i] + domain + ", "
   }
   str = str.slice(0, -2);
   return str;
@@ -1593,20 +1593,20 @@ Logger.log(ex_clfd);
 // -- Mail Merge
 
 function mailMerge(arrObj) {
-	var subj = "test mail merge";
-	var body =
-	"<p>this is some text</p>" + "<p>pulling in some data " + 
-	arrObj[i]["A"] + " </p>";
+  var subj = "test mail merge";
+  var body =
+  "<p>this is some text</p>" + "<p>pulling in some data " + 
+  arrObj[i]["A"] + " </p>";
 
   for (var i =0; i < arrObj.length; i++){
     var email = arrObj[i]["Email"];
-		if (email) {
-			MailApp.sendEmail({
-				to: email,
-				subject: subj,
-				htmlBody: body
-			});
-		}
+    if (email) {
+      MailApp.sendEmail({
+        to: email,
+        subject: subj,
+        htmlBody: body
+      });
+    }
   }
 }
 
