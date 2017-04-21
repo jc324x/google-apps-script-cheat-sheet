@@ -13,7 +13,6 @@ Logger.log("Start");
 // | -- Array as Modified Delimited String
 // | - Multidimensional Array
 // | -- Flatten Multidimensional Array
-// | -- Create Multidimensional Array of Values
 // | - Array of Objects
 // | -- Sort by Property or Properties
 // | -- Find Object With Unique Property Value
@@ -98,6 +97,7 @@ Logger.log("Start");
 // * Timestamp on Cell Change
 // * Moving / Copying Folders
 // * Copy Formulas Down
+// * Create Multidimensional Array of Values
 
 // General
 
@@ -110,8 +110,7 @@ function checkValIn(arr, val) {
 }
 
 var arr_cvi = [1,2,3,4];
-var ex_cvi  = checkValIn(arr_cvi);
-Logger.log(ex_cvi); // false
+// Logger.log(checkValIn(arr_cvi,5)); // false
   
 // -- Remove Duplicates | return: `array`
 
@@ -130,8 +129,7 @@ function rmDuplicatesFrom(arr) {
 }
 
 var arr_rdf = [1,2,3,1,2,3,4,];
-var ex_rdf  = rmDuplicatesFrom(arr_rdf);
-Logger.log(ex_rdf); // [1,2,3,4] 
+// Logger.log(rmDuplicatesFrom(arr_rdf)); // [1,2,3,4]
 
 // -- Remove Empty Values | return: `array`
 
@@ -140,8 +138,7 @@ function rmEmptyVal(x){
 }
 
 var arr_rev = ["a",,"b",,,"c"];
-var ex_rev  = arr_rev.filter(rmEmptyVal);
-Logger.log(ex_rev); // ["a","b","c"]
+// Logger.log(arr_rev.filter(rmEmptyVal)); // [a,b,c]
 
 // -- Get Count of Values | return: array (objects)
 
@@ -166,12 +163,10 @@ function countOfValIn(arr){
 	return _arr;
 }
 
-// var arr_covi  = ["A", "B", "C", "A", "B", "C", "D", "A"];
-// var ex_covi = countOfValIn(arr_covi);
-// Logger.log(ex_covi); // VALUE
+var arr_covi  = ["A", "B", "C", "A", "B", "C", "A"];
+// Logger.log(countOfValIn(arr_covi)); // [{count=3.0, value=A}, {count=2.0, value=B}, {count=2.0, value=C}]
 
 // -- Intersect of Two Arrays | return: array 
-// NOTE: sort arrays prior
 
 function intersectOf(arrA, arrB) {
 	var a = 0;
@@ -189,9 +184,9 @@ function intersectOf(arrA, arrB) {
   return _arr;
 }
 
-// var arr1_io = [1, 2, 3];
-// var arr2_io = [3, 4, 5];
-// Logger.log(intersectOf(arr1_io, arr2_io) + " is the intersect");
+var arr1_io = [1, 2, 3];
+var arr2_io = [3, 4, 5];
+Logger.log(intersectOf(arr1_io, arr2_io)); // [3]
 
 // -- Compare Two Arrays | return: boolean
 
@@ -203,11 +198,41 @@ function compareArr(arr1, arr2) {
     return true;
 }
 
-// var arr1_ca = [1,2,3,4,5]
-// var arr2_ca = [1,2,3,4,5]
-// var arr3_ca = ["a","b","c","d","e"]
-// Logger.log("arr1 / arr2 " + compareArr(arr1_ca, arr2_ca));
-// Logger.log("arr2 / arr3 " + compareArr(arr2_ca, arr3_ca));
+var arr1_ca = [1,2,3,4,5]
+var arr2_ca = [1,2,3,4,5]
+var arr3_ca = ["a","b","c","d","e"]
+// Logger.log(compareArr(arr1_ca, arr2_ca)); // true
+// Logger.log(compareArr(arr1_ca, arr3_ca)); // false
+
+// -- Array as Delimited String
+
+function delimited(arr, delimiter){
+  var _arr = rmDuplicatesFrom(arr).sort();
+  var str  = "";
+  for (var i = 0; i < _arr.length; i++) {
+		str += _arr[i] + delimiter + "  ";
+  }
+  str = str.slice(0, -2);
+  return str;
+}
+
+var arr_clf = ["c@example.com", "b@example.com", "a@example.com"];
+// Logger.log(commaListFrom(arr_clf, ",")); // a@example.com, b@example.com, c@example.com
+
+// -- Array as Modified Delimited String
+
+function delimitedModified(arr, extension, delimiter) {
+  var _arr = rmDuplicatesFrom(arr).sort();
+  var str  = "";
+  for (var i = 0; i < _arr.length; i++) {
+		str += _arr[i] + extension + delimiter + " "; 
+  }
+  str = str.slice(0, -2);
+  return str;
+}
+
+var arr_clfd = ["x", "z", "y"];
+// Logger.log(delimitedModified(arr_clfd, "@example.com", ",")); // x@example.com, y@example.com, z@example.com
 
 // - Multidimensional Array
 
@@ -220,42 +245,9 @@ function flattenMultiArr(multiArr){
   return arr;
 }
 
-// var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var val_fma = ss_fma.getRange("G2:H5").getValues();
-// var ex_fma  = flattenMultiArr(val_fma).sort();
-// Logger.log(ex_fma);
-
-// -- Array as Delimited String
-
-function delimited(arr, delimiter){
-  var _arr = rmDuplicatesFrom(arr).sort();
-  var str  = "";
-  for (var i = 0; i < _arr.length; i++) {
-		str += _arr[i] + ", "
-  }
-  str = str.slice(0, -2);
-  return str;
-}
-
-var arr_clf = ["a@gmail.com", "b@gmail.com", "z@gmail.com", "z@gmail.com", "h@gmail.com"];
-var ex_clf  = commaListFrom(arr_clf);
-// Logger.log(ex_clf);
-
-// --- Array as Modified Delimited String
-
-function delimitedModified(arr, delimiter, modification) {
-  var _arr = rmDuplicatesFrom(arr).sort();
-  var str  = "";
-  for (var i = 0; i < _arr.length; i++) {
-		str += _arr[i] + alt + ", "
-  }
-  str = str.slice(0, -2);
-  return str;
-}
-
-var arr_clfd = ["a_user", "b_user", "c_user", "a_user"];
-var ex_clfd = commaListForDomain(arr_clfd, "@example.com");
-Logger.log(ex_clfd);
+var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var val_fma = ss_fma.getRange("G2:H5").getValues();
+// Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
 
