@@ -303,9 +303,7 @@ function findObjIn(arrObj, pQuery, val) {
   }
 }
 
-// Logger.log("find obj with 'a' value of 1000 ⬇ ");
-// var ex_foi = findObjIn(ex_arrObj, "a", 1000);
-// Logger.log(ex_foi);
+Logger.log(findObjIn(ex_arrObj,"a",1000)); // {a=1000.0, b=1.0, c=5.0}
 
 function findObjValIn(arrObj, pQuery, val, pReturn) {
   for (var i = 0; i < arrObj.length; i++) {
@@ -318,9 +316,7 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
   }
 }
 
-// Logger.log("find obj with 'c' value of 500 and return its 'a' value ⬇ ");
-// var ex_fovi = findObjValIn(ex_arrObj, "c", 500, "a");
-// Logger.log(ex_fovi);
+Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
 
 // -- Find First or Last Object by Timestamp | return: object
 

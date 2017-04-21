@@ -223,3 +223,33 @@ function dynSortM() {
 Logger.log(ex_arrObj.sort(dynSortM("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 ```
+
+#### Find Object With Unique Property Value | return: `object / value`
+
+```javascript
+function findObjIn(arrObj, pQuery, val) {
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
+        return obj;
+      }
+    }
+  }
+}
+
+Logger.log(findObjIn(ex_arrObj,"a",1000)); // {a=1000.0, b=1.0, c=5.0}
+
+function findObjValIn(arrObj, pQuery, val, pReturn) {
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
+        return obj[pReturn];
+      }
+    }
+  }
+}
+
+Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
+```
