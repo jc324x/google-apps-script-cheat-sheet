@@ -253,3 +253,38 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 
 Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
 ```
+
+#### Find First or Last Object by Timestamp | return: `object`
+
+```javascript
+function earliestTS(arrObj){
+  if (arrObj.length >= 2) {
+    var sorted = arrObj.sort(function(a,b){
+      return new Date(a.Timestamp) - new Date(b.Timestamp);
+    });
+    return sorted[0];
+  } else {
+    return arrObj[0];
+  }
+}
+
+var ss_fe     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var arrObj_fe = arrObjFromRange(ss_fe, "J1:K4");
+Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
+
+function latestTS(arrObj) {
+  if (arrObj.length >= 2) {
+    var sorted = arrObj.sort(function(a,b){
+      return new Date(b.Timestamp) - new Date(a.Timestamp);
+    });
+    return sorted[0];
+  } else {
+    return arrObj[0];
+  }
+} 
+
+var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var arrObj_le = arrObjFromRange(ss_le, "J1:K4");
+Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
+```
+

@@ -16,7 +16,7 @@ Logger.log("Start");
 // | - Array of Objects
 // | -- Sort by Property or Properties
 // | -- Find Object With Unique Property Value
-// | -- Find Oldest or Youngest Object by Timestamp * 
+// | -- Find Earliest or Latest Object by Timestamp
 // | -- Filter by Property Value or Values
 // | -- Unify Properties for Array of Objects
 // | - Object
@@ -303,7 +303,7 @@ function findObjIn(arrObj, pQuery, val) {
   }
 }
 
-Logger.log(findObjIn(ex_arrObj,"a",1000)); // {a=1000.0, b=1.0, c=5.0}
+// Logger.log(findObjIn(ex_arrObj,"a",1000)); // {a=1000.0, b=1.0, c=5.0}
 
 function findObjValIn(arrObj, pQuery, val, pReturn) {
   for (var i = 0; i < arrObj.length; i++) {
@@ -316,11 +316,11 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
   }
 }
 
-Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
+// Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
 
-// -- Find First or Last Object by Timestamp | return: object
+// -- Find Earliest or Latest Object by Timestamp | return: object
 
-function firstEntry(arrObj){
+function earliestTS(arrObj){
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
       return new Date(a.Timestamp) - new Date(b.Timestamp);
@@ -331,12 +331,11 @@ function firstEntry(arrObj){
   }
 }
 
-// var ss_fe     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var arrObj_fe = arrObjFromRange(ss_fe, "J1:K4");
-// var ex_fe     = firstEntry(arrObj_fe);
-// Logger.log(ex_fe);
+var ss_fe     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var arrObj_fe = arrObjFromRange(ss_fe, "J1:K4");
+Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
-function lastEntry(arrObj) {
+function latestTS(arrObj) {
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
       return new Date(b.Timestamp) - new Date(a.Timestamp);
@@ -347,10 +346,9 @@ function lastEntry(arrObj) {
   }
 } 
 
-// var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var arrObj_le = arrObjFromRange(ss_le, "J1:K4");
-// var ex_le     = lastEntry(arrObj_le);
-// Logger.log(ex_le);
+var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var arrObj_le = arrObjFromRange(ss_le, "J1:K4");
+Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
 // -- Filter by Property Value or Values | return: array (objects)
 
