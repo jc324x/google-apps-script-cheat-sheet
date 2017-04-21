@@ -186,7 +186,7 @@ function intersectOf(arrA, arrB) {
 
 var arr1_io = [1, 2, 3];
 var arr2_io = [3, 4, 5];
-Logger.log(intersectOf(arr1_io, arr2_io)); // [3]
+// Logger.log(intersectOf(arr1_io, arr2_io)); // [3]
 
 // -- Compare Two Arrays | return: boolean
 
@@ -333,7 +333,7 @@ function earliestTS(arrObj){
 
 var ss_fe     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 var arrObj_fe = arrObjFromRange(ss_fe, "J1:K4");
-Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
+// Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 function latestTS(arrObj) {
   if (arrObj.length >= 2) {
@@ -348,7 +348,7 @@ function latestTS(arrObj) {
 
 var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 var arrObj_le = arrObjFromRange(ss_le, "J1:K4");
-Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
+// Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
 // -- Filter by Property Value or Values | return: array (objects)
 
@@ -1578,7 +1578,7 @@ function commaListForDomain(arr, domain) {
 
 var arr_clfd = ["a_user", "b_user", "c_user", "a_user"];
 var ex_clfd = commaListForDomain(arr_clfd, "@example.com");
-Logger.log(ex_clfd);
+// Logger.log(ex_clfd);
 
 // -- Mail Merge
 
