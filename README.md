@@ -291,15 +291,51 @@ Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 201
 #### Filter by Property Value or Values | return: `array (objects)`
 
 ```javascript
+function filterObjIn(arrObj, pQuery, arrVal) {
+  var _arrObj = [];
+  for (var i = 0; i < arrVal.length; i++) {
+    var val = arrVal[i]; 
+    for (var j = 0; j < arrObj.length; j++) {
+      if (arrObj[j][pQuery] == val) _arrObj.push(arrObj[j]);
+    }
+  } 
+  return _arrObj;
+}
+
+Logger.log(filterObjIn(ex_arrObj, "a", [10])); // [{a=10.0, b=2.0, c=500.0}]
+Logger.log(filterObjIn(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 ```
 
 #### Unify Properties for Array of Objects | return: `array (objects)`
 
 ```javascript
-```
+// -- Unify Properties for Array of Objects | return: array (objects)
 
+function unifyPropForArrObj(arrObj, arrProp, newProp){
+  for (var i = 0; i < arrObj.length; i++){
+    var obj = arrObj[i];
+    for (var h = 0; h < arrProp.length; h++) {
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop) && prop == arrProp[h] && obj[prop] != ""){
+              obj[newProp] = obj[prop];
+        }
+      }
+    }
+  }
+  return arrObj;
+}
+
+var arrObj_upfao  = [
+{x: 123},
+{y: 234},
+{z: 345},
+];
+
+Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new"));
+// [{new=123.0, x=123.0}, {new=234.0, y=234.0}, {new=345.0, z=345.0}]
+```
 
 ### Object
 
-#### Array of Matching Property Values | return: `array`
+## Array of Matching Property Values | return: `array`
 #### Unify Object Properties | return: `obj`
