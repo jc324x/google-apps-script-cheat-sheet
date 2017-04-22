@@ -254,7 +254,7 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
 ```
 
-#### Find First or Last Object by Timestamp | return: `object`
+#### Find Earliest or Lastest Object by Timestamp | return: `object`
 
 ```javascript
 function earliestTS(arrObj){
@@ -288,14 +288,18 @@ var arrObj_le = arrObjFromRange(ss_le, "J1:K4");
 Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 ```
 
-#### | return: `object`
-// -- Filter by Property Value or Values | return: array (objects)
+#### Filter by Property Value or Values | return: `array (objects)`
 
 ```javascript
 ```
 
-#### | return: `object`
-// -- Unify Properties for Array of Objects | return: array (objects)
+#### Unify Properties for Array of Objects | return: `array (objects)`
 
 ```javascript
 ```
+
+
+### Object
+
+#### Array of Matching Property Values | return: `array`
+#### Unify Object Properties | return: `obj`
