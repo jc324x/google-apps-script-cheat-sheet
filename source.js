@@ -420,7 +420,7 @@ function filterValIn(obj, props) {
 // var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
 // Logger.log(ex_fvi);
 
-// -- Unify Object Properties
+// -- Unify Object Properties | return: object
 
 function unifyPropForObj(obj, arrProp, newProp){
   for (var i = 0; i < arrProp.length; i++) {

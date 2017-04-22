@@ -10,6 +10,29 @@
   * [Compare Two Arrays](#compare-two-arrays)
   * [Array as Delimited String](#array-as-delimited-string)
   * [Array as Modified Delimited String](#array-as-modified-delimited-string)
+* [Multidimensional Array](#multidimensional-array)
+  * [Flatten Multidimensional Array](#flatten-multidimensional-array)
+* [Array of Objects](#array-of-objects)
+  * [Sort by Property or Properties](#sort-by-property-or-properties)
+  * [Find Object With Unique Property Value](#find-object-with-unique-property-value)
+  * [Find Earliest or Latest Object by Timestamp](#find-earliest-or-latest-object-by-timestamp)
+  * [Filter by Property Value or Values](#filter-by-property-value-or-values)
+  * [Unify Properties for Array of Objects](#unify-properties-for-array-of-objects)
+* [Object](#object)
+  * [Array of Matching Property Values](#array-of-matching-property-values)
+  * [Unify Object Properties](#array-of-matching-property-values)
+
+// | - Object
+// | -- Array of Matching Property Values
+// | -- Unify Object Properties  
+// | -- Merge Objects -> Combine Objects
+// | -- Object from Range 
+// | - Dates and Times
+// | -- Formatted Timestamps
+// | -- Date Object from String
+// | -- Match a Date to a Range
+
+
 
 ## General
 
@@ -337,5 +360,7 @@ Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new"));
 
 ### Object
 
-## Array of Matching Property Values | return: `array`
-#### Unify Object Properties | return: `obj`
+#### Array of Matching Property Values | return: `array`
+#### Unify Object Properties | return: `object`
+#### Merge Objects | return: `object`
+#### Object from Range | return: `object`
