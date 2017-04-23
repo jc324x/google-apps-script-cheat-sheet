@@ -2,8 +2,8 @@
 
 [General](#general)
 * [Array](#array)
-  * [Check for a Value](#check-for-a-value)
-  * [Remove Duplicates](#remove-duplicates)
+  * [Check for a Value](#check-for-a-value--return-boolean)
+  * [Remove Duplicates](#remove-duplicates--return-array)
   * [Remove Empty Values](#remove-empty)
   * [Get Count of Values](#get-count-of-values)
   * [Intersect of Two Arrays](#intersect-of-two-arrays)
