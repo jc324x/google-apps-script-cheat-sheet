@@ -4,16 +4,16 @@
 * [Array](#array)
   * [Check for a Value](#check-for-a-value--return-boolean)
   * [Remove Duplicates](#remove-duplicates--return-array)
-  * [Remove Empty Values](#remove-empty)
-  * [Get Count of Values](#get-count-of-values)
-  * [Intersect of Two Arrays](#intersect-of-two-arrays)
-  * [Compare Two Arrays](#compare-two-arrays)
-  * [Array as Delimited String](#array-as-delimited-string)
-  * [Array as Modified Delimited String](#array-as-modified-delimited-string)
+  * [Remove Empty Values](#remove-empty--return-array)
+  * [Get Count of Values](#get-count-of-values--return-object)
+  * [Intersect of Two Arrays](#intersect-of-two-arrays--return-array)
+  * [Compare Two Arrays](#compare-two-arrays--return-boolean)
+  * [Array as Delimited String](#array-as-delimited-string--return-string)
+  * [Array as Modified Delimited String](#array-as-modified-delimited-string--return-string)
 * [Multidimensional Array](#multidimensional-array)
-  * [Flatten Multidimensional Array](#flatten-multidimensional-array)
+  * [Flatten Multidimensional Array](#flatten-multidimensional-array--return-array)
 * [Array of Objects](#array-of-objects)
-  * [Sort by Property or Properties](#sort-by-property-or-properties)
+  * [Sort by Property or Properties](#sort-by-property-or-properties--return-array-objets)
   * [Find Object With Unique Property Value](#find-object-with-unique-property-value)
   * [Find Earliest or Latest Object by Timestamp](#find-earliest-or-latest-object-by-timestamp)
   * [Filter by Property Value or Values](#filter-by-property-value-or-values)
@@ -22,11 +22,6 @@
   * [Array of Matching Property Values](#array-of-matching-property-values)
   * [Merge Objects](#merge-objects)
   * [Object from Range](#object-from-range)
-
-// | - Dates and Times
-// | -- Formatted Timestamps
-// | -- Date Object from String
-// | -- Match a Date to a Range
 
 ## General ##
 
