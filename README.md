@@ -1,4 +1,4 @@
-# Google Apps Script Cheat Sheet
+# Google Apps Script Cheat Sheet #
 
 [General](#general)
 * [Array](#array)
@@ -28,11 +28,11 @@
 // | -- Date Object from String
 // | -- Match a Date to a Range
 
-## General
+## General ##
 
-### Array
+### Array ###
 
-#### Check for a Value | return: `boolean`
+#### Check for a Value | return: `boolean` ####
 
 ```javascript
 function checkValIn(arr, val) { 
@@ -43,7 +43,7 @@ var arr_cvi = [1,2,3,4];
 Logger.log(checkValIn(arr_cvi,5)); // false
 ```
 
-#### Remove Duplicates | return: `array`
+#### Remove Duplicates | return: `array` ####
 
 ```javascript
 function rmDuplicatesFrom(arr) {
