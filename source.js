@@ -410,15 +410,14 @@ function filterValIn(obj, props) {
   return arr;
 }
 
-// var obj_fvi = { 
-//  a: 1, 
-//  b: 2, 
-//  c: 3
-// };
+var obj_fvi = { 
+ a: 1, 
+ b: 2, 
+ c: 3
+};
 
-// var arr_fvi = ["a", "b", "d"];
-// var ex_fvi  = filterValIn(obj_fvi, arr_fvi);
-// Logger.log(ex_fvi);
+var arr_fvi = ["a", "b", "d"];
+Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
 
 // -- Unify Object Properties | return: object
 
@@ -433,15 +432,14 @@ function unifyPropForObj(obj, arrProp, newProp){
   }
 }
 
-// var obj_upfo = { 
-//  a: 1, 
-//  b: 2, 
-//  c: 3
-// };
+var obj_upfo = { 
+ a: 1, 
+ b: 2, 
+ c: 3
+};
 
-// var arr_upfo = ["c", "d", "e"];
-// var ex_upfo = unifyPropForObj(obj_upfo, arr_upfo, "z"); 
-// Logger.log(ex_upfo);
+var arr_upfo = ["c", "d", "e"];
+Logger.log(unifyPropForObj(obj_upfo, arr_upfo, "z")); //  {a=1.0, b=2.0, c=3.0, z=3.0}
 
 // Merge Objects | return: object
 
@@ -456,22 +454,20 @@ function mergeObjs() {
   return obj;
 } 
 
-// var objA_mo = {
-//  a: 1, 
-//  b: 2, 
-//  c: 3
-// }; 
+var objA_mo = {
+ a: 1, 
+ b: 2, 
+ c: 3
+}; 
 
-// var objB_mo = {
-//   c: 4,
-//  d: 5, 
-//  e: 6, 
-//  f: 7
+var objB_mo = {
+ c: 4,
+ d: 5, 
+ e: 6, 
+ f: 7
+}; 
 
-// }; 
-
-// var ex_mo = mergeObjs(objA_mo, objB_mo); 
-// Logger.log(ex_mo);
+Logger.log(mergeObjs(objA_mo, obj_mo)); // VAL
 
 // -- Object from Range | return: object
 

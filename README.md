@@ -361,6 +361,21 @@ Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new"));
 ### Object
 
 #### Array of Matching Property Values | return: `array`
+
+```javacript
+```
+
 #### Unify Object Properties | return: `object`
+
+```javacript
+```
+
 #### Merge Objects | return: `object`
+
+```javacript
+```
+
 #### Object from Range | return: `object`
+
+```javacript
+```
