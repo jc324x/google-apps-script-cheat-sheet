@@ -21,8 +21,7 @@ Logger.log("Start");
 // | -- Unify Properties for Array of Objects
 // | - Object
 // | -- Array of Matching Property Values
-// | -- Unify Object Properties  
-// | -- Merge Objects -> Combine Objects
+// | -- Merge Objects
 // | -- Object from Range 
 // | - Dates and Times
 // | -- Formatted Timestamps
@@ -419,28 +418,6 @@ var obj_fvi = {
 var arr_fvi = ["a", "b", "d"];
 Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
 
-// -- Unify Object Properties | return: object
-
-function unifyPropForObj(obj, arrProp, newProp){
-  for (var i = 0; i < arrProp.length; i++) {
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(prop) && prop == arrProp[i] && obj[prop] != "" ) {
-        obj[newProp] = obj[prop];
-        return obj;
-      }
-    }
-  }
-}
-
-var obj_upfo = { 
- a: 1, 
- b: 2, 
- c: 3
-};
-
-var arr_upfo = ["c", "d", "e"];
-Logger.log(unifyPropForObj(obj_upfo, arr_upfo, "z")); //  {a=1.0, b=2.0, c=3.0, z=3.0}
-
 // Merge Objects | return: object
 
 function mergeObjs() {
@@ -467,7 +444,7 @@ var objB_mo = {
  f: 7
 }; 
 
-Logger.log(mergeObjs(objA_mo, obj_mo)); // VAL
+Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
 
 // -- Object from Range | return: object
 
@@ -483,9 +460,8 @@ function objFromRange(sheetObj, a1Notation) {
   return obj;
 }
 
-// var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_ofr    = objFromRange(sheet_ofr, "D2:E5");
-// Logger.log(ex_ofr);
+var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 
 // - Dates and Times
 
