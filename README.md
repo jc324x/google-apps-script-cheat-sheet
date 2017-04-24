@@ -13,7 +13,7 @@
 * [Multidimensional Array](#multidimensional-array)
   * [Flatten Multidimensional Array](#flatten-multidimensional-array--return-array)
 * [Array of Objects](#array-of-objects)
-  * [Sort by Property or Properties](#sort-by-property-or-properties--return-array-objets)
+  * [Sort by Property or Properties](#sort-by-property-or-properties--return-array-objects)
   * [Find Object With Unique Property Value](#find-object-with-unique-property-value)
   * [Find Earliest or Latest Object by Timestamp](#find-earliest-or-latest-object-by-timestamp)
   * [Filter by Property Value or Values](#filter-by-property-value-or-values)
@@ -59,7 +59,7 @@ var arr_rdf = [1,2,3,1,2,3,4,];
 Logger.log(rmDuplicatesFrom(arr_rdf)); // [1,2,3,4]
 ```
 
-#### Remove Empty Values | return: `array`
+#### Remove Empty Values | return: `array` ####
 
 ```javascript
 function rmEmptyVal(x){
