@@ -473,7 +473,7 @@ function fmatD() {
     return d.join("/");
 }
 
-Logger.log(fmatD()); // 4/24/2017
+// Logger.log(fmatD()); // 4/24/2017
 
 function fmat24T(){
   var n  = new Date();
@@ -486,7 +486,7 @@ function fmat24T(){
     }
 }
 
-Logger.log(fmat24T()); // 20:43:40
+// Logger.log(fmat24T()); // 20:43:40
 
 function fmat12DT() {
   var n = new Date();
@@ -502,7 +502,7 @@ function fmat12DT() {
   return d.join("/") + " " + t.join(":") + " " + s;
 }
 
-Logger.log(fmat12DT()); // 4/24/2017 8:43:40 PM
+// Logger.log(fmat12DT()); // 4/24/2017 8:43:40 PM
 
 // -- Date Object from String | return: date
 
@@ -514,7 +514,7 @@ function dateObjectFrom(str) {
   return new Date (months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
 }
 
-Logger.log(dateObjectFrom("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
+// Logger.log(dateObjectFrom("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
 
 // -- Match a Date to a Range | return: integer
 
@@ -537,7 +537,7 @@ function academicQuarter() {
   if (q) { return q } else { return "date outside of academic calendar"}
 }
 
-Logger.log(academicQuarter()); // 4 (4/24/2017)
+// Logger.log(academicQuarter()); // 4 (4/24/2017)
 
 // Drive
 
@@ -568,8 +568,7 @@ function createVerifyPath(path) {
   return fldr;
 }
 
-// var ex_cov = createVerifyPath("google-apps-script-library/A/B/C");
-// Logger.log("Id of 'C' in 'google-apps-script-library/A/B/C' is ➡ " + ex_cov.getId());
+Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/A/B/C")); // C
 
 // -- Get the Last Folder in Folder Path | return: folder
 
@@ -596,8 +595,7 @@ function lastFolderIn(path) {
   return fldr;
 }
 
-// var ex_lfi = lastFolderIn("google-apps-script-library/A/B/C");
-// Logger.log("Id of 'C' in 'google-apps-script-library/A/B/C' is ➡ " + ex_lfi.getId());
+Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/A/B")); // B
 
 // -- Array of All Folders | return: array (folders)
 
@@ -613,9 +611,7 @@ function foldersIn(fldr) {
   return arr;
 }
 
-// var fldr_fi = lastFolderIn("google-apps-script-library");
-// var ex_fi   = foldersIn(fldr_fi);
-// Logger.log("'google-apps-script-library' has top level folders ➡ " + ex_fi);
+Logger.log(foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo"))); // [A]
 
 // --- All Folders at Root
 
