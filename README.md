@@ -22,11 +22,28 @@
   * [Array of Matching Property Values](#array-of-matching-property-values--return-array)
   * [Merge Objects](#merge-objects--return-object)
   * [Object from Range](#object-from-range--return-object)
+* [Dates and Times](#dates-and-times)
+  * [Formatted Timestamps](#)
+  * [Date Object from String](#)
+  * [Match a Date to a Range](#)
 
-> // | - Dates and Times
-> // | -- Formatted Timestamps
-> // | -- Date Object from String
-> // | -- Match a Date to a Range
+[Drive](#drive)
+* [Folders](#folders)
+  * [Create or Verify Folder Path](#)
+  * [Last Folder in Folder Path](#)
+  * [Array of All Folders](#)
+  * [Array of All Folder Names](#)
+  * [Find a Folder](#)
+  * [Create or Verify Folders](#)
+  * [Rename a Folder](#)
+* [Files](#files)
+  * [Array of All Files](#)
+  * [Array of All File Names](#)
+  * [Find a File](#)
+  * [Parent Folder of a File](#)
+  * [Copy a File to a Folder](#)
+  * [Move a File to a Folder](#)
+  * [Rename a File](#)
 
 ## General ##
 
