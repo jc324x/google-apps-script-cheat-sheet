@@ -14,14 +14,14 @@
   * [Flatten Multidimensional Array](#flatten-multidimensional-array--return-array)
 * [Array of Objects](#array-of-objects)
   * [Sort by Property or Properties](#sort-by-property-or-properties--return-array-objects)
-  * [Find Object With Unique Property Value](#find-object-with-unique-property-value--return-object-value)
-  * [Find Earliest or Latest Object by Timestamp](#find-earliest-or-latest-object-by-timestamp--return-object)
+  * [Find Object With Unique Property Value](#find-object-with-unique-property-value--return-object--value)
+  * [Find Earliest or Latest Object by Timestamp](#find-earliest-or-lastest-object-by-timestamp--return-object)
   * [Filter by Property Value or Values](#filter-by-property-value-or-values--return-array-objects)
   * [Unify Properties for Array of Objects](#unify-properties-for-array-of-objects--return-array-objects)
 * [Object](#object)
-  * [Array of Matching Property Values](#array-of-matching-property-values)
-  * [Merge Objects](#merge-objects)
-  * [Object from Range](#object-from-range)
+  * [Array of Matching Property Values](#array-of-matching-property-values--return-array)
+  * [Merge Objects](#merge-objects--return-object)
+  * [Object from Range](#object-from-range--return-object)
 
 ## General ##
 
@@ -70,7 +70,7 @@ var arr_rev = ["a",,"b",,,"c"];
 Logger.log(arr_rev.filter(rmEmptyVal)); // [a,b,c]
 ```
 
-#### Get Count of Values | return: `array (objects)`
+#### Get Count of Values | return: `array (objects)` #### 
 
 ```javascript
 function countOfValIn(arr){
@@ -98,7 +98,7 @@ var arr_covi  = ["A", "B", "C", "A", "B", "C", "A"];
 Logger.log(countOfValIn(arr_covi)); // {count=3.0, value=A}, {count=2.0, value=B}, {count=2.0, value=C}]
 ```
 
-#### Intersect of Two Arrays | return: `array`
+#### Intersect of Two Arrays | return: `array` #### 
 
 ```javascript
 function intersectOf(arrA, arrB) {
@@ -122,7 +122,7 @@ var arr2_io = [3, 4, 5];
 Logger.log(intersectOf(arr1_io, arr2_io)); // [3]
 ```
 
-#### Compare Two Arrays | return: `boolean`
+#### Compare Two Arrays | return: `boolean` #### 
 
 ```javascript
 function compareArr(arr1, arr2) {
@@ -140,7 +140,7 @@ Logger.log(compareArr(arr1_ca, arr2_ca)); // true
 Logger.log(compareArr(arr1_ca, arr3_ca)); // false
 ```
 
-#### Array as Delimited String | return: `string`
+#### Array as Delimited String | return: `string` #### 
 
 ```javascript
 function delimited(arr, delimiter){
@@ -157,7 +157,7 @@ var arr_clf = ["c@example.com", "b@example.com", "a@example.com"];
 Logger.log(commaListFrom(arr_clf, ",")); // a@example.com, b@example.com, c@example.com
 ```
 
-#### Array as Modified Delimited String | return: `string`
+#### Array as Modified Delimited String | return: `string` #### 
 
 ```javascript
 function delimitedModified(arr, extension, delimiter) {
@@ -174,9 +174,9 @@ var arr_clfd = ["x", "z", "y"];
 Logger.log(delimitedModified(arr_clfd, "@example.com", ",")); // x@example.com, y@example.com, z@example.com
 ```
 
-### Multidimensional Array
+### Multidimensional Array ###
 
-#### Flatten Multidimensional Array | return: `array`
+#### Flatten Multidimensional Array | return: `array` #### 
 
 ```javascript
 function flattenMultiArr(multiArr){
@@ -191,7 +191,7 @@ var val_fma = ss_fma.getRange("G2:H5").getValues();
 Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 ```
 
-### Array of Objects
+### Array of Objects ###
 
 ```javascript
 var ex_arrObj = [
@@ -202,7 +202,7 @@ var ex_arrObj = [
 ]
 ```
 
-#### Sort by Property or Properties | return: `array (objects)`
+#### Sort by Property or Properties | return: `array (objects)` ####
 
 ```javascript
 function dynSort(prop) {
@@ -236,7 +236,7 @@ Logger.log(ex_arrObj.sort(dynSortM("b", "c")));
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 ```
 
-#### Find Object With Unique Property Value | return: `object / value`
+#### Find Object With Unique Property Value | return: `object / value` #### 
 
 ```javascript
 function findObjIn(arrObj, pQuery, val) {
@@ -266,7 +266,7 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
 ```
 
-#### Find Earliest or Lastest Object by Timestamp | return: `object`
+#### Find Earliest or Lastest Object by Timestamp | return: `object` #### 
 
 ```javascript
 function earliestTS(arrObj){
@@ -300,7 +300,7 @@ var arrObj_le = arrObjFromRange(ss_le, "J1:K4");
 Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 ```
 
-#### Filter by Property Value or Values | return: `array (objects)`
+#### Filter by Property Value or Values | return: `array (objects)` #### 
 
 ```javascript
 function filterObjIn(arrObj, pQuery, arrVal) {
@@ -318,7 +318,7 @@ Logger.log(filterObjIn(ex_arrObj, "a", [10])); // [{a=10.0, b=2.0, c=500.0}]
 Logger.log(filterObjIn(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 ```
 
-#### Unify Properties for Array of Objects | return: `array (objects)`
+#### Unify Properties for Array of Objects | return: `array (objects)` #### 
 
 ```javascript
 // -- Unify Properties for Array of Objects | return: array (objects)
@@ -347,9 +347,9 @@ Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new"));
 // [{new=123.0, x=123.0}, {new=234.0, y=234.0}, {new=345.0, z=345.0}]
 ```
 
-### Object
+### Object ###
 
-#### Array of Matching Property Values | return: `array`
+#### Array of Matching Property Values | return: `array` #### 
 
 ```javacript
 function filterValIn(obj, props) {
@@ -377,7 +377,7 @@ var arr_fvi = ["a", "b", "d"];
 Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
 ```
 
-#### Merge Objects | return: `object`
+#### Merge Objects | return: `object` #### 
 
 ```javacript
 function mergeObjs() {
@@ -407,7 +407,7 @@ var objB_mo = {
 Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
 ```
 
-#### Object from Range | return: `object`
+#### Object from Range | return: `object` #### 
 
 ```javacript
 function objFromRange(sheetObj, a1Notation) {
