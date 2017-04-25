@@ -416,7 +416,7 @@ var obj_fvi = {
 };
 
 var arr_fvi = ["a", "b", "d"];
-Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
+// Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
 
 // Merge Objects | return: object
 
@@ -444,7 +444,7 @@ var objB_mo = {
  f: 7
 }; 
 
-Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
+// Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
 
 // -- Object from Range | return: object
 
@@ -461,7 +461,7 @@ function objFromRange(sheetObj, a1Notation) {
 }
 
 var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
+// Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 
 // - Dates and Times
 
@@ -473,8 +473,7 @@ function fmatD() {
     return d.join("/");
 }
 
-// var ex_fd = fmatD();
-// Logger.log("current date ➡ " + ex_fd);
+Logger.log(fmatD()); // 4/24/2017
 
 function fmat24T(){
   var n  = new Date();
@@ -487,8 +486,7 @@ function fmat24T(){
     }
 }
 
-// var ex_24T = fmat24T();
-// Logger.log("current time (24 hour) ➡ " + ex_24T);
+Logger.log(fmat24T()); // 20:43:40
 
 function fmat12DT() {
   var n = new Date();
@@ -504,8 +502,7 @@ function fmat12DT() {
   return d.join("/") + " " + t.join(":") + " " + s;
 }
 
-// var ex_dt12 = fmat12DT();
-// Logger.log("current date + time (12 hour) ➡ " + ex_dt12);
+Logger.log(fmat12DT()); // 4/24/2017 8:43:40 PM
 
 // -- Date Object from String | return: date
 
@@ -517,9 +514,7 @@ function dateObjectFrom(str) {
   return new Date (months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
 }
 
-// var ex_ds   = "2016-02-17";
-// var ex_dofs = dateObjectFrom(ex_ds);
-// Logger.log(ex_dofs);
+Logger.log(dateObjectFrom("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
 
 // -- Match a Date to a Range | return: integer
 
@@ -542,8 +537,7 @@ function academicQuarter() {
   if (q) { return q } else { return "date outside of academic calendar"}
 }
 
-// var acdQ = academicQuarter();
-// Logger.log("current quarter ➡ " + acdQ);
+Logger.log(academicQuarter()); // 4 (4/24/2017)
 
 // Drive
 

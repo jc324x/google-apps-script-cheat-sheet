@@ -23,6 +23,11 @@
   * [Merge Objects](#merge-objects--return-object)
   * [Object from Range](#object-from-range--return-object)
 
+> // | - Dates and Times
+> // | -- Formatted Timestamps
+> // | -- Date Object from String
+> // | -- Match a Date to a Range
+
 ## General ##
 
 ### Array ###
@@ -32,7 +37,6 @@
 ```javascript
 function checkValIn(arr, val) { 
   return arr.indexOf(val) > -1; 
-
 
 var arr_cvi = [1,2,3,4];
 Logger.log(checkValIn(arr_cvi,5)); // false
@@ -424,4 +428,86 @@ function objFromRange(sheetObj, a1Notation) {
 
 var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
+```
+
+### Dates and Times ###
+
+#### Formatted Timestamps | return: `string` ####
+
+```javascript
+function fmatD() {
+  var n = new Date();
+  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
+    return d.join("/");
+}
+
+Logger.log(fmatD()); // 4/24/2017
+
+function fmat24T(){
+  var n  = new Date();
+  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+    for ( var i = 1; i < 3; i++ ) {
+      if ( t[i] < 10 ) {
+        t[i] = "0" + t[i];
+      }
+      return t.join(":");
+    }
+}
+
+Logger.log(fmat24T()); // 20:43:40
+
+function fmat12DT() {
+  var n = new Date();
+  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
+    var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+    var s = ( t[0] < 12 ) ? "AM" : "PM";
+  t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
+  for ( var i = 1; i < 3; i++ ) {
+    if ( t[i] < 10 ) {
+      t[i] = "0" + t[i];
+    }
+  }
+  return d.join("/") + " " + t.join(":") + " " + s;
+}
+
+Logger.log(fmat12DT()); // 4/24/2017 8:43:40 PM
+```
+
+#### Date Object from String | return: `date` ####
+
+```javascript
+function dateObjectFrom(str) {
+  var arr    = str.split("-");
+  var months = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+    ];
+  return new Date (months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
+}
+
+Logger.log(dateObjectFrom("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
+```
+
+#### Match a Date to a Range | return: `integer` ####
+
+```javascript
+var quarterDates = [
+  ["08/01/2016", "10/28/2016"],
+  ["11/02/2016", "1/9/2017"],
+  ["1/15/2017", "3/19/2017"],
+  ["3/21/2017", "6/15/2017"],
+];
+
+function academicQuarter() {
+  var d = new Date();
+  for (i = 0; i < 4; i++){
+    var s = new Date(quarterDates[i][0]);
+    var e = new Date(quarterDates[i][1]);
+    if (d >= s && d <= e ) {
+      var q =  i + 1;
+    } 
+  }
+  if (q) { return q } else { return "date outside of academic calendar"}
+}
+
+Logger.log(academicQuarter()); // 4 (4/24/2017)
 ```
