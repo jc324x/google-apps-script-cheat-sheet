@@ -23,6 +23,7 @@ Logger.log("Start");
 // | -- Array of Matching Property Values
 // | -- Merge Objects
 // | -- Object from Range 
+// | -- String from Object Properties // FLAG
 // | - Dates and Times
 // | -- Formatted Timestamps
 // | -- Date Object from String
@@ -63,10 +64,6 @@ Logger.log("Start");
 // | -- Array of Objects from Range
 // | - Array 
 // | -- Array of Values for Column
-// | - Multidimensional Array
-// | -- Multidimensional Array from Array of Objects
-// | - Object
-// | -- Build Object From X Columns
 // | Docs
 // | - Managing Document Files
 // | -- Create or Verify Document
@@ -77,15 +74,14 @@ Logger.log("Start");
 // | - Utility Functions for Merges
 // | -- String from Object Properties
 // | - Docs
-// | -- Find and Replace in Doc by Object Properties
-// | -- Create Merged Documents From a Template Document
-// | -- Shade Cells in Table
+// | -- Find and Replace in Document by Object Properties // FLAG
+// | -- Create Merged Documents From a Template // Flag
+// | -- Shade Cells in a Table // FLAG
 // | -- Create Bulleted List from Array of Objects
 // | - Sheets
 // | -- Find and Replace in Sheet by Object Properties
-// | -- Create Merged Sheets From a Template Spreadsheet
+// | -- Create Merged Sheets From a Template // FLAG
 // | -- Shade Cells in Sheet
-// | -- Set Range of Values in Sheet 
 // | - Gmail
 // | -- Mail Merge from Array of Objects
 // | Other
@@ -97,6 +93,8 @@ Logger.log("Start");
 // * Moving / Copying Folders
 // * Copy Formulas Down
 // * Create Multidimensional Array of Values
+// * Multidimensional Array from Array of Objects
+// * Set Range of Values in Sheet 
 
 // General
 
