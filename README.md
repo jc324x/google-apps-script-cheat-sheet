@@ -569,3 +569,97 @@ function academicQuarter() {
 
 Logger.log(academicQuarter()); // 4 (4/24/2017)
 ```
+
+## Drive ##
+
+### Folders ###
+
+#### Create or Verify Folder Path####
+
+```javascript
+```
+
+#### Last Folder in Folder Path ####
+
+```javascript
+```
+
+#### Array of All Folders ####
+
+```javascript
+```
+
+#### Array of All Folder Names ####
+
+```javascript
+```
+
+#### Find a Folder ####
+
+```javascript
+```
+
+#### Create or Verify Folders ####
+
+```javascript
+```
+
+#### Rename a Folder ####
+
+```javascript
+```
+
+### Files ###
+
+#### Array of All Files ####
+
+```javascript
+```
+
+#### Array of All File Names ####
+
+```javascript
+```
+
+#### Find a File ####
+
+```javascript
+```
+
+#### Parent Folder of a File ####
+
+```javascript
+```
+
+ 
+#### Copy a File to a Folder ####
+
+```javascript
+```
+
+#### Move a File to a Folder ####
+
+```javascript
+```
+
+#### Rename a File ####
+
+```javascript
+```
+
+## Sheets ##
+
+### Managing Spreadsheet Files ###
+
+#### Create or Verify Spreadsheet ####
+
+```javascript
+```
+
+#### Get Spreadsheet Id ####
+
+```javascript
+```
+
+### Managing Spreadsheet Files ###
+
