@@ -409,33 +409,6 @@ Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new")); // [{new=123
 
 ### Object ###
 
-#### Array of Matching Property Values | return: `array` #### 
-
-```javacript
-function filterValIn(obj, props) {
-  var arr  = [];
-  var keys = intersectOf(Object.keys(obj), props);
-  for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(key)) {
-        arr.push(obj[key]);
-        break;
-      }
-    }
-  }
-  return arr;
-}
-
-var obj_fvi = { 
- a: 1, 
- b: 2, 
- c: 3
-};
-
-var arr_fvi = ["a", "b", "d"];
-Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
-```
 
 #### Merge Objects | return: `object` #### 
 
