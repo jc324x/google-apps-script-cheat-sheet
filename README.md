@@ -631,7 +631,7 @@ function lastFolderIn(path) {
 Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/A/B")); // B
 ```
 
-#### Array of All Folders | return: `array (folders)`####
+#### Array of All Folders | return: `array (folders)` ####
 
 ##### All Folders in a Folder #####
 
@@ -700,17 +700,86 @@ Logger.log(folderNames(arr_fn)); // [C]
 
 #### Find a Folder | return: `folder` ####
 
+##### Find a Folder in a Folder #####
+
 ```javascript
+function findFolderIn(fldr, name) {
+  var fldrs = foldersIn(fldr);
+  var names = folderNames(fldrs);
+  if (checkValIn(names, name)) {
+    var _fldr = fldr.getFoldersByName(name).next();
+    return _fldr;
+  }
+}
+
+var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo");
+Logger.log(findFolderIn(fldr_ffi, "A")); // A
 ```
 
-#### Create or Verify Folders ####
+##### Find a Folder at Root #####
 
 ```javascript
+function findFolderAtRoot(name) {
+  var rf    = DriveApp.getRootFolder();
+  var fldrs = rootFolders();
+  var names = folderNames(fldrs);
+  if (checkValIn(names, name)) {
+    var fldr = rf.getFoldersByName(name).next();
+    return fldr;
+  }
+}
+
+Logger.log(findFolderAtRoot("google-apps-script-cheat-sheet-demo")); // google-apps-script-cheat-sheet-demo
 ```
 
-#### Rename a Folder ####
+##### Find a Folder in Drive #####
 
 ```javascript
+function findFolderInDrive(name) {
+  var fi = DriveApp.getFoldersByName(name);
+  while (fi.hasNext()){
+    var fldr = fi.next();
+    return fldr;
+  }
+}
+
+Logger.log(findFolderInDrive("C")); // C
+```
+
+#### Create or Verify Folders | return: `folder` ####
+
+##### Create or Verify Folders in a Folder #####
+
+```javascript
+function createVerifyFoldersIn(fldr, names) {
+  var fldrs  = foldersIn(fldr);
+  var _names = folderNames(fldrs);
+  for (i = 0; i < names.length; i++) {
+    if (!(checkValIn(_names, names[i]))) {
+      fldr.createFolder(names[i]);
+    }
+  }
+  return fldr;
+}
+
+var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet-demo");
+Logger.log(createVerifyFoldersIn(fldr_cvfi, ["X", "Y", "Z"])); // google-apps-script-cheat-sheet-demo
+Logger.log(foldersIn(fldr_cvfi)); // [A,X,Y,Z]
+```
+
+##### Create or Verify Folders at Root #####
+
+```javascipt
+function createVerifyFoldersAtRoot(names) {
+  var rfs    = rootFolders();
+  var _names = folderNames(rfs);
+  for (i=0; i < names.length; i++) {
+    if (!(checkValIn(_names, names[i]))) {
+      DriveApp.createFolder(names[i]);
+    }
+  } 
+  return DriveApp.getRootFolder();
+}
 ```
 
 ### Files ###

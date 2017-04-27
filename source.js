@@ -38,7 +38,12 @@ Logger.log("Start");
 // | --- All Folders in Drive
 // | -- Array of All Folder Names
 // | -- Find a Folder
+// | --- Find a Folder in a Folder
+// | --- Find a Folder at Root
+// | --- Find a Folder in Drive
 // | -- Create or Verify Folders
+// | --- Create or Verify Folders in a Folder
+// | --- Create or Verify Folders at Root
 // | -- Rename a Folder
 // | - Files
 // | -- Array of All Files
@@ -654,7 +659,7 @@ function folderNames(fldrs) {
   return arr;
 }
 
-var arr_fn  = foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/A/B"));
+// var arr_fn  = foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/A/B"));
 // Logger.log(folderNames(arr_fn)); // [C]
 
 // -- Find a Folder | return: folder
@@ -670,9 +675,8 @@ function findFolderIn(fldr, name) {
   }
 }
 
-// var fldr_ffi = lastFolderIn("google-apps-script-library");
-// var ex_ffi = findFolderIn(fldr_ffi, "A");
-// Logger.log(" Id of 'A' in 'google-apps-script-library' is ➡ " + ex_ffi.getId());
+// var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo");
+// Logger.log(findFolderIn(fldr_ffi, "A")); // A
 
 // --- Find a Folder at Root
 
@@ -686,8 +690,7 @@ function findFolderAtRoot(name) {
   }
 }
 
-// var ex_ffar = findFolderAtRoot("google-apps-script-library");
-// Logger.log(" Id of 'google-apps-script-library' at root ➡ " + ex_ffar.getId());
+// Logger.log(findFolderAtRoot("google-apps-script-cheat-sheet-demo")); // google-apps-script-cheat-sheet-demo
 
 // --- Find a Folder in Drive
 
@@ -699,8 +702,7 @@ function findFolderInDrive(name) {
   }
 }
 
-// var ex_ffid = findFolderInDrive("google-apps-script-library");
-// Logger.log(" Id of 'google-apps-script-library' at root ➡ " + ex_ffid.getId());
+// Logger.log(findFolderInDrive("C")); // C
 
 // -- Create or Verify Folders | return: folder
 
@@ -717,8 +719,10 @@ function createVerifyFoldersIn(fldr, names) {
   return fldr;
 }
 
-// var fldr_cvfi = lastFolderIn("google-apps-script-library");
-// var arr_cvfi  = ["X", "Y", "Z"];
+var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet-demo");
+Logger.log(createVerifyFoldersIn(fldr_cvfi, ["X", "Y", "Z"])); // google-apps-script-cheat-sheet-demo
+Logger.log(foldersIn(fldr_cvfi)); // [A,X,Y,Z]
+  
 // var ex_cfi = createVerifyFoldersIn(fldr_cvfi, arr_cvfi);
 // Logger.log("all folders in 'google-apps-script-library' = AXYZ+ ⬇ ");
 // Logger.log(foldersIn(ex_cfi));
@@ -735,11 +739,6 @@ function createVerifyFoldersAtRoot(names) {
   } 
   return DriveApp.getRootFolder();
 }
-
-// var arr_cvfar = ["1", "2", "3"];
-// var ex_cvfar  = createVerifyFoldersAtRoot(arr_cvfar);
-// Logger.log("all folders at Root ⬇ ");
-// Logger.log(rootFolders());
 
 // - Files
 
