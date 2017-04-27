@@ -970,6 +970,13 @@ Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-fi
 
 #### Create or Verify Spreadsheet ####
 
+##### Create or Verify Spreadsheet in a Folder #####
+
+```javascript
+```
+
+##### Create or Verify Spreadsheet at Root #####
+
 ```javascript
 ```
 
@@ -978,5 +985,6 @@ Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-fi
 ```javascript
 ```
 
-### Managing Spreadsheet Files ###
+### Utility Functions for Sheets ###
+
 
