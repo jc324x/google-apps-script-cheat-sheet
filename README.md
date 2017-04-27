@@ -46,6 +46,9 @@
   * [Rename a Folder](#)
 * [Files](#files)
   * [Array of All Files](#)
+    * [All Files in a Folder](#)
+    * [All Files at Root](#)
+    * [All Files in Drive](#)
   * [Array of All File Names](#)
   * [Find a File](#)
   * [Parent Folder of a File](#)
@@ -792,40 +795,173 @@ function createVerifyFoldersAtRoot(names) {
 
 ### Files ###
 
-#### Array of All Files ####
+#### Array of All Files | return: `array (files)` ####
+
+##### All Files in a Folder ##### 
 
 ```javascript
+function filesIn(fldr) {
+  var fi  = fldr.getFiles();
+  var arr = [];
+  while (fi.hasNext()) {
+    var file = fi.next();
+    arr.push(file);
+  } 
+  return arr;
+}
+
+var fldr_fin = lastFolderIn("google-apps-script-cheat-sheet-demo");
+Logger.log(filesIn(fldr_fin)); // [example-file]
 ```
 
-#### Array of All File Names ####
+##### All Files at Root ##### 
 
 ```javascript
+function rootFiles() {
+  var rf = DriveApp.getRootFolder();
+  var fi = rf.getFiles();
+  var arr = [];
+  while (fi.hasNext()) {
+    var file = fi.next();
+    arr.push(file);
+  } 
+  return arr;
+}
 ```
 
-#### Find a File ####
+##### All Files in Drive ##### 
 
 ```javascript
+function allFiles() {
+  var fi = DriveApp.getFiles();
+  var arr  = [];
+  while (fi.hasNext()) {
+    var file = fi.next();
+    arr.push(file);
+  } 
+  return arr;
+}
+```
+
+#### Array of All File Names | return: `array (strings)`####
+
+```javascript
+function fileNames(files) {
+  var arr = [];
+  for (var i = 0; i < files.length; i++) {
+    var name = files[i].getName();
+    arr.push(name);
+  }
+  return arr;
+}
+
+var fldr_fnam = lastFolderIn("google-apps-script-cheat-sheet-demo");
+var arr_fnam  = filesIn(fldr_fnam);
+Logger.log(fileNames(arr_fnam)); // [example-file]
+```
+
+#### Find a File | return: `file` ####
+
+##### Find a File in a Folder #####
+
+```javascript
+function findFileIn(fldr, name) {
+  var files = filesIn(fldr);
+  var names = fileNames(files);
+  if (checkValIn(names, name)) {
+    var file = fldr.getFilesByName(name).next();
+    return file;
+  }
+}
+
+var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo");
+Logger.log(findFileIn(fldr_ffi, "example-file")); // example-file
+```
+
+##### Find a File at Root #####
+
+```javascript
+function findFileAtRoot(name) {
+  var rf    = DriveApp.getRootFolder();
+  var files = rootFiles();
+  var names = fileNames(files);
+  if (checkValIn(names, name)) {
+    var file = rf.getFilesByName(name).next();
+    return file;
+  }
+}
+```
+
+##### Find a File in Drive #####
+
+```javascript
+function findFileInDrive(name) {
+  var fi = DriveApp.getFilesByName(name);
+  while (fi.hasNext()){
+    var file = fi.next();
+    return file;
+  }
+}
+
+Logger.log(findFileInDrive("example-file")); // example-file
 ```
 
 #### Parent Folder of a File ####
 
 ```javascript
-```
+function parentFolderOf(file) {
+  var fi = file.getParents();
+  return fi.next();
+}
 
+var file_pfo = findFileInDrive("example-file");
+Logger.log(parentFolderOf(file_pfo)); // google-apps-script-cheat-sheet-demo
+```
  
 #### Copy a File to a Folder ####
 
 ```javascript
+function copyFile(file, fldr) {
+  var name = file.getName();
+  var dest = findFileIn(fldr, name);
+  if (dest === undefined) { file.makeCopy(name, fldr) }
+  return findFileIn(fldr, name);
+}
+
+var fldr_cf = lastFolderIn("google-apps-script-cheat-sheet-demo/A/B/C");
+var file_cf = findFileInDrive("example-file");
+Logger.log(copyFile(file_cf, fldr_cf)); // example-file
 ```
 
 #### Move a File to a Folder ####
 
 ```javascript
+function moveFile(file, fldr) {
+  var name = file.getName();
+  var dest = findFileIn(fldr, name);
+  if (dest === undefined) { file.makeCopy(name, fldr) }
+  var _file = findFileIn(fldr, name);
+  if (_file !== undefined) { file.setTrashed(true) }
+  return _file;
+}
+
+var fldr_mf1 = lastFolderIn("google-apps-script-cheat-sheet-demo/A/B/C");
+var file_mf  = findFileIn(fldr_mf1, "example-file");
+var fldr_mf2 = lastFolderIn("google-apps-script-cheat-sheet-demo/A");
+Logger.log(moveFile(file_mf, fldr_mf2)); // example-file
 ```
 
 #### Rename a File ####
 
 ```javascript
+function renameFile(file, name) {
+  file.setName(name)
+  return file;
+} 
+
+var fldr_rf = lastFolderIn("google-apps-script-cheat-sheet-demo/A")
+var file_rf = findFileIn(fldr_rf, "example-file");
+Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-file
 ```
 
 ## Sheets ##
