@@ -383,8 +383,6 @@ Logger.log(filterObjIn(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0},
 #### Unify Properties for Array of Objects | return: `array (objects)` #### 
 
 ```javascript
-// -- Unify Properties for Array of Objects | return: array (objects)
-
 function unifyPropForArrObj(arrObj, arrProp, newProp){
   for (var i = 0; i < arrObj.length; i++){
     var obj = arrObj[i];
@@ -405,8 +403,7 @@ var arrObj_upfao  = [
 {z: 345},
 ];
 
-Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new"));
-// [{new=123.0, x=123.0}, {new=234.0, y=234.0}, {new=345.0, z=345.0}]
+Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new")); // [{new=123.0, x=123.0}, {new=234.0, y=234.0}, {new=345.0, z=345.0}]
 
 ```
 
