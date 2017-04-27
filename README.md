@@ -576,19 +576,114 @@ Logger.log(academicQuarter()); // 4 (4/24/2017)
 #### Create or Verify Folder Path####
 
 ```javascript
+function createVerifyPath(path) {
+  var arr = path.split('/');
+  var fldr;
+  for (i = 0; i < arr.length; i++) {
+    if (i == 0) {
+      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      if(!(fi.hasNext())) {
+        DriveApp.createFolder(arr[i]);
+        fi = DriveApp.getFoldersByName(arr[i]);
+      } 
+      fldr = fi.next();
+    } else if (i >= 1) {
+      fi = fldr.getFoldersByName(arr[i]);
+      if(!(fi.hasNext())) {
+        fldr.createFolder(arr[i]);
+        fi = DriveApp.getFoldersByName(arr[i]);
+      } 
+      fldr = fi.next();
+    }
+  } 
+  return fldr;
+}
+
+Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/A/B/C")); // C
 ```
 
 #### Last Folder in Folder Path ####
 
 ```javascript
+function lastFolderIn(path) {
+  var arr = path.split('/');
+  var fldr;
+  for (i = 0; i < arr.length; i++) {
+    if (i == 0) {
+      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      if (fi.hasNext()) {
+        fldr = fi.next();
+      } else { 
+        return null;
+      }
+    } else if (i >= 1) {
+        fi = fldr.getFoldersByName(arr[i]);
+        if (fi.hasNext()) {
+          fldr = fi.next();
+        } else { 
+          return null;
+        }
+    }
+  } 
+  return fldr;
+}
+
+Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/A/B")); // B
 ```
 
 #### Array of All Folders ####
 
+
+##### All Folders in a Folder #####
+
 ```javascript
+// --- All Folders in a Folder 
+
+function foldersIn(fldr) {
+  var fi  = fldr.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var _fldr = fi.next();
+    arr.push(_fldr);
+  } 
+  return arr;
+}
+
+Logger.log(foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo"))); // [A]
 ```
 
-#### Array of All Folder Names ####
+```javascript
+// --- All Folders at Root
+
+function rootFolders() {
+  var rf  = DriveApp.getRootFolder();
+  var fi  = rf.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var fldr = fi.next();
+    arr.push(fldr);
+  } 
+  return arr;
+}
+
+Logger.log(rootFolders());
+
+// --- All Folders in Drive
+
+function allFolders() {
+  var fi  = DriveApp.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var fldr = fi.next();
+    arr.push(fldr);
+  } 
+  return arr;
+}
+
+Logger.log(allFolders());
+```
+
+#### Array of All Folder Names | return: `array (strings)`####
 
 ```javascript
 ```
