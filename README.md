@@ -409,54 +409,32 @@ Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new")); // [{new=123
 
 ### Object ###
 
-
-#### Merge Objects | return: `object` #### 
+#### Array of Matching Property Values | return: `array` #### 
 
 ```javacript
-function mergeObjs() {
-  var obj = arguments[0];
-  for (i = 1; i < arguments.length; i++) {
-    var src = arguments[i]; 
-    for (var key in src) {
-      if (src.hasOwnProperty(key)) obj[key] = src[key];
+function filterValIn(obj, props) {
+  var arr  = [];
+  var keys = intersectOf(Object.keys(obj), props);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(key)) {
+        arr.push(obj[key]);
+        break;
+      }
     }
-  } 
-  return obj;
-} 
+  }
+  return arr;
+}
 
-var objA_mo = {
+var obj_fvi = { 
  a: 1, 
  b: 2, 
  c: 3
-}; 
+};
 
-var objB_mo = {
- c: 4,
- d: 5, 
- e: 6, 
- f: 7
-}; 
-
-Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
-```
-
-#### Object from Range | return: `object` #### 
-
-```javacript
-function objFromRange(sheetObj, a1Notation) {
-  var range  = sheetObj.getRange(a1Notation);
-  var height = range.getHeight();
-  var width  = range.getWidth();
-  var values = range.getValues();
-  var obj    = new Object();
-  for (var i = 0; i < values.length; i++) {
-    obj[values[i][0]] = values[i][1];
-  } 
-  return obj;
-}
-
-var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
+var arr_fvi = ["a", "b", "d"];
+Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
 ```
 
 ### Dates and Times ###
