@@ -654,10 +654,8 @@ function folderNames(fldrs) {
   return arr;
 }
 
-// var fldr_fn = lastFolderIn("google-apps-script-library");
-// var arr_fn  = foldersIn(fldr_fn);
-// var ex_fn   = folderNames(arr_fn)
-// Logger.log("'google-apps-script-library' has top level folders " + ex_fn);
+var arr_fn  = foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/A/B"));
+// Logger.log(folderNames(arr_fn)); // [C]
 
 // -- Find a Folder | return: folder
 

@@ -573,7 +573,7 @@ Logger.log(academicQuarter()); // 4 (4/24/2017)
 
 ### Folders ###
 
-#### Create or Verify Folder Path####
+#### Create or Verify Folder Path | return: `folder` ####
 
 ```javascript
 function createVerifyPath(path) {
@@ -602,7 +602,7 @@ function createVerifyPath(path) {
 Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/A/B/C")); // C
 ```
 
-#### Last Folder in Folder Path ####
+#### Last Folder in Folder Path | return: `folder` ####
 
 ```javascript
 function lastFolderIn(path) {
@@ -631,14 +631,11 @@ function lastFolderIn(path) {
 Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/A/B")); // B
 ```
 
-#### Array of All Folders ####
-
+#### Array of All Folders | return: `array (folders)`####
 
 ##### All Folders in a Folder #####
 
 ```javascript
-// --- All Folders in a Folder 
-
 function foldersIn(fldr) {
   var fi  = fldr.getFolders();
   var arr = [];
@@ -652,9 +649,9 @@ function foldersIn(fldr) {
 Logger.log(foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo"))); // [A]
 ```
 
-```javascript
-// --- All Folders at Root
+##### All Folders at Root #####
 
+```javascript
 function rootFolders() {
   var rf  = DriveApp.getRootFolder();
   var fi  = rf.getFolders();
@@ -667,9 +664,11 @@ function rootFolders() {
 }
 
 Logger.log(rootFolders());
+```
 
-// --- All Folders in Drive
+##### All Folders in Drive #####
 
+```javascript
 function allFolders() {
   var fi  = DriveApp.getFolders();
   var arr = [];
@@ -683,12 +682,23 @@ function allFolders() {
 Logger.log(allFolders());
 ```
 
-#### Array of All Folder Names | return: `array (strings)`####
+#### Array of All Folder Names | return: `array (strings)` ####
 
 ```javascript
+function folderNames(fldrs) {
+  var arr = [];
+  for (var i = 0; i < fldrs.length; i++) {
+    var name = fldrs[i].getName();
+    arr.push(name);
+  }
+  return arr;
+}
+
+var arr_fn  = foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/A/B"));
+Logger.log(folderNames(arr_fn)); // [C]
 ```
 
-#### Find a Folder ####
+#### Find a Folder | return: `folder` ####
 
 ```javascript
 ```
