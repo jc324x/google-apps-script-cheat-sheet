@@ -47,8 +47,14 @@ Logger.log("Start");
 // | -- Rename a Folder
 // | - Files
 // | -- Array of All Files
+// | --- All Files in a Folder
+// | --- All Files at Root
+// | --- All Files in Drive
 // | -- Array of All File Names
 // | -- Find a File
+// | --- Find a File in a Folder
+// | --- Find a File at Root
+// | --- Find a File in Drive
 // | -- Parent Folder of a File
 // | -- Copy a File to a Folder
 // | -- Move a File to a Folder
