@@ -610,7 +610,7 @@ function createVerifyPath(path) {
   return fldr;
 }
 
-Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/A/B/C")); // C
+Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 ```
 
 #### Last Folder in Folder Path | return: `folder` ####
@@ -639,7 +639,7 @@ function lastFolderIn(path) {
   return fldr;
 }
 
-Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/A/B")); // B
+Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
 ```
 
 #### Array of All Folders | return: `array (folders)` ####
@@ -657,7 +657,7 @@ function foldersIn(fldr) {
   return arr;
 }
 
-Logger.log(foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo"))); // [A]
+Logger.log(foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/"))); // [A]
 ```
 
 ##### All Folders at Root #####
@@ -705,7 +705,7 @@ function folderNames(fldrs) {
   return arr;
 }
 
-var arr_fn  = foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/A/B"));
+var arr_fn  = foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B"));
 Logger.log(folderNames(arr_fn)); // [C]
 ```
 
@@ -723,7 +723,7 @@ function findFolderIn(fldr, name) {
   }
 }
 
-var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo");
+var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo/folders");
 Logger.log(findFolderIn(fldr_ffi, "A")); // A
 ```
 
@@ -754,7 +754,7 @@ function findFolderInDrive(name) {
   }
 }
 
-Logger.log(findFolderInDrive("C")); // C
+Logger.log(findFolderInDrive("folders")); // folders
 ```
 
 #### Create or Verify Folders | return: `folder` ####
@@ -810,7 +810,7 @@ function filesIn(fldr) {
   return arr;
 }
 
-var fldr_fin = lastFolderIn("google-apps-script-cheat-sheet-demo");
+var fldr_fin = lastFolderIn("google-apps-script-cheat-sheet-demo/files");
 Logger.log(filesIn(fldr_fin)); // [example-file]
 ```
 
@@ -843,7 +843,7 @@ function allFiles() {
 }
 ```
 
-#### Array of All File Names | return: `array (strings)`####
+#### Array of All File Names | return: `array (strings)` ####
 
 ```javascript
 function fileNames(files) {
@@ -855,7 +855,7 @@ function fileNames(files) {
   return arr;
 }
 
-var fldr_fnam = lastFolderIn("google-apps-script-cheat-sheet-demo");
+var fldr_fnam = lastFolderIn("google-apps-script-cheat-sheet-demo/files");
 var arr_fnam  = filesIn(fldr_fnam);
 Logger.log(fileNames(arr_fnam)); // [example-file]
 ```
@@ -874,7 +874,7 @@ function findFileIn(fldr, name) {
   }
 }
 
-var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo");
+var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo/files");
 Logger.log(findFileIn(fldr_ffi, "example-file")); // example-file
 ```
 
@@ -915,7 +915,7 @@ function parentFolderOf(file) {
 }
 
 var file_pfo = findFileInDrive("example-file");
-Logger.log(parentFolderOf(file_pfo)); // google-apps-script-cheat-sheet-demo
+Logger.log(parentFolderOf(file_pfo)); // files
 ```
  
 #### Copy a File to a Folder ####
@@ -928,7 +928,7 @@ function copyFile(file, fldr) {
   return findFileIn(fldr, name);
 }
 
-var fldr_cf = lastFolderIn("google-apps-script-cheat-sheet-demo/A/B/C");
+var fldr_cf = createVerifyPath("google-apps-script-cheat-sheet-demo/files/copied");
 var file_cf = findFileInDrive("example-file");
 Logger.log(copyFile(file_cf, fldr_cf)); // example-file
 ```
@@ -945,9 +945,9 @@ function moveFile(file, fldr) {
   return _file;
 }
 
-var fldr_mf1 = lastFolderIn("google-apps-script-cheat-sheet-demo/A/B/C");
+var fldr_mf1 = lastFolderIn("google-apps-script-cheat-sheet-demo/files/copied");
 var file_mf  = findFileIn(fldr_mf1, "example-file");
-var fldr_mf2 = lastFolderIn("google-apps-script-cheat-sheet-demo/A");
+var fldr_mf2 = createVerifyPath("google-apps-script-cheat-sheet-demo/files/moved");
 Logger.log(moveFile(file_mf, fldr_mf2)); // example-file
 ```
 
@@ -959,7 +959,7 @@ function renameFile(file, name) {
   return file;
 } 
 
-var fldr_rf = lastFolderIn("google-apps-script-cheat-sheet-demo/A")
+var fldr_rf = lastFolderIn("google-apps-script-cheat-sheet-demo/files/moved")
 var file_rf = findFileIn(fldr_rf, "example-file");
 Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-file
 ```
@@ -973,14 +973,34 @@ Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-fi
 ##### Create or Verify Spreadsheet in a Folder #####
 
 ```javascript
+  var files = filesIn(fldr);
+  var names = fileNames(files);
+  if (!(checkValIn(names, name))) {
+    var ss   = SpreadsheetApp.create(name).getId();
+    var file = DriveApp.getFileById(ss);
+    moveFile(file, fldr);
+  }
+  return findFileIn(fldr, name);
+}
+
+var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
+Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet"));
 ```
 
 ##### Create or Verify Spreadsheet at Root #####
 
 ```javascript
+function createVerifySSAtRoot(name) {
+  var files = rootFiles();
+  var names = fileNames(files);
+  if (!(checkValIn(names, name))) {
+    var ss = SpreadsheetApp.create(name);
+  }
+  return findFileAtRoot(name);
+}
 ```
 
-#### Get Spreadsheet Id ####
+#### Id of Active Spreadsheet ####
 
 ```javascript
 ```
