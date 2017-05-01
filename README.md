@@ -1211,7 +1211,7 @@ function arrObjFromSheet(sheetObj, hRow){
 }
 
 var ss_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrObjFromSheet(ss_aofs, 2)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, {Last=Juda, Email=njuda@example.com, Homeroom=Edvard, Grade=7.0, First=Nerses}, {Last=Armen, Email=garmen@example.com, Homeroom=Waldek, Grade=7.0, First=Gülistan}, {Last=Yeong-Suk, Email=syeong-suk@example.com, Homeroom=Helena, Grade=8.0, First=Syed}, {Last=Coy, Email=icoy@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Isaiah}, {Last=Stevie, Email=sstevie@example.com, Homeroom=Helena, Grade=8.0, First=Stanley}, {Last=Emin, Email=semin@example.com, Homeroom=Lale, Grade=6.0, First=Sára}, {Last=Tiriaq, Email=ktiriaq@example.com, Homeroom=Muhsina, Grade=6.0, First=Kaja}, {Last=Dilay, Email=jdilay@example.com, Homeroom=Waldek, Grade=7.0, First=Józef}, {Last=Kirabo, Email=rkirabo@example.com, Homeroom=Helena, Grade=8.0, First=Radoslava}, {Last=Ariadna, Email=sariadna@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Sarah}, {Last=Devrim, Email=odevrim@example.com, Homeroom=Lale, Grade=6.0, First=Oluwasegun}, {Last=Adjoa, Email=eadjoa@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Ekundayo}, {Last=Suk, Email=gsuk@example.com, Homeroom=Waldek, Grade=7.0, First=Gina}, {Last=Lyle, Email=slyle@example.com, Homeroom=Helena, Grade=8.0, First=Sylvia}, {Last=Edita, Email=cedita@example.com, Homeroom=Lale, Grade=6.0, First=Cemil}]
+Logger.log(arrObjFromSheet(ss_aofs, 2)); [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, ... ]
 ```
 
 #### Array of Objects from Range | return: `array (objects)` ####
@@ -1225,7 +1225,7 @@ function arrObjFromRange(sheetObj, a1Notation) {
 }
 
 var ss_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrObjFromRange(ss_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, {Last=Juda, Email=njuda@example.com, Homeroom=Edvard, Grade=7.0, First=Nerses}, {Last=Armen, Email=garmen@example.com, Homeroom=Waldek, Grade=7.0, First=Gülistan}, {Last=Yeong-Suk, Email=syeong-suk@example.com, Homeroom=Helena, Grade=8.0, First=Syed}]
+Logger.log(arrObjFromRange(ss_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, ... ]
 ```
 
 ### Array ###
