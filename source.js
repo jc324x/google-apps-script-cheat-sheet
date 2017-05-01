@@ -62,7 +62,10 @@ Logger.log("Start");
 // | Sheets
 // | - Managing Spreadsheet Files
 // | -- Create or Verify Spreadsheet
+// | --- Create or Verify Spreadsheet in a Folder
+// | --- Create or Verify Spreadsheet at Root
 // | -- Id of Active Spreadsheet
+// | -- Access Spreadsheet by Id
 // | - Utility Functions for Sheets
 // | -- Convert Column Number to a Letter
 // | -- Convert Column Letter to a Number
@@ -949,8 +952,7 @@ function ssId() {
 
 // Logger.log(ssId());
 
-// --- Open Spreadsheet by Id
-// FLAG
+// -- Access Spreadsheet by Id
 
 // - Utility Functions for Sheets
 

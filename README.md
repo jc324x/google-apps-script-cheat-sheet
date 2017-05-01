@@ -968,7 +968,7 @@ Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-fi
 
 ### Managing Spreadsheet Files ###
 
-#### Create or Verify Spreadsheet ####
+#### Create or Verify Spreadsheet | return: `spreadsheet` ####
 
 ##### Create or Verify Spreadsheet in a Folder #####
 
@@ -1000,11 +1000,50 @@ function createVerifySSAtRoot(name) {
 }
 ```
 
-#### Id of Active Spreadsheet ####
+#### Id of Active Spreadsheet | return: `string` ####
+
+```javascript
+function ssId() {
+  var _ss = SpreadsheetApp.getActiveSpreadsheet();
+  var id  = _ss.getId();
+  return id;
+}
+```
+
+#### Access Spreadsheet by Id | return: `spreadsheet` ####
+
+```javascipt
+```
+
+#### Convert Column Number to a Letter | return: `integer` #### 
 
 ```javascript
 ```
 
-### Utility Functions for Sheets ###
+#### Convert Column Letter to a Number | return: `string` #### 
 
+```javascript
+```
+
+#### Replicating Import Range #### 
+
+```javascript
+```
+
+#### Evaluating True and False | return:  `boolean` #### 
+
+```javascript
+```
+
+### Array of Objects ###
+
+#### Utility Functions for Array of Objects ####
+
+##### Header Range | return: `` #####
+
+##### Value Range | return: `` #####
+
+##### Header Values | return: `` #####
+
+##### Values by Row | return: `` #####
 
