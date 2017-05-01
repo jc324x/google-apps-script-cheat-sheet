@@ -65,7 +65,7 @@ Logger.log("Start");
 // | --- Create or Verify Spreadsheet in a Folder
 // | --- Create or Verify Spreadsheet at Root
 // | -- Id of Active Spreadsheet
-// | -- Access Spreadsheet by Id
+// | -- Open File as Spreadsheet
 // | - Utility Functions for Sheets
 // | -- Convert Column Number to a Letter
 // | -- Convert Column Letter to a Number
@@ -583,7 +583,7 @@ function createVerifyPath(path) {
   return fldr;
 }
 
-Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
+// Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 
 // -- Last Folder in Folder Path | return: folder
 
@@ -610,7 +610,7 @@ function lastFolderIn(path) {
   return fldr;
 }
 
-Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
+// Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
 
 // -- Array of All Folders | return: array (folders)
 
@@ -684,8 +684,8 @@ function findFolderIn(fldr, name) {
   }
 }
 
-var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo/folders");
-Logger.log(findFolderIn(fldr_ffi, "A")); // A
+// var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo/folders");
+// Logger.log(findFolderIn(fldr_ffi, "A")); // A
 
 // --- Find a Folder at Root
 
@@ -756,7 +756,7 @@ function checkForExFile() {
   return findFileIn(fldr, "example-file");
 }
 
-Logger.log(checkForExFile());
+// Logger.log(checkForExFile());
 
 // -- Array of All Files | array (files) 
 
@@ -928,8 +928,8 @@ function createVerifySSIn(fldr, name) {
   return findFileIn(fldr, name);
 }
 
-// var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
-// Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet"));
+var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
+Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet")); // example-sheet
 
 // --- Create or Verify Spreadsheet at Root
 
@@ -945,14 +945,23 @@ function createVerifySSAtRoot(name) {
 // --- Id of Active Spreadsheet | return: string
 
 function ssId() {
-  var _ss = SpreadsheetApp.getActiveSpreadsheet();
-  var id  = _ss.getId();
+  var id = SpreadsheetApp.getActiveSpreadsheet().getId();
   return id;
 }
 
 // Logger.log(ssId());
 
-// -- Access Spreadsheet by Id
+// -- Open File as Spreadsheet
+
+function openFileAsSpreadsheet(file) {
+  var _id = file.getId();
+  var _ss = SpreadsheetApp.openById(_id);
+  return _ss;
+} 
+
+// var fldr_ofas = lastFolderIn("google-apps-script-cheat-sheet-demo/sheets")
+// var file_ofas = findFileIn(fldr_ofas, "example-sheet");
+// var ss_ofas   = openFileAsSpreadsheet(file_ofas); // example-sheet
 
 // - Utility Functions for Sheets
 
@@ -984,6 +993,7 @@ function numCol(num) {
 //    Logger.log(i + " - " + j);
 //  }
 // }
+
 // ex_nc();
 
 // -- Convert Column Letter to a Number | return: integer 
@@ -1010,6 +1020,7 @@ function colNum(col) {
 //    Logger.log(abc + " - " + colNum(abc));
 //  }
 // }
+
 // ex_cn();
 
 // -- Replicating Import Range | return: nil
@@ -1042,10 +1053,8 @@ function checkTF(input) {
   }
 }
 
-// var ex_ctf1 = "Yes";
-// var ex_ctf2 = "No";
-// Logger.log(checkTF(ex_ctf1));
-// Logger.log(checkTF(ex_ctf2));
+// Logger.log(checkTF("No")); // false
+// Logger.log(checkTF("Yes")); // true
 
 // - Array of Objects
 
@@ -1121,8 +1130,7 @@ function arrObjFromSheet(sheetObj, hRow){
 }
 
 // var ss_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var ex_aofs = arrObjFromSheet(ss_aofs, 2);
-// Logger.log(ex_aofs);
+// Logger.log(arrObjFromSheet(ss_aofs, 2));
 
 // -- Array of Objects from Range | return: array (objects)
 // dependencies: headerVal, valByRow
@@ -1135,8 +1143,7 @@ function arrObjFromRange(sheetObj, a1Notation) {
 }
 
 // var ss_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var ex_aofr = arrObjFromRange(ss_aofr, "A2:E7");
-// Logger.log(ex_aofr);
+// Logger.log(arrObjFromRange(ss_aofr, "A2:E7"));
 
 // - Array 
 

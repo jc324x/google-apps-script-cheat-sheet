@@ -973,6 +973,7 @@ Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-fi
 ##### Create or Verify Spreadsheet in a Folder #####
 
 ```javascript
+function createVerifySSIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
   if (!(checkValIn(names, name))) {
@@ -984,7 +985,7 @@ Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-fi
 }
 
 var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
-Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet"));
+Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet")); // example-sheet
 ```
 
 ##### Create or Verify Spreadsheet at Root #####
@@ -1004,46 +1005,229 @@ function createVerifySSAtRoot(name) {
 
 ```javascript
 function ssId() {
-  var _ss = SpreadsheetApp.getActiveSpreadsheet();
-  var id  = _ss.getId();
+  var id = SpreadsheetApp.getActiveSpreadsheet().getId();
   return id;
 }
+
+Logger.log(ssId());
 ```
 
-#### Access Spreadsheet by Id | return: `spreadsheet` ####
+#### Open File as Spreadsheet | return: `spreadsheet` ####
 
 ```javascipt
+function openFileAsSpreadsheet(file) {
+  var _id = file.getId();
+  var _ss = SpreadsheetApp.openById(_id);
+  return _ss;
+} 
+
+var fldr_ofas = lastFolderIn("google-apps-script-cheat-sheet-demo/sheets")
+var file_ofas = findFileIn(fldr_ofas, "example-sheet");
+var ss_ofas   = openFileAsSpreadsheet(file_ofas); // example-sheet
 ```
+
+### Utility Functions for Sheets ###
 
 #### Convert Column Number to a Letter | return: `integer` #### 
 
 ```javascript
+function numCol(num) {
+  var num = num - 1, chr;
+  if (num <= 25) {
+    chr = String.fromCharCode(97 + num).toUpperCase();
+    return chr;
+  } else if (num >= 26 && num <= 51) {
+    num -= 26;
+    chr = String.fromCharCode(97 + num).toUpperCase();
+    return "A" + chr;
+  } else if (num >= 52 && num <= 77) {
+    num -= 52;
+    chr = String.fromCharCode(97 + num).toUpperCase();
+    return "B" + chr;
+  } else if (num >= 78 && num <= 103) {
+    num -= 78;
+    chr = String.fromCharCode(97 + num).toUpperCase();
+    return "C" + chr;
+  }
+}
+
+function ex_nc() {
+ for (var i = 1; i <= 104; i++) {
+   var j = numCol(i);
+   Logger.log(i + " - " + j);
+ }
+}
+
+ex_nc(); // 1 - A ... 104 - CZ
 ```
 
 #### Convert Column Letter to a Number | return: `string` #### 
 
 ```javascript
+function colNum(col) {
+  var col = col.toUpperCase();
+  if (col.length === 1)  {
+    var chr0 = col.charCodeAt(0) - 64;
+    return chr0;
+  } else if (col.length === 2) {
+    var chr0 = (col.charCodeAt(0) - 64) * 26;
+    var chr1 = col.charCodeAt(1) - 64;
+    return chr0 + chr1;
+  }
+}
+
+function ex_cn() {
+ for (var i = 0; i <= 25; i++) {
+   var abc = String.fromCharCode(97 + i).toUpperCase();
+   Logger.log(abc + " - " + colNum(abc));
+ }
+ for (var i = 26; i <= 51; i++) {
+   var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
+   Logger.log(abc + " - " + colNum(abc));
+ }
+}
+
+ex_cn(); // A - 1 ... AZ - 52
 ```
 
 #### Replicating Import Range #### 
 
 ```javascript
+// trigger -> importRange > From spreadsheet > On edit
+function importRange(){
+  var get = sheet_gs.getRange("A2:A5").getValues();
+  var set = sheet_gs.getRange("B2:B5").setValues(get);
+}
 ```
 
 #### Evaluating True and False | return:  `boolean` #### 
 
 ```javascript
+// -- Evaluating True and False | return: boolean
+// true:  1, t*, T*, y*, Y*
+// false: 0, !t || !y
+// ➡  boolean
+
+function checkTF(input) {
+  if (isNaN(input)) {
+    var first_letter = input.charAt(0).toLowerCase();
+    if (first_letter === 't' || first_letter === 'y') {
+      return true 
+    } else {
+      return false
+    }
+  } else {
+    if (input === 1) {
+      return true
+    } else { 
+      return false;
+    }
+  }
+}
+
+Logger.log(checkTF("No")); // false
+Logger.log(checkTF("Yes")); // true
 ```
 
 ### Array of Objects ###
 
 #### Utility Functions for Array of Objects ####
 
-##### Header Range | return: `` #####
+##### Header Range | return: `range` #####
 
-##### Value Range | return: `` #####
+```javascript
+function headerRange(sheetObj, a1Notation) {
+  var arr  = a1Notation.split(":");
+  var col0 = arr[0].match(/\D/g,'');
+  var col1 = arr[1].match(/\D/g,'');
+  var row  = arr[0].match(/\d+/g);
+  var a1   = col0 + row + ":" + col1 + row;
+  return sheetObj.getRange(a1);
+}
+```
 
-##### Header Values | return: `` #####
+##### Value Range | return: `range` #####
 
-##### Values by Row | return: `` #####
+```javascript
+function valueRange(sheetObj, a1Notation) {
+  var arr  = a1Notation.split(":");
+  var col0 = arr[0].match(/\D/g,'');
+  var row0 = arr[0].match(/\d+/g);
+  var col1 = arr[1].match(/\D/g,'');
+  var row1 = arr[1].match(/\d+/g);
+  var a1   = col0 + (Number(row0) + 1) + ":" + col1 + row1;
+  return sheetObj.getRange(a1);
+}
+```
 
+##### Header Values | return: `array` #####
+
+```javascript
+function headerVal(rangeObj){
+  var vals = rangeObj.getValues();
+  var arr  = [];
+  for (var i = 0; i < vals[0].length; i++) {
+    var val = vals[0][i];
+    arr.push(val);
+  } 
+  return arr;
+}
+```
+
+##### Values by Row | return: `array (objects)` #####
+
+```javascript
+function valByRow(rangeObj, headers){
+  var h    = rangeObj.getHeight();
+  var w    = rangeObj.getWidth();
+  var vals = rangeObj.getValues();
+  var arr  = [];
+  for (var i = 0; i < h; i++) {
+    var row = {};
+    for (var j = 0; j < w; j++) {
+      var prop = headers[j];
+      var val  = vals[i][j];
+      if (val !== "") {
+        row[prop] = val;
+      } 
+    }
+    arr.push(row);
+  }  
+  return arr;
+}
+```
+
+### Array of Objects from Sheet | return: `array (objects)`
+
+```javascript
+function arrObjFromSheet(sheetObj, hRow){
+  var lColNum = sheetObj.getLastColumn();
+  var lColABC = numCol(lColNum);
+  var lRow    = sheetObj.getLastRow();
+  var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+  var headers = headerVal(hRange);
+  var vRange  = sheetObj.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
+  return valByRow(vRange, headers)
+}
+
+var ss_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrObjFromSheet(ss_aofs, 2));
+
+ [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, {Last=Juda, Email=njuda@example.com, Homeroom=Edvard, Grade=7.0, First=Nerses}, {Last=Armen, Email=garmen@example.com, Homeroom=Waldek, Grade=7.0, First=Gülistan}, {Last=Yeong-Suk, Email=syeong-suk@example.com, Homeroom=Helena, Grade=8.0, First=Syed}, {Last=Coy, Email=icoy@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Isaiah}, {Last=Stevie, Email=sstevie@example.com, Homeroom=Helena, Grade=8.0, First=Stanley}, {Last=Emin, Email=semin@example.com, Homeroom=Lale, Grade=6.0, First=Sára}, {Last=Tiriaq, Email=ktiriaq@example.com, Homeroom=Muhsina, Grade=6.0, First=Kaja}, {Last=Dilay, Email=jdilay@example.com, Homeroom=Waldek, Grade=7.0, First=Józef}, {Last=Kirabo, Email=rkirabo@example.com, Homeroom=Helena, Grade=8.0, First=Radoslava}, {Last=Ariadna, Email=sariadna@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Sarah}, {Last=Devrim, Email=odevrim@example.com, Homeroom=Lale, Grade=6.0, First=Oluwasegun}, {Last=Adjoa, Email=eadjoa@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Ekundayo}, {Last=Suk, Email=gsuk@example.com, Homeroom=Waldek, Grade=7.0, First=Gina}, {Last=Lyle, Email=slyle@example.com, Homeroom=Helena, Grade=8.0, First=Sylvia}, {Last=Edita, Email=cedita@example.com, Homeroom=Lale, Grade=6.0, First=Cemil}]
+```
+
+### Array of Objects from Range | return: `array (objects)`
+
+```javascript
+function arrObjFromRange(sheetObj, a1Notation) {
+  var hRange  = headerRange(sheetObj, a1Notation);
+  var vRange  = valueRange(sheetObj, a1Notation);
+  var headers = headerVal(hRange);
+  return valByRow(vRange, headers);
+}
+
+var ss_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrObjFromRange(ss_aofr, "A2:E7"));
+
+[{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, {Last=Juda, Email=njuda@example.com, Homeroom=Edvard, Grade=7.0, First=Nerses}, {Last=Armen, Email=garmen@example.com, Homeroom=Waldek, Grade=7.0, First=Gülistan}, {Last=Yeong-Suk, Email=syeong-suk@example.com, Homeroom=Helena, Grade=8.0, First=Syed}]
+```
