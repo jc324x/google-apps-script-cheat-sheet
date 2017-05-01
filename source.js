@@ -1169,8 +1169,8 @@ function arrForColName(sheetObj, hRow, name){
   return arr;
 }
 
-var ss_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrForColName(ss_afcna, 2, "First"));
+// var ss_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(arrForColName(ss_afcna, 2, "First"));
 
 // --- By Column Number
 
@@ -1191,8 +1191,8 @@ function arrForColNo(sheetObj, hRow, colIndex){
   return arr;
 }
 
-var ss_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
-Logger.log(arrForColNo(ss_afcno, 2, 2));
+// var ss_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
+// Logger.log(arrForColNo(ss_afcno, 2, 2));
 
 // Docs
 
