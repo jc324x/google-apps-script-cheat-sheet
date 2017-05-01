@@ -1211,7 +1211,7 @@ function arrObjFromSheet(sheetObj, hRow){
 }
 
 var ss_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrObjFromSheet(ss_aofs, 2)); [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, ... ]
+Logger.log(arrObjFromSheet(ss_aofs, 2)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, ... ]
 ```
 
 #### Array of Objects from Range | return: `array (objects)` ####
