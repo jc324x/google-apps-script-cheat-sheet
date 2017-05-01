@@ -1169,9 +1169,8 @@ function arrForColName(sheetObj, hRow, name){
   return arr;
 }
 
-// var ss_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var ex_afcna = arrForColName(ss_afcna, 2, "First");
-// Logger.log(ex_afcna);
+var ss_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrForColName(ss_afcna, 2, "First"));
 
 // --- By Column Number
 
@@ -1192,18 +1191,8 @@ function arrForColNo(sheetObj, hRow, colIndex){
   return arr;
 }
 
-// var ss_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
-// var ex_afcno = arrForColNo(ss_afcno, 2, 2);
-// Logger.log(ex_afcno);
-
-// - Multidimensional Array
-
-// -- FLAG -- | haven't written this yet...
-// -- Multidimensional Array from Array of Objects | return: multidimensional array
-
-// function multiArrFromArrObj(arrObj, prop) {
-  
-// } 
+var ss_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
+Logger.log(arrForColNo(ss_afcno, 2, 2));
 
 // Docs
 
