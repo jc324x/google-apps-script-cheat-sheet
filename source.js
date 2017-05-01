@@ -84,6 +84,10 @@ Logger.log("Start");
 // | Docs
 // | - Managing Document Files
 // | -- Create or Verify Document
+// | --- Create or Verify Document in a Folder
+// | --- Create or Verify Document at Root
+// | -- Id of Active Document
+// | -- Open File as Document
 // | - Utility Functions for Docs
 // | -- Access Document Body
 // | -- Clear Document Body
@@ -928,8 +932,8 @@ function createVerifySSIn(fldr, name) {
   return findFileIn(fldr, name);
 }
 
-var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
-Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet")); // example-sheet
+// var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
+// Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet")); // example-sheet
 
 // --- Create or Verify Spreadsheet at Root
 
@@ -1117,7 +1121,6 @@ function valByRow(rangeObj, headers){
 }
 
 // -- Array of Objects from Sheet | return: array (objects)
-// dependencies: numCol, headerVal, valByRow
 
 function arrObjFromSheet(sheetObj, hRow){
   var lColNum = sheetObj.getLastColumn();
@@ -1133,7 +1136,6 @@ function arrObjFromSheet(sheetObj, hRow){
 // Logger.log(arrObjFromSheet(ss_aofs, 2));
 
 // -- Array of Objects from Range | return: array (objects)
-// dependencies: headerVal, valByRow
 
 function arrObjFromRange(sheetObj, a1Notation) {
   var hRange  = headerRange(sheetObj, a1Notation);
@@ -1196,22 +1198,9 @@ function arrForColNo(sheetObj, hRow, colIndex){
 
 // Docs
 
-function checkForExDoc() {
-  var fldr  = createVerifyPath("google-apps-script-library");
-  var exDoc = findFileIn(fldr, "example_doc");
-  if (!(exDoc)){
-    DocumentApp.create("example_doc");
-    exDoc = moveFile(findFileAtRoot("example_doc"), fldr);
-  }
-  return exDoc;
-}
-
-var chkDoc = checkForExDoc();
-
 // - Managing Document Files
 
-// -- Create or Verify Document in a Folder or at Root | return: file
-// dependencies: filesIn, rootFiles, fileNames, findFileIn
+// -- Create or Verify Document in a Folder or at Root | return: document 
 
 // --- Create or Verify Document in a Folder
 
@@ -1226,9 +1215,8 @@ function createVerifyDocIn(fldr, name) {
   return findFileIn(fldr, name);
 }
 
-// var fldr_cvdi = createVerifyPath("google-apps-script-library");
-// var ex_cvdi   = createVerifyDocIn(fldr_cvdi, "example_doc");
-// Logger.log("The Id of '" + ex_cvdi + "' in " + parentFolderOf(ex_cvdi) + " is '" + ex_cvdi.getId());
+var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet/docs");
+Logger.log(createVerifyDocIn(fldr_cvdi, "example-doc")); // example-doc
 
 // --- Create or Verify Document at Root
 
@@ -1241,8 +1229,10 @@ function createVerifyDocAtRoot(name) {
   return findFileAtRoot(name);
 }
 
-// var ex_cvdar = createVerifyDocAtRoot("example_doc");
-// Logger.log("The Id of '" + ex_cvdar + "' at root is '" + ex_cvdar.getId());
+
+// -- Id of Active Document
+  
+// -- Open File as Document
 
 // - Utility Functions for Docs
 

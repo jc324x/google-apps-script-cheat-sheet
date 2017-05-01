@@ -82,6 +82,7 @@
 * [Utility Functions for Docs](#)
   * [Access Document Body](#)
   * [Clear Document Body](#)
+
 [Merges](#)
 * [Docs](#)
   * [Find and Replace in Document by Object Properties](#)
@@ -1279,4 +1280,41 @@ function arrForColNo(sheetObj, hRow, colIndex){
 
 var ss_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
 Logger.log(arrForColNo(ss_afcno, 2, 2)); // [Garret, Jules, Juda, Armen, Yeong-Suk, Coy, Stevie, Emin, Tiriaq, Dilay, Kirabo, Ariadna, Devrim, Adjoa, Suk, Lyle, Edita]
+```
+
+## Docs ##
+
+### Managing Document Files ###
+
+#### Create or Verify Document 
+
+##### Create or Verify Document in a Folder #####
+
+```javascript
+function createVerifyDocIn(fldr, name) {
+  var files = filesIn(fldr);
+  var names = fileNames(files);
+  if (!(checkValIn(names, name))) {
+    var doc  = DocumentApp.create(name).getId();
+    var file = DriveApp.getFileById(doc);
+    moveFile(file, fldr);
+  }
+  return findFileIn(fldr, name);
+}
+
+var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet/docs");
+Logger.log(createVerifyDocIn(fldr_cvdi, "example-doc")); // example-doc
+```
+
+##### Create or Verify Document at Root #####
+
+```javascript
+function createVerifyDocAtRoot(name) {
+  var files = rootFiles();
+  var names = fileNames(files);
+  if (!(checkValIn(names, name))) {
+    var ss = DocumentApp.create(name);
+  }
+  return findFileAtRoot(name);
+}
 ```
