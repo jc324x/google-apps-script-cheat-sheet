@@ -1318,3 +1318,42 @@ function createVerifyDocAtRoot(name) {
   return findFileAtRoot(name);
 }
 ```
+
+#### Id of Active Document ####
+
+```javascript
+function docId() {
+  var _id = DocumentApp.getActiveDocument().getId();
+  return _id;
+}
+```
+
+#### Open File as Document ####
+
+```javascript
+function docId() {
+  var _id = DocumentApp.getActiveDocument().getId();
+  return _id;
+}
+```
+
+### Utility Functions for Docs ### 
+
+#### Access Document Body ####
+
+```javascript
+var fldr_adb = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
+var file_adb = findFileIn(fldr_adb, "example-doc");
+var doc_adb  = openFileAsDocument(file_adb);
+doc_adb.appendParagraph("Hello, world!");
+```
+
+#### Clear Document Body ####
+
+```javascript
+var fldr_cdb = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
+var file_cdb = findFileIn(fldr_cdb, "example-doc");
+var doc_cdb  = openFileAsDocument(file_cdb);
+var body_cdb = doc_cdb.getBody();
+body_cdb.clear();
+```

@@ -949,8 +949,8 @@ function createVerifySSAtRoot(name) {
 // --- Id of Active Spreadsheet | return: string
 
 function ssId() {
-  var id = SpreadsheetApp.getActiveSpreadsheet().getId();
-  return id;
+  var _id = SpreadsheetApp.getActiveSpreadsheet().getId();
+  return _id;
 }
 
 // Logger.log(ssId());
@@ -963,9 +963,9 @@ function openFileAsSpreadsheet(file) {
   return _ss;
 } 
 
-// var fldr_ofas = lastFolderIn("google-apps-script-cheat-sheet-demo/sheets")
-// var file_ofas = findFileIn(fldr_ofas, "example-sheet");
-// var ss_ofas   = openFileAsSpreadsheet(file_ofas); // example-sheet
+var fldr_ofas = lastFolderIn("google-apps-script-cheat-sheet-demo/sheets")
+var file_ofas = findFileIn(fldr_ofas, "example-sheet");
+Logger.log(openFileAsSpreadsheet(file_ofas));
 
 // - Utility Functions for Sheets
 
@@ -1215,7 +1215,7 @@ function createVerifyDocIn(fldr, name) {
   return findFileIn(fldr, name);
 }
 
-var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet/docs");
+var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet-demo/docs");
 Logger.log(createVerifyDocIn(fldr_cvdi, "example-doc")); // example-doc
 
 // --- Create or Verify Document at Root
@@ -1229,26 +1229,41 @@ function createVerifyDocAtRoot(name) {
   return findFileAtRoot(name);
 }
 
-
 // -- Id of Active Document
+ 
+function docId() {
+  var _id = DocumentApp.getActiveDocument().getId();
+  return _id;
+}
   
 // -- Open File as Document
+
+function openFileAsDocument(file) {
+  var _id = file.getId();
+  var _doc = DocumentApp.openById(_id);
+  return _doc;
+} 
+
+var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs")
+var file_ofad = findFileIn(fldr_ofad, "example-doc");
+Logger.log(openFileAsDocument(file_ofad));
 
 // - Utility Functions for Docs
 
 // -- Access Document Body
 
-// var fldr_adb = lastFolderIn("google-apps-script-library");
-// var doc_adb  = findFileIn(fldr_adb, "example_doc").getId();
-// var body     = DocumentApp.openById(doc_adb).getBody();
-// body.appendParagraph("Hello, world!");
+var fldr_adb = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
+var file_adb = findFileIn(fldr_adb, "example-doc");
+var doc_adb  = openFileAsDocument(file_adb);
+doc_adb.appendParagraph("Hello, world!");
 
 // -- Clear Document Body
 
-// var fldr_cdb = lastFolderIn("google-apps-script-library");
-// var doc_cdb  = findFileIn(fldr_cdb, "example_doc").getId();
-// var body     = DocumentApp.openById(doc_cdb).getBody();
-// body.clear();
+var fldr_cdb = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
+var file_cdb = findFileIn(fldr_cdb, "example-doc");
+var doc_cdb  = openFileAsDocument(file_cdb);
+var body_cdb = doc_cdb.getBody();
+body_cdb.clear();
 
 // Sheets and Docs
 
