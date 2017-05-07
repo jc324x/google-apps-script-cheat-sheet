@@ -116,6 +116,7 @@ Logger.log("Start");
 // * Create Multidimensional Array of Values
 // * Multidimensional Array from Array of Objects
 // * Set Range of Values in Sheet 
+// * Copy Folders (Recursive)
 
 // General
 
@@ -562,7 +563,7 @@ function academicQuarter() {
 
 // - Folders
 
-// -- Create or Verify Folder Path  | return: folder
+// -- Create or Verify Folder Path | return: folder
 
 function createVerifyPath(path) {
   var arr = path.split('/');
@@ -748,6 +749,16 @@ function createVerifyFoldersAtRoot(names) {
   } 
   return DriveApp.getRootFolder();
 }
+
+// -- Rename a Folder | return: folder
+
+function renameFolder(fldr, name) {
+  fldr.setName(name)
+  return fldr;
+} 
+
+var fldr_rfo = createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C/D")
+Logger.log(renameFolder(fldr_rfo, "renamed-folder")); // renamed-folder
 
 // - Files
 
@@ -963,9 +974,9 @@ function openFileAsSpreadsheet(file) {
   return _ss;
 } 
 
-var fldr_ofas = lastFolderIn("google-apps-script-cheat-sheet-demo/sheets")
-var file_ofas = findFileIn(fldr_ofas, "example-sheet");
-Logger.log(openFileAsSpreadsheet(file_ofas));
+// var fldr_ofas = lastFolderIn("google-apps-script-cheat-sheet-demo/sheets")
+// var file_ofas = findFileIn(fldr_ofas, "example-sheet");
+// Logger.log(openFileAsSpreadsheet(file_ofas));
 
 // - Utility Functions for Sheets
 
@@ -1215,8 +1226,8 @@ function createVerifyDocIn(fldr, name) {
   return findFileIn(fldr, name);
 }
 
-var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet-demo/docs");
-Logger.log(createVerifyDocIn(fldr_cvdi, "example-doc")); // example-doc
+// var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet-demo/docs");
+// Logger.log(createVerifyDocIn(fldr_cvdi, "example-doc")); // example-doc
 
 // --- Create or Verify Document at Root
 
@@ -1244,26 +1255,26 @@ function openFileAsDocument(file) {
   return _doc;
 } 
 
-var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs")
-var file_ofad = findFileIn(fldr_ofad, "example-doc");
-Logger.log(openFileAsDocument(file_ofad));
+// var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs")
+// var file_ofad = findFileIn(fldr_ofad, "example-doc");
+// Logger.log(openFileAsDocument(file_ofad));
 
 // - Utility Functions for Docs
 
 // -- Access Document Body
 
-var fldr_adb = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
-var file_adb = findFileIn(fldr_adb, "example-doc");
-var doc_adb  = openFileAsDocument(file_adb);
-doc_adb.appendParagraph("Hello, world!");
+// var fldr_adb = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
+// var file_adb = findFileIn(fldr_adb, "example-doc");
+// var doc_adb  = openFileAsDocument(file_adb);
+// doc_adb.appendParagraph("Hello, world!");
 
 // -- Clear Document Body
 
-var fldr_cdb = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
-var file_cdb = findFileIn(fldr_cdb, "example-doc");
-var doc_cdb  = openFileAsDocument(file_cdb);
-var body_cdb = doc_cdb.getBody();
-body_cdb.clear();
+// var fldr_cdb = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
+// var file_cdb = findFileIn(fldr_cdb, "example-doc");
+// var doc_cdb  = openFileAsDocument(file_cdb);
+// var body_cdb = doc_cdb.getBody();
+// body_cdb.clear();
 
 // Sheets and Docs
 

@@ -23,26 +23,24 @@
   * [Merge Objects](#merge-objects--return-object)
   * [Object from Range](#object-from-range--return-object)
 * [Dates and Times](#dates-and-times)
-  * [Formatted Timestamps](#)
-  * [Date Object from String](#)
-  * [Match a Date to a Range](#)
+  * [Formatted Timestamps](#formatted-timestamps--return-string)
+  * [Date Object from String](#date-object-from-string--return-date)
+  * [Match a Date to a Range](#match-a-date-to-a-range--return-integer)
 
 [Drive](#drive)
 * [Folders](#folders)
-  * [Create or Verify Folder Path](#)
-  * [Last Folder in Folder Path](#)
-  * [Array of All Folders](#)
-    * [All Folders in a Folder](#)
-    * [All Folders at Root](#)
-    * [All Folders in Drive](#)
-  * [Array of All Folder Names](#)
-  * [Find a Folder](#)
-    * [Find a Folder in a Folder](#)
-    * [Find a Folder at Root](#)
-    * [Find a Folder in Drive](#)
-  * [Create or Verify Folders](#)
-    * [Create or Verify Folders in a Folder](#)
-    * [Create or Verify Folders at Root](#)
+  * [Create or Verify Folder Path](#create-or-verify-folder-path--return-folder)
+  * [Last Folder in Folder Path](#last-folder-in-folder-path--return-folder)
+  * [Array of All Folders](#array-of-all-folders--return-array-folders)
+    * [All Folders in a Folder](#all-folders-in-a-folder)
+    * [All Folders at Root](#all-folders-at-root)
+    * [All Folders in Drive](#all-folders-in-drive)
+    * [Find a Folder in a Folder](#find-a-folder--return-folder)
+    * [Find a Folder at Root](#find-a-folder-at-root)
+    * [Find a Folder in Drive](#find-a-folder-in-drive)
+  * [Create or Verify Folders](#create-or-verify-folders--return-folder)
+    * [Create or Verify Folders in a Folder](#create-or-verify-folders-in-a-folder)
+    * [Create or Verify Folders at Root](#create-or-verify-folders-at-root)
   * [Rename a Folder](#)
 * [Files](#files)
   * [Array of All Files](#)
@@ -792,6 +790,18 @@ function createVerifyFoldersAtRoot(names) {
   } 
   return DriveApp.getRootFolder();
 }
+```
+
+#### Rename a Folder ####
+
+```javascript
+function renameFolder(fldr, name) {
+  fldr.setName(name)
+  return fldr;
+} 
+
+var fldr_rfo = createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C/D")
+Logger.log(renameFolder(fldr_rfo, "renamed-folder")); // renamed-folder
 ```
 
 ### Files ###
