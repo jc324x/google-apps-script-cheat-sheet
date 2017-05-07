@@ -35,6 +35,7 @@
     * [All Folders in a Folder](#all-folders-in-a-folder)
     * [All Folders at Root](#all-folders-at-root)
     * [All Folders in Drive](#all-folders-in-drive)
+  * [Find a Folder](#find-a-folder)
     * [Find a Folder in a Folder](#find-a-folder--return-folder)
     * [Find a Folder at Root](#find-a-folder-at-root)
     * [Find a Folder in Drive](#find-a-folder-in-drive)
