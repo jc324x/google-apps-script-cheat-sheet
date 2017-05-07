@@ -41,6 +41,7 @@ Logger.log("Start");
 // | --- Find a Folder in a Folder
 // | --- Find a Folder at Root
 // | --- Find a Folder in Drive
+// | -- Parent Folder of a Folder
 // | -- Create or Verify Folders
 // | --- Create or Verify Folders in a Folder
 // | --- Create or Verify Folders at Root
@@ -717,6 +718,8 @@ function findFolderInDrive(name) {
 }
 
 // Logger.log(findFolderInDrive("folders")); // folders
+
+// | -- Parent Folder of a Folder
 
 // -- Create or Verify Folders | return: folder
 
