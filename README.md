@@ -798,7 +798,7 @@ function createVerifyFoldersAtRoot(names) {
 }
 ```
 
-#### Rename a Folder ####
+#### Rename a Folder | return: `folder` ####
 
 ```javascript
 function renameFolder(fldr, name) {
