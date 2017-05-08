@@ -41,11 +41,9 @@ Logger.log("Start");
 // | --- Find a Folder in a Folder
 // | --- Find a Folder at Root
 // | --- Find a Folder in Drive
-// | -- Parent Folder of a Folder
 // | -- Create or Verify Folders
 // | --- Create or Verify Folders in a Folder
 // | --- Create or Verify Folders at Root
-// | -- Rename a Folder
 // | - Files
 // | -- Array of All Files
 // | --- All Files in a Folder
@@ -56,10 +54,11 @@ Logger.log("Start");
 // | --- Find a File in a Folder
 // | --- Find a File at Root
 // | --- Find a File in Drive
-// | -- Parent Folder of a File
 // | -- Copy a File to a Folder
 // | -- Move a File to a Folder
-// | -- Rename a File
+// | - Files and Folders
+// | -- Rename a File or Folder
+// | -- Parent Folder of a File or Folder
 // | Sheets
 // | - Managing Spreadsheet Files
 // | -- Create or Verify Spreadsheet
@@ -719,8 +718,6 @@ function findFolderInDrive(name) {
 
 // Logger.log(findFolderInDrive("folders")); // folders
 
-// | -- Parent Folder of a Folder
-
 // -- Create or Verify Folders | return: folder
 
 // --- Create or Verify Folders in a Folder
@@ -877,16 +874,6 @@ function findFileInDrive(name) {
 
 // Logger.log(findFileInDrive("example-file")); // example-file
 
-// -- Parent Folder of a File | return: folder
-
-function parentFolderOf(file) {
-  var fi = file.getParents();
-  return fi.next();
-}
-
-// var file_pfo = findFileInDrive("example-file");
-// Logger.log(parentFolderOf(file_pfo)); // files
-
 // -- Copy a File to a Folder | return: file
 
 function copyFile(file, fldr) {
@@ -916,9 +903,11 @@ function moveFile(file, fldr) {
 // var fldr_mf2 = createVerifyPath("google-apps-script-cheat-sheet-demo/files/moved");
 // Logger.log(moveFile(file_mf, fldr_mf2)); // example-file
 
-// -- Rename a File | return: file
+// - Files and Folders
 
-function renameFile(file, name) {
+// -- Rename a File or Folder | return: file or folder 
+
+function rename(file, name) {
   file.setName(name)
   return file;
 } 
@@ -926,6 +915,16 @@ function renameFile(file, name) {
 // var fldr_rf = lastFolderIn("google-apps-script-cheat-sheet-demo/files/moved")
 // var file_rf = findFileIn(fldr_rf, "example-file");
 // Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-file
+
+// -- Parent Folder of a File or Folder | return: file or folder
+
+function parentFolderOf(file) {
+  var fi = file.getParents();
+  return fi.next();
+}
+
+// var file_pfo = findFileInDrive("example-file");
+// Logger.log(parentFolderOf(file_pfo)); // files
 
 // Sheets
 

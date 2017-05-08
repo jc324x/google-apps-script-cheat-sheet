@@ -40,25 +40,24 @@
     * [Find a Folder in a Folder](#find-a-folder--return-folder)
     * [Find a Folder at Root](#find-a-folder-at-root)
     * [Find a Folder in Drive](#find-a-folder-in-drive)
-  * [Parent Folder of a Folder](#)
   * [Create or Verify Folders](#create-or-verify-folders--return-folder)
     * [Create or Verify Folders in a Folder](#create-or-verify-folders-in-a-folder)
     * [Create or Verify Folders at Root](#create-or-verify-folders-at-root)
-  * [Rename a Folder](#)
 * [Files](#files)
-  * [Array of All Files](#)
-    * [All Files in a Folder](#)
-    * [All Files at Root](#)
-    * [All Files in Drive](#)
-  * [Array of All File Names](#)
+  * [Array of All Files](#array-of-all-files--return-array-files)
+    * [All Files in a Folder](#all-files-in-a-folder)
+    * [All Files at Root](#all-files-at-root)
+    * [All Files in Drive](#all-files-in-drive)
+  * [Array of All File Names](#array-of-all-file-names--return-array-strings)
   * [Find a File](#find-a-file--return-file)
     * [Find a File in a Folder](#find-a-file-in-a-folder)
     * [Find a File at Root](#find-a-file-at-root)
     * [Find a File in Drive](#find-a-file-in-drive)
-  * [Parent Folder of a File](#)
   * [Copy a File to a Folder](#)
   * [Move a File to a Folder](#)
-  * [Rename a File](#)
+* [Files and Folders](#files-and-folders)
+  * [Rename a File or Folder](#)
+  * [Parent Folder of a File or Folder](#)
 
 [Sheets](#sheets)
 * [Managing Spreadsheet Files](#)
@@ -798,18 +797,6 @@ function createVerifyFoldersAtRoot(names) {
 }
 ```
 
-#### Rename a Folder | return: `folder` ####
-
-```javascript
-function renameFolder(fldr, name) {
-  fldr.setName(name)
-  return fldr;
-} 
-
-var fldr_rfo = createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C/D")
-Logger.log(renameFolder(fldr_rfo, "renamed-folder")); // renamed-folder
-```
-
 ### Files ###
 
 #### Array of All Files | return: `array (files)` ####
@@ -923,18 +910,6 @@ function findFileInDrive(name) {
 Logger.log(findFileInDrive("example-file")); // example-file
 ```
 
-#### Parent Folder of a File ####
-
-```javascript
-function parentFolderOf(file) {
-  var fi = file.getParents();
-  return fi.next();
-}
-
-var file_pfo = findFileInDrive("example-file");
-Logger.log(parentFolderOf(file_pfo)); // files
-```
- 
 #### Copy a File to a Folder ####
 
 ```javascript
@@ -968,6 +943,8 @@ var fldr_mf2 = createVerifyPath("google-apps-script-cheat-sheet-demo/files/moved
 Logger.log(moveFile(file_mf, fldr_mf2)); // example-file
 ```
 
+## FILES and FOLDERS
+
 #### Rename a File ####
 
 ```javascript
@@ -979,6 +956,18 @@ function renameFile(file, name) {
 var fldr_rf = lastFolderIn("google-apps-script-cheat-sheet-demo/files/moved")
 var file_rf = findFileIn(fldr_rf, "example-file");
 Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-file
+```
+
+#### Parent Folder of a File ####
+
+```javascript
+function parentFolderOf(file) {
+  var fi = file.getParents();
+  return fi.next();
+}
+
+var file_pfo = findFileInDrive("example-file");
+Logger.log(parentFolderOf(file_pfo)); // files
 ```
 
 ## Sheets ##
