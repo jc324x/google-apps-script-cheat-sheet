@@ -500,8 +500,6 @@ var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 ```
 
-
-
 ### Dates and Times ###
 
 #### Formatted Timestamps | return: `string` ####
@@ -1362,3 +1360,5 @@ var doc_cdb  = openFileAsDocument(file_cdb);
 var body_cdb = doc_cdb.getBody();
 body_cdb.clear();
 ```
+
+

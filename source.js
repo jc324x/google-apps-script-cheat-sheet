@@ -1324,7 +1324,7 @@ function openFileAsDocument(file) {
 
 // -- String From Object Properties
 
-var obj_nfp = { 
+var obj_sfp = { 
   name:  "Jon",
   state: "MN",
   job:   "IT"
@@ -1349,8 +1349,7 @@ function strFromProp(obj, str){
   return _arr.join(" ");
 }
 
-// var ex_nfp = strFromProp(obj_nfp, "name: <<name>> - state: <<state>> - job: <<job>>");
-// Logger.log(ex_nfp);
+Logger.log(strFromProp(obj_stp, "name: <<name>> - state: <<state>> - job: <<job>>"));
 
 // --- Find and Replace Text from Object Properties
 
