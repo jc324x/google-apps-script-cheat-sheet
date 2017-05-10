@@ -1323,8 +1323,27 @@ findReplaceInDoc(doc_frid, ex_obj);
 
 // --- Find and Replace in Sheet
 
-// function findReplaceInSheet(sheetObj,obj) {
-// } 
+function findReplaceInSheet(sheetObj,obj) {
+} 
+
+function mergeObjInSheet(obj, sheetObj) {
+  var values = sheetObj.getDataRange().getValues();
+  for(var row in values){
+    var update = values[row].map(function(original){
+      var text = original.toString();
+      for (var prop in obj) {
+        var query = "<<"+prop+">>"
+          if (text.indexOf(query) !== -1) {
+            text = text.replace(query, obj[prop]);
+            // break;
+          }
+      } 
+      return text;
+    });
+    values[row] = update;
+  }
+  sheetObj.getDataRange().setValues(values);
+}
 
 // -- Merge Documents or Sheets From a Template
 
