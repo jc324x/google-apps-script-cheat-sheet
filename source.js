@@ -112,6 +112,7 @@ Logger.log("Start");
 // * Multidimensional Array from Array of Objects
 // * Set Range of Values in Sheet 
 // * Copy Folders (Recursive)
+// * Convert JSON to Sheet
 
 // General
 
@@ -1263,71 +1264,13 @@ function openFileAsDocument(file) {
 // var body_cdb = doc_cdb.getBody();
 // body_cdb.clear();
 
-// Sheets and Docs
-
-// - Bulleted Lists
-
-// -- Single Division List
-
-// var ss_sdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_sdl = arrObjFromSheet(ss_sdl, 2);
-// var fldr_sdl   = createVerifyPath("google-apps-script-library");
-// var docId_sdl  = createVerifyDocIn(fldr_sdl, "example_doc").getId();
-// var body_sdl   = DocumentApp.openById(docId_sdl).getBody();
-
-// (function(){
-//  arrObj_sdl.sort(dynSortM("Last", "First"));
-//  var sectionHeader = body_sdl.appendParagraph("Students");
-//  sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-//  for (var i in arrObj_sdl) {
-//    body_sdl.appendListItem(arrObj_sdl[i]["Last"] + ", " + arrObj_sdl[i]["First"]);
-//  }
-// })();
-
-// -- Multi Division List
-
-// var ss_mdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_mdl = arrObjFromSheet(ss_mdl, 2);
-// var fldr_mdl   = createVerifyPath("google-apps-script-library");
-// var docId_mdl  = createVerifyDocIn(fldr_mdl, "example_doc").getId();
-// var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
-
-// (function(){
-//  arrObj_mdl.sort(dynSortM("Homeroom", "Last", "First"));
-//  var sectionHeader = body_mdl.appendParagraph("Homerooms and Students");
-//  sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-//  var homeroom = arrObj_mdl[0]["Homeroom"];
-//  body_mdl.appendListItem(homeroom);
-//  for (var i in arrObj_mdl) {
-//    if (arrObj_mdl[i]["Homeroom"] === homeroom) {
-//      body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
-//      .setNestingLevel(1).setIndentStart(10)
-//      .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
-//    } else {
-//      homeroom = arrObj_mdl[i]["Homeroom"];
-//      body_mdl.appendListItem(homeroom);
-//      body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
-//      .setNestingLevel(1).setIndentStart(10)
-//      .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
-//    }
-//  }
-// })();
-
-// | Merges
-// | - Sheets and Docs
-// | -- String from Object Properties
-// | -- Find and Replace in Document or Sheet by Object Properties
-// | -- Merge Documents or Sheets From a Template
-// | -- Shade Cells in a Sheet or Document Table 
-// | -- Create Bulleted List from Array of Objects
-// | - Gmail
-// | -- Mail Merge from Array of Objects
-
 // Merges
 
-// -- String From Object Properties
+// - Sheets and Docs
 
-var obj_sfp = { 
+// -- String From Object Properties | return: string
+
+var ex_obj = { 
   name:  "Jon",
   state: "MN",
   job:   "Mac Admin"
@@ -1351,13 +1294,15 @@ function strFromProp(obj, str){
   return _arr.join(" ");
 }
 
-Logger.log(strFromProp(obj_sfp, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
+Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
 
-// --- Find and Replace Text from Object Properties
+// -- Find and Replace in Document or Sheet by Object Properties
 
-// --- Find and Replace Text in Document from Object Properties
+// --- Find and Replace in Doc
 
-function mergeDocByObj(docObj, obj) {
+// function mergeDocByObj(docObj, obj) {
+
+function findReplaceInDoc(docObj, obj) {
   var body = docObj.getBody(); 
   for (var prop in obj) {
     var query = "<<" + prop + ">>"
@@ -1366,10 +1311,22 @@ function mergeDocByObj(docObj, obj) {
   } 
 } 
 
-// -- FLAG -- | clean?
-// --- Find and Replace Text in Google Sheet from Object Properties
+var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var file_frid = createVerifyDocIn(fldr_frid, "find-replace");
+var doc_frid  = openFileAsDocument(file_frid);
+var body_frid = doc_frid.getBody();
+body_frid.clear();
+doc_frid.appendParagraph("name: <<name>>");
+doc_frid.appendParagraph("state: <<state>>");
+doc_frid.appendParagraph("job: <<job>>");
+findReplaceInDoc(doc_frid, ex_obj);
 
-// -- Merge Data in Array of Objects
+// --- Find and Replace in Sheet
+
+// function findReplaceInSheet(sheetObj,obj) {
+// } 
+
+// -- Merge Documents or Sheets From a Template
 
 function mergeDataArrObjDoc(arrObj, template, naming, fldr, ts) {
   for (var i = 0; i < arrObj.length; i++) {
@@ -1443,28 +1400,9 @@ var name_mdaos    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
 
 // mergeDataarrObjFromSheet(arrObj_mdaos, sheet_mdaos, name_mdaos, exports_mdaod, true)
 
-// -- Cell Shading
+// -- Shade Cells in a Sheet or Document Table 
 
-// -- FLAG --
-// needs documentation
-
-function arrForCol(rangeObj){
-  var h    = rangeObj.getHeight();
-  var w    = rangeObj.getWidth();
-  var vals = rangeObj.getValues();
-  var arr  = [];
-  for (var i = 0; i < h; i++) {
-    arr.push(vals[i][0]);
-  }
-  return arr;
-}
-
-var ss_vfc     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
-var range_vfc  = ss_vfc.getRange("A1:A5");
-var colVal_vfc = arrForCol(range_vfc);
-// Logger.log(colVal_vfc);
-
-// --- Cell Shading
+// --- Shade Cells in Sheet
 
 function shadeCells(sheetObj, colLetter, obj, color) {
   var lRow   = sheetObj.getLastRow();
@@ -1488,46 +1426,66 @@ var obj_sc = {
   "Student Gets Along Well With Others": 5
 };
 
-var ss_sc = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
-shadeCells(ss_sc, "A", obj_sc, "#D3D3D3");
+// var ss_sc = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
+// shadeCells(ss_sc, "A", obj_sc, "#D3D3D3");
+
+// --- Shade Cells in Document
+
+// -- Create Bulleted List from Array of Objects
+
+// -- Single Division List
+
+// var ss_sdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_sdl = arrObjFromSheet(ss_sdl, 2);
+// var fldr_sdl   = createVerifyPath("google-apps-script-library");
+// var docId_sdl  = createVerifyDocIn(fldr_sdl, "example_doc").getId();
+// var body_sdl   = DocumentApp.openById(docId_sdl).getBody();
+
+// (function(){
+//  arrObj_sdl.sort(dynSortM("Last", "First"));
+//  var sectionHeader = body_sdl.appendParagraph("Students");
+//  sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+//  for (var i in arrObj_sdl) {
+//    body_sdl.appendListItem(arrObj_sdl[i]["Last"] + ", " + arrObj_sdl[i]["First"]);
+//  }
+// })();
+
+// -- Multi Division List
+
+// var ss_mdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_mdl = arrObjFromSheet(ss_mdl, 2);
+// var fldr_mdl   = createVerifyPath("google-apps-script-library");
+// var docId_mdl  = createVerifyDocIn(fldr_mdl, "example_doc").getId();
+// var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
+
+// (function(){
+//  arrObj_mdl.sort(dynSortM("Homeroom", "Last", "First"));
+//  var sectionHeader = body_mdl.appendParagraph("Homerooms and Students");
+//  sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+//  var homeroom = arrObj_mdl[0]["Homeroom"];
+//  body_mdl.appendListItem(homeroom);
+//  for (var i in arrObj_mdl) {
+//    if (arrObj_mdl[i]["Homeroom"] === homeroom) {
+//      body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
+//      .setNestingLevel(1).setIndentStart(10)
+//      .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+//    } else {
+//      homeroom = arrObj_mdl[i]["Homeroom"];
+//      body_mdl.appendListItem(homeroom);
+//      body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
+//      .setNestingLevel(1).setIndentStart(10)
+//      .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+//    }
+//  }
+// })();
+
+//  - Gmail
+
+// -- Mail Merge from Array of Objects
 
 // Gmail
 
 // - Send Email
-
-// -- Comma Separated List of Recipients
-
-// --- Full Address
-
-function commaListFrom(arr){
-  var _arr = rmDuplicatesFrom(arr).sort();
-  var str  = "";
-  for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + ", "
-  }
-  str = str.slice(0, -2);
-  return str;
-}
-
-var arr_clf = ["a@gmail.com", "b@gmail.com", "z@gmail.com", "z@gmail.com", "h@gmail.com"];
-var ex_clf  = commaListFrom(arr_clf);
-// Logger.log(ex_clf);
-
-// --- For Domain
-
-function commaListForDomain(arr, domain) {
-  var _arr = rmDuplicatesFrom(arr).sort();
-  var str  = "";
-  for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + domain + ", "
-  }
-  str = str.slice(0, -2);
-  return str;
-}
-
-var arr_clfd = ["a_user", "b_user", "c_user", "a_user"];
-var ex_clfd = commaListForDomain(arr_clfd, "@example.com");
-// Logger.log(ex_clfd);
 
 // -- Mail Merge
 
@@ -1549,8 +1507,8 @@ function mailMerge(arrObj) {
   }
 }
 
-var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var ex_mm = arrObjFromSheet(ss_mm, 1);
+// var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var ex_mm = arrObjFromSheet(ss_mm, 1);
 // mailMerge(ex_mm);
 
 // Other
@@ -1561,13 +1519,12 @@ var re     = "123ABC234XYZ"
 var ex_num = re.match(/\d+/g);
 var ex_abc = re.replace(/\d/g, "");
 
-// Logger.log(ex_num);
-// Logger.log(ex_abc);
+Logger.log(ex_num);
+Logger.log(ex_abc);
 
 Logger.log("End");
 
 // ----------------------------------------------------------------------------------------------
-
 
 function timerCheck(start, end) {
   var elapsed = ((((new Date().getTime()) - start.getTime() ) / 1000).toFixed(2));
