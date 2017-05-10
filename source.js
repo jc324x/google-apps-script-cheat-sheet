@@ -750,16 +750,6 @@ function createVerifyFoldersAtRoot(names) {
   return DriveApp.getRootFolder();
 }
 
-// -- Rename a Folder | return: folder
-
-function renameFolder(fldr, name) {
-  fldr.setName(name)
-  return fldr;
-} 
-
-var fldr_rfo = createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C/D")
-Logger.log(renameFolder(fldr_rfo, "renamed-folder")); // renamed-folder
-
 // - Files
 
 // checkForExFile is akin to `touch`, it just creates an example file
@@ -907,9 +897,9 @@ function moveFile(file, fldr) {
 
 // -- Rename a File or Folder | return: file or folder 
 
-function rename(file, name) {
-  file.setName(name)
-  return file;
+function rename(file_fldr, name) {
+  file_fldr.setName(name)
+  return file_fldr;
 } 
 
 // var fldr_rf = lastFolderIn("google-apps-script-cheat-sheet-demo/files/moved")
@@ -918,13 +908,13 @@ function rename(file, name) {
 
 // -- Parent Folder of a File or Folder | return: file or folder
 
-function parentFolderOf(file) {
-  var fi = file.getParents();
+function parentFolderOf(file_fldr) {
+  var fi = file_fldr.getParents();
   return fi.next();
 }
 
-// var file_pfo = findFileInDrive("example-file");
-// Logger.log(parentFolderOf(file_pfo)); // files
+var file_pfo = findFileInDrive("example-file");
+Logger.log(parentFolderOf(file_pfo)); // files
 
 // Sheets
 

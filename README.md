@@ -910,7 +910,7 @@ function findFileInDrive(name) {
 Logger.log(findFileInDrive("example-file")); // example-file
 ```
 
-#### Copy a File to a Folder ####
+#### Copy a File to a Folder | return: `file` ####
 
 ```javascript
 function copyFile(file, fldr) {
@@ -925,7 +925,7 @@ var file_cf = findFileInDrive("example-file");
 Logger.log(copyFile(file_cf, fldr_cf)); // example-file
 ```
 
-#### Move a File to a Folder ####
+#### Move a File to a Folder | return: `file` ####
 
 ```javascript
 function moveFile(file, fldr) {
@@ -943,14 +943,14 @@ var fldr_mf2 = createVerifyPath("google-apps-script-cheat-sheet-demo/files/moved
 Logger.log(moveFile(file_mf, fldr_mf2)); // example-file
 ```
 
-## FILES and FOLDERS
+### Files and Folders ###
 
-#### Rename a File ####
+#### Rename a File or Folder | return: `file or folder` ####
 
 ```javascript
-function renameFile(file, name) {
-  file.setName(name)
-  return file;
+function rename(file_fldr, name) {
+  file_fldr.setName(name)
+  return file_fldr;
 } 
 
 var fldr_rf = lastFolderIn("google-apps-script-cheat-sheet-demo/files/moved")
@@ -958,11 +958,11 @@ var file_rf = findFileIn(fldr_rf, "example-file");
 Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-file
 ```
 
-#### Parent Folder of a File ####
+#### Parent Folder of a File or Folder | return: `file or folder` ####
 
 ```javascript
-function parentFolderOf(file) {
-  var fi = file.getParents();
+function parentFolderOf(file_fldr) {
+  var fi = file_fldr.getParents();
   return fi.next();
 }
 
