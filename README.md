@@ -86,6 +86,16 @@
   * [Access Document Body](#)
   * [Clear Document Body](#)
 
+[Forms](#)
+* [Form Management](#)
+  * [Get Form Id](#)
+  * [Array of Form Items](#)
+  * [Get Form Item by Name](#)
+  * [Set Item Choices](#)
+  * [Get Destination Sheet](#)
+* [Form Responses](#)
+  * [Get Last Form Response](#)
+
 [Merges](#)
 * [Docs](#)
   * [Find and Replace in Document by Object Properties](#)

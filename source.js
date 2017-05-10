@@ -92,17 +92,12 @@ Logger.log("Start");
 // | -- Access Document Body
 // | -- Clear Document Body
 // | Merges
-// | - Utility Functions for Merges
+// | - Sheets and Docs
 // | -- String from Object Properties
-// | - Docs
-// | -- Find and Replace in Document by Object Properties // FLAG
-// | -- Create Merged Documents From a Template // Flag
-// | -- Shade Cells in a Table // FLAG
+// | -- Find and Replace in Document or Sheet by Object Properties
+// | -- Merge Documents or Sheets From a Template
+// | -- Shade Cells in a Sheet or Document Table 
 // | -- Create Bulleted List from Array of Objects
-// | - Sheets
-// | -- Find and Replace in Sheet by Object Properties
-// | -- Create Merged Sheets From a Template // FLAG
-// | -- Shade Cells in Sheet
 // | - Gmail
 // | -- Mail Merge from Array of Objects
 // | Other
@@ -913,8 +908,8 @@ function parentFolderOf(file_fldr) {
   return fi.next();
 }
 
-var file_pfo = findFileInDrive("example-file");
-Logger.log(parentFolderOf(file_pfo)); // files
+// var file_pfo = findFileInDrive("example-file");
+// Logger.log(parentFolderOf(file_pfo)); // files
 
 // Sheets
 
@@ -1318,19 +1313,26 @@ function openFileAsDocument(file) {
 //  }
 // })();
 
-// Merges
+// | Merges
+// | - Sheets and Docs
+// | -- String from Object Properties
+// | -- Find and Replace in Document or Sheet by Object Properties
+// | -- Merge Documents or Sheets From a Template
+// | -- Shade Cells in a Sheet or Document Table 
+// | -- Create Bulleted List from Array of Objects
+// | - Gmail
+// | -- Mail Merge from Array of Objects
 
-// - Utility Functions for Merges
+// Merges
 
 // -- String From Object Properties
 
 var obj_sfp = { 
   name:  "Jon",
   state: "MN",
-  job:   "IT"
+  job:   "Mac Admin"
 };
 
-// -- FLAG -- good?
 function strFromProp(obj, str){
   var arr  = str.split(" ");
   var _arr = [];
@@ -1349,7 +1351,7 @@ function strFromProp(obj, str){
   return _arr.join(" ");
 }
 
-Logger.log(strFromProp(obj_stp, "name: <<name>> - state: <<state>> - job: <<job>>"));
+Logger.log(strFromProp(obj_sfp, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
 
 // --- Find and Replace Text from Object Properties
 
