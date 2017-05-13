@@ -95,7 +95,7 @@ Logger.log("Start");
 // | - Sheets and Docs
 // | -- String from Object Properties
 // | -- Find and Replace in Document or Sheet by Object Properties
-// | -- Merge Documents or Sheets From a Template
+// | -- Merge Documents or Sheets for Array of Objects
 // | -- Shade Cells in a Sheet or Document Table 
 // | -- Create Bulleted List from Array of Objects
 // | - Gmail
@@ -1294,7 +1294,7 @@ function strFromProp(obj, str){
   return _arr.join(" ");
 }
 
-Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
+// Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
 
 // -- Find and Replace in Document or Sheet by Object Properties
 
@@ -1302,7 +1302,7 @@ Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>
 
 // function mergeDocByObj(docObj, obj) {
 
-function findReplaceInDoc(docObj, obj) {
+function findReplaceInDoc(obj, docObj) {
   var body = docObj.getBody(); 
   for (var prop in obj) {
     var query = "<<" + prop + ">>"
@@ -1312,21 +1312,18 @@ function findReplaceInDoc(docObj, obj) {
 } 
 
 var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var file_frid = createVerifyDocIn(fldr_frid, "find-replace");
+var file_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
 var doc_frid  = openFileAsDocument(file_frid);
 var body_frid = doc_frid.getBody();
 body_frid.clear();
 doc_frid.appendParagraph("name: <<name>>");
 doc_frid.appendParagraph("state: <<state>>");
 doc_frid.appendParagraph("job: <<job>>");
-findReplaceInDoc(doc_frid, ex_obj);
+findReplaceInDoc(ex_obj, doc_frid);
 
 // --- Find and Replace in Sheet
 
-function findReplaceInSheet(sheetObj,obj) {
-} 
-
-function mergeObjInSheet(obj, sheetObj) {
+function findReplaceinSheet(obj, sheetObj) {
   var values = sheetObj.getDataRange().getValues();
   for(var row in values){
     var update = values[row].map(function(original){
@@ -1335,7 +1332,6 @@ function mergeObjInSheet(obj, sheetObj) {
         var query = "<<"+prop+">>"
           if (text.indexOf(query) !== -1) {
             text = text.replace(query, obj[prop]);
-            // break;
           }
       } 
       return text;
@@ -1345,6 +1341,27 @@ function mergeObjInSheet(obj, sheetObj) {
   sheetObj.getDataRange().setValues(values);
 }
 
+var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var file_fris = createVerifySSIn(fldr_frid, "find-replace-sheet");
+var ss_frid   = openFileAsSpreadsheet(file_fris);
+var sheet_frid = ss_frid.getSheets()[0];
+sheet_frid.clear();
+
+ var val_frid = [
+   [ "name", "state", "job" ],
+   [ "<<name>>", "<<state>>", "<<job>>"]
+ ];
+
+ var range_frid = sheet_frid.getRange("A1:C2");
+ range_frid.setValues(val_frid);
+
+// body_frid.clear();
+// doc_frid.appendParagraph("name: <<name>>");
+// doc_frid.appendParagraph("state: <<state>>");
+// doc_frid.appendParagraph("job: <<job>>");
+// findReplaceInDoc(ex_obj, doc_frid);
+
+// | -- Merge Documents or Sheets for Array of Objects
 // -- Merge Documents or Sheets From a Template
 
 function mergeDataArrObjDoc(arrObj, template, naming, fldr, ts) {
@@ -1538,8 +1555,8 @@ var re     = "123ABC234XYZ"
 var ex_num = re.match(/\d+/g);
 var ex_abc = re.replace(/\d/g, "");
 
-Logger.log(ex_num);
-Logger.log(ex_abc);
+// Logger.log(ex_num);
+// Logger.log(ex_abc);
 
 Logger.log("End");
 
