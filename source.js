@@ -1294,7 +1294,7 @@ function strFromProp(obj, str){
   return _arr.join(" ");
 }
 
-Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
+// Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
 
 // -- Find and Replace Object Properties in Document or Sheet
 
@@ -1309,23 +1309,28 @@ function findReplaceInDoc(obj, docObj) {
   } 
 } 
 
-var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var file_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
-var doc_frid  = openFileAsDocument(file_frid);
-var body_frid = doc_frid.getBody();
-body_frid.clear();
-doc_frid.appendParagraph("name: <<name>>");
-doc_frid.appendParagraph("state: <<state>>");
-doc_frid.appendParagraph("job: <<job>>");
-findReplaceInDoc(ex_obj, doc_frid);
+// var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var file_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
+// var doc_frid  = openFileAsDocument(file_frid);
+// var body_frid = doc_frid.getBody();
+// body_frid.clear();
+// doc_frid.appendParagraph("name: <<name>>");
+// doc_frid.appendParagraph("state: <<state>>");
+// doc_frid.appendParagraph("job: <<job>>");
+// findReplaceInDoc(ex_obj, doc_frid);
 
 // --- Find and Replace Object Properties in Sheet
+// rework -> findReplaceinSpreadSheet(obj, ssObj)
+// loop through sheets in ss and replace
+// that way, it will work with createSheetsFromTemplateArrObj
 
 function findReplaceinSheet(obj, sheetObj) {
   var values = sheetObj.getDataRange().getValues();
+  Logger.log(values);
   for(var row in values){
     var update = values[row].map(function(original){
       var text = original.toString();
+      Logger.log(text);
       for (var prop in obj) {
         var query = "<<"+prop+">>"
           if (text.indexOf(query) !== -1) {
@@ -1339,20 +1344,20 @@ function findReplaceinSheet(obj, sheetObj) {
   sheetObj.getDataRange().setValues(values);
 }
 
-var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var file_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
-var ss_frid   = openFileAsSpreadsheet(file_fris);
-var sheet_frid = ss_frid.getSheets()[0];
-sheet_frid.clear();
+// var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var file_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
+// var ss_frid   = openFileAsSpreadsheet(file_fris);
+// var sheet_frid = ss_frid.getSheets()[0];
+// sheet_frid.clear();
 
-var val_frid = [
-  [ "name", "state", "job" ],
-  [ "<<name>>", "<<state>>", "<<job>>"]
-];
+// var val_frid = [
+//   [ "name", "state", "job" ],
+//   [ "<<name>>", "<<state>>", "<<job>>"]
+// ];
 
-var range_frid = sheet_frid.getRange("A1:C2");
-range_frid.setValues(val_frid);
-findReplaceinSheet(ex_obj, ss_frid);
+// var range_frid = sheet_frid.getRange("A1:C2");
+// range_frid.setValues(val_frid);
+// findReplaceinSheet(ex_obj, ss_frid);
 
 // -- Create Documents or Sheets from Template and Array of Objects
 
@@ -1361,32 +1366,29 @@ findReplaceinSheet(ex_obj, ss_frid);
 function createDocsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
-    Logger.log(obj);
     var name = strFromProp(obj, naming);
-    Logger.log(name);
     if (ts == true) name += " - " + fmat12DT();
-    Logger.log(name);
     var docId = copyFile(template, fldr).setName(name).getId();
     var doc   = DocumentApp.openById(docId);
     findReplaceInDoc(obj, doc);
     }
 } 
 
-var ss_cdftao     = SpreadsheetApp.getActiveSpreadsheet();
-var sheet_cdftao  = ss_cdftao.getSheetByName("Sheet2");
-var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
-var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges")
-var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
-var file_cdftao   = createVerifyDocIn(fldr1_cdftao, "template-doc");
-var doc_cdftao    = openFileAsDocument(file_cdftao);
-var body_cdftao   = doc_cdftao.getBody();
-body_cdftao.clear();
-doc_cdftao.appendParagraph("First: <<First>>");
-doc_cdftao.appendParagraph("Last: <<Last>>");
-doc_cdftao.appendParagraph("Grade: <<Grade>>");
-doc_cdftao.appendParagraph("Homeroom: <<Homeroom>>");
-doc_cdftao.appendParagraph("Email: <<Email>>");
-createDocsFromTemplateArrObj(arrObj_cdftao, file_cdftao, "Name: <<Last>> <<First>>", fldr2_cdftao, true);
+// var ss_cdftao     = SpreadsheetApp.getActiveSpreadsheet();
+// var sheet_cdftao  = ss_cdftao.getSheetByName("Sheet2");
+// var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
+// var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges")
+// var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
+// var file_cdftao   = createVerifyDocIn(fldr1_cdftao, "template-doc");
+// var doc_cdftao    = openFileAsDocument(file_cdftao);
+// var body_cdftao   = doc_cdftao.getBody();
+// body_cdftao.clear();
+// doc_cdftao.appendParagraph("First: <<First>>");
+// doc_cdftao.appendParagraph("Last: <<Last>>");
+// doc_cdftao.appendParagraph("Grade: <<Grade>>");
+// doc_cdftao.appendParagraph("Homeroom: <<Homeroom>>");
+// doc_cdftao.appendParagraph("Email: <<Email>>");
+// createDocsFromTemplateArrObj(arrObj_cdftao, file_cdftao, "Name: <<Last>> <<First>>", fldr2_cdftao, true);
 
 // --- Create Spreadsheets from Template and Array of Objects 
 
@@ -1397,20 +1399,27 @@ function createSheetsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
     if (ts == true) name += " - " + fmat12DT();
     var sheetId = copyFile(template, fldr).setName(name).getId()
     var sheet   = SpreadsheetApp.openById(sheetId);
-    var search  = "<<First>>";
-    var replace = obj["First"];
-    mergeSheetByObj(sheet, obj);
+    findReplaceinSheet(sheet, obj);
     }
 } 
 
-// var ss_mdaos      = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_mdaos  = arrObjFromSheet(ss_mdaod, 2);
-// var main_mdaos    = lastFolderIn("google-apps-script-library");
-// var exports_mdaos = createVerifyPath("google-apps-script-library/Merge Exports");
-// var sheet_mdaos   = findFileIn(main_mdaod, "merge_template_sheet");
-// var name_mdaos    = "Name: <<First>> <<Last>> Grade: <<Grade>>";
+var ss1_csftao    = SpreadsheetApp.getActiveSpreadsheet();
+var sheet1_csftao = ss1_csftao.getSheetByName("Sheet2");
+var arrObj_csftao = arrObjFromSheet(sheet1_csftao, 2);
+var fldr1_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var fldr2_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
+var file_csftao   = createVerifySSIn(fldr1_csftao, "template-sheet");
+var ss2_csftao    = openFileAsSpreadsheet(file_csftao);
+var sheet2_csftao = ss2_csftao.getSheets()[0];
 
-// mergeDataarrObjFromSheet(arrObj_mdaos, sheet_mdaos, name_mdaos, exports_mdaod, true)
+var val_csftao = [
+  [ "First", "Last", "Grade", "Homeroom", "Email" ],
+  [ "<<First>>", "<<Last>>", "<<Grade>>", "<<Homeroom>>", "<<Email>>"]
+];
+
+var range_csftao = sheet2_csftao.getRange("A1:E2");
+range_csftao.setValues(val_csftao);
+createSheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: <<Last>> <<First>>", fldr2_csftao, true)
 
 // -- Shade Cells in a Sheet or Document Table 
 
