@@ -1296,9 +1296,9 @@ function strFromProp(obj, str){
 
 // Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
 
-// -- Find and Replace Object Properties in Document or Sheet
+// -- Find and Replace by Object Properties in Document, Sheet or Spreadsheet
 
-// --- Find and Replace Object Properties in Doc
+// --- Find and Replace by Object Properties in Doc
 
 function findReplaceInDoc(obj, docObj) {
   var body = docObj.getBody(); 
@@ -1319,29 +1319,32 @@ function findReplaceInDoc(obj, docObj) {
 // doc_frid.appendParagraph("job: <<job>>");
 // findReplaceInDoc(ex_obj, doc_frid);
 
-// --- Find and Replace Object Properties in Sheet
-// rework -> findReplaceinSpreadSheet(obj, ssObj)
-// loop through sheets in ss and replace
-// that way, it will work with createSheetsFromTemplateArrObj
+// --- Find and Replace by Object Properties in Spreadsheet
 
-function findReplaceinSheet(obj, sheetObj) {
-  var values = sheetObj.getDataRange().getValues();
-  Logger.log(values);
-  for(var row in values){
-    var update = values[row].map(function(original){
-      var text = original.toString();
-      Logger.log(text);
-      for (var prop in obj) {
-        var query = "<<"+prop+">>"
+function findReplaceinSpreadsheet(obj, ssObj) {
+  var numSheets = ssObj.getNumSheets();
+  var sheets    = ssObj.getSheets();
+  for (var i = 0; i < numSheets; i++) {
+    var sheetObj = sheets[i];
+    Logger.log(sheetObj);
+    var values = sheetObj.getDataRange().getValues();
+    Logger.log(values);
+    for(var row in values){
+      var update = values[row].map(function(original){
+        var text = original.toString();
+        Logger.log(text);
+        for (var prop in obj) {
+          var query = "<<"+prop+">>"
           if (text.indexOf(query) !== -1) {
             text = text.replace(query, obj[prop]);
           }
-      } 
-      return text;
-    });
+        } 
+        return text;
+      });
     values[row] = update;
-  }
-  sheetObj.getDataRange().setValues(values);
+    }
+    sheetObj.getDataRange().setValues(values);
+  } 
 }
 
 // var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
@@ -1357,7 +1360,7 @@ function findReplaceinSheet(obj, sheetObj) {
 
 // var range_frid = sheet_frid.getRange("A1:C2");
 // range_frid.setValues(val_frid);
-// findReplaceinSheet(ex_obj, ss_frid);
+// findReplaceinSpreadsheet(ex_obj, ss_frid);
 
 // -- Create Documents or Sheets from Template and Array of Objects
 
@@ -1392,14 +1395,14 @@ function createDocsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
 
 // --- Create Spreadsheets from Template and Array of Objects 
 
-function createSheetsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
+function createSpreadsheetsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
     var name = strFromProp(obj, naming);
     if (ts == true) name += " - " + fmat12DT();
-    var sheetId = copyFile(template, fldr).setName(name).getId()
-    var sheet   = SpreadsheetApp.openById(sheetId);
-    findReplaceinSheet(sheet, obj);
+    var ssId = copyFile(template, fldr).setName(name).getId()
+    var ss   = SpreadsheetApp.openById(ssId);
+    findReplaceinSpreadsheet(obj, ss);
     }
 } 
 
@@ -1419,7 +1422,7 @@ var val_csftao = [
 
 var range_csftao = sheet2_csftao.getRange("A1:E2");
 range_csftao.setValues(val_csftao);
-createSheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: <<Last>> <<First>>", fldr2_csftao, true)
+createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: <<Last>> <<First>>", fldr2_csftao, true)
 
 // -- Shade Cells in a Sheet or Document Table 
 
