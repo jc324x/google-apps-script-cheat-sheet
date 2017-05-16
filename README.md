@@ -1419,27 +1419,60 @@ Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>
 #### Replace Object Properties #### 
 
 ##### Replace Object Properties in Document #####
+
+```javascript
+```
+
 ##### Replace Object Properties in Spreadsheet #####
+
+```javascript
+```
+
 ##### Replace Object Properties in Sheet #####
+
+```javascript
+```
 
 #### Copy Template for Item in Array of Objects and Replace Object Properties #### 
 
 ##### Copy Document Template and Replace Object Properties #####
 
+```javascript
+```
+
 ##### Copy Spreadsheet Template and Replace Object Properties #####
+
+```javascript
+```
 
 #### Cell Shading #### 
 
 ##### Shade Cells in Sheet #####
 
+```javascript
+```
+
 ##### Shade Cells in Document Table #####
+
+```javascript
+```
 
 #### Create Bulleted List in Document for Array of Objects ####
 
 ##### Single Division List #####
 
+```javascript
+```
+
 ##### Multi Division List #####
+
+```javascript
+```
 
 ### Gmail ###
 
 #### Mail Merge for Array of Objects ####
+
+```javascript
+```
+
