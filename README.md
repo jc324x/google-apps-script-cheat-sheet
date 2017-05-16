@@ -62,7 +62,10 @@
 [Sheets](#sheets)
 * [Managing Spreadsheet Files](#)
   * [Create or Verify Spreadsheet](#)
-  * [Get Spreadsheet Id](#)
+    * [Create or Verify Spreadsheet in a Folder](#)
+    * [Create or Verify Spreadsheet at Root](#)
+  * [Id of Active Spreadsheet](#)
+  * [Open File as Spreadsheet](#)
 * [Utility Functions for Sheets](#)
   * [Convert Colmun Number to a Letter](#)
   * [Convert Column Letter to a Number](#)
@@ -82,18 +85,22 @@
 [Docs](#)
 * [Managing Document Files](#)
   * [Create or Verify Document](#)
+    * [Create or Verify Document in a Folder](#)
+    * [Create or Verify Document at Root](#)
+  * [Id of Active Document](#)
+  * [Open File as Document](#)
 * [Utility Functions for Docs](#)
   * [Access Document Body](#)
   * [Clear Document Body](#)
 
 [Forms](#)
-* [Form Management](#)
+* [Managing Form Files](#)
   * [Get Form Id](#)
+* [Utility Functions for Forms](#)
   * [Array of Form Items](#)
   * [Get Form Item by Name](#)
   * [Set Item Choices](#)
   * [Get Destination Sheet](#)
-* [Form Responses](#)
   * [Get Last Form Response](#)
 
 [Merges](#)
@@ -1375,4 +1382,64 @@ var body_cdb = doc_cdb.getBody();
 body_cdb.clear();
 ```
 
+## Merges ##
 
+### Sheets and Docs ###
+
+#### String from Object Properties | return: `string` #### 
+
+```javascript
+var ex_obj = { 
+  name:  "Jon",
+  state: "MN",
+  job:   "Mac Admin"
+};
+
+function strFromProp(obj, str){
+  var arr  = str.split(" ");
+  var _arr = [];
+  for (var i = 0; i < arr.length; i++) {
+    var str = arr[i]; 
+    for (var prop in obj){
+      var mod = str.substr(0, str.length-2).substr(2);
+      if (obj.hasOwnProperty(mod)){
+        _arr.push(obj[mod]);
+      } else {
+        _arr.push(str);
+      }
+      break;
+    }
+  } 
+  return _arr.join(" ");
+}
+
+Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
+```
+
+#### Replace Object Properties #### 
+
+##### Replace Object Properties in Document #####
+##### Replace Object Properties in Spreadsheet #####
+##### Replace Object Properties in Sheet #####
+
+#### Copy Template for Item in Array of Objects and Replace Object Properties #### 
+
+##### Copy Document Template and Replace Object Properties #####
+
+##### Copy Spreadsheet Template and Replace Object Properties #####
+
+#### Cell Shading #### 
+
+##### Shade Cells in Sheet #####
+
+##### Shade Cells in Document Table #####
+
+#### Create Bulleted List in Document for Array of Objects ####
+
+##### Single Division List #####
+
+##### Multi Division List #####
+
+### Gmail ###
+
+#### Mail Merge for Array of Objects ####

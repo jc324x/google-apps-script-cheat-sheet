@@ -2,15 +2,15 @@
 
 var form = FormApp.getActiveForm();
 
-// *   | Forms
-// *   | - Form Management
-// 1.1 | -- Get Form Id
-// *   | -- Array of Form Items
-// *   | -- Get Form Item by Name
-// *   | -- Set Item Choices
-// *   | -- Get Destination Sheet
-// *   | - Form Responses
-// *   | -- Get Last Form Response
+// [Forms](#)
+// * [Managing Form Files](#)
+//   * [Get Form Id](#)
+// * [Utility Functions for Forms](#)
+//   * [Array of Form Items](#)
+//   * [Get Form Item by Name](#)
+//   * [Set Item Choices](#)
+//   * [Get Destination Sheet](#)
+//   * [Get Last Form Response](#)
 
 function testEverything() {}
 

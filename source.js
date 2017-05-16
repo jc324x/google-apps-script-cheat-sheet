@@ -23,7 +23,6 @@ Logger.log("Start");
 // | -- Array of Matching Property Values
 // | -- Merge Objects
 // | -- Object from Range 
-// | -- String from Object Properties // FLAG
 // | - Dates and Times
 // | -- Formatted Timestamps
 // | -- Date Object from String
@@ -108,7 +107,7 @@ Logger.log("Start");
 // | --- Single Division List
 // | --- Multi Division List
 // | - Gmail
-// | -- Mail Merge from Array of Objects
+// | -- Mail Merge for Array of Objects
 
 // Future Additions: 
 // * Count of Value in Array of Objects
@@ -1302,7 +1301,7 @@ function strFromProp(obj, str){
   return _arr.join(" ");
 }
 
-// Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
+Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
 
 // -- Replace Object Properties 
 
@@ -1317,15 +1316,15 @@ function findReplaceInDoc(obj, docObj) {
   } 
 } 
 
-// var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var file_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
-// var doc_frid  = openFileAsDocument(file_frid);
-// var body_frid = doc_frid.getBody();
-// body_frid.clear();
-// doc_frid.appendParagraph("name: <<name>>");
-// doc_frid.appendParagraph("state: <<state>>");
-// doc_frid.appendParagraph("job: <<job>>");
-// findReplaceInDoc(ex_obj, doc_frid);
+var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var file_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
+var doc_frid  = openFileAsDocument(file_frid);
+var body_frid = doc_frid.getBody();
+body_frid.clear();
+doc_frid.appendParagraph("name: <<name>>");
+doc_frid.appendParagraph("state: <<state>>");
+doc_frid.appendParagraph("job: <<job>>");
+findReplaceInDoc(ex_obj, doc_frid);
 
 // --- Replace Object Properties in Spreadsheet
 
@@ -1355,20 +1354,20 @@ function findReplaceinSpreadsheet(obj, ssObj) {
   } 
 }
 
-// var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var file_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
-// var ss_frid   = openFileAsSpreadsheet(file_fris);
-// var sheet_frid = ss_frid.getSheets()[0];
-// sheet_frid.clear();
+var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var file_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
+var ss_frid   = openFileAsSpreadsheet(file_fris);
+var sheet_frid = ss_frid.getSheets()[0];
+sheet_frid.clear();
 
-// var val_frid = [
-//   [ "name", "state", "job" ],
-//   [ "<<name>>", "<<state>>", "<<job>>"]
-// ];
+var val_frid = [
+  [ "name", "state", "job" ],
+  [ "<<name>>", "<<state>>", "<<job>>"]
+];
 
-// var range_frid = sheet_frid.getRange("A1:C2");
-// range_frid.setValues(val_frid);
-// findReplaceinSpreadsheet(ex_obj, ss_frid);
+var range_frid = sheet_frid.getRange("A1:C2");
+range_frid.setValues(val_frid);
+findReplaceinSpreadsheet(ex_obj, ss_frid);
 
 // --- Replace Object Properties in Sheet
 
@@ -1391,7 +1390,6 @@ function findReplaceinSheet(obj, sheetObj) {
   }
   sheetObj.getDataRange().setValues(values);
 }
-
 
 // -- Copy Template for Item in Array of Objects and Replace Object Properties
 
@@ -1544,13 +1542,12 @@ var obj_sc = {
 
 // -- Mail Merge
 
-function mailMerge(arrObj) {
+function mailMergeArrObj(arrObj) {
   var subj = "test mail merge";
   var body =
   "<p>this is some text</p>" + "<p>pulling in some data " + 
   arrObj[i]["A"] + " </p>";
-
-  for (var i =0; i < arrObj.length; i++){
+  for (var i = 0; i < arrObj.length; i++){
     var email = arrObj[i]["Email"];
     if (email) {
       MailApp.sendEmail({
