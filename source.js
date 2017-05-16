@@ -94,14 +94,21 @@ Logger.log("Start");
 // | Merges
 // | - Sheets and Docs
 // | -- String from Object Properties
-// | -- Find and Replace Object Properties in Document or Sheet
-// | -- Create Documents or Sheets from Template and Array of Objects
-// | -- Shade Cells in a Sheet or Document Table 
+// | -- Replace Object Properties 
+// | --- Replace Object Properties in Document
+// | --- Replace Object Properties in Spreadsheet
+// | --- Replace Object Properties in Sheet
+// | -- Copy Template for Item in Array of Objects and Replace Object Properties
+// | --- Copy Document Template and Replace Object Properties
+// | --- Copy Spreadsheet Template and Replace Object Properties
+// | -- Cell Shading
+// | --- Shade Cells in Sheet 
+// | --- Shade Cells in Document Table
 // | -- Create Bulleted List in Document for Array of Objects
+// | --- Single Division List
+// | --- Multi Division List
 // | - Gmail
 // | -- Mail Merge from Array of Objects
-// | Other
-// | -- Regex Only Numbers or Letters
 
 // Future Additions: 
 // * Count of Value in Array of Objects
@@ -113,6 +120,7 @@ Logger.log("Start");
 // * Set Range of Values in Sheet 
 // * Copy Folders (Recursive)
 // * Convert JSON to Sheet
+// * Timer management
 
 // General
 
@@ -1296,9 +1304,9 @@ function strFromProp(obj, str){
 
 // Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
 
-// -- Find and Replace Object Properties in Document, Sheet or Spreadsheet
+// -- Replace Object Properties 
 
-// --- Find and Replace Object Properties in Doc
+// --- Replace Object Properties in Document
 
 function findReplaceInDoc(obj, docObj) {
   var body = docObj.getBody(); 
@@ -1319,7 +1327,7 @@ function findReplaceInDoc(obj, docObj) {
 // doc_frid.appendParagraph("job: <<job>>");
 // findReplaceInDoc(ex_obj, doc_frid);
 
-// --- Find and Replace Object Properties in Spreadsheet
+// --- Replace Object Properties in Spreadsheet
 
 function findReplaceinSpreadsheet(obj, ssObj) {
   var numSheets = ssObj.getNumSheets();
@@ -1362,7 +1370,7 @@ function findReplaceinSpreadsheet(obj, ssObj) {
 // range_frid.setValues(val_frid);
 // findReplaceinSpreadsheet(ex_obj, ss_frid);
 
-// --- Find and Replace Object Properties in Sheet
+// --- Replace Object Properties in Sheet
 
 function findReplaceinSheet(obj, sheetObj) {
   var values = sheetObj.getDataRange().getValues();
@@ -1384,9 +1392,10 @@ function findReplaceinSheet(obj, sheetObj) {
   sheetObj.getDataRange().setValues(values);
 }
 
-// -- Create Documents or Sheets from Template and Array of Objects
 
-// --- Create Documents from Template and Array of Objects 
+// -- Copy Template for Item in Array of Objects and Replace Object Properties
+
+// --- Copy Document Template and Replace Object Properties
 
 function createDocsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
   for (var i = 0; i < arrObj.length; i++) {
@@ -1415,7 +1424,7 @@ function createDocsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
 // doc_cdftao.appendParagraph("Email: <<Email>>");
 // createDocsFromTemplateArrObj(arrObj_cdftao, file_cdftao, "Name: <<Last>> <<First>>", fldr2_cdftao, true);
 
-// --- Create Spreadsheets from Template and Array of Objects 
+// --- Copy Spreadsheet Template and Replace Object Properties
 
 function createSpreadsheetsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
   for (var i = 0; i < arrObj.length; i++) {
@@ -1446,7 +1455,7 @@ var range_csftao = sheet2_csftao.getRange("A1:E2");
 range_csftao.setValues(val_csftao);
 createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: <<Last>> <<First>>", fldr2_csftao, true)
 
-// -- Shade Cells in a Sheet or Document Table 
+// -- Cell Shading
 
 // --- Shade Cells in Sheet
 
@@ -1475,9 +1484,9 @@ var obj_sc = {
 // var ss_sc = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
 // shadeCells(ss_sc, "A", obj_sc, "#D3D3D3");
 
-// --- Shade Cells in Document
+// --- Shade Cells in Document Table
 
-// | -- Create Bulleted List in Document for Array of Objects
+// -- Create Bulleted List in Document for Array of Objects
 
 // -- Single Division List
 
@@ -1557,25 +1566,4 @@ function mailMerge(arrObj) {
 // var ex_mm = arrObjFromSheet(ss_mm, 1);
 // mailMerge(ex_mm);
 
-// Other
-
-// -- Regex Only Numbers or Letters
-
-var re     = "123ABC234XYZ"
-var ex_num = re.match(/\d+/g);
-var ex_abc = re.replace(/\d/g, "");
-
-// Logger.log(ex_num);
-// Logger.log(ex_abc);
-
 Logger.log("End");
-
-// ----------------------------------------------------------------------------------------------
-
-function timerCheck(start, end) {
-  var elapsed = ((((new Date().getTime()) - start.getTime() ) / 1000).toFixed(2));
-  // var elapsed = (new Date().getTime()) - start.getTime() ;
-    Logger.log(elapsed + " / " + end);
-    return elapsed < end;
-} 
-
