@@ -1296,9 +1296,9 @@ function strFromProp(obj, str){
 
 // Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
 
-// -- Find and Replace by Object Properties in Document, Sheet or Spreadsheet
+// -- Find and Replace Object Properties in Document, Sheet or Spreadsheet
 
-// --- Find and Replace by Object Properties in Doc
+// --- Find and Replace Object Properties in Doc
 
 function findReplaceInDoc(obj, docObj) {
   var body = docObj.getBody(); 
@@ -1319,7 +1319,7 @@ function findReplaceInDoc(obj, docObj) {
 // doc_frid.appendParagraph("job: <<job>>");
 // findReplaceInDoc(ex_obj, doc_frid);
 
-// --- Find and Replace by Object Properties in Spreadsheet
+// --- Find and Replace Object Properties in Spreadsheet
 
 function findReplaceinSpreadsheet(obj, ssObj) {
   var numSheets = ssObj.getNumSheets();
@@ -1361,6 +1361,28 @@ function findReplaceinSpreadsheet(obj, ssObj) {
 // var range_frid = sheet_frid.getRange("A1:C2");
 // range_frid.setValues(val_frid);
 // findReplaceinSpreadsheet(ex_obj, ss_frid);
+
+// --- Find and Replace Object Properties in Sheet
+
+function findReplaceinSheet(obj, sheetObj) {
+  var values = sheetObj.getDataRange().getValues();
+  Logger.log(values);
+  for(var row in values){
+    var update = values[row].map(function(original){
+      var text = original.toString();
+      Logger.log(text);
+      for (var prop in obj) {
+        var query = "<<"+prop+">>"
+          if (text.indexOf(query) !== -1) {
+            text = text.replace(query, obj[prop]);
+          }
+      } 
+      return text;
+    });
+    values[row] = update;
+  }
+  sheetObj.getDataRange().setValues(values);
+}
 
 // -- Create Documents or Sheets from Template and Array of Objects
 
