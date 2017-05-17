@@ -267,9 +267,9 @@ function flattenMultiArr(multiArr){
   return arr;
 }
 
-var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
-var val_fma = ss_fma.getRange("G2:H5").getValues();
-// Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
+var sheet_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
+var val_fma = sheet_fma.getRange("G2:H5").getValues();
+Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
 
@@ -353,9 +353,9 @@ function earliestTS(arrObj){
   }
 }
 
-var ss_fe     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var arrObj_fe = arrObjFromRange(ss_fe, "J1:K4");
-// Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
+var sheet_fe  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var arrObj_fe = arrObjFromRange(sheet_fe, "J1:K4");
+Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 function latestTS(arrObj) {
   if (arrObj.length >= 2) {
@@ -368,9 +368,9 @@ function latestTS(arrObj) {
   }
 } 
 
-var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var arrObj_le = arrObjFromRange(ss_le, "J1:K4");
-// Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
+var sheet_le  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
+Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
 // -- Filter by Property Value or Values | return: array (objects)
 
@@ -484,7 +484,7 @@ function objFromRange(sheetObj, a1Notation) {
 }
 
 var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
+Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 
 // - Dates and Times
 
@@ -1138,8 +1138,8 @@ function arrObjFromSheet(sheetObj, hRow){
   return valByRow(vRange, headers)
 }
 
-// var ss_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrObjFromSheet(ss_aofs, 2));
+var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrObjFromSheet(sheet_aofs, 2));
 
 // -- Array of Objects from Range | return: array (objects)
 
@@ -1150,8 +1150,8 @@ function arrObjFromRange(sheetObj, a1Notation) {
   return valByRow(vRange, headers);
 }
 
-// var ss_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrObjFromRange(ss_aofr, "A2:E7"));
+var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
 
 // - Array 
 
@@ -1177,8 +1177,8 @@ function arrForColName(sheetObj, hRow, name){
   return arr;
 }
 
-// var ss_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrForColName(ss_afcna, 2, "First"));
+var sheet_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrForColName(sheet_afcna, 2, "First"));
 
 // --- By Column Number
 
@@ -1199,8 +1199,25 @@ function arrForColNo(sheetObj, hRow, colIndex){
   return arr;
 }
 
-// var ss_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
-// Logger.log(arrForColNo(ss_afcno, 2, 2));
+var sheet_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
+Logger.log(arrForColNo(sheet_afcno, 2, 2));
+
+// --- First Column of Range Object
+
+function verticalArrForRangeObject(rangeObj){
+  var h    = rangeObj.getHeight();
+  var w    = rangeObj.getWidth();
+  var vals = rangeObj.getValues();
+  var arr  = [];
+  for (var i = 0; i < h; i++) {
+    arr.push(vals[i][0]);
+  }
+  return arr;
+}
+
+var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
+var range_vafro = sheet_vafro.getRange("A1:F10");
+Logger.log(verticalArrForRangeObject(range_vafro));
 
 // Docs
 
@@ -1316,15 +1333,15 @@ function findReplaceInDoc(obj, docObj) {
   } 
 } 
 
-var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var file_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
-var doc_frid  = openFileAsDocument(file_frid);
-var body_frid = doc_frid.getBody();
-body_frid.clear();
-doc_frid.appendParagraph("name: <<name>>");
-doc_frid.appendParagraph("state: <<state>>");
-doc_frid.appendParagraph("job: <<job>>");
-findReplaceInDoc(ex_obj, doc_frid);
+// var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var file_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
+// var doc_frid  = openFileAsDocument(file_frid);
+// var body_frid = doc_frid.getBody();
+// body_frid.clear();
+// doc_frid.appendParagraph("name: <<name>>");
+// doc_frid.appendParagraph("state: <<state>>");
+// doc_frid.appendParagraph("job: <<job>>");
+// findReplaceInDoc(ex_obj, doc_frid);
 
 // --- Replace Object Properties in Spreadsheet
 
@@ -1354,20 +1371,20 @@ function findReplaceinSpreadsheet(obj, ssObj) {
   } 
 }
 
-var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var file_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
-var ss_frid   = openFileAsSpreadsheet(file_fris);
-var sheet_frid = ss_frid.getSheets()[0];
-sheet_frid.clear();
+// var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var file_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
+// var ss_frid   = openFileAsSpreadsheet(file_fris);
+// var sheet_frid = ss_frid.getSheets()[0];
+// sheet_frid.clear();
 
-var val_frid = [
-  [ "name", "state", "job" ],
-  [ "<<name>>", "<<state>>", "<<job>>"]
-];
+// var val_frid = [
+//   [ "name", "state", "job" ],
+//   [ "<<name>>", "<<state>>", "<<job>>"]
+// ];
 
-var range_frid = sheet_frid.getRange("A1:C2");
-range_frid.setValues(val_frid);
-findReplaceinSpreadsheet(ex_obj, ss_frid);
+// var range_frid = sheet_frid.getRange("A1:C2");
+// range_frid.setValues(val_frid);
+// findReplaceinSpreadsheet(ex_obj, ss_frid);
 
 // --- Replace Object Properties in Sheet
 
@@ -1406,21 +1423,20 @@ function createDocsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
     }
 } 
 
-// var ss_cdftao     = SpreadsheetApp.getActiveSpreadsheet();
-// var sheet_cdftao  = ss_cdftao.getSheetByName("Sheet2");
-// var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
-// var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges")
-// var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
-// var file_cdftao   = createVerifyDocIn(fldr1_cdftao, "template-doc");
-// var doc_cdftao    = openFileAsDocument(file_cdftao);
-// var body_cdftao   = doc_cdftao.getBody();
-// body_cdftao.clear();
-// doc_cdftao.appendParagraph("First: <<First>>");
-// doc_cdftao.appendParagraph("Last: <<Last>>");
-// doc_cdftao.appendParagraph("Grade: <<Grade>>");
-// doc_cdftao.appendParagraph("Homeroom: <<Homeroom>>");
-// doc_cdftao.appendParagraph("Email: <<Email>>");
-// createDocsFromTemplateArrObj(arrObj_cdftao, file_cdftao, "Name: <<Last>> <<First>>", fldr2_cdftao, true);
+var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
+var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges")
+var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
+var file_cdftao   = createVerifyDocIn(fldr1_cdftao, "template-doc");
+var doc_cdftao    = openFileAsDocument(file_cdftao);
+var body_cdftao   = doc_cdftao.getBody();
+body_cdftao.clear();
+doc_cdftao.appendParagraph("First: <<First>>");
+doc_cdftao.appendParagraph("Last: <<Last>>");
+doc_cdftao.appendParagraph("Grade: <<Grade>>");
+doc_cdftao.appendParagraph("Homeroom: <<Homeroom>>");
+doc_cdftao.appendParagraph("Email: <<Email>>");
+createDocsFromTemplateArrObj(arrObj_cdftao, file_cdftao, "Name: <<Last>> <<First>>", fldr2_cdftao, true);
 
 // --- Copy Spreadsheet Template and Replace Object Properties
 
@@ -1444,23 +1460,24 @@ var file_csftao   = createVerifySSIn(fldr1_csftao, "template-sheet");
 var ss2_csftao    = openFileAsSpreadsheet(file_csftao);
 var sheet2_csftao = ss2_csftao.getSheets()[0];
 
-var val_csftao = [
-  [ "First", "Last", "Grade", "Homeroom", "Email" ],
-  [ "<<First>>", "<<Last>>", "<<Grade>>", "<<Homeroom>>", "<<Email>>"]
-];
+// var val_csftao = [
+//   [ "First", "Last", "Grade", "Homeroom", "Email" ],
+//   [ "<<First>>", "<<Last>>", "<<Grade>>", "<<Homeroom>>", "<<Email>>"]
+// ];
 
-var range_csftao = sheet2_csftao.getRange("A1:E2");
-range_csftao.setValues(val_csftao);
-createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: <<Last>> <<First>>", fldr2_csftao, true)
+// var range_csftao = sheet2_csftao.getRange("A1:E2");
+// range_csftao.setValues(val_csftao);
+// createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: <<Last>> <<First>>", fldr2_csftao, true)
 
 // -- Cell Shading
 
 // --- Shade Cells in Sheet
 
-function shadeCells(sheetObj, colLetter, obj, color) {
+function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
   var lRow   = sheetObj.getLastRow();
   var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
-  var arrVal = arrForCol(vRange);
+  var arrVal = verticalArrForRangeObject(vRange);
+  Logger.log(arrVal);
   var index  = colNum(colLetter)
   for (var i = 0; i < arrVal.length; i++) {
     for (var prop in obj) {
@@ -1479,10 +1496,15 @@ var obj_sc = {
   "Student Gets Along Well With Others": 5
 };
 
-// var ss_sc = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
-// shadeCells(ss_sc, "A", obj_sc, "#D3D3D3");
+var sheet_scic = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
+shadeCellsInSheet(sheet_scic, "A", obj_sc, "#D3D3D3");
 
 // --- Shade Cells in Document Table
+
+function shadeCellsInDocTable() {
+  
+} 
+
 
 // -- Create Bulleted List in Document for Array of Objects
 
