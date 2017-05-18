@@ -80,6 +80,9 @@ Logger.log("Start");
 // | -- Array of Objects from Range
 // | - Array 
 // | -- Array of Values for Column
+// | --- For Column Index
+// | --- For Header Value
+// | --- For Range Object 
 // | Docs
 // | - Managing Document Files
 // | -- Create or Verify Document
@@ -131,7 +134,7 @@ function checkValIn(arr, val) {
   return arr.indexOf(val) > -1; 
 }
 
-var arr_cvi = [1,2,3,4];
+// var arr_cvi = [1,2,3,4];
 // Logger.log(checkValIn(arr_cvi,5)); // false
   
 // -- Remove Duplicates | return: `array`
@@ -150,7 +153,7 @@ function rmDuplicatesFrom(arr) {
   return _arr;
 }
 
-var arr_rdf = [1,2,3,1,2,3,4,];
+// var arr_rdf = [1,2,3,1,2,3,4,];
 // Logger.log(rmDuplicatesFrom(arr_rdf)); // [1,2,3,4]
 
 // -- Remove Empty Values | return: `array`
@@ -159,7 +162,7 @@ function rmEmptyVal(x){
   return (x !== (undefined || ''));
 }
 
-var arr_rev = ["a",,"b",,,"c"];
+// var arr_rev = ["a",,"b",,,"c"];
 // Logger.log(arr_rev.filter(rmEmptyVal)); // [a,b,c]
 
 // -- Get Count of Values | return: array (objects)
@@ -185,7 +188,7 @@ function countOfValIn(arr){
   return _arr;
 }
 
-var arr_covi  = ["A", "B", "C", "A", "B", "C", "A"];
+// var arr_covi  = ["A", "B", "C", "A", "B", "C", "A"];
 // Logger.log(countOfValIn(arr_covi)); // [{count=3.0, value=A}, {count=2.0, value=B}, {count=2.0, value=C}]
 
 // -- Intersect of Two Arrays | return: array 
@@ -206,8 +209,8 @@ function intersectOf(arrA, arrB) {
   return _arr;
 }
 
-var arr1_io = [1, 2, 3];
-var arr2_io = [3, 4, 5];
+// var arr1_io = [1, 2, 3];
+// var arr2_io = [3, 4, 5];
 // Logger.log(intersectOf(arr1_io, arr2_io)); // [3]
 
 // -- Compare Two Arrays | return: boolean
@@ -220,9 +223,9 @@ function compareArr(arr1, arr2) {
     return true;
 }
 
-var arr1_ca = [1,2,3,4,5]
-var arr2_ca = [1,2,3,4,5]
-var arr3_ca = ["a","b","c","d","e"]
+// var arr1_ca = [1,2,3,4,5]
+// var arr2_ca = [1,2,3,4,5]
+// var arr3_ca = ["a","b","c","d","e"]
 // Logger.log(compareArr(arr1_ca, arr2_ca)); // true
 // Logger.log(compareArr(arr1_ca, arr3_ca)); // false
 
@@ -238,7 +241,7 @@ function delimited(arr, delimiter){
   return str;
 }
 
-var arr_clf = ["c@example.com", "b@example.com", "a@example.com"];
+// var arr_clf = ["c@example.com", "b@example.com", "a@example.com"];
 // Logger.log(commaListFrom(arr_clf, ",")); // a@example.com, b@example.com, c@example.com
 
 // -- Array as Modified Delimited String
@@ -253,7 +256,7 @@ function delimitedModified(arr, extension, delimiter) {
   return str;
 }
 
-var arr_clfd = ["x", "z", "y"];
+// var arr_clfd = ["x", "z", "y"];
 // Logger.log(delimitedModified(arr_clfd, "@example.com", ",")); // x@example.com, y@example.com, z@example.com
 
 // - Multidimensional Array
@@ -267,9 +270,9 @@ function flattenMultiArr(multiArr){
   return arr;
 }
 
-var sheet_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
-var val_fma = sheet_fma.getRange("G2:H5").getValues();
-Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
+// var sheet_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
+// var val_fma = sheet_fma.getRange("G2:H5").getValues();
+// Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
 
@@ -353,9 +356,9 @@ function earliestTS(arrObj){
   }
 }
 
-var sheet_fe  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var arrObj_fe = arrObjFromRange(sheet_fe, "J1:K4");
-Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
+// var sheet_fe  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var arrObj_fe = arrObjFromRange(sheet_fe, "J1:K4");
+// Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 function latestTS(arrObj) {
   if (arrObj.length >= 2) {
@@ -368,9 +371,9 @@ function latestTS(arrObj) {
   }
 } 
 
-var sheet_le  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
-Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
+// var sheet_le  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
+// Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
 // -- Filter by Property Value or Values | return: array (objects)
 
@@ -483,8 +486,8 @@ function objFromRange(sheetObj, a1Notation) {
   return obj;
 }
 
-var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
+// var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 
 // - Dates and Times
 
@@ -1138,8 +1141,8 @@ function arrObjFromSheet(sheetObj, hRow){
   return valByRow(vRange, headers)
 }
 
-var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrObjFromSheet(sheet_aofs, 2));
+// var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(arrObjFromSheet(sheet_aofs, 2));
 
 // -- Array of Objects from Range | return: array (objects)
 
@@ -1150,14 +1153,14 @@ function arrObjFromRange(sheetObj, a1Notation) {
   return valByRow(vRange, headers);
 }
 
-var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
+// var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
 
 // - Array 
 
 // -- Array of Values for Column
 
-// --- By Header Value 
+// --- For Header Value 
 
 function arrForColName(sheetObj, hRow, name){
   var lColNum  = sheetObj.getLastColumn();
@@ -1177,10 +1180,10 @@ function arrForColName(sheetObj, hRow, name){
   return arr;
 }
 
-var sheet_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrForColName(sheet_afcna, 2, "First"));
+// var sheet_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(arrForColName(sheet_afcna, 2, "First"));
 
-// --- By Column Number
+// --- For Column Number
 
 function arrForColNo(sheetObj, hRow, colIndex){
   var lColNum  = sheetObj.getLastColumn();
@@ -1199,12 +1202,12 @@ function arrForColNo(sheetObj, hRow, colIndex){
   return arr;
 }
 
-var sheet_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
-Logger.log(arrForColNo(sheet_afcno, 2, 2));
+// var sheet_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
+// Logger.log(arrForColNo(sheet_afcno, 2, 2));
 
-// --- First Column of Range Object
+// --- For Range Object
 
-function verticalArrForRangeObject(rangeObj){
+function arrForRange(rangeObj){
   var h    = rangeObj.getHeight();
   var w    = rangeObj.getWidth();
   var vals = rangeObj.getValues();
@@ -1215,9 +1218,9 @@ function verticalArrForRangeObject(rangeObj){
   return arr;
 }
 
-var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
-var range_vafro = sheet_vafro.getRange("A1:F10");
-Logger.log(verticalArrForRangeObject(range_vafro));
+// var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
+// var range_vafro = sheet_vafro.getRange("A1:F5");
+// Logger.log(arrForRange(range_vafro)); // [Shading, , Student Has Good Study Habits, Student is Organized, Student Gets Along Well With Others]
 
 // Docs
 
@@ -1297,7 +1300,7 @@ function openFileAsDocument(file) {
 var ex_obj = { 
   name:  "Jon",
   state: "MN",
-  job:   "Mac Admin"
+  job:   "IT Administrator"
 };
 
 function strFromProp(obj, str){
@@ -1318,7 +1321,7 @@ function strFromProp(obj, str){
   return _arr.join(" ");
 }
 
-Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: Mac Admin
+// Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: IT Administrator
 
 // -- Replace Object Properties 
 
@@ -1423,20 +1426,20 @@ function createDocsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
     }
 } 
 
-var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
-var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges")
-var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
-var file_cdftao   = createVerifyDocIn(fldr1_cdftao, "template-doc");
-var doc_cdftao    = openFileAsDocument(file_cdftao);
-var body_cdftao   = doc_cdftao.getBody();
-body_cdftao.clear();
-doc_cdftao.appendParagraph("First: <<First>>");
-doc_cdftao.appendParagraph("Last: <<Last>>");
-doc_cdftao.appendParagraph("Grade: <<Grade>>");
-doc_cdftao.appendParagraph("Homeroom: <<Homeroom>>");
-doc_cdftao.appendParagraph("Email: <<Email>>");
-createDocsFromTemplateArrObj(arrObj_cdftao, file_cdftao, "Name: <<Last>> <<First>>", fldr2_cdftao, true);
+// var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
+// var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges")
+// var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
+// var file_cdftao   = createVerifyDocIn(fldr1_cdftao, "template-doc");
+// var doc_cdftao    = openFileAsDocument(file_cdftao);
+// var body_cdftao   = doc_cdftao.getBody();
+// body_cdftao.clear();
+// doc_cdftao.appendParagraph("First: <<First>>");
+// doc_cdftao.appendParagraph("Last: <<Last>>");
+// doc_cdftao.appendParagraph("Grade: <<Grade>>");
+// doc_cdftao.appendParagraph("Homeroom: <<Homeroom>>");
+// doc_cdftao.appendParagraph("Email: <<Email>>");
+// createDocsFromTemplateArrObj(arrObj_cdftao, file_cdftao, "Name: <<Last>> <<First>>", fldr2_cdftao, true);
 
 // --- Copy Spreadsheet Template and Replace Object Properties
 
@@ -1451,14 +1454,14 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, template, naming, fldr, ts
     }
 } 
 
-var ss1_csftao    = SpreadsheetApp.getActiveSpreadsheet();
-var sheet1_csftao = ss1_csftao.getSheetByName("Sheet2");
-var arrObj_csftao = arrObjFromSheet(sheet1_csftao, 2);
-var fldr1_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var fldr2_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
-var file_csftao   = createVerifySSIn(fldr1_csftao, "template-sheet");
-var ss2_csftao    = openFileAsSpreadsheet(file_csftao);
-var sheet2_csftao = ss2_csftao.getSheets()[0];
+// var ss1_csftao    = SpreadsheetApp.getActiveSpreadsheet();
+// var sheet1_csftao = ss1_csftao.getSheetByName("Sheet2");
+// var arrObj_csftao = arrObjFromSheet(sheet1_csftao, 2);
+// var fldr1_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var fldr2_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
+// var file_csftao   = createVerifySSIn(fldr1_csftao, "template-sheet");
+// var ss2_csftao    = openFileAsSpreadsheet(file_csftao);
+// var sheet2_csftao = ss2_csftao.getSheets()[0];
 
 // var val_csftao = [
 //   [ "First", "Last", "Grade", "Homeroom", "Email" ],
@@ -1471,33 +1474,57 @@ var sheet2_csftao = ss2_csftao.getSheets()[0];
 
 // -- Cell Shading
 
+var values_cs = [
+  "Strongly Disagree",
+  "Somewhat Disagree",
+  "No Opinion",
+  "Somewhat Agree",
+  "Strongly Agree"
+] 
+
+var obj_cs = {
+  "Student Has Good Study Habits":       "Strongly Agree",
+  "Student is Organized":                "No Opinion",
+  "Student Gets Along Well With Others": "Somewhat Agree"
+}
+
+// --- Convert Object Properties to Grid Values
+
+function gridValForObject(obj, gridArr) {
+  var _obj = {};
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      if (gridArr.indexOf(obj[prop]) != -1) {
+        _obj[prop] = (gridArr.indexOf(obj[prop])+1) 
+      }
+    }
+  }
+  return _obj;
+}
+
+// Logger.log(gridValForObject(obj_cs, values_cs)); // {Student Has Good Study Habits=5.0, Student Gets Along Well With Others=4.0, Student is Organized=3.0}
+
 // --- Shade Cells in Sheet
 
 function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
   var lRow   = sheetObj.getLastRow();
   var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
-  var arrVal = verticalArrForRangeObject(vRange);
-  Logger.log(arrVal);
+  var arrVal = arrForRange(vRange);
   var index  = colNum(colLetter)
   for (var i = 0; i < arrVal.length; i++) {
     for (var prop in obj) {
       if (prop == arrVal[i]) {
         var letter = numCol(index + obj[prop]);
-        var sRange = sheetObj.getRange(letter + (1+i));
+        var sRange = sheetObj.getRange(letter + (i+1));
         sRange.setBackground(color);
       }
     } 
   } 
 }
 
-var obj_sc = { 
-  "Student Has Good Study Habits":       1,
-  "Student is Organized":                2,
-  "Student Gets Along Well With Others": 5
-};
-
-var sheet_scic = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
-shadeCellsInSheet(sheet_scic, "A", obj_sc, "#D3D3D3");
+// var obj_scis = gridValForObject(obj_cs, values_cs);
+// var sheet_scis = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
+// shadeCellsInSheet(sheet_scis, "A", obj_scis, "#D3D3D3");
 
 // --- Shade Cells in Document Table
 
