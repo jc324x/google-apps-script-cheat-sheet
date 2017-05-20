@@ -26,7 +26,6 @@
   * [Formatted Timestamps](#formatted-timestamps--return-string)
   * [Date Object from String](#date-object-from-string--return-date)
   * [Match a Date to a Range](#match-a-date-to-a-range--return-integer)
-
 [Drive](#drive)
 * [Folders](#folders)
   * [Create or Verify Folder Path](#create-or-verify-folder-path--return-folder)
@@ -58,7 +57,6 @@
 * [Files and Folders](#files-and-folders)
   * [Rename a File or Folder](#)
   * [Parent Folder of a File or Folder](#)
-
 [Sheets](#sheets)
 * [Managing Spreadsheet Files](#)
   * [Create or Verify Spreadsheet](#)
@@ -81,7 +79,9 @@
   * [Array of Objects from Range](#)
 * [Array](#)
   * [Array of Values for Column](#)
-
+  * [For Column Index](#)
+  * [For Header Value](#)
+  * [For Range Object](#)
 [Docs](#)
 * [Managing Document Files](#)
   * [Create or Verify Document](#)
@@ -92,7 +92,6 @@
 * [Utility Functions for Docs](#)
   * [Access Document Body](#)
   * [Clear Document Body](#)
-
 [Forms](#)
 * [Managing Form Files](#)
   * [Get Form Id](#)
@@ -102,7 +101,6 @@
   * [Set Item Choices](#)
   * [Get Destination Sheet](#)
   * [Get Last Form Response](#)
-
 [Merges](#)
 * [Sheets and Docs](#)
   * [String from Object Properties](#)
