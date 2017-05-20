@@ -104,8 +104,8 @@ Logger.log("Start");
 // | --- Copy Document Template and Replace Object Properties
 // | --- Copy Spreadsheet Template and Replace Object Properties
 // | -- Cell Shading
+// | --- Index Object Properties
 // | --- Shade Cells in Sheet 
-// | --- Shade Cells in Document Table
 // | -- Create Bulleted List in Document for Array of Objects
 // | --- Single Division List
 // | --- Multi Division List
@@ -123,6 +123,7 @@ Logger.log("Start");
 // * Copy Folders (Recursive)
 // * Convert JSON to Sheet
 // * Timer management
+// * Shade Cells in Document Table
 
 // General
 
@@ -1354,13 +1355,10 @@ function findReplaceinSpreadsheet(obj, ssObj) {
   var sheets    = ssObj.getSheets();
   for (var i = 0; i < numSheets; i++) {
     var sheetObj = sheets[i];
-    Logger.log(sheetObj);
     var values = sheetObj.getDataRange().getValues();
-    Logger.log(values);
     for(var row in values){
       var update = values[row].map(function(original){
         var text = original.toString();
-        Logger.log(text);
         for (var prop in obj) {
           var query = "<<"+prop+">>"
           if (text.indexOf(query) !== -1) {
@@ -1394,11 +1392,9 @@ function findReplaceinSpreadsheet(obj, ssObj) {
 
 function findReplaceinSheet(obj, sheetObj) {
   var values = sheetObj.getDataRange().getValues();
-  Logger.log(values);
   for(var row in values){
     var update = values[row].map(function(original){
       var text = original.toString();
-      Logger.log(text);
       for (var prop in obj) {
         var query = "<<"+prop+">>"
           if (text.indexOf(query) !== -1) {
@@ -1411,6 +1407,21 @@ function findReplaceinSheet(obj, sheetObj) {
   }
   sheetObj.getDataRange().setValues(values);
 }
+
+// var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var file_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
+// var ss_frid   = openFileAsSpreadsheet(file_fris);
+// var sheet_frid = ss_frid.getSheets()[0];
+// sheet_frid.clear();
+
+// var val_frid = [
+//   [ "name", "state", "job" ],
+//   [ "<<name>>", "<<state>>", "<<job>>"]
+// ];
+
+// var range_frid = sheet_frid.getRange("A1:C2");
+// range_frid.setValues(val_frid);
+// findReplaceinSheet(ex_obj, sheet_frid);
 
 // -- Copy Template for Item in Array of Objects and Replace Object Properties
 
@@ -1489,21 +1500,21 @@ var obj_cs = {
   "Student Gets Along Well With Others": "Somewhat Agree"
 }
 
-// --- Convert Object Properties to Grid Values
+// --- Index Object Properties | return: object
 
-function gridValForObject(obj, gridArr) {
+function indexValForObj(obj, indexArray) {
   var _obj = {};
   for (var prop in obj) {
     if (obj.hasOwnProperty(prop)) {
-      if (gridArr.indexOf(obj[prop]) != -1) {
-        _obj[prop] = (gridArr.indexOf(obj[prop])+1) 
+      if (indexArray.indexOf(obj[prop]) != -1) {
+        _obj[prop] = (indexArray.indexOf(obj[prop])+1) 
       }
     }
   }
   return _obj;
 }
 
-// Logger.log(gridValForObject(obj_cs, values_cs)); // {Student Has Good Study Habits=5.0, Student Gets Along Well With Others=4.0, Student is Organized=3.0}
+// Logger.log(indexValForObj(obj_cs, values_cs)); // {Student Has Good Study Habits=5.0, Student Gets Along Well With Others=4.0, Student is Organized=3.0}
 
 // --- Shade Cells in Sheet
 
@@ -1523,63 +1534,58 @@ function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
   } 
 }
 
-// var obj_scis = gridValForObject(obj_cs, values_cs);
+// var obj_scis   = indexValForObj(obj_cs, values_cs);
 // var sheet_scis = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
 // shadeCellsInSheet(sheet_scis, "A", obj_scis, "#D3D3D3");
-
-// --- Shade Cells in Document Table
-
-function shadeCellsInDocTable() {
-  
-} 
-
 
 // -- Create Bulleted List in Document for Array of Objects
 
 // -- Single Division List
 
-// var ss_sdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_sdl = arrObjFromSheet(ss_sdl, 2);
-// var fldr_sdl   = createVerifyPath("google-apps-script-library");
-// var docId_sdl  = createVerifyDocIn(fldr_sdl, "example_doc").getId();
-// var body_sdl   = DocumentApp.openById(docId_sdl).getBody();
+// var sheet_sdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_sdl = arrObjFromSheet(sheet_sdl, 2);
+// var fldr_sdl   = createVerifyPath("google-apps-script-cheat-sheet-demo/docs");
+// var file_sdl   = createVerifyDocIn(fldr_sdl, "example-doc");
+// var doc_sdl    = openFileAsDocument(file_sdl);
+// var body_sdl   = doc_sdl.getBody();
 
 // (function(){
-//  arrObj_sdl.sort(dynSortM("Last", "First"));
-//  var sectionHeader = body_sdl.appendParagraph("Students");
-//  sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-//  for (var i in arrObj_sdl) {
-//    body_sdl.appendListItem(arrObj_sdl[i]["Last"] + ", " + arrObj_sdl[i]["First"]);
-//  }
+//   arrObj_sdl.sort(dynSortM("Last", "First"));
+//   var sectionHeader = body_sdl.appendParagraph("Students");
+//   sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+//   for (var i in arrObj_sdl) {
+//     body_sdl.appendListItem(arrObj_sdl[i]["Last"] + ", " + arrObj_sdl[i]["First"]);
+//   }
 // })();
 
 // -- Multi Division List
 
-// var ss_mdl     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_mdl = arrObjFromSheet(ss_mdl, 2);
-// var fldr_mdl   = createVerifyPath("google-apps-script-library");
-// var docId_mdl  = createVerifyDocIn(fldr_mdl, "example_doc").getId();
-// var body_mdl   = DocumentApp.openById(docId_mdl).getBody();
+// var sheet_mdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_mdl = arrObjFromSheet(sheet_mdl, 2);
+// var fldr_mdl   = createVerifyPath("google-apps-script-cheat-sheet-demo/docs");
+// var file_mdl   = createVerifyDocIn(fldr_mdl, "example-doc");
+// var doc_mdl    = openFileAsDocument(file_mdl);
+// var body_mdl   = doc_mdl.getBody();
 
 // (function(){
-//  arrObj_mdl.sort(dynSortM("Homeroom", "Last", "First"));
-//  var sectionHeader = body_mdl.appendParagraph("Homerooms and Students");
-//  sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-//  var homeroom = arrObj_mdl[0]["Homeroom"];
-//  body_mdl.appendListItem(homeroom);
-//  for (var i in arrObj_mdl) {
-//    if (arrObj_mdl[i]["Homeroom"] === homeroom) {
-//      body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
-//      .setNestingLevel(1).setIndentStart(10)
-//      .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
-//    } else {
-//      homeroom = arrObj_mdl[i]["Homeroom"];
-//      body_mdl.appendListItem(homeroom);
-//      body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
-//      .setNestingLevel(1).setIndentStart(10)
-//      .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
-//    }
-//  }
+//   arrObj_mdl.sort(dynSortM("Homeroom", "Last", "First"));
+//   var sectionHeader = body_mdl.appendParagraph("Homerooms and Students");
+//   sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
+//   var homeroom = arrObj_mdl[0]["Homeroom"];
+//   body_mdl.appendListItem(homeroom);
+//   for (var i in arrObj_mdl) {
+//     if (arrObj_mdl[i]["Homeroom"] === homeroom) {
+//       body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
+//       .setNestingLevel(1).setIndentStart(10)
+//       .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+//     } else {
+//       homeroom = arrObj_mdl[i]["Homeroom"];
+//       body_mdl.appendListItem(homeroom);
+//       body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
+//       .setNestingLevel(1).setIndentStart(10)
+//       .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
+//     }
+//   }
 // })();
 
 //  - Gmail
