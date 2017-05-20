@@ -1038,6 +1038,7 @@ function colNum(col) {
 
 // -- Replicating Import Range | return: nil
 // trigger -> importRange > From spreadsheet > On edit
+// FLAG
 
 function importRange(){
   var get = sheet_gs.getRange("A2:A5").getValues();
@@ -1181,7 +1182,7 @@ function arrForColName(sheetObj, hRow, name){
 }
 
 // var sheet_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrForColName(sheet_afcna, 2, "First"));
+// Logger.log(arrForColName(sheet_afcna, 2, "First")); // [Arienne, Elissa, Nerses, Gülistan, Syed, Isaiah, Stanley, Sára, Kaja, Józef, Radoslava, Sarah, Oluwasegun, Ekundayo, Gina, Sylvia, Cemil]
 
 // --- For Column Number
 
@@ -1203,7 +1204,7 @@ function arrForColNo(sheetObj, hRow, colIndex){
 }
 
 // var sheet_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
-// Logger.log(arrForColNo(sheet_afcno, 2, 2));
+// Logger.log(arrForColNo(sheet_afcno, 2, 2)); // [Garret, Jules, Juda, Armen, Yeong-Suk, Coy, Stevie, Emin, Tiriaq, Dilay, Kirabo, Ariadna, Devrim, Adjoa, Suk, Lyle, Edita]
 
 // --- For Range Object
 

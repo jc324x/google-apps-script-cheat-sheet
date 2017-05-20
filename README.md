@@ -282,8 +282,8 @@ function flattenMultiArr(multiArr){
   return arr;
 }
 
-var ss_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var val_fma = ss_fma.getRange("G2:H5").getValues();
+var sheet_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
+var val_fma = sheet_fma.getRange("G2:H5").getValues();
 Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 ```
 
@@ -376,8 +376,8 @@ function earliestTS(arrObj){
   }
 }
 
-var ss_fe     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var arrObj_fe = arrObjFromRange(ss_fe, "J1:K4");
+var sheet_fe  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var arrObj_fe = arrObjFromRange(sheet_fe, "J1:K4");
 Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 function latestTS(arrObj) {
@@ -391,8 +391,8 @@ function latestTS(arrObj) {
   }
 } 
 
-var ss_le     = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var arrObj_le = arrObjFromRange(ss_le, "J1:K4");
+var sheet_le  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
 Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 ```
 
@@ -1233,8 +1233,9 @@ function arrObjFromSheet(sheetObj, hRow){
   return valByRow(vRange, headers)
 }
 
-var ss_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrObjFromSheet(ss_aofs, 2)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, ... ]
+var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrObjFromSheet(sheet_aofs, 2));
+// [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, {Last=Juda, Email=njuda@example.com, Homeroom=Edvard, Grade=7.0, First=Nerses}, {Last=Armen, Email=garmen@example.com, Homeroom=Waldek, Grade=7.0, First=Gülistan}, {Last=Yeong-Suk, Email=syeong-suk@example.com, Homeroom=Helena, Grade=8.0, First=Syed}, {Last=Coy, Email=icoy@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Isaiah}, {Last=Stevie, Email=sstevie@example.com, Homeroom=Helena, Grade=8.0, First=Stanley}, {Last=Emin, Email=semin@example.com, Homeroom=Lale, Grade=6.0, First=Sára}, {Last=Tiriaq, Email=ktiriaq@example.com, Homeroom=Muhsina, Grade=6.0, First=Kaja}, {Last=Dilay, Email=jdilay@example.com, Homeroom=Waldek, Grade=7.0, First=Józef}, {Last=Kirabo, Email=rkirabo@example.com, Homeroom=Helena, Grade=8.0, First=Radoslava}, {Last=Ariadna, Email=sariadna@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Sarah}, {Last=Devrim, Email=odevrim@example.com, Homeroom=Lale, Grade=6.0, First=Oluwasegun}, {Last=Adjoa, Email=eadjoa@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Ekundayo}, {Last=Suk, Email=gsuk@example.com, Homeroom=Waldek, Grade=7.0, First=Gina}, {Last=Lyle, Email=slyle@example.com, Homeroom=Helena, Grade=8.0, First=Sylvia}, {Last=Edita, Email=cedita@example.com, Homeroom=Lale, Grade=6.0, First=Cemil}]
 ```
 
 #### Array of Objects from Range | return: `array (objects)` ####
@@ -1247,8 +1248,9 @@ function arrObjFromRange(sheetObj, a1Notation) {
   return valByRow(vRange, headers);
 }
 
-var ss_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrObjFromRange(ss_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, ... ]
+var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
+// [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, {Last=Juda, Email=njuda@example.com, Homeroom=Edvard, Grade=7.0, First=Nerses}, {Last=Armen, Email=garmen@example.com, Homeroom=Waldek, Grade=7.0, First=Gülistan}, {Last=Yeong-Suk, Email=syeong-suk@example.com, Homeroom=Helena, Grade=8.0, First=Syed}]
 ```
 
 ### Array ###
@@ -1276,8 +1278,8 @@ function arrForColName(sheetObj, hRow, name){
   return arr;
 }
 
-var ss_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrForColName(ss_afcna, 2, "First")); // [Arienne, Elissa, Nerses, Gülistan, Syed, Isaiah, Stanley, Sára, Kaja, Józef, Radoslava, Sarah, Oluwasegun, Ekundayo, Gina, Sylvia, Cemil]
+var sheet_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrForColName(sheet_afcna, 2, "First")); // [Arienne, Elissa, Nerses, Gülistan, Syed, Isaiah, Stanley, Sára, Kaja, Józef, Radoslava, Sarah, Oluwasegun, Ekundayo, Gina, Sylvia, Cemil]
 ```
 
 ##### By Column Number #####
@@ -1300,8 +1302,27 @@ function arrForColNo(sheetObj, hRow, colIndex){
   return arr;
 }
 
-var ss_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
-Logger.log(arrForColNo(ss_afcno, 2, 2)); // [Garret, Jules, Juda, Armen, Yeong-Suk, Coy, Stevie, Emin, Tiriaq, Dilay, Kirabo, Ariadna, Devrim, Adjoa, Suk, Lyle, Edita]
+var sheet_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
+Logger.log(arrForColNo(sheet_afcno, 2, 2)); // [Garret, Jules, Juda, Armen, Yeong-Suk, Coy, Stevie, Emin, Tiriaq, Dilay, Kirabo, Ariadna, Devrim, Adjoa, Suk, Lyle, Edita]
+```
+
+##### For Range Object #####
+
+```javascript
+function arrForRange(rangeObj){
+  var h    = rangeObj.getHeight();
+  var w    = rangeObj.getWidth();
+  var vals = rangeObj.getValues();
+  var arr  = [];
+  for (var i = 0; i < h; i++) {
+    arr.push(vals[i][0]);
+  }
+  return arr;
+}
+
+var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
+var range_vafro = sheet_vafro.getRange("A1:F5");
+Logger.log(arrForRange(range_vafro)); // [Shading, , Student Has Good Study Habits, Student is Organized, Student Gets Along Well With Others]
 ```
 
 ## Docs ##
