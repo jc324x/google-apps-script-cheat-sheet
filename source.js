@@ -1592,12 +1592,6 @@ function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
 
 // -- Mail Merge from Array of Objects
 
-// Gmail
-
-// - Send Email
-
-// -- Mail Merge
-
 function mailMergeArrObj(arrObj) {
   var subj = "test mail merge";
   var body =
