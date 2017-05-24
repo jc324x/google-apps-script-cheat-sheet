@@ -55,28 +55,19 @@ function fileNames(files) {
 
 // +++ 
 
-function jsonFromFile() {
-  var fldr     = createVerifyPath("google-apps-script-cheat-sheet-demo");
-  var file     = findFileIn(fldr, "test.json");
-  var content = file.getBlob().getDataAsString();
-  Logger.log(content);
-  var json    = JSON.parse(content)
-  Logger.log(json);
-  Logger.log(json.glossary.title);  
-  
-  // var url      = file.getUrl();
-  // Logger.log(url);
-  // var response = UrlFetchApp.fetch(url);
-  // Logger.log(response);
-  // var json     = response.getContentText();
-  // var data     = JSON.parse(json);
-  // Logger.log(data.title); 
-  //
-  //
-  // var blob = respon
-  // Logger.log(response.getContentText());
+var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo");
+var file = findFileIn(fldr, "test.json");
+var url  = file.getUrl();
+
+function jsonFromFile(file) {
+  var data = file.getBlob().getDataAsString();
+  var json = JSON.parse(data)
+  return json
 } 
 
- 
- 
-
+function jsonFromUrl(url) {
+  var rsp  = UrlFetchApp.fetch(url);
+  var data = rsp.getContentText();
+  var json = JSON.parse(data)
+  return json
+} 
