@@ -1592,22 +1592,47 @@ function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
 
 // -- Mail Merge from Array of Objects
 
-function mailMergeArrObj(arrObj) {
-  var subj = "test mail merge";
-  var body =
-  "<p>this is some text</p>" + "<p>pulling in some data " + 
-  arrObj[i]["A"] + " </p>";
-  for (var i = 0; i < arrObj.length; i++){
-    var email = arrObj[i]["Email"];
-    if (email) {
-      MailApp.sendEmail({
-        to: email,
-        subject: subj,
-        htmlBody: body
-      });
+function createMergedArrBody(arrObj, body) {
+  var arrBody = []; 
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj   = arrObj[i];
+    var _body = body;
+    for (var prop in obj) {
+      var search = "%" + prop + "%"
+      if (_body.indexOf(search) !== -1) {
+        Logger.log("removing placeholder now...");
+        _body.replace(search, "found");
+        Logger.log(_body);
+        }
+      }
     }
-  }
-}
+  return arrBody;
+} 
+
+var body_cmab = "<p>the value of a is: %a%</p>" + "<p>the value of b is: %b%</p>" + "<p>the value of c is: %c%</p>";
+Logger.log(createMergedArrBody(ex_arrObj, body_cmab));
+
+// function mailMergeArrObj(subj, arrBody, arrObj) {
+//   var subj = "test mail merge";
+//   var body =
+//   "<p>this is some text</p>" + "<p>pulling in some data " + 
+//   arrObj[i]["A"] + " </p>";
+//   for (var i = 0; i < arrObj.length; i++){
+//     var email = arrObj[i]["Email"];
+//     if (email) {
+//       MailApp.sendEmail({
+//         to: email,
+//         subject: subj,
+//         htmlBody: body
+//       });
+//     }
+//   }
+// }
+
+// var subj_mmao = "example mail merge";
+// var body_mmao = 
+//   "<p>this is some text</p>" + 
+//   "<p>pulling in some data " + arrObj[i]["A"] + " </p>";
 
 // var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var ex_mm = arrObjFromSheet(ss_mm, 1);
