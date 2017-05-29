@@ -136,11 +136,11 @@
     * [Single Division List](#single-division-list)
     * [Multi Division List](#multi-division-list)
 
-* [Gmail](#gmail-1)
+[Gmail](#gmail)
 =====
 * [Mail Merge](#mail-merge)
-  * [Append Body Property for Object in Array of Objects ](#)
-  * [Mail Merge from Array of Objects](#)
+  * [Append Body Property for Object in Array of Objects ](#append-body-property-for-object-in-array-of-objects)
+  * [Run Mail Merge from Array of Objects](#run-mail-merge-for-array-of-objects)
 
 ## General ##
 
@@ -1824,7 +1824,7 @@ var body_mdl   = doc_mdl.getBody();
 
 #### Append Body Property for Object in Array of Objects ####
 
-#### Mail Merge for Array of Objects ####
+#### Run Mail Merge for Array of Objects ####
 
 ```javascript
 ```
