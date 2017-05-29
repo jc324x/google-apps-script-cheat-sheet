@@ -60,6 +60,7 @@
   * [Parent Folder of a File or Folder](#parent-folder-of-a-file-or-folder--return-file-or-folder)
 
 [JSON](#json)
+  * [Import JSON](#import-json)
   * [Import JSON from File](#)
   * [Import JSON from URL](#)
   * [Import Script Configuration](#)
@@ -999,6 +1000,8 @@ Logger.log(parentFolderOf(file_pfo)); // files
 ```
 
 ## JSON ##  
+
+### Import JSON ###
 
 ```javascript
 function jsonExFile() {
