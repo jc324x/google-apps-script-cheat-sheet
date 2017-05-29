@@ -53,11 +53,15 @@ Logger.log("Start");
 // | --- Find a File in a Folder
 // | --- Find a File at Root
 // | --- Find a File in Drive
+// | --- Find a File at Path
 // | -- Copy a File to a Folder
 // | -- Move a File to a Folder
 // | - Files and Folders
 // | -- Rename a File or Folder
 // | -- Parent Folder of a File or Folder
+// | JSON
+// | -- Import JSON from File
+// | -- Import JSON from URL
 // | Sheets
 // | - Managing Spreadsheet Files
 // | -- Create or Verify Spreadsheet
@@ -871,6 +875,34 @@ function findFileInDrive(name) {
 
 // Logger.log(findFileInDrive("example-file")); // example-file
 
+// --- Find at File at Path
+
+function findFileAtPath(path) {
+  var arr  = path.split('/');
+  var file = arr[arr.length -1];
+  var fldr;
+  for (i = 0; i < arr.length - 1; i++) {
+    if (i == 0) {
+      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      if (fi.hasNext()) {
+        fldr = fi.next();
+      } else { 
+        return null;
+      }
+    } else if (i >= 1) {
+        fi = fldr.getFoldersByName(arr[i]);
+        if (fi.hasNext()) {
+          fldr = fi.next();
+        } else { 
+          return null;
+        }
+    }
+  } 
+  return findFileIn(fldr, file);
+} 
+
+Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file"));
+
 // -- Copy a File to a Folder | return: file
 
 function copyFile(file, fldr) {
@@ -922,6 +954,26 @@ function parentFolderOf(file_fldr) {
 
 // var file_pfo = findFileInDrive("example-file");
 // Logger.log(parentFolderOf(file_pfo)); // files
+
+
+// JSON
+
+// -- Import JSON from File
+
+function jsonFromFile(file) {
+  var data = file.getBlob().getDataAsString();
+  var json = JSON.parse(data)
+  return json
+} 
+
+// -- Import JSON from URL
+
+function jsonFromUrl(url) {
+  var rsp  = UrlFetchApp.fetch(url);
+  var data = rsp.getContentText();
+  var json = JSON.parse(data)
+  return json
+} 
 
 // Sheets
 
@@ -1609,8 +1661,8 @@ function createMergedArrBody(arrObj, body) {
   return arrBody;
 } 
 
-var body_cmab = "<p>the value of a is: %a%</p>" + "<p>the value of b is: %b%</p>" + "<p>the value of c is: %c%</p>";
-Logger.log(createMergedArrBody(ex_arrObj, body_cmab));
+// var body_cmab = "<p>the value of a is: %a%</p>" + "<p>the value of b is: %b%</p>" + "<p>the value of c is: %c%</p>";
+// Logger.log(createMergedArrBody(ex_arrObj, body_cmab));
 
 // function mailMergeArrObj(subj, arrBody, arrObj) {
 //   var subj = "test mail merge";
