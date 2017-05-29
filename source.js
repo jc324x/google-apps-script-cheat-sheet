@@ -956,8 +956,6 @@ function parentFolderOf(file_fldr) {
 // var file_pfo = findFileInDrive("example-file");
 // Logger.log(parentFolderOf(file_pfo)); // files
 
-// Import from URL
-
 // JSON
 
 function jsonExFile() {
@@ -981,10 +979,10 @@ function jsonFromUrl(url) {
   return json;
 } 
 
-var json_jfu = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+var json_jfu     = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
 var glossary_jfu = json_jfu.glossary;
-Logger.log(JSON.stringify(json_jfu));
-Logger.log(JSON.stringify(glossary_jfu));
+// Logger.log(JSON.stringify(json_jfu));
+// Logger.log(JSON.stringify(glossary_jfu));
 
 // -- Import JSON from File
 
@@ -997,8 +995,8 @@ function jsonFromFile(file) {
 var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
 var json_jff     = jsonFromFile(file_jff);
 var glossary_jff = json_jff.glossary;
-Logger.log(JSON.stringify(json_jff));
-Logger.log(JSON.stringify(glossary_jff));
+// Logger.log(JSON.stringify(json_jff));
+// Logger.log(JSON.stringify(glossary_jff));
 
 // -- Import Script Configuration
 
@@ -1015,8 +1013,8 @@ function importConfiguration(scriptConfig) {
   }
 }
 
-// Logger.log(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json"));
-// Logger.log(importConfiguration("google-apps-script-cheat-sheet-demo/json/example-json"));
+Logger.log(JSON.stringify(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
+Logger.log(JSON.stringify(importConfiguration("google-apps-script-cheat-sheet-demo/json/example-json")));
 
 // Sheets
 

@@ -1146,7 +1146,26 @@ Logger.log(JSON.stringify(glossary_jff));
 #### Import Script Configuration | return: `object` ####
 
 ```javascript
+function importConfiguration(scriptConfig) {
+  var regExp = new RegExp("^(http|https)://")
+  var test   = regExp.test(scriptConfig);
+  if (test) {
+    var json = jsonFromUrl(scriptConfig); 
+    return json;
+  } else {
+    var file = findFileAtPath(scriptConfig); 
+    var json = jsonFromFile(file); 
+    return json;
+  }
+}
+
+Logger.log(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json"));
+Logger.log(importConfiguration("google-apps-script-cheat-sheet-demo/json/example-json"));
 ```
+
+```json
+```
+
 
 ## Sheets ##
 
