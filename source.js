@@ -1,4 +1,4 @@
-functio test() {}
+function test() {}
 Logger.log("Start");
 
 // | General
@@ -59,11 +59,10 @@ Logger.log("Start");
 // | - Files and Folders
 // | -- Rename a File or Folder
 // | -- Parent Folder of a File or Folder
-// | Source URLs and Files
-// | -- Data from URL
 // | - JSON
 // | -- Import JSON from File
 // | -- Import JSON from URL
+// | -- Import Script Configuration
 // | - Content
 // | Sheets
 // | - Managing Spreadsheet Files
@@ -904,7 +903,7 @@ function findFileAtPath(path) {
   return findFileIn(fldr, file);
 } 
 
-Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file"));
+// Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file"));
 
 // -- Copy a File to a Folder | return: file
 
@@ -965,17 +964,28 @@ function parentFolderOf(file_fldr) {
 function jsonExFile() {
   var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/json");
   var file = findFileIn(fldr, "example-json");
-  if (!(file)){fldr.createFile("example-file", "example");}
-  return findFileIn(fldr, "example-file");
+  var json = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+  var text = JSON.stringify(json);
+  if (!(file)){fldr.createFile("example-json");}
+  file.setContent(text);
+  return findFileIn(fldr, "example-json");
 }
+
+jsonExFile()
 
 // -- Import JSON from File
 
 function jsonFromFile(file) {
   var data = file.getBlob().getDataAsString();
   var json = JSON.parse(data)
-  return json
+  return json;
 } 
+
+var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+var json_jff     = jsonFromFile(file_jff);
+var glossary_jff = json_jff.glossary;
+// Logger.log(json_jff);
+// Logger.log(glossary_jff);
 
 // -- Import JSON from URL
 
@@ -983,10 +993,23 @@ function jsonFromUrl(url) {
   var rsp  = UrlFetchApp.fetch(url);
   var data = rsp.getContentText();
   var json = JSON.parse(data)
-  return json
+  return json;
 } 
 
-// Logger.log(jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json"));
+var json_jfu = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+var glossary_jfu = json_jfu.glossary;
+// Logger.log(json_jfu);
+// Logger.log(glossary_jfu);
+
+// -- Import Script Configuration
+
+function importConfiguration(scriptConfig) {
+  var regExp = new RegExp("https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)")
+  var test   = regExp.test(scriptConfig);
+  Logger.log(test);
+}
+
+Logger.log(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json"));
 
 // Sheets
 
