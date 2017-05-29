@@ -1,6 +1,6 @@
 # Google Apps Script Cheat Sheet #
 
-[General](#general)
+##[General](#general)
 * [Array](#array)
   * [Check for a Value](#check-for-a-value--return-boolean)
   * [Remove Duplicates](#remove-duplicates--return-array)
