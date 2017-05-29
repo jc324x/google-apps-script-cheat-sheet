@@ -138,6 +138,8 @@
 
 * [Gmail](#gmail-1)
 =====
+* [Mail Merge](#mail-merge)
+  * [Append Body Property for Object in Array of Objects ](#)
   * [Mail Merge from Array of Objects](#)
 
 ## General ##
@@ -1816,7 +1818,11 @@ var body_mdl   = doc_mdl.getBody();
 })();
 ```
 
-### Gmail ###
+## Gmail ##
+
+### Mail Merge ###
+
+#### Append Body Property for Object in Array of Objects ####
 
 #### Mail Merge for Array of Objects ####
 
