@@ -1,6 +1,6 @@
 # Google Apps Script Cheat Sheet #
 
-##[General](#general)
+[General](#general)
 * [Array](#array)
   * [Check for a Value](#check-for-a-value--return-boolean)
   * [Remove Duplicates](#remove-duplicates--return-array)
@@ -53,17 +53,17 @@
     * [Find a File in a Folder](#find-a-file-in-a-folder)
     * [Find a File at Root](#find-a-file-at-root)
     * [Find a File in Drive](#find-a-file-in-drive)
-  * [Copy a File to a Folder](#)
-  * [Move a File to a Folder](#)
+  * [Copy a File to a Folder](#copy-a-file-to-a-folder--return-file)
+  * [Move a File to a Folder](#move-a-file-to-a-folder--return-file)
 * [Files and Folders](#files-and-folders)
   * [Rename a File or Folder](#rename-a-file-or-folder--return-file-or-folder)
   * [Parent Folder of a File or Folder](#parent-folder-of-a-file-or-folder--return-file-or-folder)
 
 [JSON](#json)
   * [Import JSON](#import-json)
-    * [Import JSON from File](#)
-    * [Import JSON from URL](#)
-    * [Import Script Configuration](#)
+    * [Import JSON from URL](#import-json-from-url--return-object)
+    * [Import JSON from File](#import-json-from-file--return-object)
+    * [Import Script Configuration](#import-script-configuration--return-object)
 
 [Sheets](#sheets)
 * [Managing Spreadsheet Files](#)
@@ -1033,58 +1033,6 @@ Logger.log(json_jfu);
 Logger.log(glossary_jfu);
 ```
 
-```json
-{
-   "glossary": {
-      "title": "example glossary",
-      "GlossDiv": {
-         "title": "S",
-         "GlossList": {
-            "GlossEntry": {
-               "ID": "SGML",
-               "SortAs": "SGML",
-               "GlossTerm": "Standard Generalized Markup Language",
-               "Acronym": "SGML",
-               "Abbrev": "ISO 8879:1986",
-               "GlossDef": {
-                  "para": "A meta-markup language, used to create markup languages such as DocBook.",
-                  "GlossSeeAlso": [
-                     "GML",
-                     "XML"
-                  ]
-               },
-               "GlossSee": "markup"
-            }
-         }
-      }
-   }
-}
-
-{
-   "title": "example glossary",
-   "GlossDiv": {
-      "title": "S",
-      "GlossList": {
-         "GlossEntry": {
-            "ID": "SGML",
-            "SortAs": "SGML",
-            "GlossTerm": "Standard Generalized Markup Language",
-            "Acronym": "SGML",
-            "Abbrev": "ISO 8879:1986",
-            "GlossDef": {
-               "para": "A meta-markup language, used to create markup languages such as DocBook.",
-               "GlossSeeAlso": [
-                  "GML",
-                  "XML"
-               ]
-            },
-            "GlossSee": "markup"
-         }
-      }
-   }
-}
-```
-
 #### Import JSON from File | return: `object` #### 
 
 ```javascript
@@ -1099,58 +1047,6 @@ var json_jff     = jsonFromFile(file_jff);
 var glossary_jff = json_jff.glossary;
 Logger.log(JSON.stringify(json_jff));
 Logger.log(JSON.stringify(glossary_jff));
-```
-
-```json
-{
-   "glossary": {
-      "title": "example glossary",
-      "GlossDiv": {
-         "title": "S",
-         "GlossList": {
-            "GlossEntry": {
-               "ID": "SGML",
-               "SortAs": "SGML",
-               "GlossTerm": "Standard Generalized Markup Language",
-               "Acronym": "SGML",
-               "Abbrev": "ISO 8879:1986",
-               "GlossDef": {
-                  "para": "A meta-markup language, used to create markup languages such as DocBook.",
-                  "GlossSeeAlso": [
-                     "GML",
-                     "XML"
-                  ]
-               },
-               "GlossSee": "markup"
-            }
-         }
-      }
-   }
-}
-
-{
-   "title": "example glossary",
-   "GlossDiv": {
-      "title": "S",
-      "GlossList": {
-         "GlossEntry": {
-            "ID": "SGML",
-            "SortAs": "SGML",
-            "GlossTerm": "Standard Generalized Markup Language",
-            "Acronym": "SGML",
-            "Abbrev": "ISO 8879:1986",
-            "GlossDef": {
-               "para": "A meta-markup language, used to create markup languages such as DocBook.",
-               "GlossSeeAlso": [
-                  "GML",
-                  "XML"
-               ]
-            },
-            "GlossSee": "markup"
-         }
-      }
-   }
-}
 ```
 
 #### Import Script Configuration | return: `object` ####
@@ -1172,10 +1068,6 @@ function importConfiguration(scriptConfig) {
 Logger.log(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json"));
 Logger.log(importConfiguration("google-apps-script-cheat-sheet-demo/json/example-json"));
 ```
-
-```json
-```
-
 
 ## Sheets ##
 
