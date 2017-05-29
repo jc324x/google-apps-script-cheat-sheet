@@ -62,12 +62,14 @@
   * [Parent Folder of a File or Folder](#parent-folder-of-a-file-or-folder--return-file-or-folder)
 
 [JSON](#json)
+=====
   * [Import JSON](#import-json)
     * [Import JSON from URL](#import-json-from-url--return-object)
     * [Import JSON from File](#import-json-from-file--return-object)
     * [Import Script Configuration](#import-script-configuration--return-object)
 
 [Sheets](#sheets)
+=====
 * [Managing Spreadsheet Files](#managing-spreadsheet-files)
   * [Create or Verify Spreadsheet](#create-or-verify-spreadsheet--return-spreadsheet)
     * [Create or Verify Spreadsheet in a Folder](#create-or-verify-spreadsheet-in-a-folder)
@@ -94,6 +96,7 @@
     * [For Range Object](#for-range-object)
 
 [Docs](#docs)
+=====
 * [Managing Document Files](#managing-document-files)
   * [Create or Verify Document](#create-or-verify-document)
     * [Create or Verify Document in a Folder](#create-or-verify-document-in-a-folder)
@@ -105,6 +108,7 @@
   * [Clear Document Body](#clear-document-body)
 
 [Forms](#)
+=====
 * [Managing Form Files](#)
   * [Get Form Id](#)
 * [Utility Functions for Forms](#)
@@ -115,6 +119,7 @@
   * [Get Last Form Response](#)
 
 [Merges](#merges)
+=====
 * [Sheets and Docs](#sheets-and-docs)
   * [String from Object Properties](#string-from-object-properties--return-string)
   * [Replace Object Properties](#replace-object-properties)
@@ -132,6 +137,7 @@
     * [Multi Division List](#multi-division-list)
 
 * [Gmail](#)
+=====
   * [Mail Merge from Array of Objects](#)
 
 ## General ##
