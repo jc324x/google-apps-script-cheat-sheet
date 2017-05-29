@@ -1,6 +1,7 @@
 # Google Apps Script Cheat Sheet #
 
 [General](#general)
+=====
 * [Array](#array)
   * [Check for a Value](#check-for-a-value--return-boolean)
   * [Remove Duplicates](#remove-duplicates--return-array)
@@ -28,6 +29,7 @@
   * [Match a Date to a Range](#match-a-date-to-a-range--return-integer)
 
 [Drive](#drive)
+=====
 * [Folders](#folders)
   * [Create or Verify Folder Path](#create-or-verify-folder-path--return-folder)
   * [Last Folder in Folder Path](#last-folder-in-folder-path--return-folder)
