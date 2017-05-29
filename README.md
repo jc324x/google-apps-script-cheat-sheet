@@ -1,6 +1,6 @@
 # Google Apps Script Cheat Sheet #
 
-[General](#general)
+[General](#general-1)
 =====
 * [Array](#array)
   * [Check for a Value](#check-for-a-value--return-boolean)
@@ -28,7 +28,7 @@
   * [Date Object from String](#date-object-from-string--return-date)
   * [Match a Date to a Range](#match-a-date-to-a-range--return-integer)
 
-[Drive](#drive)
+[Drive](#drive-1)
 =====
 * [Folders](#folders)
   * [Create or Verify Folder Path](#create-or-verify-folder-path--return-folder)
@@ -61,14 +61,14 @@
   * [Rename a File or Folder](#rename-a-file-or-folder--return-file-or-folder)
   * [Parent Folder of a File or Folder](#parent-folder-of-a-file-or-folder--return-file-or-folder)
 
-[JSON](#json)
+[JSON](#json-1)
 =====
   * [Import JSON](#import-json)
     * [Import JSON from URL](#import-json-from-url--return-object)
     * [Import JSON from File](#import-json-from-file--return-object)
     * [Import Script Configuration](#import-script-configuration--return-object)
 
-[Sheets](#sheets)
+[Sheets](#sheets-1)
 =====
 * [Managing Spreadsheet Files](#managing-spreadsheet-files)
   * [Create or Verify Spreadsheet](#create-or-verify-spreadsheet--return-spreadsheet)
@@ -95,7 +95,7 @@
     * [For Column Number](#for-column-number)
     * [For Range Object](#for-range-object)
 
-[Docs](#docs)
+[Docs](#docs-1)
 =====
 * [Managing Document Files](#managing-document-files)
   * [Create or Verify Document](#create-or-verify-document)
@@ -118,7 +118,7 @@
   * [Get Destination Sheet](#)
   * [Get Last Form Response](#)
 
-[Merges](#merges)
+[Merges](#merges-1)
 =====
 * [Sheets and Docs](#sheets-and-docs)
   * [String from Object Properties](#string-from-object-properties--return-string)
@@ -136,7 +136,7 @@
     * [Single Division List](#single-division-list)
     * [Multi Division List](#multi-division-list)
 
-* [Gmail](#)
+* [Gmail](#gmail-1)
 =====
   * [Mail Merge from Array of Objects](#)
 
