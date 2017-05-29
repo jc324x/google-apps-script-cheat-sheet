@@ -87,20 +87,20 @@
   * [Array of Objects from Range](#array-of-objects-from-range--return-array-objects)
 * [Array](#array-1)
   * [Array of Values for Column](#array-of-values-for-column--return-array-objects)
-  * [For Header Value](#by-header-value)
-  * [For Column Number](#)
-  * [For Range Object](#)
+    * [For Header Value](#for-header-value)
+    * [For Column Number](#for-column-number)
+    * [For Range Object](#for-range-object)
 
-[Docs](#)
-* [Managing Document Files](#)
-  * [Create or Verify Document](#)
-    * [Create or Verify Document in a Folder](#)
-    * [Create or Verify Document at Root](#)
-  * [Id of Active Document](#)
-  * [Open File as Document](#)
-* [Utility Functions for Docs](#)
-  * [Access Document Body](#)
-  * [Clear Document Body](#)
+[Docs](#docs)
+* [Managing Document Files](#managing-document-files)
+  * [Create or Verify Document](#create-or-verify-document)
+    * [Create or Verify Document in a Folder](#create-or-verify-document-in-a-folder)
+    * [Create or Verify Document at Root](#create-or-verify-document-at-root)
+  * [Id of Active Document](#id-of-active-document)
+  * [Open File as Document](#open-file-as-document)
+* [Utility Functions for Docs](#utility-functions-for-docs)
+  * [Access Document Body](#access-document-body)
+  * [Clear Document Body](#clear-document-body)
 
 [Forms](#)
 * [Managing Form Files](#)
@@ -1456,10 +1456,15 @@ function docId() {
 #### Open File as Document ####
 
 ```javascript
-function docId() {
-  var _id = DocumentApp.getActiveDocument().getId();
-  return _id;
-}
+function openFileAsDocument(file) {
+  var _id = file.getId();
+  var _doc = DocumentApp.openById(_id);
+  return _doc;
+} 
+
+var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs")
+var file_ofad = findFileIn(fldr_ofad, "example-doc");
+Logger.log(openFileAsDocument(file_ofad));
 ```
 
 ### Utility Functions for Docs ### 

@@ -1365,9 +1365,9 @@ function openFileAsDocument(file) {
   return _doc;
 } 
 
-// var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs")
-// var file_ofad = findFileIn(fldr_ofad, "example-doc");
-// Logger.log(openFileAsDocument(file_ofad));
+var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs")
+var file_ofad = findFileIn(fldr_ofad, "example-doc");
+Logger.log(openFileAsDocument(file_ofad));
 
 // - Utility Functions for Docs
 
