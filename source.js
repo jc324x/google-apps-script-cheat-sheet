@@ -973,20 +973,6 @@ function jsonExFile() {
 
 jsonExFile()
 
-// -- Import JSON from File
-
-function jsonFromFile(file) {
-  var data = file.getBlob().getDataAsString();
-  var json = JSON.parse(data)
-  return json;
-} 
-
-var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-var json_jff     = jsonFromFile(file_jff);
-var glossary_jff = json_jff.glossary;
-// Logger.log(json_jff);
-// Logger.log(glossary_jff);
-
 // -- Import JSON from URL
 
 function jsonFromUrl(url) {
@@ -1001,15 +987,37 @@ var glossary_jfu = json_jfu.glossary;
 // Logger.log(json_jfu);
 // Logger.log(glossary_jfu);
 
+// -- Import JSON from File
+
+function jsonFromFile(file) {
+  var data = file.getBlob().getDataAsString();
+  var json = JSON.parse(data)
+  return json;
+} 
+
+var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+var json_jff     = jsonFromFile(file_jff);
+var glossary_jff = json_jff.glossary;
+// Logger.log(json_jff);
+// Logger.log(glossary_jff);
+
 // -- Import Script Configuration
 
 function importConfiguration(scriptConfig) {
-  var regExp = new RegExp("https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)")
+  var regExp = new RegExp("^(http|https)://")
   var test   = regExp.test(scriptConfig);
-  Logger.log(test);
+  if (test) {
+    var json = jsonFromUrl(scriptConfig); 
+    return json;
+  } else {
+    var file = findFileAtPath(scriptConfig); 
+    var json = jsonFromFile(file); 
+    return json;
+  }
 }
 
-Logger.log(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json"));
+// Logger.log(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json"));
+// Logger.log(importConfiguration("google-apps-script-cheat-sheet-demo/json/example-json"));
 
 // Sheets
 
