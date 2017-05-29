@@ -1,4 +1,4 @@
-function test() {}
+functio test() {}
 Logger.log("Start");
 
 // | General
@@ -59,9 +59,12 @@ Logger.log("Start");
 // | - Files and Folders
 // | -- Rename a File or Folder
 // | -- Parent Folder of a File or Folder
-// | JSON
+// | Source URLs and Files
+// | -- Data from URL
+// | - JSON
 // | -- Import JSON from File
 // | -- Import JSON from URL
+// | - Content
 // | Sheets
 // | - Managing Spreadsheet Files
 // | -- Create or Verify Spreadsheet
@@ -763,7 +766,7 @@ function createVerifyFoldersAtRoot(names) {
 
 // - Files
 
-// checkForExFile is akin to `touch`, it just creates an example file
+// checkForExFile is akin to `touch`, it just creates an empty example file
 
 function checkForExFile() {
   var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/files");
@@ -955,8 +958,16 @@ function parentFolderOf(file_fldr) {
 // var file_pfo = findFileInDrive("example-file");
 // Logger.log(parentFolderOf(file_pfo)); // files
 
+// Import from URL
 
 // JSON
+
+function jsonExFile() {
+  var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/json");
+  var file = findFileIn(fldr, "example-json");
+  if (!(file)){fldr.createFile("example-file", "example");}
+  return findFileIn(fldr, "example-file");
+}
 
 // -- Import JSON from File
 
@@ -974,6 +985,8 @@ function jsonFromUrl(url) {
   var json = JSON.parse(data)
   return json
 } 
+
+// Logger.log(jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json"));
 
 // Sheets
 
