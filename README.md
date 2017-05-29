@@ -57,7 +57,7 @@
 * [Files and Folders](#files-and-folders)
   * [Rename a File or Folder](#)
   * [Parent Folder of a File or Folder](#)
-[JSON](#)
+[JSON](#json)
   * [Import JSON from File](#)
   * [Import JSON from URL](#)
   * [Import Script Configuration](#)
