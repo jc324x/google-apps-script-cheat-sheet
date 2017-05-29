@@ -1339,7 +1339,7 @@ Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
 
 #### Array of Values for Column | return: `array (objects)` ####
 
-##### By Header Value #####
+##### For Header Value #####
 
 ```javascript
 function arrForColName(sheetObj, hRow, name){
@@ -1364,7 +1364,7 @@ var sheet_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2")
 Logger.log(arrForColName(sheet_afcna, 2, "First")); // [Arienne, Elissa, Nerses, Gülistan, Syed, Isaiah, Stanley, Sára, Kaja, Józef, Radoslava, Sarah, Oluwasegun, Ekundayo, Gina, Sylvia, Cemil]
 ```
 
-##### By Column Number #####
+##### For Column Number #####
 
 ```javascript
 function arrForColNo(sheetObj, hRow, colIndex){
