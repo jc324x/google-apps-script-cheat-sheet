@@ -60,10 +60,9 @@ Logger.log("Start");
 // | -- Rename a File or Folder
 // | -- Parent Folder of a File or Folder
 // | - JSON
-// | -- Import JSON from File
 // | -- Import JSON from URL
+// | -- Import JSON from File
 // | -- Import Script Configuration
-// | - Content
 // | Sheets
 // | - Managing Spreadsheet Files
 // | -- Create or Verify Spreadsheet
@@ -984,8 +983,8 @@ function jsonFromUrl(url) {
 
 var json_jfu = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
 var glossary_jfu = json_jfu.glossary;
-// Logger.log(json_jfu);
-// Logger.log(glossary_jfu);
+Logger.log(json_jfu);
+Logger.log(glossary_jfu);
 
 // -- Import JSON from File
 

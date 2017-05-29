@@ -57,6 +57,10 @@
 * [Files and Folders](#files-and-folders)
   * [Rename a File or Folder](#)
   * [Parent Folder of a File or Folder](#)
+[JSON](#)
+  * [Import JSON from File](#)
+  * [Import JSON from URL](#)
+  * [Import Script Configuration](#)
 [Sheets](#sheets)
 * [Managing Spreadsheet Files](#)
   * [Create or Verify Spreadsheet](#)
@@ -985,6 +989,56 @@ function parentFolderOf(file_fldr) {
 
 var file_pfo = findFileInDrive("example-file");
 Logger.log(parentFolderOf(file_pfo)); // files
+```
+
+## JSON ##  
+
+```javascript
+function jsonExFile() {
+  var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/json");
+  var file = findFileIn(fldr, "example-json");
+  var json = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+  var text = JSON.stringify(json);
+  if (!(file)){fldr.createFile("example-json");}
+  file.setContent(text);
+  return findFileIn(fldr, "example-json");
+}
+
+jsonExFile()
+```
+
+#### Import JSON from URL | return: `object` #### 
+
+```javascript
+function jsonFromUrl(url) {
+  var rsp  = UrlFetchApp.fetch(url);
+  var data = rsp.getContentText();
+  var json = JSON.parse(data)
+  return json;
+} 
+
+var json_jfu = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+var glossary_jfu = json_jfu.glossary;
+Logger.log(json_jfu);
+Logger.log(glossary_jfu);
+```
+
+```json
+{glossary={title=example glossary, GlossDiv={GlossList={GlossEntry={GlossTerm=Standard Generalized Markup Language, GlossSee=markup, SortAs=SGML, GlossDef={para=A meta-markup language, used to create markup languages such as DocBook., GlossSeeAlso=[GML, XML]}, ID=SGML, Acronym=SGML, Abbrev=ISO 8879:1986}}, title=S}}}
+```
+
+```json
+title=example glossary, GlossDiv={GlossList={GlossEntry={GlossTerm=Standard Generalized Markup Language, GlossSee=markup, SortAs=SGML, GlossDef={para=A meta-markup language, used to create markup languages such as DocBook., GlossSeeAlso=[GML, XML]}, ID=SGML, Acronym=SGML, Abbrev=ISO 8879:1986}}, title=S}}
+```
+
+#### Import JSON from File | return: `object` #### 
+
+```javascript
+```
+
+#### Import Script Configuration | return: `object` ####
+
+```javascript
 ```
 
 ## Sheets ##
