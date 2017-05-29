@@ -85,8 +85,8 @@ Logger.log("Start");
 // | -- Array of Objects from Range
 // | - Array 
 // | -- Array of Values for Column
-// | --- For Column Index
 // | --- For Header Value
+// | --- For Column Number
 // | --- For Range Object 
 // | Docs
 // | - Managing Document Files
