@@ -1024,16 +1024,125 @@ Logger.log(glossary_jfu);
 ```
 
 ```json
-{glossary={title=example glossary, GlossDiv={GlossList={GlossEntry={GlossTerm=Standard Generalized Markup Language, GlossSee=markup, SortAs=SGML, GlossDef={para=A meta-markup language, used to create markup languages such as DocBook., GlossSeeAlso=[GML, XML]}, ID=SGML, Acronym=SGML, Abbrev=ISO 8879:1986}}, title=S}}}
-```
+{
+   "glossary": {
+      "title": "example glossary",
+      "GlossDiv": {
+         "title": "S",
+         "GlossList": {
+            "GlossEntry": {
+               "ID": "SGML",
+               "SortAs": "SGML",
+               "GlossTerm": "Standard Generalized Markup Language",
+               "Acronym": "SGML",
+               "Abbrev": "ISO 8879:1986",
+               "GlossDef": {
+                  "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                  "GlossSeeAlso": [
+                     "GML",
+                     "XML"
+                  ]
+               },
+               "GlossSee": "markup"
+            }
+         }
+      }
+   }
+}```
 
 ```json
-title=example glossary, GlossDiv={GlossList={GlossEntry={GlossTerm=Standard Generalized Markup Language, GlossSee=markup, SortAs=SGML, GlossDef={para=A meta-markup language, used to create markup languages such as DocBook., GlossSeeAlso=[GML, XML]}, ID=SGML, Acronym=SGML, Abbrev=ISO 8879:1986}}, title=S}}
+{
+   "title": "example glossary",
+   "GlossDiv": {
+      "title": "S",
+      "GlossList": {
+         "GlossEntry": {
+            "ID": "SGML",
+            "SortAs": "SGML",
+            "GlossTerm": "Standard Generalized Markup Language",
+            "Acronym": "SGML",
+            "Abbrev": "ISO 8879:1986",
+            "GlossDef": {
+               "para": "A meta-markup language, used to create markup languages such as DocBook.",
+               "GlossSeeAlso": [
+                  "GML",
+                  "XML"
+               ]
+            },
+            "GlossSee": "markup"
+         }
+      }
+   }
+}
 ```
 
 #### Import JSON from File | return: `object` #### 
 
 ```javascript
+function jsonFromFile(file) {
+  var data = file.getBlob().getDataAsString();
+  var json = JSON.parse(data)
+  return json;
+} 
+
+var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+var json_jff     = jsonFromFile(file_jff);
+var glossary_jff = json_jff.glossary;
+Logger.log(JSON.stringify(json_jff));
+Logger.log(JSON.stringify(glossary_jff));
+```
+
+```json
+{
+   "glossary": {
+      "title": "example glossary",
+      "GlossDiv": {
+         "title": "S",
+         "GlossList": {
+            "GlossEntry": {
+               "ID": "SGML",
+               "SortAs": "SGML",
+               "GlossTerm": "Standard Generalized Markup Language",
+               "Acronym": "SGML",
+               "Abbrev": "ISO 8879:1986",
+               "GlossDef": {
+                  "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                  "GlossSeeAlso": [
+                     "GML",
+                     "XML"
+                  ]
+               },
+               "GlossSee": "markup"
+            }
+         }
+      }
+   }
+}```
+
+```json
+{
+   "title": "example glossary",
+   "GlossDiv": {
+      "title": "S",
+      "GlossList": {
+         "GlossEntry": {
+            "ID": "SGML",
+            "SortAs": "SGML",
+            "GlossTerm": "Standard Generalized Markup Language",
+            "Acronym": "SGML",
+            "Abbrev": "ISO 8879:1986",
+            "GlossDef": {
+               "para": "A meta-markup language, used to create markup languages such as DocBook.",
+               "GlossSeeAlso": [
+                  "GML",
+                  "XML"
+               ]
+            },
+            "GlossSee": "markup"
+         }
+      }
+   }
+}
 ```
 
 #### Import Script Configuration | return: `object` ####

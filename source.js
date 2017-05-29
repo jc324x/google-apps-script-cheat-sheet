@@ -983,8 +983,8 @@ function jsonFromUrl(url) {
 
 var json_jfu = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
 var glossary_jfu = json_jfu.glossary;
-Logger.log(json_jfu);
-Logger.log(glossary_jfu);
+Logger.log(JSON.stringify(json_jfu));
+Logger.log(JSON.stringify(glossary_jfu));
 
 // -- Import JSON from File
 
@@ -997,8 +997,8 @@ function jsonFromFile(file) {
 var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
 var json_jff     = jsonFromFile(file_jff);
 var glossary_jff = json_jff.glossary;
-// Logger.log(json_jff);
-// Logger.log(glossary_jff);
+Logger.log(JSON.stringify(json_jff));
+Logger.log(JSON.stringify(glossary_jff));
 
 // -- Import Script Configuration
 
