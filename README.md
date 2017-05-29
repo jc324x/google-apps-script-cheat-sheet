@@ -1048,9 +1048,8 @@ Logger.log(glossary_jfu);
          }
       }
    }
-}```
+}
 
-```json
 {
    "title": "example glossary",
    "GlossDiv": {
@@ -1117,9 +1116,8 @@ Logger.log(JSON.stringify(glossary_jff));
          }
       }
    }
-}```
+}
 
-```json
 {
    "title": "example glossary",
    "GlossDiv": {
