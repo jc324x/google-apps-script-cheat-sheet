@@ -1822,7 +1822,7 @@ var body_mdl   = doc_mdl.getBody();
 
 ### Mail Merge ###
 
-#### Append Body Property for Object in Array of Objects | return: `array (objects)`####
+#### Append Body Property for Object in Array of Objects | return: `array (objects)` ####
 
 ```javascript
 function appendSubjBodyForArrObj(arrObj, subj, body) {
