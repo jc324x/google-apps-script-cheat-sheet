@@ -115,7 +115,9 @@ Logger.log("Start");
 // | --- Single Division List
 // | --- Multi Division List
 // | - Gmail
-// | -- Mail Merge for Array of Objects
+// | -- Mail Merge
+// | --- Append Body Property for Object in Array of Objects 
+// | --- Run Mail Merge for Array of Objects
 
 // Future Additions: 
 // * Count of Value in Array of Objects
@@ -1681,31 +1683,39 @@ function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
 //   }
 // })();
 
-//  - Gmail
+// Gmail
 
-// -- Mail Merge from Array of Objects
+// - Mail Merge
 
-function createMergedArrBody(arrObj, body) {
-  var arrBody = []; 
+// -- Append Subject and Body Properties for Array of Objects
+
+function appendSubjBodyForArrObj(arrObj, subj, body) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj   = arrObj[i];
     var _body = body;
+    var _subj = subj;
     for (var prop in obj) {
       var search = "%" + prop + "%"
       if (_body.indexOf(search) !== -1) {
-        Logger.log("removing placeholder now...");
-        _body.replace(search, "found");
-        Logger.log(_body);
+        _body = _body.replace(search, obj[prop]);
+        }
+      if (_subj.indexOf(search) !== -1) {
+        _subj = _subj.replace(search, obj[prop]);
         }
       }
+    obj.subj = _subj;
+    obj.body = _body;
     }
-  return arrBody;
+  return arrObj;
 } 
 
-// var body_cmab = "<p>the value of a is: %a%</p>" + "<p>the value of b is: %b%</p>" + "<p>the value of c is: %c%</p>";
-// Logger.log(createMergedArrBody(ex_arrObj, body_cmab));
+var subj_asbfao = "subject: %a%"
+var body_asbfao = "<p>the value of a is: %a%</p>" + "<p>the value of b is: %b%</p>" + "<p>the value of c is: %c%</p>";
+Logger.log(appendSubjBodyForArrObj(ex_arrObj, subj_asbfao, body_asbfao));
 
-// function mailMergeArrObj(subj, arrBody, arrObj) {
+// -- Run Mail Merge for Array of Objects
+
+// function mailMergeArrObj(arrObj) {
 //   var subj = "test mail merge";
 //   var body =
 //   "<p>this is some text</p>" + "<p>pulling in some data " + 
