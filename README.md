@@ -139,7 +139,7 @@
 [Gmail](#gmail)
 =====
 * [Mail Merge](#mail-merge)
-  * [Append Body Property for Object in Array of Objects ](#append-body-property-for-object-in-array-of-objects)
+  * [Append Subject and Body Properties for Object in Array of Objects ](#append-subject-and-body-properties-for-object-in-array-of-objects--return-array-objects)
   * [Run Mail Merge for Array of Objects](#run-mail-merge-for-array-of-objects)
 
 ## General ##
