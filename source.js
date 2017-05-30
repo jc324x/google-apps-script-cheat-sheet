@@ -970,7 +970,7 @@ function jsonExFile() {
   return findFileIn(fldr, "example-json");
 }
 
-jsonExFile()
+// jsonExFile()
 
 // -- Import JSON from URL
 
@@ -981,8 +981,8 @@ function jsonFromUrl(url) {
   return json;
 } 
 
-var json_jfu     = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-var glossary_jfu = json_jfu.glossary;
+// var json_jfu     = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+// var glossary_jfu = json_jfu.glossary;
 // Logger.log(JSON.stringify(json_jfu));
 // Logger.log(JSON.stringify(glossary_jfu));
 
@@ -994,9 +994,9 @@ function jsonFromFile(file) {
   return json;
 } 
 
-var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-var json_jff     = jsonFromFile(file_jff);
-var glossary_jff = json_jff.glossary;
+// var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+// var json_jff     = jsonFromFile(file_jff);
+// var glossary_jff = json_jff.glossary;
 // Logger.log(JSON.stringify(json_jff));
 // Logger.log(JSON.stringify(glossary_jff));
 
@@ -1015,8 +1015,8 @@ function importConfiguration(scriptConfig) {
   }
 }
 
-Logger.log(JSON.stringify(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
-Logger.log(JSON.stringify(importConfiguration("google-apps-script-cheat-sheet-demo/json/example-json")));
+// Logger.log(JSON.stringify(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
+// Logger.log(JSON.stringify(importConfiguration("google-apps-script-cheat-sheet-demo/json/example-json")));
 
 // Sheets
 
@@ -1703,42 +1703,36 @@ function appendSubjBodyForArrObj(arrObj, subj, body) {
         _subj = _subj.replace(search, obj[prop]);
         }
       }
-    obj.subj = _subj;
-    obj.body = _body;
+    obj.Subject = _subj;
+    obj.Body    = _body;
     }
   return arrObj;
 } 
 
-var subj_asbfao = "subject: %a%"
-var body_asbfao = "<p>the value of a is: %a%</p>" + "<p>the value of b is: %b%</p>" + "<p>the value of c is: %c%</p>";
-Logger.log(appendSubjBodyForArrObj(ex_arrObj, subj_asbfao, body_asbfao));
+var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
+var subj_asbfao   = "Classroom update for %First% %Last%"
+var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
 
 // -- Run Mail Merge for Array of Objects
 
-// function mailMergeArrObj(arrObj) {
-//   var subj = "test mail merge";
-//   var body =
-//   "<p>this is some text</p>" + "<p>pulling in some data " + 
-//   arrObj[i]["A"] + " </p>";
-//   for (var i = 0; i < arrObj.length; i++){
-//     var email = arrObj[i]["Email"];
-//     if (email) {
-//       MailApp.sendEmail({
-//         to: email,
-//         subject: subj,
-//         htmlBody: body
-//       });
-//     }
-//   }
-// }
+function runMailMergeForArrObj(arrObj) {
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+      MailApp.sendEmail({
+        to: obj.Email,
+        subject: obj.Subject,
+        htmlBody: obj.Body
+      });
+  }
+}
 
-// var subj_mmao = "example mail merge";
-// var body_mmao = 
-//   "<p>this is some text</p>" + 
-//   "<p>pulling in some data " + arrObj[i]["A"] + " </p>";
-
-// var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_mm = arrObjFromSheet(ss_mm, 1);
-// mailMerge(ex_mm);
+var sheet_rmmfao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_rmmfao = arrObjFromSheet(sheet_rmmfao, 2);
+var subj_rmmfao   = "Classroom update for %First% %Last%"
+var body_rmmfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+arrObj_rmmfao     = appendSubjBodyForArrObj(arrObj_rmmfao, subj_rmmfao, body_rmmfao);
+runMailMergeForArrObj(arrObj_rmmfao);
 
 Logger.log("End");
