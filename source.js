@@ -1,4 +1,4 @@
-function test() {}
+nunction test() {}
 Logger.log("Start");
 
 // | General
@@ -320,7 +320,7 @@ function dynSortM() {
   }
 }
 
-// Logger.log(ex_arrObj.sort(dynSortM("b", "c"))); 
+// Logger.log(ex_/rrObj.sort(dynSortM("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 // -- Find Object With Unique Property Value | return: object / value
@@ -1687,7 +1687,7 @@ function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
 
 // - Mail Merge
 
-// -- Append Subject and Body Properties for Array of Objects
+// -- Append Subject and Body Properties for Array of Objects | return: array (objects)
 
 function appendSubjBodyForArrObj(arrObj, subj, body) {
   for (var i = 0; i < arrObj.length; i++) {
