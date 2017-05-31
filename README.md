@@ -151,6 +151,7 @@
 ```javascript
 function checkValIn(arr, val) { 
   return arr.indexOf(val) > -1; 
+}
 
 var arr_cvi = [1,2,3,4];
 Logger.log(checkValIn(arr_cvi,5)); // false
@@ -160,14 +161,14 @@ Logger.log(checkValIn(arr_cvi,5)); // false
 
 ```javascript
 function rmDuplicatesFrom(arr) {
-  var check  = {};
-  var _arr = [];
+  var check = {};
+  var _arr  = [];
   var j = 0;
   for(var i = 0; i < arr.length; i++) {
     var item = arr[i];
     if(check[item] !== 1) {
       check[item] = 1;
-      _arr[j++] = item;
+      _arr[j++]   = item;
     }
   }
   return _arr;
@@ -180,7 +181,7 @@ Logger.log(rmDuplicatesFrom(arr_rdf)); // [1,2,3,4]
 #### Remove Empty Values | return: `array` ####
 
 ```javascript
-function rmEmptyVal(x){
+function rmEmptyVal(x) {
   return (x !== (undefined || ''));
 }
 
@@ -191,7 +192,7 @@ Logger.log(arr_rev.filter(rmEmptyVal)); // [a,b,c]
 #### Get Count of Values | return: `array (objects)` #### 
 
 ```javascript
-function countOfValIn(arr){
+function countOfValIn(arr) {
   var _arr = [];
   var copy = arr.slice(0);
   for (var i = 0; i < arr.length; i++) {
@@ -203,7 +204,7 @@ function countOfValIn(arr){
       }
     }
     if (myCount > 0) {
-      var obj = new Object();
+      var obj   = new Object();
       obj.value = arr[i];
       obj.count = myCount;
       _arr.push(obj);
@@ -261,35 +262,35 @@ Logger.log(compareArr(arr1_ca, arr3_ca)); // false
 #### Array as Delimited String | return: `string` #### 
 
 ```javascript
-function delimited(arr, delimiter){
+function delimitedArr(arr, delimiter) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + delimiter + "  ";
+    str += _arr[i] + delimiter + " ";
   }
   str = str.slice(0, -2);
   return str;
 }
 
-var arr_clf = ["c@example.com", "b@example.com", "a@example.com"];
-Logger.log(commaListFrom(arr_clf, ",")); // a@example.com, b@example.com, c@example.com
+var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
+Logger.log(delimitedArr(arr_da, ",")); // a@example.com, b@example.com, c@example.com
 ```
 
 #### Array as Modified Delimited String | return: `string` #### 
 
 ```javascript
-function delimitedModified(arr, extension, delimiter) {
+function delimitedArrMod(arr, delimiter, mod) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + extension + delimiter + " "; 
+    str += _arr[i] + mod + delimiter + " "; 
   }
   str = str.slice(0, -2);
   return str;
 }
 
 var arr_clfd = ["x", "z", "y"];
-Logger.log(delimitedModified(arr_clfd, "@example.com", ",")); // x@example.com, y@example.com, z@example.com
+Logger.log(delimitedArrMod(arr_clfd, ",", "@example.com")); // x@example.com, y@example.com, z@example.com
 ```
 
 ### Multidimensional Array ###
@@ -297,15 +298,15 @@ Logger.log(delimitedModified(arr_clfd, "@example.com", ",")); // x@example.com, 
 #### Flatten Multidimensional Array | return: `array` #### 
 
 ```javascript
-function flattenMultiArr(multiArr){
+function flattenMultiArr(multiArr) {
   var arr = multiArr.reduce(function(a, b) {
     return a.concat(b);
   });
   return arr;
 }
 
-var sheet_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
-var val_fma = sheet_fma.getRange("G2:H5").getValues();
+var sheet_fma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
+var val_fma   = sheet_fma.getRange("G2:H5").getValues();
 Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 ```
 
