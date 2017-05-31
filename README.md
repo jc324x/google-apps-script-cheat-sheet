@@ -1,6 +1,7 @@
 # Google Apps Script Cheat Sheet #
 
-[General](#general)
+[General](#general-1)
+=====
 * [Array](#array)
   * [Check for a Value](#check-for-a-value--return-boolean)
   * [Remove Duplicates](#remove-duplicates--return-array)
@@ -26,7 +27,9 @@
   * [Formatted Timestamps](#formatted-timestamps--return-string)
   * [Date Object from String](#date-object-from-string--return-date)
   * [Match a Date to a Range](#match-a-date-to-a-range--return-integer)
-[Drive](#drive)
+
+[Drive](#drive-1)
+=====
 * [Folders](#folders)
   * [Create or Verify Folder Path](#create-or-verify-folder-path--return-folder)
   * [Last Folder in Folder Path](#last-folder-in-folder-path--return-folder)
@@ -52,47 +55,60 @@
     * [Find a File in a Folder](#find-a-file-in-a-folder)
     * [Find a File at Root](#find-a-file-at-root)
     * [Find a File in Drive](#find-a-file-in-drive)
-  * [Copy a File to a Folder](#)
-  * [Move a File to a Folder](#)
+  * [Copy a File to a Folder](#copy-a-file-to-a-folder--return-file)
+  * [Move a File to a Folder](#move-a-file-to-a-folder--return-file)
 * [Files and Folders](#files-and-folders)
-  * [Rename a File or Folder](#)
-  * [Parent Folder of a File or Folder](#)
-[Sheets](#sheets)
-* [Managing Spreadsheet Files](#)
-  * [Create or Verify Spreadsheet](#)
-    * [Create or Verify Spreadsheet in a Folder](#)
-    * [Create or Verify Spreadsheet at Root](#)
-  * [Id of Active Spreadsheet](#)
-  * [Open File as Spreadsheet](#)
-* [Utility Functions for Sheets](#)
-  * [Convert Colmun Number to a Letter](#)
-  * [Convert Column Letter to a Number](#)
-  * [Replicating Import Range](#)
-  * [Evaluating True and False](#)
-* [Array of Objects](#)
-  * [Utility Functions for Array of Objects](#)
-    * [Header Range](#)
-    * [Value Range](#)
-    * [Header Values](#)
-    * [Values by Row](#)
-  * [Array of Objects from Sheet](#)
-  * [Array of Objects from Range](#)
-* [Array](#)
-  * [Array of Values for Column](#)
-  * [For Column Index](#)
-  * [For Header Value](#)
-  * [For Range Object](#)
-[Docs](#)
-* [Managing Document Files](#)
-  * [Create or Verify Document](#)
-    * [Create or Verify Document in a Folder](#)
-    * [Create or Verify Document at Root](#)
-  * [Id of Active Document](#)
-  * [Open File as Document](#)
-* [Utility Functions for Docs](#)
-  * [Access Document Body](#)
-  * [Clear Document Body](#)
+  * [Rename a File or Folder](#rename-a-file-or-folder--return-file-or-folder)
+  * [Parent Folder of a File or Folder](#parent-folder-of-a-file-or-folder--return-file-or-folder)
+
+[JSON](#json-1)
+=====
+  * [Import JSON](#import-json)
+    * [Import JSON from URL](#import-json-from-url--return-object)
+    * [Import JSON from File](#import-json-from-file--return-object)
+    * [Import Script Configuration](#import-script-configuration--return-object)
+
+[Sheets](#sheets-1)
+=====
+* [Managing Spreadsheet Files](#managing-spreadsheet-files)
+  * [Create or Verify Spreadsheet](#create-or-verify-spreadsheet--return-spreadsheet)
+    * [Create or Verify Spreadsheet in a Folder](#create-or-verify-spreadsheet-in-a-folder)
+    * [Create or Verify Spreadsheet at Root](#create-or-verify-spreadsheet-at-root)
+  * [Id of Active Spreadsheet](#id-of-active-spreadsheet--return-string)
+  * [Open File as Spreadsheet](#open-file-as-spreadsheet--return-spreadsheet)
+* [Utility Functions for Sheets](#utility-functions-for-sheets)
+  * [Convert Colmun Number to a Letter](#convert-column-number-to-a-letter--return-integer)
+  * [Convert Column Letter to a Number](#convert-column-letter-to-a-number--return-string)
+  * [Replicating Import Range](#replicating-import-range)
+  * [Evaluating True and False](#evaluating-true-and-false--return--boolean)
+* [Array of Objects](#array-of-objects-1)
+  * [Utility Functions for Array of Objects](#utility-functions-for-array-of-objects)
+    * [Header Range](#header-range--return-range)
+    * [Value Range](#value-range--return-range)
+    * [Header Values](#header-values--return-array)
+    * [Values by Row](#values-by-row--return-array-objects)
+  * [Array of Objects from Sheet](#array-of-objects-from-sheet--return-array-objects)
+  * [Array of Objects from Range](#array-of-objects-from-range--return-array-objects)
+* [Array](#array-1)
+  * [Array of Values for Column](#array-of-values-for-column--return-array-objects)
+    * [For Header Value](#for-header-value)
+    * [For Column Number](#for-column-number)
+    * [For Range Object](#for-range-object)
+
+[Docs](#docs-1)
+=====
+* [Managing Document Files](#managing-document-files)
+  * [Create or Verify Document](#create-or-verify-document)
+    * [Create or Verify Document in a Folder](#create-or-verify-document-in-a-folder)
+    * [Create or Verify Document at Root](#create-or-verify-document-at-root)
+  * [Id of Active Document](#id-of-active-document)
+  * [Open File as Document](#open-file-as-document)
+* [Utility Functions for Docs](#utility-functions-for-docs)
+  * [Access Document Body](#access-document-body)
+  * [Clear Document Body](#clear-document-body)
+
 [Forms](#)
+=====
 * [Managing Form Files](#)
   * [Get Form Id](#)
 * [Utility Functions for Forms](#)
@@ -101,24 +117,30 @@
   * [Set Item Choices](#)
   * [Get Destination Sheet](#)
   * [Get Last Form Response](#)
-[Merges](#)
-* [Sheets and Docs](#)
-  * [String from Object Properties](#)
-  * [Replace Object Properties](#)
-    * [Replace Object Properties in Document](#)
-    * [Replace Object Properties in Spreadsheet](#)
-    * [Replace Object Properties in Sheet](#)
-  * [Copy Template for Item in Array of Objects and Replace Object Properties](#)
-    * [Copy Document Template and Replace Object Properties](#)
-    * [Copy Spreadsheet Template and Replace Object Properties](#)
-  * [Cell Shading](#)
-    * [Shade Cells in Sheet](#)
-    * [Shade Cells in Document](#)
-  * [Create Bulleted List from Array of Objects](#)
-    * [Single Division List](#)
-    * [Multi Division List](#)
-* [Gmail](#)
-  * [Mail Merge from Array of Objects](#)
+
+[Merges](#merges-1)
+=====
+* [Sheets and Docs](#sheets-and-docs)
+  * [String from Object Properties](#string-from-object-properties--return-string)
+  * [Replace Object Properties](#replace-object-properties)
+    * [Replace Object Properties in Document](#replace-object-properties-in-document)
+    * [Replace Object Properties in Spreadsheet](#replace-object-properties-in-spreadsheet)
+    * [Replace Object Properties in Sheet](#replace-object-properties-in-sheet)
+  * [Copy Template for Item in Array of Objects and Replace Object Properties](#copy-template-for-item-in-array-of-objects-and-replace-object-properties)
+    * [Copy Document Template and Replace Object Properties](#copy-document-template-and-replace-object-properties)
+    * [Copy Spreadsheet Template and Replace Object Properties](#copy-spreadsheet-template-and-replace-object-properties)
+  * [Cell Shading](#cell-shading)
+    * [Index Object Propreties](#index-object-properties--return-object)
+    * [Shade Cells in Sheet](#shade-cells-in-sheet)
+  * [Create Bulleted List from Array of Objects](#create-bulleted-list-in-document-for-array-of-objects)
+    * [Single Division List](#single-division-list)
+    * [Multi Division List](#multi-division-list)
+
+[Gmail](#gmail)
+=====
+* [Mail Merge](#mail-merge)
+  * [Append Subject and Body Properties for Object in Array of Objects ](#append-subject-and-body-properties-for-object-in-array-of-objects--return-array-objects)
+  * [Run Mail Merge for Array of Objects](#run-mail-merge-for-array-of-objects)
 
 ## General ##
 
@@ -129,6 +151,7 @@
 ```javascript
 function checkValIn(arr, val) { 
   return arr.indexOf(val) > -1; 
+}
 
 var arr_cvi = [1,2,3,4];
 Logger.log(checkValIn(arr_cvi,5)); // false
@@ -138,14 +161,14 @@ Logger.log(checkValIn(arr_cvi,5)); // false
 
 ```javascript
 function rmDuplicatesFrom(arr) {
-  var check  = {};
-  var _arr = [];
+  var check = {};
+  var _arr  = [];
   var j = 0;
   for(var i = 0; i < arr.length; i++) {
     var item = arr[i];
     if(check[item] !== 1) {
       check[item] = 1;
-      _arr[j++] = item;
+      _arr[j++]   = item;
     }
   }
   return _arr;
@@ -158,7 +181,7 @@ Logger.log(rmDuplicatesFrom(arr_rdf)); // [1,2,3,4]
 #### Remove Empty Values | return: `array` ####
 
 ```javascript
-function rmEmptyVal(x){
+function rmEmptyVal(x) {
   return (x !== (undefined || ''));
 }
 
@@ -169,7 +192,7 @@ Logger.log(arr_rev.filter(rmEmptyVal)); // [a,b,c]
 #### Get Count of Values | return: `array (objects)` #### 
 
 ```javascript
-function countOfValIn(arr){
+function countOfValIn(arr) {
   var _arr = [];
   var copy = arr.slice(0);
   for (var i = 0; i < arr.length; i++) {
@@ -181,7 +204,7 @@ function countOfValIn(arr){
       }
     }
     if (myCount > 0) {
-      var obj = new Object();
+      var obj   = new Object();
       obj.value = arr[i];
       obj.count = myCount;
       _arr.push(obj);
@@ -239,35 +262,35 @@ Logger.log(compareArr(arr1_ca, arr3_ca)); // false
 #### Array as Delimited String | return: `string` #### 
 
 ```javascript
-function delimited(arr, delimiter){
+function delimitedArr(arr, delimiter) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + delimiter + "  ";
+    str += _arr[i] + delimiter + " ";
   }
   str = str.slice(0, -2);
   return str;
 }
 
-var arr_clf = ["c@example.com", "b@example.com", "a@example.com"];
-Logger.log(commaListFrom(arr_clf, ",")); // a@example.com, b@example.com, c@example.com
+var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
+Logger.log(delimitedArr(arr_da, ",")); // a@example.com, b@example.com, c@example.com
 ```
 
 #### Array as Modified Delimited String | return: `string` #### 
 
 ```javascript
-function delimitedModified(arr, extension, delimiter) {
+function delimitedArrMod(arr, delimiter, mod) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + extension + delimiter + " "; 
+    str += _arr[i] + mod + delimiter + " "; 
   }
   str = str.slice(0, -2);
   return str;
 }
 
 var arr_clfd = ["x", "z", "y"];
-Logger.log(delimitedModified(arr_clfd, "@example.com", ",")); // x@example.com, y@example.com, z@example.com
+Logger.log(delimitedArrMod(arr_clfd, ",", "@example.com")); // x@example.com, y@example.com, z@example.com
 ```
 
 ### Multidimensional Array ###
@@ -275,15 +298,15 @@ Logger.log(delimitedModified(arr_clfd, "@example.com", ",")); // x@example.com, 
 #### Flatten Multidimensional Array | return: `array` #### 
 
 ```javascript
-function flattenMultiArr(multiArr){
+function flattenMultiArr(multiArr) {
   var arr = multiArr.reduce(function(a, b) {
     return a.concat(b);
   });
   return arr;
 }
 
-var sheet_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
-var val_fma = sheet_fma.getRange("G2:H5").getValues();
+var sheet_fma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
+var val_fma   = sheet_fma.getRange("G2:H5").getValues();
 Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 ```
 
@@ -987,6 +1010,76 @@ var file_pfo = findFileInDrive("example-file");
 Logger.log(parentFolderOf(file_pfo)); // files
 ```
 
+## JSON ##  
+
+### Import JSON ###
+
+```javascript
+function jsonExFile() {
+  var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/json");
+  var file = findFileIn(fldr, "example-json");
+  var json = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+  var text = JSON.stringify(json);
+  if (!(file)){fldr.createFile("example-json");}
+  file.setContent(text);
+  return findFileIn(fldr, "example-json");
+}
+
+jsonExFile()
+```
+
+#### Import JSON from URL | return: `object` #### 
+
+```javascript
+function jsonFromUrl(url) {
+  var rsp  = UrlFetchApp.fetch(url);
+  var data = rsp.getContentText();
+  var json = JSON.parse(data)
+  return json;
+} 
+
+var json_jfu = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+var glossary_jfu = json_jfu.glossary;
+Logger.log(json_jfu);
+Logger.log(glossary_jfu);
+```
+
+#### Import JSON from File | return: `object` #### 
+
+```javascript
+function jsonFromFile(file) {
+  var data = file.getBlob().getDataAsString();
+  var json = JSON.parse(data)
+  return json;
+} 
+
+var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+var json_jff     = jsonFromFile(file_jff);
+var glossary_jff = json_jff.glossary;
+Logger.log(JSON.stringify(json_jff));
+Logger.log(JSON.stringify(glossary_jff));
+```
+
+#### Import Script Configuration | return: `object` ####
+
+```javascript
+function importConfiguration(scriptConfig) {
+  var regExp = new RegExp("^(http|https)://")
+  var test   = regExp.test(scriptConfig);
+  if (test) {
+    var json = jsonFromUrl(scriptConfig); 
+    return json;
+  } else {
+    var file = findFileAtPath(scriptConfig); 
+    var json = jsonFromFile(file); 
+    return json;
+  }
+}
+
+Logger.log(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json"));
+Logger.log(importConfiguration("google-apps-script-cheat-sheet-demo/json/example-json"));
+```
+
 ## Sheets ##
 
 ### Managing Spreadsheet Files ###
@@ -1257,7 +1350,7 @@ Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
 
 #### Array of Values for Column | return: `array (objects)` ####
 
-##### By Header Value #####
+##### For Header Value #####
 
 ```javascript
 function arrForColName(sheetObj, hRow, name){
@@ -1282,7 +1375,7 @@ var sheet_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2")
 Logger.log(arrForColName(sheet_afcna, 2, "First")); // [Arienne, Elissa, Nerses, Gülistan, Syed, Isaiah, Stanley, Sára, Kaja, Józef, Radoslava, Sarah, Oluwasegun, Ekundayo, Gina, Sylvia, Cemil]
 ```
 
-##### By Column Number #####
+##### For Column Number #####
 
 ```javascript
 function arrForColNo(sheetObj, hRow, colIndex){
@@ -1374,10 +1467,15 @@ function docId() {
 #### Open File as Document ####
 
 ```javascript
-function docId() {
-  var _id = DocumentApp.getActiveDocument().getId();
-  return _id;
-}
+function openFileAsDocument(file) {
+  var _id = file.getId();
+  var _doc = DocumentApp.openById(_id);
+  return _doc;
+} 
+
+var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs")
+var file_ofad = findFileIn(fldr_ofad, "example-doc");
+Logger.log(openFileAsDocument(file_ofad));
 ```
 
 ### Utility Functions for Docs ### 
@@ -1721,10 +1819,58 @@ var body_mdl   = doc_mdl.getBody();
 })();
 ```
 
-### Gmail ###
+## Gmail ##
 
-#### Mail Merge for Array of Objects ####
+### Mail Merge ###
+
+#### Append Subject and Body Properties for Object in Array of Objects | return: `array (objects)` ####
 
 ```javascript
+function appendSubjBodyForArrObj(arrObj, subj, body) {
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj   = arrObj[i];
+    var _body = body;
+    var _subj = subj;
+    for (var prop in obj) {
+      var search = "%" + prop + "%"
+      if (_body.indexOf(search) !== -1) {
+        _body = _body.replace(search, obj[prop]);
+        }
+      if (_subj.indexOf(search) !== -1) {
+        _subj = _subj.replace(search, obj[prop]);
+        }
+      }
+    obj.Subject = _subj;
+    obj.Body    = _body;
+    }
+  return arrObj;
+} 
+
+var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
+var subj_asbfao   = "Classroom update for %First% %Last%"
+var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
 ```
 
+#### Run Mail Merge for Array of Objects ####
+
+```javascript
+function runMailMergeForArrObj(arrObj) {
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+      MailApp.sendEmail({
+        to: obj.Email,
+        subject: obj.Subject,
+        htmlBody: obj.Body
+      });
+  }
+}
+
+var sheet_rmmfao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_rmmfao = arrObjFromSheet(sheet_rmmfao, 2);
+var subj_rmmfao   = "Classroom update for %First% %Last%"
+var body_rmmfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+arrObj_rmmfao     = appendSubjBodyForArrObj(arrObj_rmmfao, subj_rmmfao, body_rmmfao);
+runMailMergeForArrObj(arrObj_rmmfao);
+```

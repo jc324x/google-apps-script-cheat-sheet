@@ -53,11 +53,16 @@ Logger.log("Start");
 // | --- Find a File in a Folder
 // | --- Find a File at Root
 // | --- Find a File in Drive
+// | --- Find a File at Path
 // | -- Copy a File to a Folder
 // | -- Move a File to a Folder
 // | - Files and Folders
 // | -- Rename a File or Folder
 // | -- Parent Folder of a File or Folder
+// | - JSON
+// | -- Import JSON from URL
+// | -- Import JSON from File
+// | -- Import Script Configuration
 // | Sheets
 // | - Managing Spreadsheet Files
 // | -- Create or Verify Spreadsheet
@@ -80,8 +85,8 @@ Logger.log("Start");
 // | -- Array of Objects from Range
 // | - Array 
 // | -- Array of Values for Column
-// | --- For Column Index
 // | --- For Header Value
+// | --- For Column Number
 // | --- For Range Object 
 // | Docs
 // | - Managing Document Files
@@ -110,7 +115,9 @@ Logger.log("Start");
 // | --- Single Division List
 // | --- Multi Division List
 // | - Gmail
-// | -- Mail Merge for Array of Objects
+// | -- Mail Merge
+// | --- Append Body Property for Object in Array of Objects 
+// | --- Run Mail Merge for Array of Objects
 
 // Future Additions: 
 // * Count of Value in Array of Objects
@@ -141,14 +148,14 @@ function checkValIn(arr, val) {
 // -- Remove Duplicates | return: `array`
 
 function rmDuplicatesFrom(arr) {
-  var check  = {};
-  var _arr = [];
+  var check = {};
+  var _arr  = [];
   var j = 0;
   for(var i = 0; i < arr.length; i++) {
     var item = arr[i];
     if(check[item] !== 1) {
       check[item] = 1;
-      _arr[j++] = item;
+      _arr[j++]   = item;
     }
   }
   return _arr;
@@ -159,7 +166,7 @@ function rmDuplicatesFrom(arr) {
 
 // -- Remove Empty Values | return: `array`
 
-function rmEmptyVal(x){
+function rmEmptyVal(x) {
   return (x !== (undefined || ''));
 }
 
@@ -168,7 +175,7 @@ function rmEmptyVal(x){
 
 // -- Get Count of Values | return: array (objects)
 
-function countOfValIn(arr){
+function countOfValIn(arr) {
   var _arr = [];
   var copy = arr.slice(0);
   for (var i = 0; i < arr.length; i++) {
@@ -180,7 +187,7 @@ function countOfValIn(arr){
       }
     }
     if (myCount > 0) {
-      var obj = new Object();
+      var obj   = new Object();
       obj.value = arr[i];
       obj.count = myCount;
       _arr.push(obj);
@@ -232,47 +239,47 @@ function compareArr(arr1, arr2) {
 
 // -- Array as Delimited String
 
-function delimited(arr, delimiter){
+function delimitedArr(arr, delimiter) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + delimiter + "  ";
+    str += _arr[i] + delimiter + " ";
   }
   str = str.slice(0, -2);
   return str;
 }
 
-// var arr_clf = ["c@example.com", "b@example.com", "a@example.com"];
-// Logger.log(commaListFrom(arr_clf, ",")); // a@example.com, b@example.com, c@example.com
+// var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
+// Logger.log(delimitedArr(arr_da, ",")); // a@example.com, b@example.com, c@example.com
 
 // -- Array as Modified Delimited String
 
-function delimitedModified(arr, extension, delimiter) {
+function delimitedArrMod(arr, delimiter, mod) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + extension + delimiter + " "; 
+    str += _arr[i] + mod + delimiter + " "; 
   }
   str = str.slice(0, -2);
   return str;
 }
 
 // var arr_clfd = ["x", "z", "y"];
-// Logger.log(delimitedModified(arr_clfd, "@example.com", ",")); // x@example.com, y@example.com, z@example.com
+// Logger.log(delimitedArrMod(arr_clfd, ",", "@example.com")); // x@example.com, y@example.com, z@example.com
 
 // - Multidimensional Array
 
 // -- Flatten Multidimensional Array | return: array
 
-function flattenMultiArr(multiArr){
+function flattenMultiArr(multiArr) {
   var arr = multiArr.reduce(function(a, b) {
     return a.concat(b);
   });
   return arr;
 }
 
-// var sheet_fma  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
-// var val_fma = sheet_fma.getRange("G2:H5").getValues();
+// var sheet_fma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
+// var val_fma   = sheet_fma.getRange("G2:H5").getValues();
 // Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
@@ -313,7 +320,7 @@ function dynSortM() {
   }
 }
 
-// Logger.log(ex_arrObj.sort(dynSortM("b", "c"))); 
+// Logger.log(ex_/rrObj.sort(dynSortM("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 // -- Find Object With Unique Property Value | return: object / value
@@ -760,7 +767,7 @@ function createVerifyFoldersAtRoot(names) {
 
 // - Files
 
-// checkForExFile is akin to `touch`, it just creates an example file
+// checkForExFile is akin to `touch`, it just creates an empty example file
 
 function checkForExFile() {
   var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/files");
@@ -872,6 +879,34 @@ function findFileInDrive(name) {
 
 // Logger.log(findFileInDrive("example-file")); // example-file
 
+// --- Find at File at Path
+
+function findFileAtPath(path) {
+  var arr  = path.split('/');
+  var file = arr[arr.length -1];
+  var fldr;
+  for (i = 0; i < arr.length - 1; i++) {
+    if (i == 0) {
+      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      if (fi.hasNext()) {
+        fldr = fi.next();
+      } else { 
+        return null;
+      }
+    } else if (i >= 1) {
+        fi = fldr.getFoldersByName(arr[i]);
+        if (fi.hasNext()) {
+          fldr = fi.next();
+        } else { 
+          return null;
+        }
+    }
+  } 
+  return findFileIn(fldr, file);
+} 
+
+// Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file"));
+
 // -- Copy a File to a Folder | return: file
 
 function copyFile(file, fldr) {
@@ -923,6 +958,66 @@ function parentFolderOf(file_fldr) {
 
 // var file_pfo = findFileInDrive("example-file");
 // Logger.log(parentFolderOf(file_pfo)); // files
+
+// JSON
+
+function jsonExFile() {
+  var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/json");
+  var file = findFileIn(fldr, "example-json");
+  var json = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+  var text = JSON.stringify(json);
+  if (!(file)){fldr.createFile("example-json");}
+  file.setContent(text);
+  return findFileIn(fldr, "example-json");
+}
+
+// jsonExFile()
+
+// -- Import JSON from URL
+
+function jsonFromUrl(url) {
+  var rsp  = UrlFetchApp.fetch(url);
+  var data = rsp.getContentText();
+  var json = JSON.parse(data)
+  return json;
+} 
+
+// var json_jfu     = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+// var glossary_jfu = json_jfu.glossary;
+// Logger.log(JSON.stringify(json_jfu));
+// Logger.log(JSON.stringify(glossary_jfu));
+
+// -- Import JSON from File
+
+function jsonFromFile(file) {
+  var data = file.getBlob().getDataAsString();
+  var json = JSON.parse(data)
+  return json;
+} 
+
+// var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+// var json_jff     = jsonFromFile(file_jff);
+// var glossary_jff = json_jff.glossary;
+// Logger.log(JSON.stringify(json_jff));
+// Logger.log(JSON.stringify(glossary_jff));
+
+// -- Import Script Configuration
+
+function importConfiguration(scriptConfig) {
+  var regExp = new RegExp("^(http|https)://")
+  var test   = regExp.test(scriptConfig);
+  if (test) {
+    var json = jsonFromUrl(scriptConfig); 
+    return json;
+  } else {
+    var file = findFileAtPath(scriptConfig); 
+    var json = jsonFromFile(file); 
+    return json;
+  }
+}
+
+// Logger.log(JSON.stringify(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
+// Logger.log(JSON.stringify(importConfiguration("google-apps-script-cheat-sheet-demo/json/example-json")));
 
 // Sheets
 
@@ -1273,9 +1368,9 @@ function openFileAsDocument(file) {
   return _doc;
 } 
 
-// var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs")
-// var file_ofad = findFileIn(fldr_ofad, "example-doc");
-// Logger.log(openFileAsDocument(file_ofad));
+var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs")
+var file_ofad = findFileIn(fldr_ofad, "example-doc");
+Logger.log(openFileAsDocument(file_ofad));
 
 // - Utility Functions for Docs
 
@@ -1589,29 +1684,56 @@ function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
 //   }
 // })();
 
-//  - Gmail
+// Gmail
 
-// -- Mail Merge from Array of Objects
+// - Mail Merge
 
-function mailMergeArrObj(arrObj) {
-  var subj = "test mail merge";
-  var body =
-  "<p>this is some text</p>" + "<p>pulling in some data " + 
-  arrObj[i]["A"] + " </p>";
-  for (var i = 0; i < arrObj.length; i++){
-    var email = arrObj[i]["Email"];
-    if (email) {
-      MailApp.sendEmail({
-        to: email,
-        subject: subj,
-        htmlBody: body
-      });
+// -- Append Subject and Body Properties for Array of Objects | return: array (objects)
+
+function appendSubjBodyForArrObj(arrObj, subj, body) {
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj   = arrObj[i];
+    var _body = body;
+    var _subj = subj;
+    for (var prop in obj) {
+      var search = "%" + prop + "%"
+      if (_body.indexOf(search) !== -1) {
+        _body = _body.replace(search, obj[prop]);
+        }
+      if (_subj.indexOf(search) !== -1) {
+        _subj = _subj.replace(search, obj[prop]);
+        }
+      }
+    obj.Subject = _subj;
+    obj.Body    = _body;
     }
+  return arrObj;
+} 
+
+var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
+var subj_asbfao   = "Classroom update for %First% %Last%"
+var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
+
+// -- Run Mail Merge for Array of Objects
+
+function runMailMergeForArrObj(arrObj) {
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+      MailApp.sendEmail({
+        to: obj.Email,
+        subject: obj.Subject,
+        htmlBody: obj.Body
+      });
   }
 }
 
-// var ss_mm = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var ex_mm = arrObjFromSheet(ss_mm, 1);
-// mailMerge(ex_mm);
+var sheet_rmmfao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_rmmfao = arrObjFromSheet(sheet_rmmfao, 2);
+var subj_rmmfao   = "Classroom update for %First% %Last%"
+var body_rmmfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+arrObj_rmmfao     = appendSubjBodyForArrObj(arrObj_rmmfao, subj_rmmfao, body_rmmfao);
+runMailMergeForArrObj(arrObj_rmmfao);
 
 Logger.log("End");
