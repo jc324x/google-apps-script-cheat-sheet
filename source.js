@@ -553,18 +553,19 @@ var quarterDates = [
 ];
 
 function academicQuarter() {
-  var d = new Date();
+  var date = new Date();
+  var quarter;
   for (i = 0; i < 4; i++){
-    var s = new Date(quarterDates[i][0]);
-    var e = new Date(quarterDates[i][1]);
-    if (d >= s && d <= e ) {
-      var q =  i + 1;
+    var start = new Date(quarterDates[i][0]);
+    var end = new Date(quarterDates[i][1]);
+    if (date >= start && date <= end ) {
+      quarter =  i + 1;
     } 
   }
-  if (q) { return q } else { return "date outside of academic calendar"}
+  if (quarter) { return quarter } else { return "date outside of academic calendar"}
 }
 
-// Logger.log(academicQuarter()); // 4 (4/24/2017)
+Logger.log(academicQuarter()); // 4 (4/24/2017)
 
 // Drive
 
@@ -576,8 +577,8 @@ function createVerifyPath(path) {
   var arr = path.split('/');
   var fldr;
   for (i = 0; i < arr.length; i++) {
-    if (i == 0) {
-      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+    var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+    if (i === 0) {
       if(!(fi.hasNext())) {
         DriveApp.createFolder(arr[i]);
         fi = DriveApp.getFoldersByName(arr[i]);
