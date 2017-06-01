@@ -982,7 +982,7 @@ function jsonExFile() {
 function jsonFromUrl(url) {
   var rsp  = UrlFetchApp.fetch(url);
   var data = rsp.getContentText();
-  var json = JSON.parse(data)
+  var json = JSON.parse(data);
   return json;
 } 
 
@@ -995,7 +995,7 @@ function jsonFromUrl(url) {
 
 function jsonFromFile(file) {
   var data = file.getBlob().getDataAsString();
-  var json = JSON.parse(data)
+  var json = JSON.parse(data);
   return json;
 } 
 
@@ -1008,14 +1008,15 @@ function jsonFromFile(file) {
 // -- Import Script Configuration
 
 function importConfiguration(scriptConfig) {
-  var regExp = new RegExp("^(http|https)://")
+  var regExp = new RegExp("^(http|https)://");
   var test   = regExp.test(scriptConfig);
+  var json;
   if (test) {
-    var json = jsonFromUrl(scriptConfig); 
+    json = jsonFromUrl(scriptConfig); 
     return json;
   } else {
     var file = findFileAtPath(scriptConfig); 
-    var json = jsonFromFile(file); 
+    json = jsonFromFile(file); 
     return json;
   }
 }
@@ -1081,8 +1082,8 @@ function openFileAsSpreadsheet(file) {
 
 // -- Convert Column Number to a Letter | return: string
 
-function numCol(num) {
-  var num = num - 1, chr;
+function numCol(number) {
+  var num = number - 1, chr;
   if (num <= 25) {
     chr = String.fromCharCode(97 + num).toUpperCase();
     return chr;
@@ -1112,25 +1113,26 @@ function numCol(num) {
 
 // -- Convert Column Letter to a Number | return: integer 
 
-function colNum(col) {
-  var col = col.toUpperCase();
-  if (col.length === 1)  {
-    var chr0 = col.charCodeAt(0) - 64;
-    return chr0;
-  } else if (col.length === 2) {
-    var chr0 = (col.charCodeAt(0) - 64) * 26;
-    var chr1 = col.charCodeAt(1) - 64;
-    return chr0 + chr1;
-  }
-}
+// function colNum(column) {
+//   var col = column.toUpperCase(), chr0, chr1;
+//   if (col.length === 1)  {
+//     chr0 = col.charCodeAt(0) - 64;
+//     return chr0;
+//   } else if (col.length === 2) {
+//     chr0 = (col.charCodeAt(0) - 64) * 26;
+//     chr1 = col.charCodeAt(1) - 64;
+//     return chr0 + chr1;
+//   }
+// }
 
 // function ex_cn() {
+//   var abc;
 //  for (var i = 0; i <= 25; i++) {
-//    var abc = String.fromCharCode(97 + i).toUpperCase();
+//    abc = String.fromCharCode(97 + i).toUpperCase();
 //    Logger.log(abc + " - " + colNum(abc));
 //  }
-//  for (var i = 26; i <= 51; i++) {
-//    var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
+//  for (var j = 26; j <= 51; j++) {
+//    abc = "A" + String.fromCharCode(97 - 26 + j).toUpperCase();
 //    Logger.log(abc + " - " + colNum(abc));
 //  }
 // }
@@ -1240,7 +1242,7 @@ function arrObjFromSheet(sheetObj, hRow){
   var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
   var headers = headerVal(hRange);
   var vRange  = sheetObj.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
-  return valByRow(vRange, headers)
+  return valByRow(vRange, headers);
 }
 
 // var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
