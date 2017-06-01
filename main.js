@@ -890,7 +890,7 @@ function findFileAtPath(path) {
   var file = arr[arr.length -1];
   var fldr;
   for (i = 0; i < arr.length - 1; i++) {
-    if (i == 0) {
+    if (i === 0) {
       var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
       if (fi.hasNext()) {
         fldr = fi.next();
