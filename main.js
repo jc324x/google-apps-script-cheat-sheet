@@ -187,7 +187,7 @@ function countOfValIn(arr) {
       }
     }
     if (myCount > 0) {
-      var obj   = new Object();
+      var obj   = {};
       obj.value = arr[i];
       obj.count = myCount;
       _arr.push(obj);
@@ -569,7 +569,11 @@ function academicQuarter() {
       quarter =  i + 1;
     } 
   }
-  if (quarter) { return quarter } else { return "date outside of academic calendar"}
+  if (quarter > 0) { 
+    return quarter;
+  } else { 
+    return "date outside of academic calendar";
+  }
 }
 
 Logger.log(academicQuarter()); // 4 (4/24/2017)
