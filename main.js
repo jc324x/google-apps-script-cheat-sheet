@@ -187,7 +187,7 @@ function countOfValIn(arr) {
       }
     }
     if (myCount > 0) {
-      var obj   = new Object();
+      var obj   = {};
       obj.value = arr[i];
       obj.count = myCount;
       _arr.push(obj);
@@ -560,18 +560,23 @@ var quarterDates = [
 ];
 
 function academicQuarter() {
-  var d = new Date();
+  var date = new Date();
+  var quarter;
   for (i = 0; i < 4; i++){
-    var s = new Date(quarterDates[i][0]);
-    var e = new Date(quarterDates[i][1]);
-    if (d >= s && d <= e ) {
-      var q =  i + 1;
+    var start = new Date(quarterDates[i][0]);
+    var end = new Date(quarterDates[i][1]);
+    if (date >= start && date <= end ) {
+      quarter =  i + 1;
     } 
   }
-  if (q) { return q } else { return "date outside of academic calendar"}
+  if (quarter > 0) { 
+    return quarter;
+  } else { 
+    return "date outside of academic calendar";
+  }
 }
 
-// Logger.log(academicQuarter()); // 4 (4/24/2017)
+Logger.log(academicQuarter()); // 4 (4/24/2017)
 
 // Drive
 
@@ -583,8 +588,8 @@ function createVerifyPath(path) {
   var arr = path.split('/');
   var fldr;
   for (i = 0; i < arr.length; i++) {
-    if (i == 0) {
-      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+    var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+    if (i === 0) {
       if(!(fi.hasNext())) {
         DriveApp.createFolder(arr[i]);
         fi = DriveApp.getFoldersByName(arr[i]);
@@ -885,7 +890,7 @@ function findFileAtPath(path) {
   var file = arr[arr.length -1];
   var fldr;
   for (i = 0; i < arr.length - 1; i++) {
-    if (i == 0) {
+    if (i === 0) {
       var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
       if (fi.hasNext()) {
         fldr = fi.next();
@@ -977,7 +982,7 @@ function jsonExFile() {
 function jsonFromUrl(url) {
   var rsp  = UrlFetchApp.fetch(url);
   var data = rsp.getContentText();
-  var json = JSON.parse(data)
+  var json = JSON.parse(data);
   return json;
 } 
 
@@ -990,7 +995,7 @@ function jsonFromUrl(url) {
 
 function jsonFromFile(file) {
   var data = file.getBlob().getDataAsString();
-  var json = JSON.parse(data)
+  var json = JSON.parse(data);
   return json;
 } 
 
@@ -1003,14 +1008,15 @@ function jsonFromFile(file) {
 // -- Import Script Configuration
 
 function importConfiguration(scriptConfig) {
-  var regExp = new RegExp("^(http|https)://")
+  var regExp = new RegExp("^(http|https)://");
   var test   = regExp.test(scriptConfig);
+  var json;
   if (test) {
-    var json = jsonFromUrl(scriptConfig); 
+    json = jsonFromUrl(scriptConfig); 
     return json;
   } else {
     var file = findFileAtPath(scriptConfig); 
-    var json = jsonFromFile(file); 
+    json = jsonFromFile(file); 
     return json;
   }
 }
@@ -1076,8 +1082,8 @@ function openFileAsSpreadsheet(file) {
 
 // -- Convert Column Number to a Letter | return: string
 
-function numCol(num) {
-  var num = num - 1, chr;
+function numCol(number) {
+  var num = number - 1, chr;
   if (num <= 25) {
     chr = String.fromCharCode(97 + num).toUpperCase();
     return chr;
@@ -1107,25 +1113,26 @@ function numCol(num) {
 
 // -- Convert Column Letter to a Number | return: integer 
 
-function colNum(col) {
-  var col = col.toUpperCase();
-  if (col.length === 1)  {
-    var chr0 = col.charCodeAt(0) - 64;
-    return chr0;
-  } else if (col.length === 2) {
-    var chr0 = (col.charCodeAt(0) - 64) * 26;
-    var chr1 = col.charCodeAt(1) - 64;
-    return chr0 + chr1;
-  }
-}
+// function colNum(column) {
+//   var col = column.toUpperCase(), chr0, chr1;
+//   if (col.length === 1)  {
+//     chr0 = col.charCodeAt(0) - 64;
+//     return chr0;
+//   } else if (col.length === 2) {
+//     chr0 = (col.charCodeAt(0) - 64) * 26;
+//     chr1 = col.charCodeAt(1) - 64;
+//     return chr0 + chr1;
+//   }
+// }
 
 // function ex_cn() {
+//   var abc;
 //  for (var i = 0; i <= 25; i++) {
-//    var abc = String.fromCharCode(97 + i).toUpperCase();
+//    abc = String.fromCharCode(97 + i).toUpperCase();
 //    Logger.log(abc + " - " + colNum(abc));
 //  }
-//  for (var i = 26; i <= 51; i++) {
-//    var abc = "A" + String.fromCharCode(97 - 26 + i).toUpperCase();
+//  for (var j = 26; j <= 51; j++) {
+//    abc = "A" + String.fromCharCode(97 - 26 + j).toUpperCase();
 //    Logger.log(abc + " - " + colNum(abc));
 //  }
 // }
