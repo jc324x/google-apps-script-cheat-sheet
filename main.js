@@ -1289,6 +1289,7 @@ function arrForColName(sheetObj, hRow, name){
 
 // --- For Column Number
 
+// expand names, no reason to just have 'h'
 function arrForColNo(sheetObj, hRow, colIndex){
   var lColNum  = sheetObj.getLastColumn();
   var lColABC  = numCol(lColNum);
