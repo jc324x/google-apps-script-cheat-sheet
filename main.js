@@ -289,7 +289,7 @@ var ex_arrObj = [
 {a: 10000, b: 2, c: 5000}, 
 {a: 10, b: 2, c: 500},
 {a: 1, b: 1, c: 50}
-]
+];
 
 // -- Sort by Property or Properties | return: array (objects)
 
@@ -503,15 +503,15 @@ function objFromRange(sheetObj, a1Notation) {
 
 function fmatD() {
   var n = new Date();
-  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
-    return d.join("/");
+  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ];
+    return d.join("-");
 }
 
-// Logger.log(fmatD()); // 4/24/2017
+// Logger.log(fmatD()); // 4-24-2017
 
 function fmat24T(){
   var n  = new Date();
-  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ];
     for ( var i = 1; i < 3; i++ ) {
       if ( t[i] < 10 ) {
         t[i] = "0" + t[i];
@@ -524,8 +524,8 @@ function fmat24T(){
 
 function fmat12DT() {
   var n = new Date();
-  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
-    var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ];
+    var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ];
     var s = ( t[0] < 12 ) ? "AM" : "PM";
   t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
   for ( var i = 1; i < 3; i++ ) {
@@ -536,7 +536,7 @@ function fmat12DT() {
   return d.join("/") + " " + t.join(":") + " " + s;
 }
 
-// Logger.log(fmat12DT()); // 4/24/2017 8:43:40 PM
+// Logger.log(fmat12DT()); // 4-24-2017 8:43:40 PM
 
 // -- Date Object from String | return: date
 
@@ -1173,6 +1173,20 @@ function checkTF(input) {
 // Logger.log(checkTF("No")); // false
 // Logger.log(checkTF("Yes")); // true
 
+// -- Array of Sheet Names | return: array
+
+function arrSheetNames(ssObj) {
+  var sheets = ssObj.getSheets();
+  var arr    = [];
+  for (var i = 0; i < sheets.length; i++) {
+    arr.push(sheets[i].getName());
+  } 
+  return arr;
+} 
+
+// var ss_asn = SpreadsheetApp.getActiveSpreadsheet();
+// Logger.log(arrSheetNames(ss_asn));
+
 // - Array of Objects
 
 // -- Utility Functions for Array of Objects
@@ -1253,12 +1267,13 @@ function arrObjFromSheet(sheetObj, hRow){
 function arrObjFromRange(sheetObj, a1Notation) {
   var hRange  = headerRange(sheetObj, a1Notation);
   var vRange  = valueRange(sheetObj, a1Notation);
+  Logger.log(vRange.getA1Notation());
   var headers = headerVal(hRange);
   return valByRow(vRange, headers);
 }
 
-// var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
+var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
 
 // - Array 
 
@@ -1717,11 +1732,11 @@ function appendSubjBodyForArrObj(arrObj, subj, body) {
   return arrObj;
 } 
 
-var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
-var subj_asbfao   = "Classroom update for %First% %Last%"
-var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
-Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
+// var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
+// var subj_asbfao   = "Classroom update for %First% %Last%"
+// var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+// Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
 
 // -- Run Mail Merge for Array of Objects
 
@@ -1736,11 +1751,11 @@ function runMailMergeForArrObj(arrObj) {
   }
 }
 
-var sheet_rmmfao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_rmmfao = arrObjFromSheet(sheet_rmmfao, 2);
-var subj_rmmfao   = "Classroom update for %First% %Last%"
-var body_rmmfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
-arrObj_rmmfao     = appendSubjBodyForArrObj(arrObj_rmmfao, subj_rmmfao, body_rmmfao);
-runMailMergeForArrObj(arrObj_rmmfao);
+// var sheet_rmmfao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_rmmfao = arrObjFromSheet(sheet_rmmfao, 2);
+// var subj_rmmfao   = "Classroom update for %First% %Last%"
+// var body_rmmfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+// arrObj_rmmfao     = appendSubjBodyForArrObj(arrObj_rmmfao, subj_rmmfao, body_rmmfao);
+// runMailMergeForArrObj(arrObj_rmmfao);
 
 Logger.log("End");
