@@ -302,7 +302,7 @@ function dynSort(prop) {
   return function (a,b) {
     var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
     return result * sortOrder;
-  }
+  };
 }
 
 // Logger.log(ex_arrObj.sort(dynSort("a"))); 
@@ -317,7 +317,7 @@ function dynSortM() {
       i++;
     }
     return result;
-  }
+  };
 }
 
 // Logger.log(ex_/rrObj.sort(dynSortM("b", "c"))); 
@@ -406,7 +406,7 @@ function unifyPropForArrObj(arrObj, arrProp, newProp){
     var obj = arrObj[i];
     for (var h = 0; h < arrProp.length; h++) {
       for (var prop in obj) {
-        if (obj.hasOwnProperty(prop) && prop == arrProp[h] && obj[prop] != ""){
+        if (obj.hasOwnProperty(prop) && prop == arrProp[h] && obj[prop] !== ""){
               obj[newProp] = obj[prop];
         }
       }
@@ -487,7 +487,7 @@ function objFromRange(sheetObj, a1Notation) {
   var height = range.getHeight();
   var width  = range.getWidth();
   var values = range.getValues();
-  var obj    = new Object();
+  var obj    = {};
   for (var i = 0; i < values.length; i++) {
     obj[values[i][0]] = values[i][1];
   } 
@@ -612,11 +612,12 @@ function createVerifyPath(path) {
 // -- Last Folder in Folder Path | return: folder
 
 function lastFolderIn(path) {
+  var fi;
   var arr = path.split('/');
   var fldr;
   for (i = 0; i < arr.length; i++) {
-    if (i == 0) {
-      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+    if (i === 0) {
+      fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
       if (fi.hasNext()) {
         fldr = fi.next();
       } else { 
@@ -846,7 +847,6 @@ function fileNames(files) {
 // -- Find a File | return: file 
 
 // --- Find a File in a Folder
-
 function findFileIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
@@ -886,12 +886,13 @@ function findFileInDrive(name) {
 // --- Find at File at Path
 
 function findFileAtPath(path) {
+  var fi;
   var arr  = path.split('/');
   var file = arr[arr.length -1];
   var fldr;
   for (i = 0; i < arr.length - 1; i++) {
     if (i === 0) {
-      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
       if (fi.hasNext()) {
         fldr = fi.next();
       } else { 
@@ -916,7 +917,7 @@ function findFileAtPath(path) {
 function copyFile(file, fldr) {
   var name = file.getName();
   var dest = findFileIn(fldr, name);
-  if (dest === undefined) { file.makeCopy(name, fldr) }
+  if (dest === undefined) file.makeCopy(name, fldr);
   return findFileIn(fldr, name);
 }
 
@@ -929,9 +930,9 @@ function copyFile(file, fldr) {
 function moveFile(file, fldr) {
   var name = file.getName();
   var dest = findFileIn(fldr, name);
-  if (dest === undefined) { file.makeCopy(name, fldr) }
+  if (dest === undefined) file.makeCopy(name, fldr);
   var _file = findFileIn(fldr, name);
-  if (_file !== undefined) { file.setTrashed(true) }
+  if (_file !== undefined) file.setTrashed(true);
   return _file;
 }
 
@@ -945,7 +946,7 @@ function moveFile(file, fldr) {
 // -- Rename a File or Folder | return: file or folder 
 
 function rename(file_fldr, name) {
-  file_fldr.setName(name)
+  file_fldr.setName(name);
   return file_fldr;
 } 
 
@@ -1157,13 +1158,13 @@ function checkTF(input) {
   if (isNaN(input)) {
     var first_letter = input.charAt(0).toLowerCase();
     if (first_letter === 't' || first_letter === 'y') {
-      return true 
+      return true;
     } else {
-      return false
+      return false;
     }
   } else {
     if (input === 1) {
-      return true
+      return true;
     } else { 
       return false;
     }
@@ -1390,7 +1391,7 @@ function openFileAsDocument(file) {
   return _doc;
 } 
 
-var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs")
+var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
 var file_ofad = findFileIn(fldr_ofad, "example-doc");
 Logger.log(openFileAsDocument(file_ofad));
 
@@ -1423,17 +1424,18 @@ var ex_obj = {
   job:   "IT Administrator"
 };
 
+// FLAG -> test
 function strFromProp(obj, str){
   var arr  = str.split(" ");
   var _arr = [];
   for (var i = 0; i < arr.length; i++) {
-    var str = arr[i]; 
+    var _str = arr[i]; 
     for (var prop in obj){
-      var mod = str.substr(0, str.length-2).substr(2);
+      var mod = _str.substr(0, _str.length-2).substr(2);
       if (obj.hasOwnProperty(mod)){
         _arr.push(obj[mod]);
       } else {
-        _arr.push(str);
+        _arr.push(_str);
       }
       break;
     }
@@ -1450,7 +1452,7 @@ function strFromProp(obj, str){
 function findReplaceInDoc(obj, docObj) {
   var body = docObj.getBody(); 
   for (var prop in obj) {
-    var query = "<<" + prop + ">>"
+    var query = "<<" + prop + ">>";
     var val   = obj[prop];
     body.replaceText(query, val);
   } 
@@ -1474,11 +1476,11 @@ function findReplaceinSpreadsheet(obj, ssObj) {
   for (var i = 0; i < numSheets; i++) {
     var sheetObj = sheets[i];
     var values = sheetObj.getDataRange().getValues();
-    for(var row in values){
-      var update = values[row].map(function(original){
+    for (var row in values){
+      var update = values[row].map(function(original) {
         var text = original.toString();
         for (var prop in obj) {
-          var query = "<<"+prop+">>"
+          var query = "<<"+prop+">>";
           if (text.indexOf(query) !== -1) {
             text = text.replace(query, obj[prop]);
           }
@@ -1511,10 +1513,10 @@ function findReplaceinSpreadsheet(obj, ssObj) {
 function findReplaceinSheet(obj, sheetObj) {
   var values = sheetObj.getDataRange().getValues();
   for(var row in values){
-    var update = values[row].map(function(original){
+    var update = values[row].map(function(original) {
       var text = original.toString();
       for (var prop in obj) {
-        var query = "<<"+prop+">>"
+        var query = "<<"+prop+">>";
           if (text.indexOf(query) !== -1) {
             text = text.replace(query, obj[prop]);
           }
@@ -1549,7 +1551,7 @@ function createDocsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
     var name = strFromProp(obj, naming);
-    if (ts == true) name += " - " + fmat12DT();
+    if (ts === true) name += " - " + fmat12DT();
     var docId = copyFile(template, fldr).setName(name).getId();
     var doc   = DocumentApp.openById(docId);
     findReplaceInDoc(obj, doc);
@@ -1577,8 +1579,8 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, template, naming, fldr, ts
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
     var name = strFromProp(obj, naming);
-    if (ts == true) name += " - " + fmat12DT();
-    var ssId = copyFile(template, fldr).setName(name).getId()
+    if (ts === true) name += " - " + fmat12DT();
+    var ssId = copyFile(template, fldr).setName(name).getId();
     var ss   = SpreadsheetApp.openById(ssId);
     findReplaceinSpreadsheet(obj, ss);
     }
@@ -1610,13 +1612,13 @@ var values_cs = [
   "No Opinion",
   "Somewhat Agree",
   "Strongly Agree"
-] 
+];
 
 var obj_cs = {
   "Student Has Good Study Habits":       "Strongly Agree",
   "Student is Organized":                "No Opinion",
   "Student Gets Along Well With Others": "Somewhat Agree"
-}
+};
 
 // --- Index Object Properties | return: object
 
@@ -1625,7 +1627,7 @@ function indexValForObj(obj, indexArray) {
   for (var prop in obj) {
     if (obj.hasOwnProperty(prop)) {
       if (indexArray.indexOf(obj[prop]) != -1) {
-        _obj[prop] = (indexArray.indexOf(obj[prop])+1) 
+        _obj[prop] = (indexArray.indexOf(obj[prop])+1);
       }
     }
   }
@@ -1640,7 +1642,7 @@ function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
   var lRow   = sheetObj.getLastRow();
   var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
   var arrVal = arrForRange(vRange);
-  var index  = colNum(colLetter)
+  var index  = colNum(colLetter);
   for (var i = 0; i < arrVal.length; i++) {
     for (var prop in obj) {
       if (prop == arrVal[i]) {
@@ -1718,7 +1720,7 @@ function appendSubjBodyForArrObj(arrObj, subj, body) {
     var _body = body;
     var _subj = subj;
     for (var prop in obj) {
-      var search = "%" + prop + "%"
+      var search = "%" + prop + "%";
       if (_body.indexOf(search) !== -1) {
         _body = _body.replace(search, obj[prop]);
         }
