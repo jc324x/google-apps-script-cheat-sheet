@@ -1290,10 +1290,10 @@ function arrForColName(sheetObj, hRow, name){
   var headers  = headerVal(hRange);
   var tColABC  = numCol(headers.indexOf(name) + 1);
   var rangeObj = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
-  var h        = rangeObj.getHeight();
+  var height   = rangeObj.getHeight();
   var vals     = rangeObj.getValues();
   var arr      = [];
-  for (var i = 0; i < h; i++) {
+  for (var i = 0; i < height; i++) {
       var val  = vals[i][0];
       arr.push(String(val));
   }  
@@ -1313,10 +1313,10 @@ function arrForColNo(sheetObj, hRow, colIndex){
   var hRange   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
   var tColABC  = numCol(colIndex);
   var rangeObj = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
-  var h        = rangeObj.getHeight();
+  var height   = rangeObj.getHeight();
   var vals     = rangeObj.getValues();
   var arr      = [];
-  for (var i = 0; i < h; i++) {
+  for (var i = 0; i < height; i++) {
       var val  = vals[i][0];
       arr.push(String(val));
   }  
@@ -1328,12 +1328,12 @@ function arrForColNo(sheetObj, hRow, colIndex){
 
 // --- For Range Object
 
-function arrForRange(rangeObj){
-  var h    = rangeObj.getHeight();
-  var w    = rangeObj.getWidth();
-  var vals = rangeObj.getValues();
-  var arr  = [];
-  for (var i = 0; i < h; i++) {
+function arrForColRange(rangeObj){
+  var height = rangeObj.getHeight();
+  // var width  = rangeObj.getWidth();
+  var vals   = rangeObj.getValues();
+  var arr    = [];
+  for (var i = 0; i < height; i++) {
     arr.push(vals[i][0]);
   }
   return arr;
@@ -1341,7 +1341,7 @@ function arrForRange(rangeObj){
 
 // var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
 // var range_vafro = sheet_vafro.getRange("A1:F5");
-// Logger.log(arrForRange(range_vafro)); // [Shading, , Student Has Good Study Habits, Student is Organized, Student Gets Along Well With Others]
+// Logger.log(arrForColRange(range_vafro)); // [Shading, , Student Has Good Study Habits, Student is Organized, Student Gets Along Well With Others]
 
 // Docs
 
