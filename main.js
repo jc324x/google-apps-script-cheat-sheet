@@ -136,16 +136,31 @@ Logger.log("Start");
 
 // - Array 
 
-// -- Check for a Value | return: `boolean`
+// -- Check for a Value 
+
+/**
+ * Given an array and a value, return true if the array contains that value.
+ *
+ * @param {Array.<*>} arr 
+ * @param {*} val
+ * @returns {boolean}
+ */
 
 function checkValIn(arr, val) { 
-  return arr.indexOf(val) > -1; 
+  return array.indexOf(value) > -1; 
 }
 
 // var arr_cvi = [1,2,3,4];
 // Logger.log(checkValIn(arr_cvi,5)); // false
   
-// -- Remove Duplicates | return: `array`
+// -- Remove Duplicates
+
+/**
+ * Given an array, return an array with no duplicate values.
+ *
+ * @param {Array.<*>} arr 
+ * @returns {Array.<*>} Unsorted array without duplicates
+ */
 
 function rmDuplicatesFrom(arr) {
   var check = {};
@@ -164,7 +179,14 @@ function rmDuplicatesFrom(arr) {
 // var arr_rdf = [1,2,3,1,2,3,4,];
 // Logger.log(rmDuplicatesFrom(arr_rdf)); // [1,2,3,4]
 
-// -- Remove Empty Values | return: `array`
+// -- Remove Empty Values 
+
+/**
+ * Given an array, return an array with no empty values.
+ *
+ * @param {Array.<*>} x
+ * @returns {Array.<*>} Unsorted array without empty values.
+ */
 
 function rmEmptyVal(x) {
   return (x !== (undefined || ''));
@@ -174,6 +196,13 @@ function rmEmptyVal(x) {
 // Logger.log(arr_rev.filter(rmEmptyVal)); // [a,b,c]
 
 // -- Get Count of Values | return: array (objects)
+
+/**
+ * Given an array, an array of objects with the count of each value in the array.
+ *
+ * @param {Array.<*>} arr
+ * @returns {Array.<*>}
+ */
 
 function countOfValIn(arr) {
   var _arr = [];
@@ -199,7 +228,15 @@ function countOfValIn(arr) {
 // var arr_covi  = ["A", "B", "C", "A", "B", "C", "A"];
 // Logger.log(countOfValIn(arr_covi)); // [{count=3.0, value=A}, {count=2.0, value=B}, {count=2.0, value=C}]
 
-// -- Intersect of Two Arrays | return: array 
+// -- Intersect of Two Arrays
+
+/**
+ * Given two arrays, returns an array with values common to both.
+ *
+ * @param {Array.<*>} arrA
+ * @param {Array.<*>} arrB
+ * @returns {Array.<*>}
+ */
 
 function intersectOf(arrA, arrB) {
   var a = 0;
