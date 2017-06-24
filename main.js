@@ -11,8 +11,8 @@ Logger.log("Start");
 // | -- Compare Two Arrays
 // | -- Array as Delimited String
 // | -- Array as Modified Delimited String
-// | - Multidimensional Array
-// | -- Flatten Multidimensional Array
+// | - Two-Dimensional Array
+// | -- Flatten Two-Dimensional Array
 // | - Array of Objects
 // | -- Sort by Property or Properties
 // | -- Find Object With Unique Property Value
@@ -331,20 +331,27 @@ function delimStrMod(arr, delimiter, mod) {
 // var arr_clfd = ["x", "z", "y"];
 // Logger.log(delimStrFromArrMod(arr_clfd, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
 
-// - Multidimensional Array
+// - Two-Dimensional Array
 
-// -- Flatten Multidimensional Array | return: array
+// -- Flatten Two-Dimensional Array | return: array
 
-function flattenMultiArr(multiArr) {
+/**
+ * Returns an array containing all values in a two-dimensional array.
+ *
+ * @param {Array[]} twoDArr
+ * @returns {Array} 
+ */
+
+function flattenTwoDArr(twoDArr) {
   var arr = multiArr.reduce(function(a, b) {
     return a.concat(b);
   });
   return arr;
 }
 
-// var sheet_fma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1")
-// var val_fma   = sheet_fma.getRange("G2:H5").getValues();
-// Logger.log(flattenMultiArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
+var sheet_fma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var val_fma   = sheet_fma.getRange("G2:H5").getValues();
+Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
 
@@ -356,6 +363,13 @@ var ex_arrObj = [
 ];
 
 // -- Sort by Property or Properties | return: array (objects)
+
+/**
+ * Returns an array of objects sorted by one property value.
+ *
+ * @param {String} prop
+ * @returns {Object[]}
+ */
 
 function dynSort(prop) {
   var sortOrder = 1;
