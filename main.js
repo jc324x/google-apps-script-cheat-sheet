@@ -146,12 +146,12 @@ Logger.log("Start");
  * @returns {boolean}
  */
 
-function checkVal(arr, val) { 
+function checkValIn(arr, val) { 
   return arr.indexOf(val) > -1; 
 }
 
 // var arr_cvi = [1, 2, 3, 4];
-// Logger.log(checkVal(arr_cvi, 5)); // false
+// Logger.log(checkValIn(arr_cvi, 5)); // false
   
 // -- Remove Duplicates
 
@@ -193,7 +193,7 @@ function rmEmptyEl(x) {
 }
 
 // var arr_rev = ["a",,"b",,,"c"];
-// Logger.log(arr_rev.filter(rmEmptyEl)); // [a, b, c]
+// Logger.log(arr_rev.filter(rmEmptyEl)); // ["a", "b", "c"]
 
 // -- Get Count of Values | return: array (objects)
 
@@ -227,8 +227,8 @@ function countOfValIn(arr) {
   return _arr;
 }
 
-// var arr_covi  = ["A", "B", "C", "A", "B", "C", "A"];
-// Logger.log(countOfValIn(arr_covi)); // [{count=3.0, value=A}, {count=2.0, value=B}, {count=2.0, value=C}]
+// var arr_covi  = ["a", "b", "c", "a", "b", "c", "a"];
+// Logger.log(countOfValIn(arr_covi)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
 
 // -- Intersect of Two Arrays
 
@@ -263,7 +263,7 @@ function intersectOf(arrA, arrB) {
 // -- Compare Two Arrays | return: boolean
 
 /**
- * Returns true if both arrays contain the same elements.
+ * Returns true if both arrays contain the same elements in the same order.
  *
  * @param {Array} arrA
  * @param {Array} arrB
@@ -287,14 +287,14 @@ Logger.log(compareArr(arrA_ca, arrC_ca)); // false
 // -- Array as Delimited String
 
 /**
- * Returns a string containing all array values, separated by a delimiter. 
+ * Returns a string of all array values, separated by a delimiter. 
  *
- * @param arr
- * @param delimiter
- * @returns {undefined}
+ * @param {Array} arr
+ * @param {string} delimiter
+ * @returns {string}
  */
 
-function delimitedArr(arr, delimiter) {
+function delimStr(arr, delimiter) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
@@ -305,11 +305,20 @@ function delimitedArr(arr, delimiter) {
 }
 
 // var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
-// Logger.log(delimitedArr(arr_da, ",")); // a@example.com, b@example.com, c@example.com
+// Logger.log(delimStrFromArr(arr_da, ",")); // "a@example.com, b@example.com, c@example.com"
 
 // -- Array as Modified Delimited String
 
-function delimitedArrMod(arr, delimiter, mod) {
+/**
+ * Returns a string of all array values, appended with a modification and separated by a delimiter. 
+ *
+ * @param {Array} arr
+ * @param {string} delimiter
+ * @param {string} mod
+ * @returns {string}
+ */
+
+function delimStrMod(arr, delimiter, mod) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var str  = "";
   for (var i = 0; i < _arr.length; i++) {
@@ -320,7 +329,7 @@ function delimitedArrMod(arr, delimiter, mod) {
 }
 
 // var arr_clfd = ["x", "z", "y"];
-// Logger.log(delimitedArrMod(arr_clfd, ",", "@example.com")); // x@example.com, y@example.com, z@example.com
+// Logger.log(delimStrFromArrMod(arr_clfd, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
 
 // - Multidimensional Array
 
@@ -758,7 +767,7 @@ function folderNames(fldrs) {
 function findFolderIn(fldr, name) {
   var fldrs = foldersIn(fldr);
   var names = folderNames(fldrs);
-  if (checkVal(names, name)) {
+  if (checkValIn(names, name)) {
     var _fldr = fldr.getFoldersByName(name).next();
     return _fldr;
   }
@@ -773,7 +782,7 @@ function findFolderAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
   var fldrs = rootFolders();
   var names = folderNames(fldrs);
-  if (checkVal(names, name)) {
+  if (checkValIn(names, name)) {
     var fldr = rf.getFoldersByName(name).next();
     return fldr;
   }
@@ -801,7 +810,7 @@ function createVerifyFoldersIn(fldr, names) {
   var fldrs  = foldersIn(fldr);
   var _names = folderNames(fldrs);
   for (i = 0; i < names.length; i++) {
-    if (!(checkVal(_names, names[i]))) {
+    if (!(checkValIn(_names, names[i]))) {
       fldr.createFolder(names[i]);
     }
   }
@@ -818,7 +827,7 @@ function createVerifyFoldersAtRoot(names) {
   var rfs    = rootFolders();
   var _names = folderNames(rfs);
   for (i=0; i < names.length; i++) {
-    if (!(checkVal(_names, names[i]))) {
+    if (!(checkValIn(_names, names[i]))) {
       DriveApp.createFolder(names[i]);
     }
   } 
@@ -905,7 +914,7 @@ function fileNames(files) {
 function findFileIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
-  if (checkVal(names, name)) {
+  if (checkValIn(names, name)) {
     var file = fldr.getFilesByName(name).next();
     return file;
   }
@@ -920,7 +929,7 @@ function findFileAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
   var files = rootFiles();
   var names = fileNames(files);
-  if (checkVal(names, name)) {
+  if (checkValIn(names, name)) {
     var file = rf.getFilesByName(name).next();
     return file;
   }
@@ -1091,7 +1100,7 @@ function importConfiguration(scriptConfig) {
 function createVerifySSIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
-  if (!(checkVal(names, name))) {
+  if (!(checkValIn(names, name))) {
     var ss   = SpreadsheetApp.create(name).getId();
     var file = DriveApp.getFileById(ss);
     moveFile(file, fldr);
@@ -1107,7 +1116,7 @@ function createVerifySSIn(fldr, name) {
 function createVerifySSAtRoot(name) {
   var files = rootFiles();
   var names = fileNames(files);
-  if (!(checkVal(names, name))) {
+  if (!(checkValIn(names, name))) {
     var ss = SpreadsheetApp.create(name);
   }
   return findFileAtRoot(name);
@@ -1409,7 +1418,7 @@ function arrForColRange(rangeObj){
 function createVerifyDocIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
-  if (!(checkVal(names, name))) {
+  if (!(checkValIn(names, name))) {
     var doc  = DocumentApp.create(name).getId();
     var file = DriveApp.getFileById(doc);
     moveFile(file, fldr);
@@ -1425,7 +1434,7 @@ function createVerifyDocIn(fldr, name) {
 function createVerifyDocAtRoot(name) {
   var files = rootFiles();
   var names = fileNames(files);
-  if (!(checkVal(names, name))) {
+  if (!(checkValIn(names, name))) {
     var ss = DocumentApp.create(name);
   }
   return findFileAtRoot(name);
