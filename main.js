@@ -139,27 +139,27 @@ Logger.log("Start");
 // -- Check for a Value 
 
 /**
- * Given an array and a value, return true if the array contains that value.
+ * Returns true if the value is in the array.
  *
- * @param {Array.<*>} arr 
+ * @param {Array} arr
  * @param {*} val
  * @returns {boolean}
  */
 
-function checkValIn(arr, val) { 
-  return array.indexOf(value) > -1; 
+function checkVal(arr, val) { 
+  return arr.indexOf(val) > -1; 
 }
 
-// var arr_cvi = [1,2,3,4];
-// Logger.log(checkValIn(arr_cvi,5)); // false
+// var arr_cvi = [1, 2, 3, 4];
+// Logger.log(checkVal(arr_cvi, 5)); // false
   
 // -- Remove Duplicates
 
 /**
- * Given an array, return an array with no duplicate values.
+ * Returns an array with no duplicate values.
  *
- * @param {Array.<*>} arr 
- * @returns {Array.<*>} Unsorted array without duplicates
+ * @param {Array} arr 
+ * @returns {Array}
  */
 
 function rmDuplicatesFrom(arr) {
@@ -176,32 +176,34 @@ function rmDuplicatesFrom(arr) {
   return _arr;
 }
 
-// var arr_rdf = [1,2,3,1,2,3,4,];
-// Logger.log(rmDuplicatesFrom(arr_rdf)); // [1,2,3,4]
+// var arr_rdf = [1, 2, 3, 1, 2, 3, 4,];
+// Logger.log(rmDuplicatesFrom(arr_rdf)); // [1, 2, 3, 4]
 
 // -- Remove Empty Values 
 
 /**
- * Given an array, return an array with no empty values.
+ * Returns an array with no empty elements.
  *
- * @param {Array.<*>} x
- * @returns {Array.<*>} Unsorted array without empty values.
+ * @param {*} x
+ * @returns {Array}
  */
 
-function rmEmptyVal(x) {
+function rmEmptyEl(x) {
   return (x !== (undefined || ''));
 }
 
 // var arr_rev = ["a",,"b",,,"c"];
-// Logger.log(arr_rev.filter(rmEmptyVal)); // [a,b,c]
+// Logger.log(arr_rev.filter(rmEmptyEl)); // [a, b, c]
 
 // -- Get Count of Values | return: array (objects)
 
 /**
- * Given an array, an array of objects with the count of each value in the array.
+ * Returns an array of objects. Objects have two properties, count and value.
  *
- * @param {Array.<*>} arr
- * @returns {Array.<*>}
+ * @param {Array} arr
+ * @property {value} a value found in the array
+ * @property {count} count of the value in the array
+ * @returns {Object[]}
  */
 
 function countOfValIn(arr) {
@@ -231,11 +233,11 @@ function countOfValIn(arr) {
 // -- Intersect of Two Arrays
 
 /**
- * Given two arrays, returns an array with values common to both.
+ * Returns an array containing elements common to both arrays.
  *
- * @param {Array.<*>} arrA
- * @param {Array.<*>} arrB
- * @returns {Array.<*>}
+ * @param {Array} arrA
+ * @param {Array} arrB
+ * @returns {Array}
  */
 
 function intersectOf(arrA, arrB) {
@@ -254,27 +256,43 @@ function intersectOf(arrA, arrB) {
   return _arr;
 }
 
-// var arr1_io = [1, 2, 3];
-// var arr2_io = [3, 4, 5];
-// Logger.log(intersectOf(arr1_io, arr2_io)); // [3]
+// var arrA_io = [1, 2, 3];
+// var arrB_io = [3, 4, 5];
+// Logger.log(intersectOf(arrA_io, arrB_io)); // [3]
 
 // -- Compare Two Arrays | return: boolean
 
-function compareArr(arr1, arr2) {
-    if(arr1.length !== arr2.length) return false;
-    for(var i = arr1.length; i--;) {
-        if(arr1[i] !== arr2[i]) return false;
+/**
+ * Returns true if both arrays contain the same elements.
+ *
+ * @param {Array} arrA
+ * @param {Array} arrB
+ * @returns {boolean}
+ */
+
+function compareArr(arrA, arrB) {
+    if(arrA.length !== arrB.length) return false;
+    for(var i = arrA.length; i--;) {
+        if(arrA[i] !== arrB[i]) return false;
     }
     return true;
 }
 
-// var arr1_ca = [1,2,3,4,5]
-// var arr2_ca = [1,2,3,4,5]
-// var arr3_ca = ["a","b","c","d","e"]
-// Logger.log(compareArr(arr1_ca, arr2_ca)); // true
-// Logger.log(compareArr(arr1_ca, arr3_ca)); // false
+var arrA_ca = [1, 2, 3, 4, 5];
+var arrB_ca = [1, 2, 3, 4, 5];
+var arrC_ca = ["a", "b", "c", "d", "e"];
+Logger.log(compareArr(arrA_ca, arrB_ca)); // true
+Logger.log(compareArr(arrA_ca, arrC_ca)); // false
 
 // -- Array as Delimited String
+
+/**
+ * Returns a string containing all array values, separated by a delimiter. 
+ *
+ * @param arr
+ * @param delimiter
+ * @returns {undefined}
+ */
 
 function delimitedArr(arr, delimiter) {
   var _arr = rmDuplicatesFrom(arr).sort();
@@ -740,7 +758,7 @@ function folderNames(fldrs) {
 function findFolderIn(fldr, name) {
   var fldrs = foldersIn(fldr);
   var names = folderNames(fldrs);
-  if (checkValIn(names, name)) {
+  if (checkVal(names, name)) {
     var _fldr = fldr.getFoldersByName(name).next();
     return _fldr;
   }
@@ -755,7 +773,7 @@ function findFolderAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
   var fldrs = rootFolders();
   var names = folderNames(fldrs);
-  if (checkValIn(names, name)) {
+  if (checkVal(names, name)) {
     var fldr = rf.getFoldersByName(name).next();
     return fldr;
   }
@@ -783,7 +801,7 @@ function createVerifyFoldersIn(fldr, names) {
   var fldrs  = foldersIn(fldr);
   var _names = folderNames(fldrs);
   for (i = 0; i < names.length; i++) {
-    if (!(checkValIn(_names, names[i]))) {
+    if (!(checkVal(_names, names[i]))) {
       fldr.createFolder(names[i]);
     }
   }
@@ -800,7 +818,7 @@ function createVerifyFoldersAtRoot(names) {
   var rfs    = rootFolders();
   var _names = folderNames(rfs);
   for (i=0; i < names.length; i++) {
-    if (!(checkValIn(_names, names[i]))) {
+    if (!(checkVal(_names, names[i]))) {
       DriveApp.createFolder(names[i]);
     }
   } 
@@ -887,7 +905,7 @@ function fileNames(files) {
 function findFileIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
-  if (checkValIn(names, name)) {
+  if (checkVal(names, name)) {
     var file = fldr.getFilesByName(name).next();
     return file;
   }
@@ -902,7 +920,7 @@ function findFileAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
   var files = rootFiles();
   var names = fileNames(files);
-  if (checkValIn(names, name)) {
+  if (checkVal(names, name)) {
     var file = rf.getFilesByName(name).next();
     return file;
   }
@@ -1073,7 +1091,7 @@ function importConfiguration(scriptConfig) {
 function createVerifySSIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
-  if (!(checkValIn(names, name))) {
+  if (!(checkVal(names, name))) {
     var ss   = SpreadsheetApp.create(name).getId();
     var file = DriveApp.getFileById(ss);
     moveFile(file, fldr);
@@ -1089,7 +1107,7 @@ function createVerifySSIn(fldr, name) {
 function createVerifySSAtRoot(name) {
   var files = rootFiles();
   var names = fileNames(files);
-  if (!(checkValIn(names, name))) {
+  if (!(checkVal(names, name))) {
     var ss = SpreadsheetApp.create(name);
   }
   return findFileAtRoot(name);
@@ -1391,7 +1409,7 @@ function arrForColRange(rangeObj){
 function createVerifyDocIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
-  if (!(checkValIn(names, name))) {
+  if (!(checkVal(names, name))) {
     var doc  = DocumentApp.create(name).getId();
     var file = DriveApp.getFileById(doc);
     moveFile(file, fldr);
@@ -1407,7 +1425,7 @@ function createVerifyDocIn(fldr, name) {
 function createVerifyDocAtRoot(name) {
   var files = rootFiles();
   var names = fileNames(files);
-  if (!(checkValIn(names, name))) {
+  if (!(checkVal(names, name))) {
     var ss = DocumentApp.create(name);
   }
   return findFileAtRoot(name);
