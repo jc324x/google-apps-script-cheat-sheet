@@ -22,7 +22,6 @@ Logger.log("Start");
 // | - Object
 // | -- Array of Matching Property Values
 // | -- Merge Objects
-// | -- Object from Range 
 // | - Dates and Times
 // | -- Formatted Timestamps
 // | -- Date Object from String
@@ -75,6 +74,8 @@ Logger.log("Start");
 // | -- Convert Column Letter to a Number
 // | -- Replicating Import Range
 // | -- Evaluating True and False
+// | - Object
+// | -- Object from Range 
 // | -  Array of Objects
 // | -- Utility Functions for Array of Objects
 // | --- Header Range
@@ -563,6 +564,14 @@ var arrObj_upfao  = [
 
 // -- Array of Matching Property Values | return: array
 
+/**
+ * Returns an array of matching properties. 
+ *
+ * @param {Object} obj
+ * @param {string[]} props
+ * @returns {Array}
+ */
+
 function filterValIn(obj, props) {
   var arr  = [];
   var keys = intersectOf(Object.keys(obj), props);
@@ -578,16 +587,22 @@ function filterValIn(obj, props) {
   return arr;
 }
 
-var obj_fvi = { 
- a: 1, 
- b: 2, 
- c: 3
-};
+// var obj_fvi = { 
+//  a: 1, 
+//  b: 2, 
+//  c: 3
+// };
 
-var arr_fvi = ["a", "b", "d"];
+// var arr_fvi = ["a", "b", "d"];
 // Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
 
 // Merge Objects | return: object
+
+/**
+ * Returns an object with the values of the argument objects.
+ * @param {...Object}
+ * @returns {Object}
+ */
 
 function mergeObjs() {
   var obj = arguments[0];
@@ -600,37 +615,20 @@ function mergeObjs() {
   return obj;
 } 
 
-var objA_mo = {
- a: 1, 
- b: 2, 
- c: 3
-}; 
+// var objA_mo = {
+//  a: 1, 
+//  b: 2, 
+//  c: 3
+// }; 
 
-var objB_mo = {
- c: 4,
- d: 5, 
- e: 6, 
- f: 7
-}; 
+// var objB_mo = {
+//  c: 4,
+//  d: 5, 
+//  e: 6, 
+//  f: 7
+// }; 
 
 // Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
-
-// -- Object from Range | return: object
-
-function objFromRange(sheetObj, a1Notation) {
-  var range  = sheetObj.getRange(a1Notation);
-  var height = range.getHeight();
-  var width  = range.getWidth();
-  var values = range.getValues();
-  var obj    = {};
-  for (var i = 0; i < values.length; i++) {
-    obj[values[i][0]] = values[i][1];
-  } 
-  return obj;
-}
-
-// var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 
 // - Dates and Times
 
@@ -1322,6 +1320,25 @@ function arrSheetNames(ssObj) {
 
 // var ss_asn = SpreadsheetApp.getActiveSpreadsheet();
 // Logger.log(arrSheetNames(ss_asn));
+
+// - Objects
+
+// -- Object from Range | return: object
+
+function objFromRange(sheetObj, a1Notation) {
+  var range  = sheetObj.getRange(a1Notation);
+  var height = range.getHeight();
+  var width  = range.getWidth();
+  var values = range.getValues();
+  var obj    = {};
+  for (var i = 0; i < values.length; i++) {
+    obj[values[i][0]] = values[i][1];
+  } 
+  return obj;
+}
+
+// var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 
 // - Array of Objects
 
