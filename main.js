@@ -1044,6 +1044,13 @@ function checkForExFile() {
 
 // --- All Files in a Folder
 
+/**
+ * Returns an array of files found at the top level of a folder.
+ *
+ * @param {Folder} fldr
+ * @returns {File[]}
+ */
+
 function filesIn(fldr) {
   var fi  = fldr.getFiles();
   var arr = [];
@@ -1058,6 +1065,12 @@ function filesIn(fldr) {
 // Logger.log(filesIn(fldr_fin)); // [example-file]
 
 // --- All Files at Root
+
+/**
+ * Returns an array of all files at the root of a user's Drive.
+ *
+ * @returns {File[]}
+ */
 
 function rootFiles() {
   var rf = DriveApp.getRootFolder();
@@ -1074,6 +1087,12 @@ function rootFiles() {
 
 // --- All Files in Drive
 
+/**
+ * Retuns an array of all files in the user's Drive.
+ *
+ * @returns {File[]}
+ */
+
 function allFiles() {
   var fi = DriveApp.getFiles();
   var arr  = [];
@@ -1087,6 +1106,13 @@ function allFiles() {
 // Logger.log(allFiles());
 
 // -- Array of File Names | return: array (strings)
+
+/**
+ *  Returns an array of file names.
+ *
+ * @param {File[]} files
+ * @returns {string[]}
+ */
 
 function fileNames(files) {
   var arr = [];
@@ -1104,6 +1130,18 @@ function fileNames(files) {
 // -- Find a File | return: file 
 
 // --- Find a File in a Folder
+
+/**
+ * Returns a file found at the top level of a folder. 
+ *
+ * @requires filesIn()
+ * @requires fileNames()
+ * @requires checkValIn()
+ * @param {Folder} fldr
+ * @param {string} name
+ * @returns {File}
+ */
+
 function findFileIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
@@ -1118,6 +1156,16 @@ function findFileIn(fldr, name) {
 
 // --- Find a File at Root
 
+/**
+ * Returns a file found at the root of a user's Drive.
+ *
+ * @requires rootFiles()
+ * @requires fileNames()
+ * @requires checkValIn()
+ * @param {string} name
+ * @returns {File}
+ */
+
 function findFileAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
   var files = rootFiles();
@@ -1130,6 +1178,13 @@ function findFileAtRoot(name) {
 
 // --- Find a File in Drive
 
+/**
+ * Returns the first matching file found in the user's Drive.
+ *
+ * @param {string} name
+ * @returns {File}
+ */
+
 function findFileInDrive(name) {
   var fi = DriveApp.getFilesByName(name);
   while (fi.hasNext()){
@@ -1141,6 +1196,13 @@ function findFileInDrive(name) {
 // Logger.log(findFileInDrive("example-file")); // example-file
 
 // --- Find at File at Path
+
+/**
+ * Returns the file found at the end of a path.
+ *
+ * @param {string} path
+ * @returns {File}
+ */
 
 function findFileAtPath(path) {
   var fi;
@@ -1171,6 +1233,15 @@ function findFileAtPath(path) {
 
 // -- Copy a File to a Folder | return: file
 
+/**
+ * Returns the copied file.
+ *
+ * @requires findFileIn()
+ * @param {File} file
+ * @param {Folder} fldr
+ * @returns {File}
+ */
+
 function copyFile(file, fldr) {
   var name = file.getName();
   var dest = findFileIn(fldr, name);
@@ -1183,6 +1254,15 @@ function copyFile(file, fldr) {
 // Logger.log(copyFile(file_cf, fldr_cf)); // example-file
 
 // -- Move a File to a Folder | return: file
+
+/**
+ * Returns the copied file from its new destination.
+ *
+ * @requires findFileIn()
+ * @param {File} file
+ * @param {Folder}  fldr
+ * @returns {File}
+ */
 
 function moveFile(file, fldr) {
   var name = file.getName();
