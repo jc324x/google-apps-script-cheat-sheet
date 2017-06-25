@@ -25,7 +25,7 @@ Logger.log("Start");
 // | - Dates and Times
 // | -- Formatted Timestamps
 // | -- Date Object from String
-// | -- Match a Date to a Range
+// | -- Match a Date to a Date Range
 // | Drive
 // | - Folders
 // | -- Create or Verify Folder Path
@@ -708,39 +708,29 @@ function dateObjectFrom(str) {
 
 // Logger.log(dateObjectFrom("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
 
-// -- Match Today's Dates to a Range of Dates | return: string
+// -- Match a Date to Date Range| return: string
 
 /**
- * Returns the matching value for a specified date. 
- * Today's date is assumed if no value is provided.
+ * Returns a value matched to a range of dates.
  *
+ * @param {Object[]} arrObj
+ * @param {string=new Date()} optDate - Date represented as a string.
  * @returns {*}
  */
 
 function matchDateRange(arrObj, optDate) {
-  var date;
+  var date = new Date();
 
-  if (optDate !== "") {
+  if (optDate !== undefined) {
     date = new Date(optDate);
-  } else {
-    date = new Date();
   }
 
-  Logger.log("param");
-  Logger.log(date);
-
-  for (i = 0; i < arrObj.length; i++){
+  for (i = 0; i < arrObj.length; i++) {
     var start = new Date(arrObj[i].start);
-    Logger.log("start");
-    Logger.log(start);
     var end   = new Date(arrObj[i].end);
-    Logger.log("end");
-    Logger.log(end);
     if (date >= start && date <= end ) {
       return arrObj[i].value;
-    } else { 
-    return "No matching range found.";
-  }
+    }
   }
 }
 
@@ -753,7 +743,7 @@ var quarterDates = [
 ];
 
 Logger.log(matchDateRange(quarterDates)); // "summer vacation" (06/25/2017)
-// Logger.log(matchDateRange(quarterDates, "08/02/2016")); // 1 
+Logger.log(matchDateRange(quarterDates, "08/02/2016")); // 1 
 
 // Drive
 
