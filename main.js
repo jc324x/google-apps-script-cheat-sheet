@@ -634,6 +634,12 @@ function mergeObjs() {
 
 // -- Formatted Timestamps | return: string
 
+/**
+ * Returns a string of today's date punctuated by "-".
+ *
+ * @returns {string}
+ */
+
 function fmatD() {
   var n = new Date();
   var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ];
@@ -641,6 +647,12 @@ function fmatD() {
 }
 
 // Logger.log(fmatD()); // 4-24-2017
+
+/**
+ * Returns a string of the current time in 24 hour format.
+ *
+ * @returns {string}
+ */
 
 function fmat24T(){
   var n  = new Date();
@@ -654,6 +666,12 @@ function fmat24T(){
 }
 
 // Logger.log(fmat24T()); // 20:43:40
+
+/**
+ * Returns a string of today's date and the current time in 12 hour format.
+ *
+ * @returns {string}
+ */
 
 function fmat12DT() {
   var n = new Date();
@@ -673,6 +691,13 @@ function fmat12DT() {
 
 // -- Date Object from String | return: date
 
+/**
+ * Returns a new date object from a string formatted year-month-date. 
+ *
+ * @param {string} str
+ * @returns {Date}
+ */
+
 function dateObjectFrom(str) {
   var arr    = str.split("-");
   var months = ["January", "February", "March", "April", "May", "June",
@@ -683,7 +708,15 @@ function dateObjectFrom(str) {
 
 // Logger.log(dateObjectFrom("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
 
+// REWRITE
+
 // -- Match a Date to a Range | return: integer
+
+/**
+ * 
+ *
+ * @returns {undefined}
+ */
 
 var quarterDates = [
   ["08/01/2016", "10/28/2016"],
