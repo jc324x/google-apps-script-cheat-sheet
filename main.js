@@ -279,11 +279,11 @@ function compareArr(arrA, arrB) {
   return true;
 }
 
-var arrA_ca = [1, 2, 3, 4, 5];
-var arrB_ca = [1, 2, 3, 4, 5];
-var arrC_ca = ["a", "b", "c", "d", "e"];
-Logger.log(compareArr(arrA_ca, arrB_ca)); // true
-Logger.log(compareArr(arrA_ca, arrC_ca)); // false
+// var arrA_ca = [1, 2, 3, 4, 5];
+// var arrB_ca = [1, 2, 3, 4, 5];
+// var arrC_ca = ["a", "b", "c", "d", "e"];
+// Logger.log(compareArr(arrA_ca, arrB_ca)); // true
+// Logger.log(compareArr(arrA_ca, arrC_ca)); // false
 
 // -- Array as Delimited String
 
@@ -344,15 +344,15 @@ function delimStrMod(arr, delimiter, mod) {
  */
 
 function flattenTwoDArr(twoDArr) {
-  var arr = multiArr.reduce(function(a, b) {
+  var arr = twoDArr.reduce(function(a, b) {
     return a.concat(b);
   });
   return arr;
 }
 
-var sheet_fma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var val_fma   = sheet_fma.getRange("G2:H5").getValues();
-Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
+// var sheet_fma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var val_fma   = sheet_fma.getRange("G2:H5").getValues();
+// Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
 
@@ -708,41 +708,52 @@ function dateObjectFrom(str) {
 
 // Logger.log(dateObjectFrom("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
 
-// REWRITE
-
-// -- Match a Date to a Range | return: integer
+// -- Match Today's Dates to a Range of Dates | return: string
 
 /**
- * 
+ * Returns the matching value for a specified date. 
+ * Today's date is assumed if no value is provided.
  *
- * @returns {undefined}
+ * @returns {*}
  */
 
-var quarterDates = [
-  ["08/01/2016", "10/28/2016"],
-  ["11/02/2016", "1/9/2017"],
-  ["1/15/2017", "3/19/2017"],
-  ["3/21/2017", "6/15/2017"],
-];
+function matchDateRange(arrObj, optDate) {
+  var date;
 
-function academicQuarter() {
-  var date = new Date();
-  var quarter;
-  for (i = 0; i < 4; i++){
-    var start = new Date(quarterDates[i][0]);
-    var end = new Date(quarterDates[i][1]);
-    if (date >= start && date <= end ) {
-      quarter =  i + 1;
-    } 
+  if (optDate !== "") {
+    date = new Date(optDate);
+  } else {
+    date = new Date();
   }
-  if (quarter > 0) { 
-    return quarter;
-  } else { 
-    return "date outside of academic calendar";
+
+  Logger.log("param");
+  Logger.log(date);
+
+  for (i = 0; i < arrObj.length; i++){
+    var start = new Date(arrObj[i].start);
+    Logger.log("start");
+    Logger.log(start);
+    var end   = new Date(arrObj[i].end);
+    Logger.log("end");
+    Logger.log(end);
+    if (date >= start && date <= end ) {
+      return arrObj[i].value;
+    } else { 
+    return "No matching range found.";
+  }
   }
 }
 
-Logger.log(academicQuarter()); // 4 (4/24/2017)
+var quarterDates = [
+  {start: "08/01/2016", end: "10/28/2016", value: 1},
+  {start: "11/02/2016", end: "01/09/2017", value: 2},
+  {start: "01/15/2017", end: "03/19/2017", value: 3},
+  {start: "03/21/2017", end: "06/15/2017", value: 4},
+  {start: "06/16/2017", end: "07/30/2017", value: "summer vacation"}
+];
+
+Logger.log(matchDateRange(quarterDates)); // "summer vacation" (06/25/2017)
+// Logger.log(matchDateRange(quarterDates, "08/02/2016")); // 1 
 
 // Drive
 
@@ -1458,8 +1469,8 @@ function arrObjFromRange(sheetObj, a1Notation) {
   return valByRow(vRange, headers);
 }
 
-var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
+// var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
 
 // - Array 
 
@@ -1576,9 +1587,9 @@ function openFileAsDocument(file) {
   return _doc;
 } 
 
-var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
-var file_ofad = findFileIn(fldr_ofad, "example-doc");
-Logger.log(openFileAsDocument(file_ofad));
+// var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
+// var file_ofad = findFileIn(fldr_ofad, "example-doc");
+// Logger.log(openFileAsDocument(file_ofad));
 
 // - Utility Functions for Docs
 
