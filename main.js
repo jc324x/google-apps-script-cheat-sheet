@@ -714,7 +714,11 @@ function dateObjectFrom(str) {
  * Returns a value matched to a range of dates.
  *
  * @param {Object[]} arrObj
- * @param {string=new Date()} optDate - Date represented as a string.
+ * @param {string=new Date()} optDate - Date to match.
+ * @namespace
+ * @property {string} start           - Starting date.
+ * @property {string} end             - Ending date.
+ * @property {*} value                - The value to return for a matching date.
  * @returns {*}
  */
 
