@@ -786,9 +786,16 @@ function createVerifyPath(path) {
   return fldr;
 }
 
-// Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
+Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 
 // -- Last Folder in Folder Path | return: folder
+
+/**
+ * Returns the last folder in a folder path.
+ *
+ * @param path
+ * @returns {Folder}
+ */
 
 function lastFolderIn(path) {
   var fi;
@@ -799,27 +806,30 @@ function lastFolderIn(path) {
       fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
       if (fi.hasNext()) {
         fldr = fi.next();
-      } else { 
-        return null;
-      }
+      } 
     } else if (i >= 1) {
         fi = fldr.getFoldersByName(arr[i]);
         if (fi.hasNext()) {
           fldr = fi.next();
-        } else { 
-          return null;
-        }
+        } 
     }
   } 
   return fldr;
 }
 
-Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
-Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B/C/D/E")); // null
+// Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
+// Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B/C/D/E/F/G")); // C
 
 // -- Array of All Folders | return: array (folders)
 
 // --- All Folders in a Folder 
+
+/**
+ * Returns an array of all folders in a folder.
+ *
+ * @param {Folder} fldr
+ * @returns {Folder[]}
+ */
 
 function foldersIn(fldr) {
   var fi  = fldr.getFolders();
@@ -834,6 +844,12 @@ function foldersIn(fldr) {
 // Logger.log(foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/"))); // [A]
 
 // --- All Folders at Root
+
+/**
+ * Returns an array of all folders in the root of the user's Drive.
+ *
+ * @returns {Folder[]}
+ */
 
 function rootFolders() {
   var rf  = DriveApp.getRootFolder();
@@ -850,6 +866,12 @@ function rootFolders() {
 
 // --- All Folders in Drive
 
+/**
+ * Returns an array of all folders in the user's Drive.
+ *
+ * @returns {Folder[]}
+ */
+
 function allFolders() {
   var fi  = DriveApp.getFolders();
   var arr = [];
@@ -863,6 +885,13 @@ function allFolders() {
 // Logger.log(allFolders());
 
 // -- Array of Folder Names | return: array (strings)
+
+/**
+ * Returns an array of folder names.
+ *
+ * @param {Folders[]}
+ * @returns {string[]}
+ */
 
 function folderNames(fldrs) {
   var arr = [];
@@ -880,6 +909,17 @@ function folderNames(fldrs) {
 
 // --- Find a Folder in a Folder
 
+/**
+ * Returns a folder from its parent folder.
+ *
+ * @requires foldersIn() 
+ * @requires folderNames() 
+ * @requires checkValIn()
+ * @param {Folder} fldr
+ * @param {string} name
+ * @returns {Folder}
+ */
+
 function findFolderIn(fldr, name) {
   var fldrs = foldersIn(fldr);
   var names = folderNames(fldrs);
@@ -893,6 +933,16 @@ function findFolderIn(fldr, name) {
 // Logger.log(findFolderIn(fldr_ffi, "A")); // A
 
 // --- Find a Folder at Root
+
+/**
+ * Returns a folder at the root of the user's Drive.
+ *
+ * @requires rootFolders()
+ * @requires folderNames()
+ * @requires checkValIn()
+ * @param {string} name
+ * @returns {Folder}
+ */
 
 function findFolderAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
@@ -908,6 +958,13 @@ function findFolderAtRoot(name) {
 
 // --- Find a Folder in Drive
 
+/**
+ * Returns the first matching folder in Drive.
+ *
+ * @param {string} name
+ * @returns {Folder}
+ */
+
 function findFolderInDrive(name) {
   var fi = DriveApp.getFoldersByName(name);
   while (fi.hasNext()){
@@ -921,6 +978,18 @@ function findFolderInDrive(name) {
 // -- Create or Verify Folders | return: folder
 
 // --- Create or Verify Folders in a Folder
+
+/**
+ * Returns the folder given as an argument. 
+ * Creates folders within a folder if they don't exist already.
+ *
+ * @requires foldersIn()
+ * @requires folderNames()
+ * @requires checkValIn()
+ * @param {Folder} fldr
+ * @param {string[]} names
+ * @returns {Folder}
+ */
 
 function createVerifyFoldersIn(fldr, names) {
   var fldrs  = foldersIn(fldr);
@@ -938,6 +1007,14 @@ function createVerifyFoldersIn(fldr, names) {
 // Logger.log(foldersIn(fldr_cvfi)); // [A,X,Y,Z]
   
 // --- Create or Verify Folders at Root
+
+/**
+ * Returns the root folder.
+ * Creates folders at root if the don't exist already.
+ *
+ * @param {string[]} names
+ * @returns {Folder}
+ */
 
 function createVerifyFoldersAtRoot(names) {
   var rfs    = rootFolders();
