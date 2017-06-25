@@ -1029,7 +1029,7 @@ function createVerifyFoldersAtRoot(names) {
 
 // - Files
 
-// checkForExFile is akin to `touch`, it just creates an empty example file
+// checkForExFile creates an empty example file
 
 function checkForExFile() {
   var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/files");
