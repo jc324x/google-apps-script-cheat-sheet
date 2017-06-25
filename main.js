@@ -738,22 +738,30 @@ function matchDateRange(arrObj, optDate) {
   }
 }
 
-var quarterDates = [
-  {start: "08/01/2016", end: "10/28/2016", value: 1},
-  {start: "11/02/2016", end: "01/09/2017", value: 2},
-  {start: "01/15/2017", end: "03/19/2017", value: 3},
-  {start: "03/21/2017", end: "06/15/2017", value: 4},
-  {start: "06/16/2017", end: "07/30/2017", value: "summer vacation"}
-];
+// var quarterDates = [
+//   {start: "08/01/2016", end: "10/28/2016", value: 1},
+//   {start: "11/02/2016", end: "01/09/2017", value: 2},
+//   {start: "01/15/2017", end: "03/19/2017", value: 3},
+//   {start: "03/21/2017", end: "06/15/2017", value: 4},
+//   {start: "06/16/2017", end: "07/30/2017", value: "summer vacation"}
+// ];
 
-Logger.log(matchDateRange(quarterDates)); // "summer vacation" (06/25/2017)
-Logger.log(matchDateRange(quarterDates, "08/02/2016")); // 1 
+// Logger.log(matchDateRange(quarterDates)); // "summer vacation" (06/25/2017)
+// Logger.log(matchDateRange(quarterDates, "08/02/2016")); // 1 
 
 // Drive
 
 // - Folders
 
 // -- Create or Verify Folder Path | return: folder
+
+/**
+ * Returns a folder at the end of a folder path.
+ * The folder is created if it does not exist already.
+ *
+ * @param {string} path
+ * @returns {Folder}
+ */
 
 function createVerifyPath(path) {
   var arr = path.split('/');
@@ -806,7 +814,8 @@ function lastFolderIn(path) {
   return fldr;
 }
 
-// Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
+Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
+Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B/C/D/E")); // null
 
 // -- Array of All Folders | return: array (folders)
 
