@@ -136,7 +136,7 @@ Logger.log("Start");
 
 // - Array 
 
-// -- Check for a Value 
+// -- Check for a Value | return: boolean
 
 /**
  * Returns true if the value is in the array.
@@ -152,8 +152,8 @@ function checkValIn(arr, val) {
 
 // var arr_cvi = [1, 2, 3, 4];
 // Logger.log(checkValIn(arr_cvi, 5)); // false
-  
-// -- Remove Duplicates
+
+// -- Remove Duplicates | return: array
 
 /**
  * Returns an array with no duplicate values.
@@ -179,7 +179,7 @@ function rmDuplicatesFrom(arr) {
 // var arr_rdf = [1, 2, 3, 1, 2, 3, 4,];
 // Logger.log(rmDuplicatesFrom(arr_rdf)); // [1, 2, 3, 4]
 
-// -- Remove Empty Values 
+// -- Remove Empty Values | return: array
 
 /**
  * Returns an array with no empty elements.
@@ -230,7 +230,7 @@ function countOfValIn(arr) {
 // var arr_covi  = ["a", "b", "c", "a", "b", "c", "a"];
 // Logger.log(countOfValIn(arr_covi)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
 
-// -- Intersect of Two Arrays
+// -- Intersect of Two Arrays | return: array
 
 /**
  * Returns an array containing elements common to both arrays.
@@ -245,13 +245,13 @@ function intersectOf(arrA, arrB) {
   var b = 0;
   var _arr = [];
   while( a < arrA.length && b < arrB.length ) {
-     if (arrA[a] < arrB[b] ) { a++; }
-     else if (arrA[a] > arrB[b] ) { b++; }
-     else {
-       _arr.push(arrA[a]);
-       a++;
-       b++;
-     }
+    if (arrA[a] < arrB[b] ) { a++; }
+    else if (arrA[a] > arrB[b] ) { b++; }
+    else {
+      _arr.push(arrA[a]);
+      a++;
+      b++;
+    }
   }
   return _arr;
 }
@@ -271,11 +271,11 @@ function intersectOf(arrA, arrB) {
  */
 
 function compareArr(arrA, arrB) {
-    if(arrA.length !== arrB.length) return false;
-    for(var i = arrA.length; i--;) {
-        if(arrA[i] !== arrB[i]) return false;
-    }
-    return true;
+  if(arrA.length !== arrB.length) return false;
+  for(var i = arrA.length; i--;) {
+    if(arrA[i] !== arrB[i]) return false;
+  }
+  return true;
 }
 
 var arrA_ca = [1, 2, 3, 4, 5];
@@ -287,7 +287,7 @@ Logger.log(compareArr(arrA_ca, arrC_ca)); // false
 // -- Array as Delimited String
 
 /**
- * Returns a string of all array values, separated by a delimiter. 
+ * Returns a string of all array values, each separated by a delimiter and a space.
  *
  * @param {Array} arr
  * @param {string} delimiter
@@ -310,11 +310,11 @@ function delimStr(arr, delimiter) {
 // -- Array as Modified Delimited String
 
 /**
- * Returns a string of all array values, appended with a modification and separated by a delimiter. 
+ * Returns a string of all array values, each appended with a modification and separated by a delimiter and a space.
  *
  * @param {Array} arr
  * @param {string} delimiter
- * @param {string} mod
+ * @param {string} mod Modification to append to each item in the array.
  * @returns {string}
  */
 
@@ -356,18 +356,18 @@ Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 // - Array of Objects
 
 var ex_arrObj = [
-{a: 1000, b: 1, c: 5}, 
-{a: 10000, b: 2, c: 5000}, 
-{a: 10, b: 2, c: 500},
-{a: 1, b: 1, c: 50}
+  {a: 1000, b: 1, c: 5}, 
+  {a: 10000, b: 2, c: 5000}, 
+  {a: 10, b: 2, c: 500},
+  {a: 1, b: 1, c: 50}
 ];
 
 // -- Sort by Property or Properties | return: array (objects)
 
 /**
- * Returns an array of objects sorted by one property value.
+ * Returns an array of objects sorted by a property value.
  *
- * @param {String} prop
+ * @param {string} prop
  * @returns {Object[]}
  */
 
@@ -386,6 +386,12 @@ function dynSort(prop) {
 // Logger.log(ex_arrObj.sort(dynSort("a"))); 
 // [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}]
 
+/**
+ * Returns an array of objects sorted by multiple property values.
+ * @param {...string}
+ * @returns {Object[]}
+ */
+
 function dynSortM() {
   var props = arguments;
   return function (obj1, obj2) {
@@ -403,6 +409,15 @@ function dynSortM() {
 
 // -- Find Object With Unique Property Value | return: object / value
 
+/**
+ * Returns the first object in an array of objects with the key value pair.
+ *
+ * @param {Object[]} arrObj
+ * @param {string} pQuery
+ * @param {string} val
+ * @returns {Object}
+ */
+
 function findObjIn(arrObj, pQuery, val) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
@@ -415,6 +430,16 @@ function findObjIn(arrObj, pQuery, val) {
 }
 
 // Logger.log(findObjIn(ex_arrObj,"a",1000)); // {a=1000.0, b=1.0, c=5.0}
+
+/**
+ * Returns a value from the first object in an array of objects with the key value pair.
+ *
+ * @param {Object[]} arrObj
+ * @param {string} pQuery
+ * @param {string} val
+ * @param {string} pReturn
+ * @returns {*}
+ */
 
 function findObjValIn(arrObj, pQuery, val, pReturn) {
   for (var i = 0; i < arrObj.length; i++) {
@@ -431,6 +456,13 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 
 // -- Find Earliest or Latest Object by Timestamp | return: object
 
+/**
+ * Returns the oldest object in an array of objects.
+ *
+ * @param {Object[]} arrObj
+ * @returns {Object}
+ */
+
 function earliestTS(arrObj){
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
@@ -445,6 +477,13 @@ function earliestTS(arrObj){
 // var sheet_fe  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var arrObj_fe = arrObjFromRange(sheet_fe, "J1:K4");
 // Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
+
+/**
+ * Returns the newest object in an array of objects.
+ *
+ * @param {Object[]} arrObj
+ * @returns {Object}
+ */
 
 function latestTS(arrObj) {
   if (arrObj.length >= 2) {
@@ -463,6 +502,15 @@ function latestTS(arrObj) {
 
 // -- Filter by Property Value or Values | return: array (objects)
 
+/**
+ * Returns an array of objects containing matching objects.
+ *
+ * @param {Object} arrObj
+ * @param {string} pQuery
+ * @param {string[]} arrVal
+ * @returns {Object[]}
+ */
+
 function filterObjIn(arrObj, pQuery, arrVal) {
   var _arrObj = [];
   for (var i = 0; i < arrVal.length; i++) {
@@ -479,6 +527,15 @@ function filterObjIn(arrObj, pQuery, arrVal) {
 
 // -- Unify Properties for Array of Objects | return: array (objects)
 
+/**
+ * Returns an array of objects, with an additional property value added to each matching object.
+ *
+ * @param {Object[]} arrObj
+ * @param {string[]} arrProp
+ * @param {string} newProp 
+ * @returns {Object[]}
+ */
+
 function unifyPropForArrObj(arrObj, arrProp, newProp){
   for (var i = 0; i < arrObj.length; i++){
     var obj = arrObj[i];
@@ -494,9 +551,9 @@ function unifyPropForArrObj(arrObj, arrProp, newProp){
 }
 
 var arrObj_upfao  = [
-{x: 123},
-{y: 234},
-{z: 345},
+  {x: 123},
+  {y: 234},
+  {z: 345},
 ];
 
 // Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new"));
