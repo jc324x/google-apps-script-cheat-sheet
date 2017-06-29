@@ -234,7 +234,7 @@ function countOfValIn(arr) {
 // -- Intersect of Two Arrays | return: array
 
 /**
- * Returns an array containing elements common to both arrays.
+ * Returns an array containing elements contained in both arrays.
  *
  * @param {Array} arrA
  * @param {Array} arrB
@@ -458,7 +458,7 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 // -- Find Earliest or Latest Object by Timestamp | return: object
 
 /**
- * Returns the oldest object in an array of objects.
+ * Returns the object with the oldest Timestamp value from an array of objects.
  *
  * @param {Object[]} arrObj
  * @returns {Object}
@@ -480,7 +480,7 @@ function earliestTS(arrObj){
 // Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 /**
- * Returns the newest object in an array of objects.
+ * Returns the object with the latest Timestamp value in an array of objects.
  *
  * @param {Object[]} arrObj
  * @returns {Object}
@@ -600,6 +600,7 @@ function filterValIn(obj, props) {
 
 /**
  * Returns an object with the values of the argument objects.
+ * If multiple objects have the same property value, the last value set is retained. 
  * @param {...Object}
  * @returns {Object}
  */
@@ -635,7 +636,7 @@ function mergeObjs() {
 // -- Formatted Timestamps | return: string
 
 /**
- * Returns a string of today's date punctuated by "-".
+ * Returns a string of today's date formatted "month-day-year".
  *
  * @returns {string}
  */
@@ -649,7 +650,7 @@ function fmatD() {
 // Logger.log(fmatD()); // 4-24-2017
 
 /**
- * Returns a string of the current time in 24 hour format.
+ * Returns a string of the current time formatted "hour:minute:second".
  *
  * @returns {string}
  */
@@ -668,7 +669,7 @@ function fmat24T(){
 // Logger.log(fmat24T()); // 20:43:40
 
 /**
- * Returns a string of today's date and the current time in 12 hour format.
+ * Returns a string of today's date and the current time formatted "month-day-year hour:minute:second AM/PM"
  *
  * @returns {string}
  */
