@@ -1419,7 +1419,7 @@ function importConfiguration(scriptConfig) {
  * @requires openFileAsSpreadsheet()
  * @param {Folder} fldr
  * @param {string} name
- * @returns {File}
+ * @returns {Spreadsheet}
  */
 
 function createVerifySSIn(fldr, name) {
@@ -1438,16 +1438,35 @@ Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet")); // example-sheet
 
 // --- Create or Verify Spreadsheet at Root
 
+/**
+ * Returns a spreadsheet. 
+ * This creates the spreadsheet if it does not already exist.
+ *
+ * @requires rootFiles()
+ * @requires fileNames()
+ * @requires checkValIn() 
+ * @requires findFileAtRoot() 
+ * @requires openFileAsSpreadsheet() 
+ * @param {string} name
+ * @returns {Spreadsheet}
+ */
+
 function createVerifySSAtRoot(name) {
   var files = rootFiles();
   var names = fileNames(files);
   if (!(checkValIn(names, name))) {
     var ss = SpreadsheetApp.create(name);
   }
-  return findFileAtRoot(name);
+  return openFileAsSpreadsheet(findFileAtRoot(name));
 }
 
 // -- Id of Active Spreadsheet | return: string
+
+/**
+ * Returns the Id of the active spreadsheet.
+ *
+ * @returns {string}
+ */
 
 function ssId() {
   var _id = SpreadsheetApp.getActiveSpreadsheet().getId();
@@ -1457,6 +1476,13 @@ function ssId() {
 // Logger.log(ssId());
 
 // -- Open File as Spreadsheet
+
+/**
+ * Returns a spreadsheet. 
+ *
+ * @param {string} 
+ * @returns {Spreadsheet}
+ */
 
 function openFileAsSpreadsheet(file) {
   var _id = file.getId();
@@ -1471,6 +1497,15 @@ function openFileAsSpreadsheet(file) {
 // - Utility Functions for Sheets
 
 // -- Convert Column Number to a Letter | return: string
+
+/**
+ * Returns the column number as a alphabetical column value.
+ * Columns are indexed from 1, not from 0.
+ * "CZ" // 103 is the highest supported value.
+ *
+ * @param {Number} number
+ * @returns {string}
+ */
 
 function numCol(number) {
   var num = number - 1, chr;
@@ -1503,17 +1538,24 @@ function numCol(number) {
 
 // -- Convert Column Letter to a Number | return: integer 
 
-// function colNum(column) {
-//   var col = column.toUpperCase(), chr0, chr1;
-//   if (col.length === 1)  {
-//     chr0 = col.charCodeAt(0) - 64;
-//     return chr0;
-//   } else if (col.length === 2) {
-//     chr0 = (col.charCodeAt(0) - 64) * 26;
-//     chr1 = col.charCodeAt(1) - 64;
-//     return chr0 + chr1;
-//   }
-// }
+/**
+ * Returns an alphabetical column value as a number.
+ *
+ * @param {string} column
+ * @returns {Number}
+ */
+
+function colNum(column) {
+  var col = column.toUpperCase(), chr0, chr1;
+  if (col.length === 1)  {
+    chr0 = col.charCodeAt(0) - 64;
+    return chr0;
+  } else if (col.length === 2) {
+    chr0 = (col.charCodeAt(0) - 64) * 26;
+    chr1 = col.charCodeAt(1) - 64;
+    return chr0 + chr1;
+  }
+}
 
 // function ex_cn() {
 //   var abc;
@@ -1529,9 +1571,14 @@ function numCol(number) {
 
 // ex_cn();
 
-// -- Replicating Import Range | return: nil
-// trigger -> importRange > From spreadsheet > On edit
-// FLAG
+// -- Replicating Import Range 
+
+/**
+ * Replicating import range in Google Apps Script.
+ * Requires a trigger to function.
+ * importRange : From spreadsheet : On edit
+ *
+ */
 
 function importRange(){
   var get = sheet_gs.getRange("A2:A5").getValues();
@@ -1539,9 +1586,15 @@ function importRange(){
 }
 
 // -- Evaluating True and False | return: boolean
-// true:  1, t*, T*, y*, Y*
-// false: 0, !t || !y
-// ➡  boolean
+
+/**
+ * Returns true or false given truthy or falsy values.
+ * true: 1, t*, T*, y*, Y*
+ * false: 0, !t, || !y
+ *
+ * @param {string} input
+ * @returns {boolean}
+ */
 
 function checkTF(input) {
   if (isNaN(input)) {
@@ -1564,6 +1617,13 @@ function checkTF(input) {
 // Logger.log(checkTF("Yes")); // true
 
 // -- Array of Sheet Names | return: array
+
+/**
+ * Returns an array of the sheet names for a spreadsheet.
+ *
+ * @param {Spreadsheet} ssObj
+ * @returns {string[]}
+ */
 
 function arrSheetNames(ssObj) {
   var sheets = ssObj.getSheets();
@@ -1901,20 +1961,19 @@ function findReplaceinSpreadsheet(obj, ssObj) {
   } 
 }
 
-// var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var file_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
-// var ss_frid   = openFileAsSpreadsheet(file_fris);
-// var sheet_frid = ss_frid.getSheets()[0];
-// sheet_frid.clear();
+var fldr_fris  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var ss_frid    = createVerifySSIn(fldr_fris, "find-replace-sheet");
+var sheet_frid = ss_frid.getSheets()[0];
+sheet_frid.clear();
 
-// var val_frid = [
-//   [ "name", "state", "job" ],
-//   [ "<<name>>", "<<state>>", "<<job>>"]
-// ];
+var val_frid = [
+  [ "name", "state", "job" ],
+  [ "<<name>>", "<<state>>", "<<job>>"]
+];
 
-// var range_frid = sheet_frid.getRange("A1:C2");
-// range_frid.setValues(val_frid);
-// findReplaceinSpreadsheet(ex_obj, ss_frid);
+var range_frid = sheet_frid.getRange("A1:C2");
+range_frid.setValues(val_frid);
+findReplaceinSpreadsheet(ex_obj, ss_frid);
 
 // --- Replace Object Properties in Sheet
 
@@ -1936,20 +1995,19 @@ function findReplaceinSheet(obj, sheetObj) {
   sheetObj.getDataRange().setValues(values);
 }
 
-// var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var file_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
-// var ss_frid   = openFileAsSpreadsheet(file_fris);
-// var sheet_frid = ss_frid.getSheets()[0];
-// sheet_frid.clear();
+var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var ss_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
+var sheet_fris = ss_fris.getSheets()[0];
+sheet_fris.clear();
 
-// var val_frid = [
-//   [ "name", "state", "job" ],
-//   [ "<<name>>", "<<state>>", "<<job>>"]
-// ];
+var val_fris = [
+  [ "name", "state", "job" ],
+  [ "<<name>>", "<<state>>", "<<job>>"]
+];
 
-// var range_frid = sheet_frid.getRange("A1:C2");
-// range_frid.setValues(val_frid);
-// findReplaceinSheet(ex_obj, sheet_frid);
+var range_fris = sheet_fris.getRange("A1:C2");
+range_fris.setValues(val_fris);
+findReplaceinSheet(ex_obj, sheet_fris);
 
 // -- Copy Template for Item in Array of Objects and Replace Object Properties
 
