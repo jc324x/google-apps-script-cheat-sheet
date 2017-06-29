@@ -1641,6 +1641,16 @@ function arrSheetNames(ssObj) {
 
 // -- Object from Range | return: object
 
+/**
+ * Returns an object from a range.
+ * The top row of the range is assumed to be the header row.
+ * Values in the header row become the object properties.
+ *
+ * @param {Sheet} sheetObj
+ * @param {string} a1Notation
+ * @returns {Object}
+ */
+
 function objFromRange(sheetObj, a1Notation) {
   var range  = sheetObj.getRange(a1Notation);
   var height = range.getHeight();
