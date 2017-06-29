@@ -1895,9 +1895,9 @@ function arrForColRange(rangeObj){
   return arr;
 }
 
-var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var range_vafro = sheet_vafro.getRange("A2:F5");
-Logger.log(arrForColRange(range_vafro)); // ["A", "B", "C", "D"]
+// var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var range_vafro = sheet_vafro.getRange("A2:F5");
+// Logger.log(arrForColRange(range_vafro)); // ["A", "B", "C", "D"]
 
 // Docs
 
@@ -1907,6 +1907,15 @@ Logger.log(arrForColRange(range_vafro)); // ["A", "B", "C", "D"]
 
 // --- Create or Verify Document in a Folder
 
+/**
+ * Returns a document.
+ * This creates the document if it does not already exist.
+ *
+ * @param {Folder} fldr
+ * @param {string} name
+ * @returns {Document}
+ */
+
 function createVerifyDocIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
@@ -1915,13 +1924,21 @@ function createVerifyDocIn(fldr, name) {
     var file = DriveApp.getFileById(doc);
     moveFile(file, fldr);
   }
-  return findFileIn(fldr, name);
+  return openFileAsDocument(findFileIn(fldr, name));
 }
 
 // var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet-demo/docs");
 // Logger.log(createVerifyDocIn(fldr_cvdi, "example-doc")); // example-doc
 
 // --- Create or Verify Document at Root
+
+/**
+ * Returns a document.
+ * This creates the document if it does not already exist.
+ *
+ * @param {string} name
+ * @returns {Document}
+ */
 
 function createVerifyDocAtRoot(name) {
   var files = rootFiles();
@@ -1934,12 +1951,25 @@ function createVerifyDocAtRoot(name) {
 
 // -- Id of Active Document
  
+/**
+ * Returns the Id of the active document.
+ *
+ * @returns {string}
+ */
+
 function docId() {
   var _id = DocumentApp.getActiveDocument().getId();
   return _id;
 }
   
 // -- Open File as Document
+
+/**
+ * Returns a file as a document.
+ *
+ * @param {File} file
+ * @returns {Document}
+ */
 
 function openFileAsDocument(file) {
   var _id = file.getId();
@@ -2014,15 +2044,14 @@ function findReplaceInDoc(obj, docObj) {
   } 
 } 
 
-// var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var file_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
-// var doc_frid  = openFileAsDocument(file_frid);
-// var body_frid = doc_frid.getBody();
-// body_frid.clear();
-// doc_frid.appendParagraph("name: <<name>>");
-// doc_frid.appendParagraph("state: <<state>>");
-// doc_frid.appendParagraph("job: <<job>>");
-// findReplaceInDoc(ex_obj, doc_frid);
+var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var doc_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
+var body_frid = doc_frid.getBody();
+body_frid.clear();
+doc_frid.appendParagraph("name: <<name>>");
+doc_frid.appendParagraph("state: <<state>>");
+doc_frid.appendParagraph("job: <<job>>");
+findReplaceInDoc(ex_obj, doc_frid);
 
 // --- Replace Object Properties in Spreadsheet
 
@@ -2116,8 +2145,7 @@ function createDocsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
 // var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
 // var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges")
 // var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
-// var file_cdftao   = createVerifyDocIn(fldr1_cdftao, "template-doc");
-// var doc_cdftao    = openFileAsDocument(file_cdftao);
+// var doc_cdftao   = createVerifyDocIn(fldr1_cdftao, "template-doc");
 // var body_cdftao   = doc_cdftao.getBody();
 // body_cdftao.clear();
 // doc_cdftao.appendParagraph("First: <<First>>");
