@@ -787,7 +787,7 @@ function createVerifyPath(path) {
   return fldr;
 }
 
-Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
+// Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 
 // -- Last Folder in Folder Path | return: folder
 
@@ -981,8 +981,8 @@ function findFolderInDrive(name) {
 // --- Create or Verify Folders in a Folder
 
 /**
- * Returns the folder given as an argument. 
- * Creates folders within a folder if they don't exist already.
+ * Returns the argument folder. 
+ * Creates folders within a folder if they don't already exist.
  *
  * @requires foldersIn()
  * @requires folderNames()
