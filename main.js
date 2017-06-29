@@ -1433,8 +1433,8 @@ function createVerifySSIn(fldr, name) {
   return openFileAsSpreadsheet(findFileIn(fldr, name));
 }
 
-var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
-Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet")); // example-sheet
+// var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
+// Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet")); // example-sheet
 
 // --- Create or Verify Spreadsheet at Root
 
@@ -1670,30 +1670,14 @@ function objFromRange(sheetObj, a1Notation) {
 
 // -- Utility Functions for Array of Objects
 
-// --- Header Range | return: range
-
-function headerRange(sheetObj, a1Notation) {
-  var arr  = a1Notation.split(":");
-  var col0 = arr[0].match(/\D/g,'');
-  var col1 = arr[1].match(/\D/g,'');
-  var row  = arr[0].match(/\d+/g);
-  var a1   = col0 + row + ":" + col1 + row;
-  return sheetObj.getRange(a1);
-}
-
-// --- Value Range | return: range
-
-function valueRange(sheetObj, a1Notation) {
-  var arr  = a1Notation.split(":");
-  var col0 = arr[0].match(/\D/g,'');
-  var row0 = arr[0].match(/\d+/g);
-  var col1 = arr[1].match(/\D/g,'');
-  var row1 = arr[1].match(/\d+/g);
-  var a1   = col0 + (Number(row0) + 1) + ":" + col1 + row1;
-  return sheetObj.getRange(a1);
-}
-
 // --- Header Values | array
+
+/**
+ * Returns an array of values for the top row of a range object.
+ *
+ * @param {Range} rangeObj
+ * @returns {Array}
+ */
 
 function headerVal(rangeObj){
   var vals = rangeObj.getValues();
@@ -1707,14 +1691,22 @@ function headerVal(rangeObj){
 
 // --- Values by Row | array (objects)
 
+/**
+ * Returns an array of objects representing a range.
+ *
+ * @param {Range} rangeObj
+ * @param {Array} headers
+ * @returns {Object[]}
+ */
+
 function valByRow(rangeObj, headers){
-  var h    = rangeObj.getHeight();
-  var w    = rangeObj.getWidth();
-  var vals = rangeObj.getValues();
+  var height = rangeObj.getHeight();
+  var width  = rangeObj.getWidth();
+  var vals   = rangeObj.getValues();
   var arr  = [];
-  for (var i = 0; i < h; i++) {
+  for (var i = 0; i < height; i++) {
     var row = {};
-    for (var j = 0; j < w; j++) {
+    for (var j = 0; j < width; j++) {
       var prop = headers[j];
       var val  = vals[i][j];
       if (val !== "") {
@@ -1726,7 +1718,57 @@ function valByRow(rangeObj, headers){
   return arr;
 }
 
+// --- Header Range | return: range
+
+/**
+ * Returns the header range for a targeted range.
+ *
+ * @param {Sheet} sheetObj
+ * @param {string} a1Notation
+ * @returns {Range}
+ */
+
+function headerRange(sheetObj, a1Notation) {
+  var arr  = a1Notation.split(":");
+  var col0 = arr[0].match(/\D/g,'');
+  var col1 = arr[1].match(/\D/g,'');
+  var row  = arr[0].match(/\d+/g);
+  var a1   = col0 + row + ":" + col1 + row;
+  return sheetObj.getRange(a1);
+}
+
+// --- Value Range | return: range
+
+/**
+ * Returns the value range for a targeted range. 
+ *
+ * @param {Sheet} sheetObj
+ * @param {string} a1Notation
+ * @returns {Range}
+ */
+
+function valueRange(sheetObj, a1Notation) {
+  var arr  = a1Notation.split(":");
+  var col0 = arr[0].match(/\D/g,'');
+  var row0 = arr[0].match(/\d+/g);
+  var col1 = arr[1].match(/\D/g,'');
+  var row1 = arr[1].match(/\d+/g);
+  var a1   = col0 + (Number(row0) + 1) + ":" + col1 + row1;
+  return sheetObj.getRange(a1);
+}
+
 // -- Array of Objects from Sheet | return: array (objects)
+
+/**
+ * Returns an array of objects representing the values in a sheet.
+ *
+ * @requires numCol() 
+ * @requires headerVal() 
+ * @requires valByRow() 
+ * @param sheetObj
+ * @param hRow
+ * @returns {undefined}
+ */
 
 function arrObjFromSheet(sheetObj, hRow){
   var lColNum = sheetObj.getLastColumn();
@@ -1734,7 +1776,9 @@ function arrObjFromSheet(sheetObj, hRow){
   var lRow    = sheetObj.getLastRow();
   var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
   var headers = headerVal(hRange);
+  Logger.log(headers);
   var vRange  = sheetObj.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
+  Logger.log(valByRow(vRange, headers));
   return valByRow(vRange, headers);
 }
 
@@ -1743,10 +1787,21 @@ function arrObjFromSheet(sheetObj, hRow){
 
 // -- Array of Objects from Range | return: array (objects)
 
+/**
+ * Returns an array of values representing the values in a range.
+ *
+ * @requires headerRange() 
+ * @requires valueRange() 
+ * @requires headerVal() 
+ * @requires valByRow() 
+ * @param sheetObj
+ * @param a1Notation
+ * @returns {undefined}
+ */
+
 function arrObjFromRange(sheetObj, a1Notation) {
   var hRange  = headerRange(sheetObj, a1Notation);
   var vRange  = valueRange(sheetObj, a1Notation);
-  Logger.log(vRange.getA1Notation());
   var headers = headerVal(hRange);
   return valByRow(vRange, headers);
 }
