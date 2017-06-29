@@ -1333,6 +1333,13 @@ function jsonExFile() {
 
 // -- Import JSON from URL
 
+/**
+ * Returns JSON from a URL.
+ *
+ * @param {string} url
+ * @returns {JSON}
+ */
+
 function jsonFromUrl(url) {
   var rsp  = UrlFetchApp.fetch(url);
   var data = rsp.getContentText();
@@ -1347,6 +1354,13 @@ function jsonFromUrl(url) {
 
 // -- Import JSON from File
 
+/**
+ * Returns JSON from a file in the user's Drive.
+ *
+ * @param {File} file
+ * @returns {JSON}
+ */
+
 function jsonFromFile(file) {
   var data = file.getBlob().getDataAsString();
   var json = JSON.parse(data);
@@ -1360,6 +1374,13 @@ function jsonFromFile(file) {
 // Logger.log(JSON.stringify(glossary_jff));
 
 // -- Import Script Configuration
+
+/**
+ * Returns JSON from a URL or from a file in the user's Drive.
+ *
+ * @param {string || File} scriptConfig
+ * @returns {JSON}
+ */
 
 function importConfiguration(scriptConfig) {
   var regExp = new RegExp("^(http|https)://");
