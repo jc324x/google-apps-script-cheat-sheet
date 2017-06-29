@@ -1407,6 +1407,21 @@ function importConfiguration(scriptConfig) {
 
 // --- Create or Verify Spreadsheet in a Folder
 
+/**
+ * Returns a spreadsheet. 
+ * This creates the spreadsheet if it does not already exist.
+ *
+ * @requires filesIn()
+ * @requires fileNames()
+ * @requires checkValIn
+ * @requires moveFile()
+ * @requires findFileIn()
+ * @requires openFileAsSpreadsheet()
+ * @param {Folder} fldr
+ * @param {string} name
+ * @returns {File}
+ */
+
 function createVerifySSIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
@@ -1415,11 +1430,11 @@ function createVerifySSIn(fldr, name) {
     var file = DriveApp.getFileById(ss);
     moveFile(file, fldr);
   }
-  return findFileIn(fldr, name);
+  return openFileAsSpreadsheet(findFileIn(fldr, name));
 }
 
-// var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
-// Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet")); // example-sheet
+var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
+Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet")); // example-sheet
 
 // --- Create or Verify Spreadsheet at Root
 
@@ -1432,7 +1447,7 @@ function createVerifySSAtRoot(name) {
   return findFileAtRoot(name);
 }
 
-// --- Id of Active Spreadsheet | return: string
+// -- Id of Active Spreadsheet | return: string
 
 function ssId() {
   var _id = SpreadsheetApp.getActiveSpreadsheet().getId();
