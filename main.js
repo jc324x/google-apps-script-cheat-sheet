@@ -2010,7 +2010,14 @@ var ex_obj = {
   job:   "IT Administrator"
 };
 
-// FLAG -> test
+/**
+ * Returns a string 
+ *
+ * @param obj
+ * @param str
+ * @returns {undefined}
+ */
+
 function strFromProp(obj, str){
   var arr  = str.split(" ");
   var _arr = [];
@@ -2029,7 +2036,7 @@ function strFromProp(obj, str){
   return _arr.join(" ");
 }
 
-// Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: IT Administrator
+Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: IT Administrator
 
 // -- Replace Object Properties 
 
