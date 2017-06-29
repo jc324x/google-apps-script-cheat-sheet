@@ -1503,7 +1503,7 @@ function openFileAsSpreadsheet(file) {
  * Columns are indexed from 1, not from 0.
  * "CZ" // 103 is the highest supported value.
  *
- * @param {Number} number
+ * @param {number} number
  * @returns {string}
  */
 
@@ -1542,7 +1542,7 @@ function numCol(number) {
  * Returns an alphabetical column value as a number.
  *
  * @param {string} column
- * @returns {Number}
+ * @returns {number}
  */
 
 function colNum(column) {
@@ -1815,6 +1815,15 @@ function arrObjFromRange(sheetObj, a1Notation) {
 
 // --- For Header Value 
 
+/**
+ * Returns an array containing all values in a column.
+ *
+ * @param {Sheet} sheetObj
+ * @param {number} hRow
+ * @param {string} name
+ * @returns {Array}
+ */
+
 function arrForColName(sheetObj, hRow, name){
   var lColNum  = sheetObj.getLastColumn();
   var lColABC  = numCol(lColNum);
@@ -1838,7 +1847,15 @@ function arrForColName(sheetObj, hRow, name){
 
 // --- For Column Number
 
-// expand names, no reason to just have 'h'
+/**
+ * Returns an array containing all values in a column.
+ *
+ * @param {Sheet} sheetObj
+ * @param {number} hRow
+ * @param {number} colIndex
+ * @returns {Array}
+ */
+
 function arrForColNo(sheetObj, hRow, colIndex){
   var lColNum  = sheetObj.getLastColumn();
   var lColABC  = numCol(lColNum);
@@ -1861,9 +1878,15 @@ function arrForColNo(sheetObj, hRow, colIndex){
 
 // --- For Range Object
 
+/**
+ * Returns an array containing all values in the first column of a range. 
+ *
+ * @param {Range} rangeObj
+ * @returns {Array}
+ */
+
 function arrForColRange(rangeObj){
   var height = rangeObj.getHeight();
-  // var width  = rangeObj.getWidth();
   var vals   = rangeObj.getValues();
   var arr    = [];
   for (var i = 0; i < height; i++) {
@@ -1872,9 +1895,9 @@ function arrForColRange(rangeObj){
   return arr;
 }
 
-// var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
-// var range_vafro = sheet_vafro.getRange("A1:F5");
-// Logger.log(arrForColRange(range_vafro)); // [Shading, , Student Has Good Study Habits, Student is Organized, Student Gets Along Well With Others]
+var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var range_vafro = sheet_vafro.getRange("A2:F5");
+Logger.log(arrForColRange(range_vafro)); // ["A", "B", "C", "D"]
 
 // Docs
 
