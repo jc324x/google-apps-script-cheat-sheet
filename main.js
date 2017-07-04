@@ -2139,34 +2139,35 @@ function findReplaceinSheet(obj, sheetObj, delim) {
 
 // --- Copy Document Template and Replace Object Properties
 
-function createDocsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
+function createDocsFromTemplateArrObj(arrObj, templateDoc, naming, fldr, ts, delim) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
-    var name = strFromProp(obj, naming);
+    var name = strFromProp(obj, naming, delim);
     if (ts === true) name += " - " + fmat12DT();
-    var docId = copyFile(template, fldr).setName(name).getId();
+    var file  = DriveApp.getFileById(templateDoc.getId());
+    var docId = copyFile(file, fldr).setName(name).getId();
     var doc   = DocumentApp.openById(docId);
-    findReplaceInDoc(obj, doc);
+    findReplaceInDoc(obj, doc, delim);
     }
 } 
 
-// var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
-// var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
-// var doc_cdftao    = createVerifyDocIn(fldr1_cdftao, "template-doc");
-// var body_cdftao   = doc_cdftao.getBody();
-// body_cdftao.clear();
-// doc_cdftao.appendParagraph("First: <<First>>");
-// doc_cdftao.appendParagraph("Last: <<Last>>");
-// doc_cdftao.appendParagraph("Grade: <<Grade>>");
-// doc_cdftao.appendParagraph("Homeroom: <<Homeroom>>");
-// doc_cdftao.appendParagraph("Email: <<Email>>");
-// createDocsFromTemplateArrObj(arrObj_cdftao, file_cdftao, "Name: <<Last>> <<First>>", fldr2_cdftao, true);
+var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
+var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
+var doc_cdftao    = createVerifyDocIn(fldr1_cdftao, "template-doc");
+var body_cdftao   = doc_cdftao.getBody();
+body_cdftao.clear();
+doc_cdftao.appendParagraph("First: %First%");
+doc_cdftao.appendParagraph("Last: %Last%");
+doc_cdftao.appendParagraph("Grade: %Grade%");
+doc_cdftao.appendParagraph("Homeroom: %Homeroom%");
+doc_cdftao.appendParagraph("Email: %Email%");
+createDocsFromTemplateArrObj(arrObj_cdftao, doc_cdftao, "Name: %Last% %First%", fldr2_cdftao, true, "%");
 
 // --- Copy Spreadsheet Template and Replace Object Properties
 
-function createSpreadsheetsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
+function createSpreadsheetsFromTemplateArrObj(arrObj, template, naming, fldr, ts, delim) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
     var name = strFromProp(obj, naming);
@@ -2324,11 +2325,11 @@ function appendSubjBodyForArrObj(arrObj, subj, body) {
   return arrObj;
 } 
 
-var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
-var subj_asbfao   = "Classroom update for %First% %Last%";
-var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
-Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
+// var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
+// var subj_asbfao   = "Classroom update for %First% %Last%";
+// var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+// Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
 
 // -- Run Mail Merge for Array of Objects
 
