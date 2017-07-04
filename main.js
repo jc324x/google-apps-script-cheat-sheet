@@ -2308,29 +2308,27 @@ function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
 
 function appendSubjBodyForArrObj(arrObj, subj, body) {
   for (var i = 0; i < arrObj.length; i++) {
-    var obj   = arrObj[i];
-    var _body = body;
-    var _subj = subj;
+    var obj = arrObj[i];
     for (var prop in obj) {
       var search = "%" + prop + "%";
-      if (_body.indexOf(search) !== -1) {
-        _body = _body.replace(search, obj[prop]);
+      if (body.indexOf(search) !== -1) {
+        body = body.replace(search, obj[prop]);
         }
-      if (_subj.indexOf(search) !== -1) {
-        _subj = _subj.replace(search, obj[prop]);
+      if (subj.indexOf(search) !== -1) {
+        subj = subj.replace(search, obj[prop]);
         }
       }
-    obj.Subject = _subj;
-    obj.Body    = _body;
+    obj.Subject = subj;
+    obj.Body    = body;
     }
   return arrObj;
 } 
 
-// var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
-// var subj_asbfao   = "Classroom update for %First% %Last%";
-// var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
-// Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
+var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
+var subj_asbfao   = "Classroom update for %First% %Last%";
+var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
 
 // -- Run Mail Merge for Array of Objects
 
