@@ -2018,16 +2018,16 @@ var ex_obj = {
  * @returns {string}
  */
 
-function strFromProp(obj, str) {
+function strFromProp(obj, str, delim) {
   var split  = str.split(" ");
   var result = [];
   for (var i = 0; i < split.length; i++) {
     var _str = split[i]; 
     for (var prop in obj){
-      var leadingChar  = _str.slice().charAt(0);
-      var trailingChar = _str.slice().substr(-1);
-      var mod          = _str.substr(0, _str.length-1).substr(1);
-      if ((obj.hasOwnProperty(mod)) && (trailingChar === leadingChar)) {
+      var first = _str.slice().charAt(0);
+      var last  = _str.slice().substr(-1);
+      var mod   = _str.substr(0, _str.length-1).substr(1);
+      if ((obj.hasOwnProperty(mod)) && (first === delim) && (last === delim)) {
         result.push(obj[mod]);
       } else {
         result.push(_str);
@@ -2038,29 +2038,29 @@ function strFromProp(obj, str) {
   return result.join(" ");
 }
 
-// Logger.log(strFromProp(ex_obj, "name: %name% - state: #state# - job: *job*")); // name: Jon - state: MN - job: IT Administrator
+Logger.log(strFromProp(ex_obj, "name: %name% - state: %state% - job: %job%", "%")); // name: Jon - state: MN - job: IT Administrator
 
 // -- Replace Object Properties 
 
 // --- Replace Object Properties in Document
 
-function findReplaceInDoc(obj, docObj) {
+function findReplaceInDoc(obj, docObj, delim) {
   var body = docObj.getBody(); 
   for (var prop in obj) {
-    var query = "<<" + prop + ">>";
+    var query = delim + prop + delim;
     var val   = obj[prop];
     body.replaceText(query, val);
   } 
 } 
 
-// var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var doc_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
-// var body_frid = doc_frid.getBody();
-// body_frid.clear();
-// doc_frid.appendParagraph("name: <<name>>");
-// doc_frid.appendParagraph("state: <<state>>");
-// doc_frid.appendParagraph("job: <<job>>");
-// findReplaceInDoc(ex_obj, doc_frid);
+var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var doc_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
+var body_frid = doc_frid.getBody();
+body_frid.clear();
+doc_frid.appendParagraph("name: %name%");
+doc_frid.appendParagraph("state: %state%");
+doc_frid.appendParagraph("job: %job%");
+findReplaceInDoc(ex_obj, doc_frid, "%");
 
 // --- Replace Object Properties in Spreadsheet
 
