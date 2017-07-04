@@ -2038,7 +2038,7 @@ function strFromProp(obj, str, delim) {
   return result.join(" ");
 }
 
-Logger.log(strFromProp(ex_obj, "name: %name% - state: %state% - job: %job%", "%")); // name: Jon - state: MN - job: IT Administrator
+// Logger.log(strFromProp(ex_obj, "name: %name% - state: %state% - job: %job%", "%")); // name: Jon - state: MN - job: IT Administrator
 
 // -- Replace Object Properties 
 
@@ -2053,18 +2053,18 @@ function findReplaceInDoc(obj, docObj, delim) {
   } 
 } 
 
-var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var doc_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
-var body_frid = doc_frid.getBody();
-body_frid.clear();
-doc_frid.appendParagraph("name: %name%");
-doc_frid.appendParagraph("state: %state%");
-doc_frid.appendParagraph("job: %job%");
-findReplaceInDoc(ex_obj, doc_frid, "%");
+// var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var doc_frid  = createVerifyDocIn(fldr_frid, "find-replace-doc");
+// var body_frid = doc_frid.getBody();
+// body_frid.clear();
+// doc_frid.appendParagraph("name: %name%");
+// doc_frid.appendParagraph("state: %state%");
+// doc_frid.appendParagraph("job: %job%");
+// findReplaceInDoc(ex_obj, doc_frid, "%");
 
 // --- Replace Object Properties in Spreadsheet
 
-function findReplaceinSpreadsheet(obj, ssObj) {
+function findReplaceinSpreadsheet(obj, ssObj, delim) {
   var numSheets = ssObj.getNumSheets();
   var sheets    = ssObj.getSheets();
   for (var i = 0; i < numSheets; i++) {
@@ -2074,7 +2074,7 @@ function findReplaceinSpreadsheet(obj, ssObj) {
       var update = values[row].map(function(original) {
         var text = original.toString();
         for (var prop in obj) {
-          var query = "<<"+prop+">>";
+          var query = delim + prop+ delim;
           if (text.indexOf(query) !== -1) {
             text = text.replace(query, obj[prop]);
           }
@@ -2094,22 +2094,22 @@ function findReplaceinSpreadsheet(obj, ssObj) {
 
 // var val_frid = [
 //   [ "name", "state", "job" ],
-//   [ "<<name>>", "<<state>>", "<<job>>"]
+//   [ "%name%", "%state%", "%job%"]
 // ];
 
 // var range_frid = sheet_frid.getRange("A1:C2");
 // range_frid.setValues(val_frid);
-// findReplaceinSpreadsheet(ex_obj, ss_frid);
+// findReplaceinSpreadsheet(ex_obj, ss_frid, "%");
 
 // --- Replace Object Properties in Sheet
 
-function findReplaceinSheet(obj, sheetObj) {
+function findReplaceinSheet(obj, sheetObj, delim) {
   var values = sheetObj.getDataRange().getValues();
   for(var row in values){
     var update = values[row].map(function(original) {
       var text = original.toString();
       for (var prop in obj) {
-        var query = "<<"+prop+">>";
+        var query = delim + prop + delim;
           if (text.indexOf(query) !== -1) {
             text = text.replace(query, obj[prop]);
           }
@@ -2121,8 +2121,8 @@ function findReplaceinSheet(obj, sheetObj) {
   sheetObj.getDataRange().setValues(values);
 }
 
-// var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var ss_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
+// var fldr_fris  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var ss_fris    = createVerifySSIn(fldr_fris, "find-replace-sheet");
 // var sheet_fris = ss_fris.getSheets()[0];
 // sheet_fris.clear();
 
@@ -2133,7 +2133,7 @@ function findReplaceinSheet(obj, sheetObj) {
 
 // var range_fris = sheet_fris.getRange("A1:C2");
 // range_fris.setValues(val_fris);
-// findReplaceinSheet(ex_obj, sheet_fris);
+// findReplaceinSheet(ex_obj, sheet_fris, "%");
 
 // -- Copy Template for Item in Array of Objects and Replace Object Properties
 
