@@ -164,23 +164,23 @@ function checkValIn(arr, val) {
  */
 
 function rmDuplicatesFrom(arr) {
-  var check = {};
-  var _arr  = [];
+  var check  = {};
+  var result = [];
   var j = 0;
   for(var i = 0; i < arr.length; i++) {
     var item = arr[i];
     if(check[item] !== 1) {
       check[item] = 1;
-      _arr[j++]   = item;
+      result[j++] = item;
     }
   }
-  return _arr;
+  return result;
 }
 
 // var arr_rdf = [1, 2, 3, 1, 2, 3, 4,];
 // Logger.log(rmDuplicatesFrom(arr_rdf)); // [1, 2, 3, 4]
 
-// -- Remove Empty Values | return: array
+// -- Remove Empty Elements | return: array
 
 /**
  * Returns an array with no empty elements.
@@ -208,7 +208,7 @@ function rmEmptyEl(x) {
  */
 
 function countOfValIn(arr) {
-  var _arr = [];
+  var result = [];
   var copy = arr.slice(0);
   for (var i = 0; i < arr.length; i++) {
     var myCount = 0;  
@@ -222,10 +222,10 @@ function countOfValIn(arr) {
       var obj   = {};
       obj.value = arr[i];
       obj.count = myCount;
-      _arr.push(obj);
+      result.push(obj);
     }
   }
-  return _arr;
+  return result;
 }
 
 // var arr_covi  = ["a", "b", "c", "a", "b", "c", "a"];
@@ -234,7 +234,7 @@ function countOfValIn(arr) {
 // -- Intersect of Two Arrays | return: array
 
 /**
- * Returns an array containing elements contained in both arrays.
+ * Returns an array of the elements in both arrays.
  *
  * @param {Array} arrA
  * @param {Array} arrB
@@ -244,17 +244,17 @@ function countOfValIn(arr) {
 function intersectOf(arrA, arrB) {
   var a = 0;
   var b = 0;
-  var _arr = [];
+  var result = [];
   while( a < arrA.length && b < arrB.length ) {
     if (arrA[a] < arrB[b] ) { a++; }
     else if (arrA[a] > arrB[b] ) { b++; }
     else {
-      _arr.push(arrA[a]);
+      result.push(arrA[a]);
       a++;
       b++;
     }
   }
-  return _arr;
+  return result;
 }
 
 // var arrA_io = [1, 2, 3];
@@ -264,7 +264,7 @@ function intersectOf(arrA, arrB) {
 // -- Compare Two Arrays | return: boolean
 
 /**
- * Returns true if both arrays contain the same elements in the same order.
+ * Returns true if both arrays have the same elements in the same order.
  *
  * @param {Array} arrA
  * @param {Array} arrB
@@ -288,21 +288,22 @@ function compareArr(arrA, arrB) {
 // -- Array as Delimited String
 
 /**
- * Returns a string of all array values, each separated by a delimiter and a space.
+ * Returns a string of array values. 
+ * Elements are separated by a delimiter and a space.
  *
  * @param {Array} arr
- * @param {string} delimiter
+ * @param {string} delim
  * @returns {string}
  */
 
-function delimStr(arr, delimiter) {
+function delimStrFromArr(arr, delim) {
   var _arr = rmDuplicatesFrom(arr).sort();
-  var str  = "";
+  var result  = "";
   for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + delimiter + " ";
+    result += _arr[i] + delim + " ";
   }
-  str = str.slice(0, -2);
-  return str;
+  result = result.slice(0, -2);
+  return result;
 }
 
 // var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
@@ -311,22 +312,23 @@ function delimStr(arr, delimiter) {
 // -- Array as Modified Delimited String
 
 /**
- * Returns a string of all array values, each appended with a modification and separated by a delimiter and a space.
+ * Returns a string of array values.
+ * Elements are separated by a delimiter and a space, each followed by a modification.
  *
  * @param {Array} arr
- * @param {string} delimiter
+ * @param {string} delim
  * @param {string} mod Modification to append to each item in the array.
  * @returns {string}
  */
 
-function delimStrMod(arr, delimiter, mod) {
+function delimStrFromArrMod(arr, delim, mod) {
   var _arr = rmDuplicatesFrom(arr).sort();
-  var str  = "";
+  var result  = "";
   for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + mod + delimiter + " "; 
+    result += _arr[i] + mod + delim + " "; 
   }
-  str = str.slice(0, -2);
-  return str;
+  result = result.slice(0, -2);
+  return result;
 }
 
 // var arr_clfd = ["x", "z", "y"];
@@ -344,10 +346,10 @@ function delimStrMod(arr, delimiter, mod) {
  */
 
 function flattenTwoDArr(twoDArr) {
-  var arr = twoDArr.reduce(function(a, b) {
+  var result = twoDArr.reduce(function(a, b) {
     return a.concat(b);
   });
-  return arr;
+  return result;
 }
 
 // var sheet_fma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
@@ -513,14 +515,14 @@ function latestTS(arrObj) {
  */
 
 function filterObjIn(arrObj, pQuery, arrVal) {
-  var _arrObj = [];
+  var result = [];
   for (var i = 0; i < arrVal.length; i++) {
     var val = arrVal[i]; 
     for (var j = 0; j < arrObj.length; j++) {
-      if (arrObj[j][pQuery] == val) _arrObj.push(arrObj[j]);
+      if (arrObj[j][pQuery] == val) result.push(arrObj[j]);
     }
   } 
-  return _arrObj;
+  return result;
 }
 
 // Logger.log(filterObjIn(ex_arrObj, "a", [10])); // [{a=10.0, b=2.0, c=500.0}]
@@ -700,11 +702,11 @@ function fmat12DT() {
  */
 
 function dateObjectFrom(str) {
-  var arr    = str.split("-");
+  var split  = str.split("-");
   var months = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
     ];
-  return new Date (months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
+  return new Date (months[(split[1] - 1)] + " " + split[2] + ", " + split[0]);
 }
 
 // Logger.log(dateObjectFrom("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
@@ -725,11 +727,9 @@ function dateObjectFrom(str) {
 
 function matchDateRange(arrObj, optDate) {
   var date = new Date();
-
   if (optDate !== undefined) {
     date = new Date(optDate);
   }
-
   for (i = 0; i < arrObj.length; i++) {
     var start = new Date(arrObj[i].start);
     var end   = new Date(arrObj[i].end);
@@ -765,21 +765,21 @@ function matchDateRange(arrObj, optDate) {
  */
 
 function createVerifyPath(path) {
-  var arr = path.split('/');
+  var split = path.split('/');
   var fldr;
-  for (i = 0; i < arr.length; i++) {
-    var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+  for (i = 0; i < split.length; i++) {
+    var fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
     if (i === 0) {
       if(!(fi.hasNext())) {
-        DriveApp.createFolder(arr[i]);
-        fi = DriveApp.getFoldersByName(arr[i]);
+        DriveApp.createFolder(split[i]);
+        fi = DriveApp.getFoldersByName(split[i]);
       } 
       fldr = fi.next();
     } else if (i >= 1) {
-      fi = fldr.getFoldersByName(arr[i]);
+      fi = fldr.getFoldersByName(split[i]);
       if(!(fi.hasNext())) {
-        fldr.createFolder(arr[i]);
-        fi = DriveApp.getFoldersByName(arr[i]);
+        fldr.createFolder(split[i]);
+        fi = DriveApp.getFoldersByName(split[i]);
       } 
       fldr = fi.next();
     }
@@ -800,16 +800,16 @@ function createVerifyPath(path) {
 
 function lastFolderIn(path) {
   var fi;
-  var arr = path.split('/');
+  var split = path.split('/');
   var fldr;
-  for (i = 0; i < arr.length; i++) {
+  for (i = 0; i < split.length; i++) {
     if (i === 0) {
-      fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
       if (fi.hasNext()) {
         fldr = fi.next();
       } 
     } else if (i >= 1) {
-        fi = fldr.getFoldersByName(arr[i]);
+        fi = fldr.getFoldersByName(split[i]);
         if (fi.hasNext()) {
           fldr = fi.next();
         } 
@@ -1207,19 +1207,19 @@ function findFileInDrive(name) {
 
 function findFileAtPath(path) {
   var fi;
-  var arr  = path.split('/');
-  var file = arr[arr.length -1];
+  var split = path.split('/');
+  var file  = split[split.length -1];
   var fldr;
-  for (i = 0; i < arr.length - 1; i++) {
+  for (i = 0; i < split.length - 1; i++) {
     if (i === 0) {
-      fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
       if (fi.hasNext()) {
         fldr = fi.next();
       } else { 
         return null;
       }
     } else if (i >= 1) {
-        fi = fldr.getFoldersByName(arr[i]);
+        fi = fldr.getFoldersByName(split[i]);
         if (fi.hasNext()) {
           fldr = fi.next();
         } else { 
@@ -1729,11 +1729,11 @@ function valByRow(rangeObj, headers){
  */
 
 function headerRange(sheetObj, a1Notation) {
-  var arr  = a1Notation.split(":");
-  var col0 = arr[0].match(/\D/g,'');
-  var col1 = arr[1].match(/\D/g,'');
-  var row  = arr[0].match(/\d+/g);
-  var a1   = col0 + row + ":" + col1 + row;
+  var split = a1Notation.split(":");
+  var col0  = split[0].match(/\D/g,'');
+  var col1  = split[1].match(/\D/g,'');
+  var row   = split[0].match(/\d+/g);
+  var a1    = col0 + row + ":" + col1 + row;
   return sheetObj.getRange(a1);
 }
 
@@ -1748,12 +1748,12 @@ function headerRange(sheetObj, a1Notation) {
  */
 
 function valueRange(sheetObj, a1Notation) {
-  var arr  = a1Notation.split(":");
-  var col0 = arr[0].match(/\D/g,'');
-  var row0 = arr[0].match(/\d+/g);
-  var col1 = arr[1].match(/\D/g,'');
-  var row1 = arr[1].match(/\d+/g);
-  var a1   = col0 + (Number(row0) + 1) + ":" + col1 + row1;
+  var split = a1Notation.split(":");
+  var col0  = split[0].match(/\D/g,'');
+  var row0  = split[0].match(/\d+/g);
+  var col1  = split[1].match(/\D/g,'');
+  var row1  = split[1].match(/\d+/g);
+  var a1    = col0 + (Number(row0) + 1) + ":" + col1 + row1;
   return sheetObj.getRange(a1);
 }
 
@@ -2011,32 +2011,34 @@ var ex_obj = {
 };
 
 /**
- * Returns a string 
+ * Returns a string.
  *
- * @param obj
- * @param str
- * @returns {undefined}
+ * @param {Object} obj
+ * @param {string} str
+ * @returns {string}
  */
 
-function strFromProp(obj, str){
-  var arr  = str.split(" ");
-  var _arr = [];
-  for (var i = 0; i < arr.length; i++) {
-    var _str = arr[i]; 
+function strFromProp(obj, str) {
+  var split  = str.split(" ");
+  var result = [];
+  for (var i = 0; i < split.length; i++) {
+    var _str = split[i]; 
     for (var prop in obj){
-      var mod = _str.substr(0, _str.length-2).substr(2);
-      if (obj.hasOwnProperty(mod)){
-        _arr.push(obj[mod]);
+      var leadingChar  = _str.slice().charAt(0);
+      var trailingChar = _str.slice().substr(-1);
+      var mod          = _str.substr(0, _str.length-1).substr(1);
+      if ((obj.hasOwnProperty(mod)) && (trailingChar === leadingChar)) {
+        result.push(obj[mod]);
       } else {
-        _arr.push(_str);
+        result.push(_str);
       }
       break;
     }
   } 
-  return _arr.join(" ");
+  return result.join(" ");
 }
 
-Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: IT Administrator
+// Logger.log(strFromProp(ex_obj, "name: %name% - state: #state# - job: *job*")); // name: Jon - state: MN - job: IT Administrator
 
 // -- Replace Object Properties 
 
@@ -2051,14 +2053,14 @@ function findReplaceInDoc(obj, docObj) {
   } 
 } 
 
-var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var doc_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
-var body_frid = doc_frid.getBody();
-body_frid.clear();
-doc_frid.appendParagraph("name: <<name>>");
-doc_frid.appendParagraph("state: <<state>>");
-doc_frid.appendParagraph("job: <<job>>");
-findReplaceInDoc(ex_obj, doc_frid);
+// var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var doc_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
+// var body_frid = doc_frid.getBody();
+// body_frid.clear();
+// doc_frid.appendParagraph("name: <<name>>");
+// doc_frid.appendParagraph("state: <<state>>");
+// doc_frid.appendParagraph("job: <<job>>");
+// findReplaceInDoc(ex_obj, doc_frid);
 
 // --- Replace Object Properties in Spreadsheet
 
@@ -2085,19 +2087,19 @@ function findReplaceinSpreadsheet(obj, ssObj) {
   } 
 }
 
-var fldr_fris  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var ss_frid    = createVerifySSIn(fldr_fris, "find-replace-sheet");
-var sheet_frid = ss_frid.getSheets()[0];
-sheet_frid.clear();
+// var fldr_fris  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var ss_frid    = createVerifySSIn(fldr_fris, "find-replace-sheet");
+// var sheet_frid = ss_frid.getSheets()[0];
+// sheet_frid.clear();
 
-var val_frid = [
-  [ "name", "state", "job" ],
-  [ "<<name>>", "<<state>>", "<<job>>"]
-];
+// var val_frid = [
+//   [ "name", "state", "job" ],
+//   [ "<<name>>", "<<state>>", "<<job>>"]
+// ];
 
-var range_frid = sheet_frid.getRange("A1:C2");
-range_frid.setValues(val_frid);
-findReplaceinSpreadsheet(ex_obj, ss_frid);
+// var range_frid = sheet_frid.getRange("A1:C2");
+// range_frid.setValues(val_frid);
+// findReplaceinSpreadsheet(ex_obj, ss_frid);
 
 // --- Replace Object Properties in Sheet
 
@@ -2119,19 +2121,19 @@ function findReplaceinSheet(obj, sheetObj) {
   sheetObj.getDataRange().setValues(values);
 }
 
-var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var ss_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
-var sheet_fris = ss_fris.getSheets()[0];
-sheet_fris.clear();
+// var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var ss_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
+// var sheet_fris = ss_fris.getSheets()[0];
+// sheet_fris.clear();
 
-var val_fris = [
-  [ "name", "state", "job" ],
-  [ "<<name>>", "<<state>>", "<<job>>"]
-];
+// var val_fris = [
+//   [ "name", "state", "job" ],
+//   [ "<<name>>", "<<state>>", "<<job>>"]
+// ];
 
-var range_fris = sheet_fris.getRange("A1:C2");
-range_fris.setValues(val_fris);
-findReplaceinSheet(ex_obj, sheet_fris);
+// var range_fris = sheet_fris.getRange("A1:C2");
+// range_fris.setValues(val_fris);
+// findReplaceinSheet(ex_obj, sheet_fris);
 
 // -- Copy Template for Item in Array of Objects and Replace Object Properties
 
@@ -2150,9 +2152,9 @@ function createDocsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
 
 // var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
-// var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges")
+// var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
 // var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
-// var doc_cdftao   = createVerifyDocIn(fldr1_cdftao, "template-doc");
+// var doc_cdftao    = createVerifyDocIn(fldr1_cdftao, "template-doc");
 // var body_cdftao   = doc_cdftao.getBody();
 // body_cdftao.clear();
 // doc_cdftao.appendParagraph("First: <<First>>");
@@ -2191,7 +2193,7 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, template, naming, fldr, ts
 
 // var range_csftao = sheet2_csftao.getRange("A1:E2");
 // range_csftao.setValues(val_csftao);
-// createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: <<Last>> <<First>>", fldr2_csftao, true)
+// createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: <<Last>> <<First>>", fldr2_csftao, true);
 
 // -- Cell Shading
 
@@ -2209,6 +2211,7 @@ var obj_cs = {
   "Student Gets Along Well With Others": "Somewhat Agree"
 };
 
+// FLAG: Object literal?
 // --- Index Object Properties | return: object
 
 function indexValForObj(obj, indexArray) {
@@ -2325,7 +2328,7 @@ function appendSubjBodyForArrObj(arrObj, subj, body) {
 
 // var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
-// var subj_asbfao   = "Classroom update for %First% %Last%"
+// var subj_asbfao   = "Classroom update for %First% %Last%";
 // var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
 // Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
 
