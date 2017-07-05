@@ -121,17 +121,17 @@ Logger.log("Start");
 // | --- Run Mail Merge for Array of Objects
 
 // Future Additions: 
-// * Count of Value in Array of Objects
 // * Timestamp on Cell Change
-// * Moving / Copying Folders
 // * Copy Formulas Down
 // * Create Multidimensional Array of Values
-// * Multidimensional Array from Array of Objects
-// * Set Range of Values in Sheet 
-// * Copy Folders (Recursive)
 // * Convert JSON to Sheet
-// * Timer management
+// * 5 Minute Timer Management
 // * Shade Cells in Document Table
+
+// Possible Additions:
+// * Multidimensional Array from Array of Objects
+// * Count of Value in Array of Objects
+// * Recursive Moving / Copying Folders
 
 // General
 
@@ -435,7 +435,7 @@ function findObjIn(arrObj, pQuery, val) {
 // Logger.log(findObjIn(ex_arrObj,"a",1000)); // {a=1000.0, b=1.0, c=5.0}
 
 /**
- * FLAG
+ * FLAG -> consistent language
  * Returns a value from the first object in an array of objects with the key value pair.
  *
  * @param {Object[]} arrObj
@@ -461,7 +461,7 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 // -- Find Earliest or Latest Object by Timestamp
 
 /**
- * Returns the object with the oldest Timestamp value from an array of objects.
+ * Returns the object with the oldest Timestamp value.
  *
  * @param {Object[]} arrObj
  * @returns {Object}
@@ -483,7 +483,7 @@ function earliestTS(arrObj){
 // Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 /**
- * Returns the object with the latest Timestamp value in an array of objects.
+ * Returns the object with the latest Timestamp value.
  *
  * @param {Object[]} arrObj
  * @returns {Object}
@@ -650,7 +650,7 @@ function fmatD() {
     return d.join("-");
 }
 
-// Logger.log(fmatD()); // 4-24-2017
+// Logger.log(fmatD()); // "4-24-2017"
 
 /**
  * Returns a string of the current time formatted "hour:minute:second".
@@ -669,7 +669,7 @@ function fmat24T(){
     }
 }
 
-// Logger.log(fmat24T()); // 20:43:40
+// Logger.log(fmat24T()); // "20:43:40"
 
 /**
  * Returns a string of today's date and the current time formatted "month-day-year hour:minute:second AM/PM"
@@ -691,7 +691,7 @@ function fmat12DT() {
   return d.join("/") + " " + t.join(":") + " " + s;
 }
 
-// Logger.log(fmat12DT()); // 4-24-2017 8:43:40 PM
+// Logger.log(fmat12DT()); // "4-24-2017 8:43:40 PM"
 
 // -- Date Object from String
 
@@ -1636,6 +1636,7 @@ function arrSheetNames(ss) {
 } 
 
 // var ss_asn = SpreadsheetApp.getActiveSpreadsheet();
+// FLAG -> return?
 // Logger.log(arrSheetNames(ss_asn));
 
 // - Objects
@@ -1669,6 +1670,7 @@ function objFromRange(sheet, a1Notation) {
 
 // - Array of Objects
 
+// FLAG -> examples...
 // -- Utility Functions for Array of Objects
 
 // --- Header Values 
@@ -1784,6 +1786,7 @@ function arrObjFromSheet(sheet, hRow){
 }
 
 // var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// FLAG -> document
 // Logger.log(arrObjFromSheet(sheet_aofs, 2));
 
 // -- Array of Objects from Range 
@@ -1808,7 +1811,7 @@ function arrObjFromRange(sheet, a1Notation) {
 }
 
 // var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
+// Logger.log(arrObjFromRange(sheet_aofr, "A2:E7")); // FLAG -> document...
 
 // - Array 
 
@@ -2268,7 +2271,6 @@ var obj_cs = {
   "Student Gets Along Well With Others": "Somewhat Agree"
 };
 
-// FLAG: Object literal?
 // --- Index Object Properties 
 
 function indexValForObj(obj, indexArray) {
@@ -2395,6 +2397,7 @@ var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2
 var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
 var subj_asbfao   = "Classroom update for %First% %Last%";
 var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+// FLAG -> return doesn't look right...
 Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao, "%")); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
 
 // -- Run Mail Merge for Array of Objects
