@@ -101,7 +101,7 @@ Logger.log("Start");
 // | -- Clear Document Body
 // | Merges
 // | - Sheets and Docs
-// | -- String from Object Properties
+// | -- String From Object Properties 
 // | -- Replace Object Properties 
 // | --- Replace Object Properties in Document
 // | --- Replace Object Properties in Spreadsheet
@@ -1621,12 +1621,12 @@ function checkTF(input) {
 /**
  * Returns an array of the sheet names for a spreadsheet.
  *
- * @param {Spreadsheet} ssObj
+ * @param {Spreadsheet} ss
  * @returns {string[]}
  */
 
-function arrSheetNames(ssObj) {
-  var sheets = ssObj.getSheets();
+function arrSheetNames(ss) {
+  var sheets = ss.getSheets();
   var arr    = [];
   for (var i = 0; i < sheets.length; i++) {
     arr.push(sheets[i].getName());
@@ -1646,13 +1646,13 @@ function arrSheetNames(ssObj) {
  * The top row of the range is assumed to be the header row.
  * Values in the header row become the object properties.
  *
- * @param {Sheet} sheetObj
+ * @param {Sheet} sheet
  * @param {string} a1Notation
  * @returns {Object}
  */
 
-function objFromRange(sheetObj, a1Notation) {
-  var range  = sheetObj.getRange(a1Notation);
+function objFromRange(sheet, a1Notation) {
+  var range  = sheet.getRange(a1Notation);
   var height = range.getHeight();
   var width  = range.getWidth();
   var values = range.getValues();
@@ -1723,18 +1723,18 @@ function valByRow(rangeObj, headers){
 /**
  * Returns the header range for a targeted range.
  *
- * @param {Sheet} sheetObj
+ * @param {Sheet} sheet
  * @param {string} a1Notation
  * @returns {Range}
  */
 
-function headerRange(sheetObj, a1Notation) {
+function headerRange(sheet, a1Notation) {
   var split = a1Notation.split(":");
   var col0  = split[0].match(/\D/g,'');
   var col1  = split[1].match(/\D/g,'');
   var row   = split[0].match(/\d+/g);
   var a1    = col0 + row + ":" + col1 + row;
-  return sheetObj.getRange(a1);
+  return sheet.getRange(a1);
 }
 
 // --- Value Range | return: range
@@ -1742,19 +1742,19 @@ function headerRange(sheetObj, a1Notation) {
 /**
  * Returns the value range for a targeted range. 
  *
- * @param {Sheet} sheetObj
+ * @param {Sheet} sheet
  * @param {string} a1Notation
  * @returns {Range}
  */
 
-function valueRange(sheetObj, a1Notation) {
+function valueRange(sheet, a1Notation) {
   var split = a1Notation.split(":");
   var col0  = split[0].match(/\D/g,'');
   var row0  = split[0].match(/\d+/g);
   var col1  = split[1].match(/\D/g,'');
   var row1  = split[1].match(/\d+/g);
   var a1    = col0 + (Number(row0) + 1) + ":" + col1 + row1;
-  return sheetObj.getRange(a1);
+  return sheet.getRange(a1);
 }
 
 // -- Array of Objects from Sheet | return: array (objects)
@@ -1765,19 +1765,19 @@ function valueRange(sheetObj, a1Notation) {
  * @requires numCol() 
  * @requires headerVal() 
  * @requires valByRow() 
- * @param sheetObj
+ * @param sheet
  * @param hRow
  * @returns {undefined}
  */
 
-function arrObjFromSheet(sheetObj, hRow){
-  var lColNum = sheetObj.getLastColumn();
+function arrObjFromSheet(sheet, hRow){
+  var lColNum = sheet.getLastColumn();
   var lColABC = numCol(lColNum);
-  var lRow    = sheetObj.getLastRow();
-  var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+  var lRow    = sheet.getLastRow();
+  var hRange  = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
   var headers = headerVal(hRange);
   Logger.log(headers);
-  var vRange  = sheetObj.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
+  var vRange  = sheet.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
   Logger.log(valByRow(vRange, headers));
   return valByRow(vRange, headers);
 }
@@ -1794,14 +1794,14 @@ function arrObjFromSheet(sheetObj, hRow){
  * @requires valueRange() 
  * @requires headerVal() 
  * @requires valByRow() 
- * @param sheetObj
+ * @param sheet
  * @param a1Notation
  * @returns {undefined}
  */
 
-function arrObjFromRange(sheetObj, a1Notation) {
-  var hRange  = headerRange(sheetObj, a1Notation);
-  var vRange  = valueRange(sheetObj, a1Notation);
+function arrObjFromRange(sheet, a1Notation) {
+  var hRange  = headerRange(sheet, a1Notation);
+  var vRange  = valueRange(sheet, a1Notation);
   var headers = headerVal(hRange);
   return valByRow(vRange, headers);
 }
@@ -1818,20 +1818,20 @@ function arrObjFromRange(sheetObj, a1Notation) {
 /**
  * Returns an array containing all values in a column.
  *
- * @param {Sheet} sheetObj
+ * @param {Sheet} sheet
  * @param {number} hRow
  * @param {string} name
  * @returns {Array}
  */
 
-function arrForColName(sheetObj, hRow, name){
-  var lColNum  = sheetObj.getLastColumn();
+function arrForColName(sheet, hRow, name){
+  var lColNum  = sheet.getLastColumn();
   var lColABC  = numCol(lColNum);
-  var lRow     = sheetObj.getLastRow();
-  var hRange   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+  var lRow     = sheet.getLastRow();
+  var hRange   = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
   var headers  = headerVal(hRange);
   var tColABC  = numCol(headers.indexOf(name) + 1);
-  var rangeObj = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
+  var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
   var height   = rangeObj.getHeight();
   var vals     = rangeObj.getValues();
   var arr      = [];
@@ -1850,19 +1850,19 @@ function arrForColName(sheetObj, hRow, name){
 /**
  * Returns an array containing all values in a column.
  *
- * @param {Sheet} sheetObj
+ * @param {Sheet} sheet
  * @param {number} hRow
  * @param {number} colIndex
  * @returns {Array}
  */
 
-function arrForColNo(sheetObj, hRow, colIndex){
-  var lColNum  = sheetObj.getLastColumn();
+function arrForColNo(sheet, hRow, colIndex){
+  var lColNum  = sheet.getLastColumn();
   var lColABC  = numCol(lColNum);
-  var lRow     = sheetObj.getLastRow();
-  var hRange   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+  var lRow     = sheet.getLastRow();
+  var hRange   = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
   var tColABC  = numCol(colIndex);
-  var rangeObj = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
+  var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
   var height   = rangeObj.getHeight();
   var vals     = rangeObj.getValues();
   var arr      = [];
@@ -2011,9 +2011,9 @@ var ex_obj = {
 };
 
 /**
- * Returns a string.
- * Text surrounded by the delimiter is replaced with the matching value.
- * 
+ * Returns a string. 
+ * Words wrapped by the delimiter are replaced with the matching property value.
+ *
  * @param {Object} obj
  * @param {string} str
  * @param {string} delim
@@ -2040,14 +2040,22 @@ function strFromProp(obj, str, delim) {
   return result.join(" ");
 }
 
-// Logger.log(strFromProp(ex_obj, "name: %name% - state: %state% - job: %job%", "%")); // name: Jon - state: MN - job: IT Administrator
+// Logger.log(strFromProp(ex_obj, "name: %name% - state: %state% - job: %job%", "%")); // "name: Jon - state: MN - job: IT Administrator"
 
 // -- Replace Object Properties 
 
 // --- Replace Object Properties in Document
 
-function findReplaceInDoc(obj, docObj, delim) {
-  var body = docObj.getBody(); 
+/**
+ * Words wrapped by the delimiter are replaced with the matching property value.
+ *
+ * @param {Object} obj
+ * @param {Document} doc
+ * @param {string} delim
+ */
+
+function findReplaceInDoc(obj, doc, delim) {
+  var body = doc.getBody(); 
   for (var prop in obj) {
     var query = delim + prop + delim;
     var val   = obj[prop];
@@ -2066,12 +2074,20 @@ function findReplaceInDoc(obj, docObj, delim) {
 
 // --- Replace Object Properties in Spreadsheet
 
-function findReplaceinSpreadsheet(obj, ssObj, delim) {
-  var numSheets = ssObj.getNumSheets();
-  var sheets    = ssObj.getSheets();
+/**
+ * Words wrapped by the delimiter are replaced with the matching property value.
+ *
+ * @param {Object} obj
+ * @param {Spreadsheet} ss
+ * @param {string} delim
+ */
+
+function findReplaceInSpreadsheet(obj, ss, delim) {
+  var numSheets = ss.getNumSheets();
+  var sheets    = ss.getSheets();
   for (var i = 0; i < numSheets; i++) {
-    var sheetObj = sheets[i];
-    var values = sheetObj.getDataRange().getValues();
+    var sheet = sheets[i];
+    var values = sheet.getDataRange().getValues();
     for (var row in values){
       var update = values[row].map(function(original) {
         var text = original.toString();
@@ -2085,7 +2101,7 @@ function findReplaceinSpreadsheet(obj, ssObj, delim) {
       });
     values[row] = update;
     }
-    sheetObj.getDataRange().setValues(values);
+    sheet.getDataRange().setValues(values);
   } 
 }
 
@@ -2101,12 +2117,20 @@ function findReplaceinSpreadsheet(obj, ssObj, delim) {
 
 // var range_frid = sheet_frid.getRange("A1:C2");
 // range_frid.setValues(val_frid);
-// findReplaceinSpreadsheet(ex_obj, ss_frid, "%");
+// findReplaceInSpreadsheet(ex_obj, ss_frid, "%");
 
 // --- Replace Object Properties in Sheet
 
-function findReplaceinSheet(obj, sheetObj, delim) {
-  var values = sheetObj.getDataRange().getValues();
+/**
+ * Words wrapped by the delimiter are replaced with the matching property value.
+ *
+ * @param {Object} obj
+ * @param {Sheet} sheet
+ * @param {string} delim
+ */
+
+function findReplaceinSheet(obj, sheet, delim) {
+  var values = sheet.getDataRange().getValues();
   for(var row in values){
     var update = values[row].map(function(original) {
       var text = original.toString();
@@ -2120,7 +2144,7 @@ function findReplaceinSheet(obj, sheetObj, delim) {
     });
     values[row] = update;
   }
-  sheetObj.getDataRange().setValues(values);
+  sheet.getDataRange().setValues(values);
 }
 
 // var fldr_fris  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
@@ -2140,6 +2164,20 @@ function findReplaceinSheet(obj, sheetObj, delim) {
 // -- Copy Template for Item in Array of Objects and Replace Object Properties
 
 // --- Copy Document Template and Replace Object Properties
+
+/**
+ * For every object in the array, create a new merged document from a template.
+ *
+ * @requires strFromProp() 
+ * @requires copyFile() 
+ * @requires findReplaceInDoc() 
+ * @param {Object[]} arrObj
+ * @param {Document} templateDoc
+ * @param {string} naming
+ * @param {Folder} fldr
+ * @param {boolean} ts
+ * @param {string} delim
+ */
 
 function createDocsFromTemplateArrObj(arrObj, templateDoc, naming, fldr, ts, delim) {
   for (var i = 0; i < arrObj.length; i++) {
@@ -2169,6 +2207,20 @@ function createDocsFromTemplateArrObj(arrObj, templateDoc, naming, fldr, ts, del
 
 // --- Copy Spreadsheet Template and Replace Object Properties
 
+/**
+ * For every object in the array, create a new merged spreadsheet from a template.
+ *
+ * @requires strFromProp() 
+ * @requires copyFile() 
+ * @requires findReplaceInSpreadsheet() 
+ * @param {Object[]} arrObj
+ * @param {Spreadsheet} templateDoc
+ * @param {string} naming
+ * @param {Folder} fldr
+ * @param {boolean} ts
+ * @param {string} delim
+ */
+
 function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, ts, delim) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
@@ -2177,7 +2229,7 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, 
     var file = DriveApp.getFileById(templateSS.getId());
     var ssId = copyFile(file, fldr).setName(name).getId();
     var ss   = SpreadsheetApp.openById(ssId);
-    findReplaceinSpreadsheet(obj, ss, delim);
+    findReplaceInSpreadsheet(obj, ss, delim);
     }
 } 
 
@@ -2234,16 +2286,16 @@ function indexValForObj(obj, indexArray) {
 
 // --- Shade Cells in Sheet
 
-function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
-  var lRow   = sheetObj.getLastRow();
-  var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
+function shadeCellsInSheet(sheet, colLetter, obj, color) {
+  var lRow   = sheet.getLastRow();
+  var vRange = sheet.getRange(colLetter + "1" + ":" + colLetter + lRow);
   var arrVal = arrForRange(vRange);
   var index  = colNum(colLetter);
   for (var i = 0; i < arrVal.length; i++) {
     for (var prop in obj) {
       if (prop == arrVal[i]) {
         var letter = numCol(index + obj[prop]);
-        var sRange = sheetObj.getRange(letter + (i+1));
+        var sRange = sheet.getRange(letter + (i+1));
         sRange.setBackground(color);
       }
     } 
