@@ -2012,9 +2012,11 @@ var ex_obj = {
 
 /**
  * Returns a string.
- *
+ * Text surrounded by the delimiter is replaced with the matching value.
+ * 
  * @param {Object} obj
  * @param {string} str
+ * @param {string} delim
  * @returns {string}
  */
 
