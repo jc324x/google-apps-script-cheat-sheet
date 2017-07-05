@@ -2179,23 +2179,23 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, 
     }
 } 
 
-var ss1_csftao    = SpreadsheetApp.getActiveSpreadsheet();
-var sheet1_csftao = ss1_csftao.getSheetByName("Sheet2");
-var arrObj_csftao = arrObjFromSheet(sheet1_csftao, 2);
-var fldr1_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var fldr2_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
-var file_csftao   = createVerifySSIn(fldr1_csftao, "template-sheet");
-var ss2_csftao    = openFileAsSpreadsheet(file_csftao);
-var sheet2_csftao = ss2_csftao.getSheets()[0];
+// var ss1_csftao    = SpreadsheetApp.getActiveSpreadsheet();
+// var sheet1_csftao = ss1_csftao.getSheetByName("Sheet2");
+// var arrObj_csftao = arrObjFromSheet(sheet1_csftao, 2);
+// var fldr1_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var fldr2_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
+// var file_csftao   = createVerifySSIn(fldr1_csftao, "template-sheet");
+// var ss2_csftao    = openFileAsSpreadsheet(file_csftao);
+// var sheet2_csftao = ss2_csftao.getSheets()[0];
 
-var val_csftao = [
-  [ "First", "Last", "Grade", "Homeroom", "Email" ],
-  [ "%First%", "%Last%", "%Grade%", "%Homeroom%", "%Email%"]
-];
+// var val_csftao = [
+//   [ "First", "Last", "Grade", "Homeroom", "Email" ],
+//   [ "%First%", "%Last%", "%Grade%", "%Homeroom%", "%Email%"]
+// ];
 
-var range_csftao = sheet2_csftao.getRange("A1:E2");
-range_csftao.setValues(val_csftao);
-createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: %Last% %First%", fldr2_csftao, true, "%");
+// var range_csftao = sheet2_csftao.getRange("A1:E2");
+// range_csftao.setValues(val_csftao);
+// createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: %Last% %First%", fldr2_csftao, true, "%");
 
 // -- Cell Shading
 
