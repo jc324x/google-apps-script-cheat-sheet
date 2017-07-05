@@ -2151,50 +2151,51 @@ function createDocsFromTemplateArrObj(arrObj, templateDoc, naming, fldr, ts, del
     }
 } 
 
-var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
-var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
-var doc_cdftao    = createVerifyDocIn(fldr1_cdftao, "template-doc");
-var body_cdftao   = doc_cdftao.getBody();
-body_cdftao.clear();
-doc_cdftao.appendParagraph("First: %First%");
-doc_cdftao.appendParagraph("Last: %Last%");
-doc_cdftao.appendParagraph("Grade: %Grade%");
-doc_cdftao.appendParagraph("Homeroom: %Homeroom%");
-doc_cdftao.appendParagraph("Email: %Email%");
-createDocsFromTemplateArrObj(arrObj_cdftao, doc_cdftao, "Name: %Last% %First%", fldr2_cdftao, true, "%");
+// var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
+// var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
+// var doc_cdftao    = createVerifyDocIn(fldr1_cdftao, "template-doc");
+// var body_cdftao   = doc_cdftao.getBody();
+// body_cdftao.clear();
+// doc_cdftao.appendParagraph("First: %First%");
+// doc_cdftao.appendParagraph("Last: %Last%");
+// doc_cdftao.appendParagraph("Grade: %Grade%");
+// doc_cdftao.appendParagraph("Homeroom: %Homeroom%");
+// doc_cdftao.appendParagraph("Email: %Email%");
+// createDocsFromTemplateArrObj(arrObj_cdftao, doc_cdftao, "Name: %Last% %First%", fldr2_cdftao, true, "%");
 
 // --- Copy Spreadsheet Template and Replace Object Properties
 
-function createSpreadsheetsFromTemplateArrObj(arrObj, template, naming, fldr, ts, delim) {
+function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, ts, delim) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
-    var name = strFromProp(obj, naming);
+    var name = strFromProp(obj, naming, delim);
     if (ts === true) name += " - " + fmat12DT();
-    var ssId = copyFile(template, fldr).setName(name).getId();
+    var file = DriveApp.getFileById(templateSS.getId());
+    var ssId = copyFile(file, fldr).setName(name).getId();
     var ss   = SpreadsheetApp.openById(ssId);
-    findReplaceinSpreadsheet(obj, ss);
+    findReplaceinSpreadsheet(obj, ss, delim);
     }
 } 
 
-// var ss1_csftao    = SpreadsheetApp.getActiveSpreadsheet();
-// var sheet1_csftao = ss1_csftao.getSheetByName("Sheet2");
-// var arrObj_csftao = arrObjFromSheet(sheet1_csftao, 2);
-// var fldr1_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var fldr2_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
-// var file_csftao   = createVerifySSIn(fldr1_csftao, "template-sheet");
-// var ss2_csftao    = openFileAsSpreadsheet(file_csftao);
-// var sheet2_csftao = ss2_csftao.getSheets()[0];
+var ss1_csftao    = SpreadsheetApp.getActiveSpreadsheet();
+var sheet1_csftao = ss1_csftao.getSheetByName("Sheet2");
+var arrObj_csftao = arrObjFromSheet(sheet1_csftao, 2);
+var fldr1_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var fldr2_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
+var file_csftao   = createVerifySSIn(fldr1_csftao, "template-sheet");
+var ss2_csftao    = openFileAsSpreadsheet(file_csftao);
+var sheet2_csftao = ss2_csftao.getSheets()[0];
 
-// var val_csftao = [
-//   [ "First", "Last", "Grade", "Homeroom", "Email" ],
-//   [ "<<First>>", "<<Last>>", "<<Grade>>", "<<Homeroom>>", "<<Email>>"]
-// ];
+var val_csftao = [
+  [ "First", "Last", "Grade", "Homeroom", "Email" ],
+  [ "%First%", "%Last%", "%Grade%", "%Homeroom%", "%Email%"]
+];
 
-// var range_csftao = sheet2_csftao.getRange("A1:E2");
-// range_csftao.setValues(val_csftao);
-// createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: <<Last>> <<First>>", fldr2_csftao, true);
+var range_csftao = sheet2_csftao.getRange("A1:E2");
+range_csftao.setValues(val_csftao);
+createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: %Last% %First%", fldr2_csftao, true, "%");
 
 // -- Cell Shading
 
