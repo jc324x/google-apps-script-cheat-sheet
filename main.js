@@ -2362,11 +2362,21 @@ function shadeCellsInSheet(sheet, colLetter, obj, color) {
 
 // -- Append Subject and Body Properties for Array of Objects | return: array (objects)
 
-function appendSubjBodyForArrObj(arrObj, subj, body) {
+/**
+ * Returns an array of objects after adding properties Subject and Body to each object.
+ *
+ * @param {Object[]} arrObj
+ * @param {string} subj
+ * @param {string} body
+ * @param {string} delim
+ * @returns {Object[]}
+ */
+
+function appendSubjBodyForArrObj(arrObj, subj, body, delim) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
     for (var prop in obj) {
-      var search = "%" + prop + "%";
+      var search = delim + prop + delim;
       if (body.indexOf(search) !== -1) {
         body = body.replace(search, obj[prop]);
         }
@@ -2380,13 +2390,21 @@ function appendSubjBodyForArrObj(arrObj, subj, body) {
   return arrObj;
 } 
 
-// var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
-// var subj_asbfao   = "Classroom update for %First% %Last%";
-// var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
-// Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
+var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
+var subj_asbfao   = "Classroom update for %First% %Last%";
+var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
+Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao, "%")); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
 
 // -- Run Mail Merge for Array of Objects
+
+/**
+ * Sends and email for each object in an array of objects.
+ * Emails are sent using properties Email, Subject and Body.
+ *
+ * @param arrObj
+ * @returns {undefined}
+ */
 
 function runMailMergeForArrObj(arrObj) {
   for (var i = 0; i < arrObj.length; i++) {
