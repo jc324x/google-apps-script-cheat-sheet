@@ -137,7 +137,7 @@ Logger.log("Start");
 
 // - Array 
 
-// -- Check for a Value | return: boolean
+// -- Check for a Value
 
 /**
  * Returns true if the value is in the array.
@@ -154,7 +154,7 @@ function checkValIn(arr, val) {
 // var arr_cvi = [1, 2, 3, 4];
 // Logger.log(checkValIn(arr_cvi, 5)); // false
 
-// -- Remove Duplicates | return: array
+// -- Remove Duplicates
 
 /**
  * Returns an array with no duplicate values.
@@ -180,7 +180,7 @@ function rmDuplicatesFrom(arr) {
 // var arr_rdf = [1, 2, 3, 1, 2, 3, 4,];
 // Logger.log(rmDuplicatesFrom(arr_rdf)); // [1, 2, 3, 4]
 
-// -- Remove Empty Elements | return: array
+// -- Remove Empty Elements
 
 /**
  * Returns an array with no empty elements.
@@ -196,7 +196,7 @@ function rmEmptyEl(x) {
 // var arr_rev = ["a",,"b",,,"c"];
 // Logger.log(arr_rev.filter(rmEmptyEl)); // ["a", "b", "c"]
 
-// -- Get Count of Values | return: array (objects)
+// -- Get Count of Values
 
 /**
  * Returns an array of objects. Objects have two properties, count and value.
@@ -231,7 +231,7 @@ function countOfValIn(arr) {
 // var arr_covi  = ["a", "b", "c", "a", "b", "c", "a"];
 // Logger.log(countOfValIn(arr_covi)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
 
-// -- Intersect of Two Arrays | return: array
+// -- Intersect of Two Arrays
 
 /**
  * Returns an array of the elements in both arrays.
@@ -261,7 +261,7 @@ function intersectOf(arrA, arrB) {
 // var arrB_io = [3, 4, 5];
 // Logger.log(intersectOf(arrA_io, arrB_io)); // [3]
 
-// -- Compare Two Arrays | return: boolean
+// -- Compare Two Arrays 
 
 /**
  * Returns true if both arrays have the same elements in the same order.
@@ -336,7 +336,7 @@ function delimStrFromArrMod(arr, delim, mod) {
 
 // - Two-Dimensional Array
 
-// -- Flatten Two-Dimensional Array | return: array
+// -- Flatten Two-Dimensional Array
 
 /**
  * Returns an array containing all values in a two-dimensional array.
@@ -365,7 +365,7 @@ var ex_arrObj = [
   {a: 1, b: 1, c: 50}
 ];
 
-// -- Sort by Property or Properties | return: array (objects)
+// -- Sort by Property or Properties
 
 /**
  * Returns an array of objects sorted by a property value.
@@ -410,7 +410,7 @@ function dynSortM() {
 // Logger.log(ex_/rrObj.sort(dynSortM("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
-// -- Find Object With Unique Property Value | return: object / value
+// -- Find Object With Unique Property Value
 
 /**
  * Returns the first object in an array of objects with the key value pair.
@@ -435,6 +435,7 @@ function findObjIn(arrObj, pQuery, val) {
 // Logger.log(findObjIn(ex_arrObj,"a",1000)); // {a=1000.0, b=1.0, c=5.0}
 
 /**
+ * FLAG
  * Returns a value from the first object in an array of objects with the key value pair.
  *
  * @param {Object[]} arrObj
@@ -457,7 +458,7 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 
 // Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
 
-// -- Find Earliest or Latest Object by Timestamp | return: object
+// -- Find Earliest or Latest Object by Timestamp
 
 /**
  * Returns the object with the oldest Timestamp value from an array of objects.
@@ -503,7 +504,7 @@ function latestTS(arrObj) {
 // var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
 // Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
-// -- Filter by Property Value or Values | return: array (objects)
+// -- Filter by Property Value or Values
 
 /**
  * Returns an array of objects containing matching objects.
@@ -528,7 +529,7 @@ function filterObjIn(arrObj, pQuery, arrVal) {
 // Logger.log(filterObjIn(ex_arrObj, "a", [10])); // [{a=10.0, b=2.0, c=500.0}]
 // Logger.log(filterObjIn(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 
-// -- Unify Properties for Array of Objects | return: array (objects)
+// -- Unify Properties for Array of Objects 
 
 /**
  * Returns an array of objects, with an additional property value added to each matching object.
@@ -564,7 +565,7 @@ var arrObj_upfao  = [
 
 // - Object
 
-// -- Array of Matching Property Values | return: array
+// -- Array of Matching Property Values 
 
 /**
  * Returns an array of matching properties. 
@@ -598,7 +599,7 @@ function filterValIn(obj, props) {
 // var arr_fvi = ["a", "b", "d"];
 // Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
 
-// Merge Objects | return: object
+// Merge Objects
 
 /**
  * Returns an object with the values of the argument objects.
@@ -635,7 +636,7 @@ function mergeObjs() {
 
 // - Dates and Times
 
-// -- Formatted Timestamps | return: string
+// -- Formatted Timestamps
 
 /**
  * Returns a string of today's date formatted "month-day-year".
@@ -692,7 +693,7 @@ function fmat12DT() {
 
 // Logger.log(fmat12DT()); // 4-24-2017 8:43:40 PM
 
-// -- Date Object from String | return: date
+// -- Date Object from String
 
 /**
  * Returns a new date object from a string formatted year-month-date. 
@@ -711,7 +712,7 @@ function dateObjectFrom(str) {
 
 // Logger.log(dateObjectFrom("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
 
-// -- Match a Date to Date Range| return: string
+// -- Match a Date to Date Range
 
 /**
  * Returns a value matched to a range of dates.
@@ -754,7 +755,7 @@ function matchDateRange(arrObj, optDate) {
 
 // - Folders
 
-// -- Create or Verify Folder Path | return: folder
+// -- Create or Verify Folder Path
 
 /**
  * Returns a folder at the end of a folder path.
@@ -789,7 +790,7 @@ function createVerifyPath(path) {
 
 // Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 
-// -- Last Folder in Folder Path | return: folder
+// -- Last Folder in Folder Path 
 
 /**
  * Returns the last folder in a folder path.
@@ -821,7 +822,7 @@ function lastFolderIn(path) {
 // Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
 // Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B/C/D/E/F/G")); // C
 
-// -- Array of All Folders | return: array (folders)
+// -- Array of All Folders 
 
 // --- All Folders in a Folder 
 
@@ -885,7 +886,7 @@ function allFolders() {
 
 // Logger.log(allFolders());
 
-// -- Array of Folder Names | return: array (strings)
+// -- Array of Folder Names
 
 /**
  * Returns an array of folder names.
@@ -906,7 +907,7 @@ function folderNames(fldrs) {
 // var arr_fn  = foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B"));
 // Logger.log(folderNames(arr_fn)); // [C]
 
-// -- Find a Folder | return: folder
+// -- Find a Folder
 
 // --- Find a Folder in a Folder
 
@@ -976,7 +977,7 @@ function findFolderInDrive(name) {
 
 // Logger.log(findFolderInDrive("folders")); // folders
 
-// -- Create or Verify Folders | return: folder
+// -- Create or Verify Folders
 
 // --- Create or Verify Folders in a Folder
 
@@ -1041,7 +1042,7 @@ function checkForExFile() {
 
 // Logger.log(checkForExFile());
 
-// -- Array of All Files | array (files) 
+// -- Array of All Files 
 
 // --- All Files in a Folder
 
@@ -1106,7 +1107,7 @@ function allFiles() {
 
 // Logger.log(allFiles());
 
-// -- Array of File Names | return: array (strings)
+// -- Array of File Names 
 
 /**
  *  Returns an array of file names.
@@ -1128,7 +1129,7 @@ function fileNames(files) {
 // var arr_fnam  = filesIn(fldr_fnam);
 // Logger.log(fileNames(arr_fnam)); // [example-file]
 
-// -- Find a File | return: file 
+// -- Find a File
 
 // --- Find a File in a Folder
 
@@ -1232,7 +1233,7 @@ function findFileAtPath(path) {
 
 // Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file"));
 
-// -- Copy a File to a Folder | return: file
+// -- Copy a File to a Folder
 
 /**
  * Returns the copied file.
@@ -1254,7 +1255,7 @@ function copyFile(file, fldr) {
 // var file_cf = findFileInDrive("example-file");
 // Logger.log(copyFile(file_cf, fldr_cf)); // example-file
 
-// -- Move a File to a Folder | return: file
+// -- Move a File to a Folder 
 
 /**
  * Returns the copied file from its new destination.
@@ -1281,7 +1282,7 @@ function moveFile(file, fldr) {
 
 // - Files and Folders
 
-// -- Rename a File or Folder | return: file or folder 
+// -- Rename a File or Folder
 
 /**
  * Returns a renamed file or a folder.
@@ -1300,7 +1301,7 @@ function renameFileFldr(file_fldr, name) {
 // var file_rf = findFileIn(fldr_rf, "example-file");
 // Logger.log(renameFileFldr(file_rf, "modified-example-file")); // modified-example-file
 
-// -- Parent Folder of a File or Folder | return: folder
+// -- Parent Folder of a File or Folder 
 
 /**
  * Returns the parent folder or a file or a folder.
@@ -1403,7 +1404,7 @@ function importConfiguration(scriptConfig) {
 
 // - Managing Spreadsheet Files
 
-// -- Create or Verify Spreadsheet | return: spreadsheet
+// -- Create or Verify Spreadsheet 
 
 // --- Create or Verify Spreadsheet in a Folder
 
@@ -1460,7 +1461,7 @@ function createVerifySSAtRoot(name) {
   return openFileAsSpreadsheet(findFileAtRoot(name));
 }
 
-// -- Id of Active Spreadsheet | return: string
+// -- Id of Active Spreadsheet 
 
 /**
  * Returns the Id of the active spreadsheet.
@@ -1496,7 +1497,7 @@ function openFileAsSpreadsheet(file) {
 
 // - Utility Functions for Sheets
 
-// -- Convert Column Number to a Letter | return: string
+// -- Convert Column Number to a Letter 
 
 /**
  * Returns the column number as a alphabetical column value.
@@ -1536,7 +1537,7 @@ function numCol(number) {
 
 // ex_nc();
 
-// -- Convert Column Letter to a Number | return: integer 
+// -- Convert Column Letter to a Number
 
 /**
  * Returns an alphabetical column value as a number.
@@ -1585,7 +1586,7 @@ function importRange(){
   var set = sheet_gs.getRange("B2:B5").setValues(get);
 }
 
-// -- Evaluating True and False | return: boolean
+// -- Evaluating True and False
 
 /**
  * Returns true or false given truthy or falsy values.
@@ -1616,7 +1617,7 @@ function checkTF(input) {
 // Logger.log(checkTF("No")); // false
 // Logger.log(checkTF("Yes")); // true
 
-// -- Array of Sheet Names | return: array
+// -- Array of Sheet Names
 
 /**
  * Returns an array of the sheet names for a spreadsheet.
@@ -1639,7 +1640,7 @@ function arrSheetNames(ss) {
 
 // - Objects
 
-// -- Object from Range | return: object
+// -- Object from Range
 
 /**
  * Returns an object from a range.
@@ -1670,7 +1671,7 @@ function objFromRange(sheet, a1Notation) {
 
 // -- Utility Functions for Array of Objects
 
-// --- Header Values | array
+// --- Header Values 
 
 /**
  * Returns an array of values for the top row of a range object.
@@ -1689,7 +1690,7 @@ function headerVal(rangeObj){
   return arr;
 }
 
-// --- Values by Row | array (objects)
+// --- Values by Row 
 
 /**
  * Returns an array of objects representing a range.
@@ -1718,7 +1719,7 @@ function valByRow(rangeObj, headers){
   return arr;
 }
 
-// --- Header Range | return: range
+// --- Header Range 
 
 /**
  * Returns the header range for a targeted range.
@@ -1737,7 +1738,7 @@ function headerRange(sheet, a1Notation) {
   return sheet.getRange(a1);
 }
 
-// --- Value Range | return: range
+// --- Value Range 
 
 /**
  * Returns the value range for a targeted range. 
@@ -1757,7 +1758,7 @@ function valueRange(sheet, a1Notation) {
   return sheet.getRange(a1);
 }
 
-// -- Array of Objects from Sheet | return: array (objects)
+// -- Array of Objects from Sheet 
 
 /**
  * Returns an array of objects representing the values in a sheet.
@@ -1785,7 +1786,7 @@ function arrObjFromSheet(sheet, hRow){
 // var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // Logger.log(arrObjFromSheet(sheet_aofs, 2));
 
-// -- Array of Objects from Range | return: array (objects)
+// -- Array of Objects from Range 
 
 /**
  * Returns an array of values representing the values in a range.
@@ -1903,7 +1904,7 @@ function arrForColRange(rangeObj){
 
 // - Managing Document Files
 
-// -- Create or Verify Document in a Folder or at Root | return: document 
+// -- Create or Verify Document in a Folder or at Root 
 
 // --- Create or Verify Document in a Folder
 
@@ -2002,7 +2003,7 @@ function openFileAsDocument(file) {
 
 // - Sheets and Docs
 
-// -- String From Object Properties | return: string
+// -- String From Object Properties 
 
 var ex_obj = { 
   name:  "Jon",
@@ -2268,7 +2269,7 @@ var obj_cs = {
 };
 
 // FLAG: Object literal?
-// --- Index Object Properties | return: object
+// --- Index Object Properties 
 
 function indexValForObj(obj, indexArray) {
   var _obj = {};
@@ -2360,7 +2361,7 @@ function shadeCellsInSheet(sheet, colLetter, obj, color) {
 
 // - Mail Merge
 
-// -- Append Subject and Body Properties for Array of Objects | return: array (objects)
+// -- Append Subject and Body Properties for Array of Objects 
 
 /**
  * Returns an array of objects after adding properties Subject and Body to each object.
