@@ -1778,9 +1778,7 @@ function arrObjFromSheet(sheet, hRow){
   var lRow    = sheet.getLastRow();
   var hRange  = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
   var headers = headerVal(hRange);
-  Logger.log(headers);
   var vRange  = sheet.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
-  Logger.log(valByRow(vRange, headers));
   return valByRow(vRange, headers);
 }
 
@@ -2311,7 +2309,7 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, 
 // -- Append Subject and Body Properties for Array of Objects 
 
 /**
- * Returns an array of objects after adding properties Subject and Body to each object.
+ * Returns an array of objects. Subject and Body properties are appended to each object.
  *
  * @param {Object[]} arrObj
  * @param {string} subj
@@ -2342,17 +2340,16 @@ var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2
 var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
 var subj_asbfao   = "Classroom update for %First% %Last%";
 var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
-// FLAG -> return doesn't look right...
-Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao, "%")); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
+// Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao, "%")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, Body=<p>Arienne Garret is in Muhsina's this fall!</p>, Subject=Classroom update for Arienne Garret}...]
 
 // -- Run Mail Merge for Array of Objects
 
 /**
  * Sends and email for each object in an array of objects.
- * Emails are sent using properties Email, Subject and Body.
+ * Properties Email, Subject and Body are used.
  *
- * @param arrObj
- * @returns {undefined}
+ * @requires appendSubjBodyForArrObj() 
+ * @param {Object[]} arrObj
  */
 
 function runMailMergeForArrObj(arrObj) {
