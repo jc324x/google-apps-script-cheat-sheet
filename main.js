@@ -111,7 +111,6 @@ Logger.log("Start");
 // | --- Copy Spreadsheet Template and Replace Object Properties
 // | -- Cell Shading
 // | --- Index Object Properties
-// | --- Shade Cells in Sheet 
 // | -- Create Bulleted List in Document for Array of Objects
 // | --- Single Division List
 // | --- Multi Division List
@@ -126,7 +125,7 @@ Logger.log("Start");
 // * Create Multidimensional Array of Values
 // * Convert JSON to Sheet
 // * 5 Minute Timer Management
-// * Shade Cells in Document Table
+// * Shade Cells in Document Tables and Spreadsheets
 
 // Possible Additions:
 // * Multidimensional Array from Array of Objects
@@ -2254,60 +2253,6 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, 
 // var range_csftao = sheet2_csftao.getRange("A1:E2");
 // range_csftao.setValues(val_csftao);
 // createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: %Last% %First%", fldr2_csftao, true, "%");
-
-// -- Cell Shading
-
-var values_cs = [
-  "Strongly Disagree",
-  "Somewhat Disagree",
-  "No Opinion",
-  "Somewhat Agree",
-  "Strongly Agree"
-];
-
-var obj_cs = {
-  "Student Has Good Study Habits":       "Strongly Agree",
-  "Student is Organized":                "No Opinion",
-  "Student Gets Along Well With Others": "Somewhat Agree"
-};
-
-// --- Index Object Properties 
-
-function indexValForObj(obj, indexArray) {
-  var _obj = {};
-  for (var prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      if (indexArray.indexOf(obj[prop]) != -1) {
-        _obj[prop] = (indexArray.indexOf(obj[prop])+1);
-      }
-    }
-  }
-  return _obj;
-}
-
-// Logger.log(indexValForObj(obj_cs, values_cs)); // {Student Has Good Study Habits=5.0, Student Gets Along Well With Others=4.0, Student is Organized=3.0}
-
-// --- Shade Cells in Sheet
-
-function shadeCellsInSheet(sheet, colLetter, obj, color) {
-  var lRow   = sheet.getLastRow();
-  var vRange = sheet.getRange(colLetter + "1" + ":" + colLetter + lRow);
-  var arrVal = arrForRange(vRange);
-  var index  = colNum(colLetter);
-  for (var i = 0; i < arrVal.length; i++) {
-    for (var prop in obj) {
-      if (prop == arrVal[i]) {
-        var letter = numCol(index + obj[prop]);
-        var sRange = sheet.getRange(letter + (i+1));
-        sRange.setBackground(color);
-      }
-    } 
-  } 
-}
-
-// var obj_scis   = indexValForObj(obj_cs, values_cs);
-// var sheet_scis = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
-// shadeCellsInSheet(sheet_scis, "A", obj_scis, "#D3D3D3");
 
 // -- Create Bulleted List in Document for Array of Objects
 
