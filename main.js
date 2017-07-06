@@ -351,9 +351,9 @@ function flattenTwoDArr(twoDArr) {
   return result;
 }
 
-// var sheet_fma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var val_fma   = sheet_fma.getRange("G2:H5").getValues();
-// Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
+var sheet_fma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var val_fma   = sheet_fma.getRange("G2:H5").getValues();
+Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
 
