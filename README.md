@@ -14,11 +14,11 @@
 * [Two-Dimensional Array](#two-dimensional-array)
   * [Flatten Two-Dimensional Array](#flatten-two-dimensional-array)
 * [Array of Objects](#array-of-objects)
-  * [Sort by Property or Properties](#sort-by-property-or-properties--return-array-objects)
-  * [Find Object With Unique Property Value](#find-object-with-unique-property-value--return-object--value)
-  * [Find Earliest or Latest Object by Timestamp](#find-earliest-or-lastest-object-by-timestamp--return-object)
-  * [Filter by Property Value or Values](#filter-by-property-value-or-values--return-array-objects)
-  * [Unify Properties for Array of Objects](#unify-properties-for-array-of-objects--return-array-objects)
+  * [Sort by Property or Properties](#sort-by-property-or-properties)
+  * [Find Object With Unique Property Value](#find-object-with-unique-property-value)
+  * [Find Earliest or Latest Object by Timestamp](#find-earliest-or-lastest-object-by-timestamp)
+  * [Filter by Property Value or Values](#filter-by-property-value-or-values)
+  * [Unify Properties for Array of Objects](#unify-properties-for-array-of-objects)
 * [Object](#object)
   * [Array of Matching Property Values](#array-of-matching-property-values--return-array)
   * [Merge Objects](#merge-objects--return-object)
@@ -394,9 +394,16 @@ var ex_arrObj = [
 ]
 ```
 
-#### Sort by Property or Properties | return: `array (objects)` ####
+#### Sort by Property or Properties ####
 
 ```javascript
+/**
+ * Returns an array of objects sorted by a single property value.
+ *
+ * @param {string} prop
+ * @returns {Object[]}
+ */
+
 function dynSort(prop) {
   var sortOrder = 1;
   if(prop[0] === "-") {
@@ -406,11 +413,17 @@ function dynSort(prop) {
   return function (a,b) {
     var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
     return result * sortOrder;
-  }
+  };
 }
 
 Logger.log(ex_arrObj.sort(dynSort("a"))); 
 // [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}]
+
+/**
+ * Returns an array of objects sorted by multiple property values.
+ * @param {...string}
+ * @returns {Object[]}
+ */
 
 function dynSortM() {
   var props = arguments;
@@ -421,14 +434,14 @@ function dynSortM() {
       i++;
     }
     return result;
-  }
+  };
 }
 
-Logger.log(ex_arrObj.sort(dynSortM("b", "c"))); 
+Logger.log(ex_/rrObj.sort(dynSortM("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 ```
 
-#### Find Object With Unique Property Value | return: `object / value` #### 
+#### Find Object With Unique Property Value #### 
 
 ```javascript
 function findObjIn(arrObj, pQuery, val) {
