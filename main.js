@@ -434,8 +434,7 @@ function findObjIn(arrObj, pQuery, val) {
 // Logger.log(findObjIn(ex_arrObj,"a",1000)); // {a=1000.0, b=1.0, c=5.0}
 
 /**
- * FLAG -> consistent language
- * Returns a value from the first object in an array of objects with the key value pair.
+ * Returns a value from the first matching object in the array.
  *
  * @param {Object[]} arrObj
  * @param {string} pQuery
@@ -1635,8 +1634,7 @@ function arrSheetNames(ss) {
 } 
 
 // var ss_asn = SpreadsheetApp.getActiveSpreadsheet();
-// FLAG -> return?
-// Logger.log(arrSheetNames(ss_asn));
+// Logger.log(arrSheetNames(ss_asn)); // [Sheet1, Sheet2, Sheet3]
 
 // - Objects
 
@@ -1669,7 +1667,6 @@ function objFromRange(sheet, a1Notation) {
 
 // - Array of Objects
 
-// FLAG -> examples...
 // -- Utility Functions for Array of Objects
 
 // --- Header Values 
@@ -1690,6 +1687,10 @@ function headerVal(rangeObj){
   } 
   return arr;
 }
+
+// var sheet_hv = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var range_hv = sheet_hv.getRange("A2:E19");
+// Logger.log(headerVal(range_hv)); // [First, Last, Grade, Homeroom, Email]
 
 // --- Values by Row 
 
@@ -1720,6 +1721,11 @@ function valByRow(rangeObj, headers){
   return arr;
 }
 
+// var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var range_vbr   = sheet_hv.getRange("A2:E19");
+// var headers_vbr = headerVal(range_vbr);
+// Logger.log(valByRow(range_vbr, headers_vbr)); // [{Last=Last, Email=Email, Homeroom=Homeroom, Grade=Grade, First=First}, {Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}...]
+
 // --- Header Range 
 
 /**
@@ -1730,6 +1736,15 @@ function valByRow(rangeObj, headers){
  * @returns {Range}
  */
 
+
+// function arrObjFromRange(sheet, a1Notation) {
+//   var hRange  = headerRange(sheet, a1Notation);
+//   var vRange  = valueRange(sheet, a1Notation);
+//   var headers = headerVal(hRange);
+//   return valByRow(vRange, headers);
+// }
+
+
 function headerRange(sheet, a1Notation) {
   var split = a1Notation.split(":");
   var col0  = split[0].match(/\D/g,'');
@@ -1738,6 +1753,10 @@ function headerRange(sheet, a1Notation) {
   var a1    = col0 + row + ":" + col1 + row;
   return sheet.getRange(a1);
 }
+
+// var sheet_hr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(headerRange(sheet_hr, "A2:E19").getA1Notation()); // "A2:E2"
+// Logger.log(headerRange(sheet_hr, "A2:E19").getValues()); // [[First, Last, Grade, Homeroom, Email]]
 
 // --- Value Range 
 
@@ -1758,6 +1777,10 @@ function valueRange(sheet, a1Notation) {
   var a1    = col0 + (Number(row0) + 1) + ":" + col1 + row1;
   return sheet.getRange(a1);
 }
+
+// var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(valueRange(sheet_vr, "A2:E19").getA1Notation()); // "A3:E19"
+// Logger.log(valueRange(sheet_vr, "A2:E19").getValues()); // [[Arienne, Garret, 6.0, Muhsina, agarret@example.com], [Elissa, Jules, 6.0, Lale, ejules@example.com]...]
 
 // -- Array of Objects from Sheet 
 
@@ -1783,8 +1806,7 @@ function arrObjFromSheet(sheet, hRow){
 }
 
 // var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// FLAG -> document
-// Logger.log(arrObjFromSheet(sheet_aofs, 2));
+// Logger.log(arrObjFromSheet(sheet_aofs, 2)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 
 // -- Array of Objects from Range 
 
@@ -1808,7 +1830,8 @@ function arrObjFromRange(sheet, a1Notation) {
 }
 
 // var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrObjFromRange(sheet_aofr, "A2:E7")); // FLAG -> document...
+// Logger.log(arrObjFromRange(sheet_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
+
 
 // - Array 
 
