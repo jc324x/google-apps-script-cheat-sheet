@@ -5,7 +5,7 @@ Logger.log("Start");
 // | - Array
 // | -- Check for a Value
 // | -- Remove Duplicates
-// | -- Remove Empty Values
+// | -- Remove Empty Elements
 // | -- Get Count of Values
 // | -- Intersect of Two Arrays
 // | -- Compare Two Arrays
@@ -305,8 +305,8 @@ function delimStrFromArr(arr, delim) {
   return result;
 }
 
-// var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
-// Logger.log(delimStrFromArr(arr_da, ",")); // "a@example.com, b@example.com, c@example.com"
+var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
+Logger.log(delimStrFromArr(arr_da, ",")); // "a@example.com, b@example.com, c@example.com"
 
 // -- Array as Modified Delimited String
 

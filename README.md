@@ -161,8 +161,8 @@ function checkValIn(arr, val) {
   return arr.indexOf(val) > -1; 
 }
 
-// var arr_cvi = [1, 2, 3, 4];
-// Logger.log(checkValIn(arr_cvi, 5)); // false
+var arr_cvi = [1, 2, 3, 4];
+Logger.log(checkValIn(arr_cvi, 5)); // false
 ```
 
 #### Remove Duplicates ####
@@ -189,26 +189,42 @@ function rmDuplicatesFrom(arr) {
   return result;
 }
 
-// var arr_rdf = [1, 2, 3, 1, 2, 3, 4,];
-// Logger.log(rmDuplicatesFrom(arr_rdf)); // [1, 2, 3, 4]
+var arr_rdf = [1, 2, 3, 1, 2, 3, 4,];
+Logger.log(rmDuplicatesFrom(arr_rdf)); // [1, 2, 3, 4]
 ```
 
-#### Remove Empty Values | return: `array` ####
+#### Remove Empty Values ####
 
 ```javascript
-function rmEmptyVal(x) {
+/**
+ * Returns an array with no empty elements.
+ *
+ * @param {*} x
+ * @returns {Array}
+ */
+
+function rmEmptyEl(x) {
   return (x !== (undefined || ''));
 }
 
 var arr_rev = ["a",,"b",,,"c"];
-Logger.log(arr_rev.filter(rmEmptyVal)); // [a,b,c]
+Logger.log(arr_rev.filter(rmEmptyEl)); // ["a", "b", "c"]
 ```
 
-#### Get Count of Values | return: `array (objects)` #### 
+#### Get Count of Values #### 
 
 ```javascript
+/**
+ * Returns an array of objects. Objects have two properties, count and value.
+ *
+ * @param {Array} arr
+ * @property {value} a value found in the array
+ * @property {count} count of the value in the array
+ * @returns {Object[]}
+ */
+
 function countOfValIn(arr) {
-  var _arr = [];
+  var result = [];
   var copy = arr.slice(0);
   for (var i = 0; i < arr.length; i++) {
     var myCount = 0;  
@@ -219,93 +235,128 @@ function countOfValIn(arr) {
       }
     }
     if (myCount > 0) {
-      var obj   = new Object();
+      var obj   = {};
       obj.value = arr[i];
       obj.count = myCount;
-      _arr.push(obj);
+      result.push(obj);
     }
   }
-  return _arr;
+  return result;
 }
 
-var arr_covi  = ["A", "B", "C", "A", "B", "C", "A"];
-Logger.log(countOfValIn(arr_covi)); // {count=3.0, value=A}, {count=2.0, value=B}, {count=2.0, value=C}]
+var arr_covi  = ["a", "b", "c", "a", "b", "c", "a"];
+Logger.log(countOfValIn(arr_covi)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
 ```
 
-#### Intersect of Two Arrays | return: `array` #### 
+#### Intersect of Two Arrays #### 
 
 ```javascript
+/**
+ * Returns an array of the elements in both arrays.
+ *
+ * @param {Array} arrA
+ * @param {Array} arrB
+ * @returns {Array}
+ */
+
 function intersectOf(arrA, arrB) {
   var a = 0;
   var b = 0;
-  var _arr = [];
+  var result = [];
   while( a < arrA.length && b < arrB.length ) {
-     if (arrA[a] < arrB[b] ) { a++; }
-     else if (arrA[a] > arrB[b] ) { b++; }
-     else {
-       _arr.push(arrA[a]);
-       a++;
-       b++;
-     }
-  }
-  return _arr;
-}
-
-var arr1_io = [1, 2, 3];
-var arr2_io = [3, 4, 5];
-Logger.log(intersectOf(arr1_io, arr2_io)); // [3]
-```
-
-#### Compare Two Arrays | return: `boolean` #### 
-
-```javascript
-function compareArr(arr1, arr2) {
-    if(arr1.length !== arr2.length) return false;
-    for(var i = arr1.length; i--;) {
-        if(arr1[i] !== arr2[i]) return false;
+    if (arrA[a] < arrB[b] ) { a++; }
+    else if (arrA[a] > arrB[b] ) { b++; }
+    else {
+      result.push(arrA[a]);
+      a++;
+      b++;
     }
-    return true;
+  }
+  return result;
 }
 
-var arr1_ca = [1,2,3,4,5]
-var arr2_ca = [1,2,3,4,5]
-var arr3_ca = ["a","b","c","d","e"]
-Logger.log(compareArr(arr1_ca, arr2_ca)); // true
-Logger.log(compareArr(arr1_ca, arr3_ca)); // false
+var arrA_io = [1, 2, 3];
+var arrB_io = [3, 4, 5];
+Logger.log(intersectOf(arrA_io, arrB_io)); // [3]
 ```
 
-#### Array as Delimited String | return: `string` #### 
+#### Compare Two Arrays #### 
 
 ```javascript
-function delimitedArr(arr, delimiter) {
-  var _arr = rmDuplicatesFrom(arr).sort();
-  var str  = "";
-  for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + delimiter + " ";
+/**
+ * Returns true if both arrays have the same elements in the same order.
+ *
+ * @param {Array} arrA
+ * @param {Array} arrB
+ * @returns {boolean}
+ */
+
+function compareArr(arrA, arrB) {
+  if(arrA.length !== arrB.length) return false;
+  for(var i = arrA.length; i--;) {
+    if(arrA[i] !== arrB[i]) return false;
   }
-  str = str.slice(0, -2);
-  return str;
+  return true;
+}
+
+var arrA_ca = [1, 2, 3, 4, 5];
+var arrB_ca = [1, 2, 3, 4, 5];
+var arrC_ca = ["a", "b", "c", "d", "e"];
+Logger.log(compareArr(arrA_ca, arrB_ca)); // true
+Logger.log(compareArr(arrA_ca, arrC_ca)); // false
+```
+
+#### Array as Delimited String #### 
+
+```javascript
+/**
+ * Returns a string of array values. 
+ * Elements are separated by a delimiter and a space.
+ *
+ * @param {Array} arr
+ * @param {string} delim
+ * @returns {string}
+ */
+
+function delimStrFromArr(arr, delim) {
+  var _arr = rmDuplicatesFrom(arr).sort();
+  var result  = "";
+  for (var i = 0; i < _arr.length; i++) {
+    result += _arr[i] + delim + " ";
+  }
+  result = result.slice(0, -2);
+  return result;
 }
 
 var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
-Logger.log(delimitedArr(arr_da, ",")); // a@example.com, b@example.com, c@example.com
+Logger.log(delimStrFromArr(arr_da, ",")); // "a@example.com, b@example.com, c@example.com"
 ```
 
-#### Array as Modified Delimited String | return: `string` #### 
+#### Array as Modified Delimited String #### 
 
 ```javascript
-function delimitedArrMod(arr, delimiter, mod) {
+/**
+ * Returns a string of array values.
+ * Elements are separated by a delimiter and a space, each followed by a modification.
+ *
+ * @param {Array} arr
+ * @param {string} delim
+ * @param {string} mod Modification to append to each item in the array.
+ * @returns {string}
+ */
+
+function delimStrFromArrMod(arr, delim, mod) {
   var _arr = rmDuplicatesFrom(arr).sort();
-  var str  = "";
+  var result  = "";
   for (var i = 0; i < _arr.length; i++) {
-    str += _arr[i] + mod + delimiter + " "; 
+    result += _arr[i] + mod + delim + " "; 
   }
-  str = str.slice(0, -2);
-  return str;
+  result = result.slice(0, -2);
+  return result;
 }
 
 var arr_clfd = ["x", "z", "y"];
-Logger.log(delimitedArrMod(arr_clfd, ",", "@example.com")); // x@example.com, y@example.com, z@example.com
+Logger.log(delimStrFromArrMod(arr_clfd, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
 ```
 
 ### Multidimensional Array ###
