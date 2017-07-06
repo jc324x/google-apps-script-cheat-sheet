@@ -3,14 +3,14 @@
 [General](#general-1)
 =====
 * [Array](#array)
-  * [Check for a Value](#check-for-a-value--return-boolean)
-  * [Remove Duplicates](#remove-duplicates--return-array)
-  * [Remove Empty Values](#remove-empty-values--return-array)
-  * [Get Count of Values](#get-count-of-values--return-array-objects)
-  * [Intersect of Two Arrays](#intersect-of-two-arrays--return-array)
-  * [Compare Two Arrays](#compare-two-arrays--return-boolean)
-  * [Array as Delimited String](#array-as-delimited-string--return-string)
-  * [Array as Modified Delimited String](#array-as-modified-delimited-string--return-string)
+  * [Check for a Value](#check-for-a-value)
+  * [Remove Duplicates](#remove-duplicates)
+  * [Remove Empty Values](#remove-empty-values)
+  * [Get Count of Values](#get-count-of-values)
+  * [Intersect of Two Arrays](#intersect-of-two-arrays)
+  * [Compare Two Arrays](#compare-two-arrays)
+  * [Array as Delimited String](#array-as-delimited-string)
+  * [Array as Modified Delimited String](#array-as-modified-delimited-string)
 * [Multidimensional Array](#multidimensional-array)
   * [Flatten Multidimensional Array](#flatten-multidimensional-array--return-array)
 * [Array of Objects](#array-of-objects)
@@ -146,36 +146,51 @@
 
 ### Array ###
 
-#### Check for a Value | return: `boolean` ####
+#### Check for a Value ####
 
 ```javascript
+/**
+ * Returns true if the value is in the array.
+ *
+ * @param {Array} arr
+ * @param {*} val
+ * @returns {boolean}
+ */
+
 function checkValIn(arr, val) { 
   return arr.indexOf(val) > -1; 
 }
 
-var arr_cvi = [1,2,3,4];
-Logger.log(checkValIn(arr_cvi,5)); // false
+// var arr_cvi = [1, 2, 3, 4];
+// Logger.log(checkValIn(arr_cvi, 5)); // false
 ```
 
-#### Remove Duplicates | return: `array` ####
+#### Remove Duplicates ####
 
 ```javascript
+/**
+ * Returns an array with no duplicate values.
+ *
+ * @param {Array} arr 
+ * @returns {Array}
+ */
+
 function rmDuplicatesFrom(arr) {
-  var check = {};
-  var _arr  = [];
+  var check  = {};
+  var result = [];
   var j = 0;
   for(var i = 0; i < arr.length; i++) {
     var item = arr[i];
     if(check[item] !== 1) {
       check[item] = 1;
-      _arr[j++]   = item;
+      result[j++] = item;
     }
   }
-  return _arr;
+  return result;
 }
 
-var arr_rdf = [1,2,3,1,2,3,4,];
-Logger.log(rmDuplicatesFrom(arr_rdf)); // [1,2,3,4]
+// var arr_rdf = [1, 2, 3, 1, 2, 3, 4,];
+// Logger.log(rmDuplicatesFrom(arr_rdf)); // [1, 2, 3, 4]
 ```
 
 #### Remove Empty Values | return: `array` ####
