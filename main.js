@@ -911,7 +911,7 @@ function folderNames(fldrs) {
 // --- Find a Folder in a Folder
 
 /**
- * Returns a folder from its parent folder.
+ * Returns a folder.
  *
  * @requires foldersIn() 
  * @requires folderNames() 
@@ -981,7 +981,7 @@ function findFolderInDrive(name) {
 // --- Create or Verify Folders in a Folder
 
 /**
- * Returns the argument folder. 
+ * Returns a folder. 
  * Creates folders within a folder if they don't already exist.
  *
  * @requires foldersIn()
@@ -1011,7 +1011,7 @@ function createVerifyFoldersIn(fldr, names) {
 
 /**
  * Returns the root folder.
- * Creates folders at root if the don't exist already.
+ * Creates folders at root if they don't exist already.
  *
  * @param {string[]} names
  * @returns {Folder}
@@ -1089,7 +1089,7 @@ function rootFiles() {
 // --- All Files in Drive
 
 /**
- * Retuns an array of all files in the user's Drive.
+ * Returns an array of all files in the user's Drive.
  *
  * @returns {File[]}
  */

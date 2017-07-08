@@ -807,22 +807,32 @@ Logger.log(matchDateRange(quarterDates, "08/02/2016")); // 1
 #### Create or Verify Folder Path ####
 
 ```javascript
+// -- Create or Verify Folder Path
+
+/**
+ * Returns a folder at the end of a folder path.
+ * The folder is created if it does not exist already.
+ *
+ * @param {string} path
+ * @returns {Folder}
+ */
+
 function createVerifyPath(path) {
-  var arr = path.split('/');
+  var split = path.split('/');
   var fldr;
-  for (i = 0; i < arr.length; i++) {
-    if (i == 0) {
-      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+  for (i = 0; i < split.length; i++) {
+    var fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+    if (i === 0) {
       if(!(fi.hasNext())) {
-        DriveApp.createFolder(arr[i]);
-        fi = DriveApp.getFoldersByName(arr[i]);
+        DriveApp.createFolder(split[i]);
+        fi = DriveApp.getFoldersByName(split[i]);
       } 
       fldr = fi.next();
     } else if (i >= 1) {
-      fi = fldr.getFoldersByName(arr[i]);
+      fi = fldr.getFoldersByName(split[i]);
       if(!(fi.hasNext())) {
-        fldr.createFolder(arr[i]);
-        fi = DriveApp.getFoldersByName(arr[i]);
+        fldr.createFolder(split[i]);
+        fi = DriveApp.getFoldersByName(split[i]);
       } 
       fldr = fi.next();
     }
@@ -836,30 +846,35 @@ Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")
 #### Last Folder in Folder Path ####
 
 ```javascript
+/**
+ * Returns the last folder in a folder path.
+ *
+ * @param path
+ * @returns {Folder}
+ */
+
 function lastFolderIn(path) {
-  var arr = path.split('/');
+  var fi;
+  var split = path.split('/');
   var fldr;
-  for (i = 0; i < arr.length; i++) {
-    if (i == 0) {
-      var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+  for (i = 0; i < split.length; i++) {
+    if (i === 0) {
+      fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
       if (fi.hasNext()) {
         fldr = fi.next();
-      } else { 
-        return null;
-      }
+      } 
     } else if (i >= 1) {
-        fi = fldr.getFoldersByName(arr[i]);
+        fi = fldr.getFoldersByName(split[i]);
         if (fi.hasNext()) {
           fldr = fi.next();
-        } else { 
-          return null;
-        }
+        } 
     }
   } 
   return fldr;
 }
 
-Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
+// Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
+// Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B/C/D/E/F/G")); // C
 ```
 
 #### Array of All Folders ####
@@ -867,6 +882,13 @@ Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // 
 ##### All Folders in a Folder #####
 
 ```javascript
+/**
+ * Returns an array of all folders in a folder.
+ *
+ * @param {Folder} fldr
+ * @returns {Folder[]}
+ */
+
 function foldersIn(fldr) {
   var fi  = fldr.getFolders();
   var arr = [];
@@ -883,6 +905,12 @@ Logger.log(foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/"
 ##### All Folders at Root #####
 
 ```javascript
+/**
+ * Returns an array of all folders in the root of the user's Drive.
+ *
+ * @returns {Folder[]}
+ */
+
 function rootFolders() {
   var rf  = DriveApp.getRootFolder();
   var fi  = rf.getFolders();
@@ -900,6 +928,12 @@ Logger.log(rootFolders());
 ##### All Folders in Drive #####
 
 ```javascript
+/**
+ * Returns an array of all folders in the user's Drive.
+ *
+ * @returns {Folder[]}
+ */
+
 function allFolders() {
   var fi  = DriveApp.getFolders();
   var arr = [];
@@ -916,6 +950,13 @@ Logger.log(allFolders());
 #### Array of All Folder Names ####
 
 ```javascript
+/**
+ * Returns an array of folder names.
+ *
+ * @param {Folders[]}
+ * @returns {string[]}
+ */
+
 function folderNames(fldrs) {
   var arr = [];
   for (var i = 0; i < fldrs.length; i++) {
@@ -934,6 +975,17 @@ Logger.log(folderNames(arr_fn)); // [C]
 ##### Find a Folder in a Folder #####
 
 ```javascript
+/**
+ * Returns a folder.
+ *
+ * @requires foldersIn() 
+ * @requires folderNames() 
+ * @requires checkValIn()
+ * @param {Folder} fldr
+ * @param {string} name
+ * @returns {Folder}
+ */
+
 function findFolderIn(fldr, name) {
   var fldrs = foldersIn(fldr);
   var names = folderNames(fldrs);
@@ -950,6 +1002,16 @@ Logger.log(findFolderIn(fldr_ffi, "A")); // A
 ##### Find a Folder at Root #####
 
 ```javascript
+/**
+ * Returns a folder at the root of the user's Drive.
+ *
+ * @requires rootFolders()
+ * @requires folderNames()
+ * @requires checkValIn()
+ * @param {string} name
+ * @returns {Folder}
+ */
+
 function findFolderAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
   var fldrs = rootFolders();
@@ -966,6 +1028,13 @@ Logger.log(findFolderAtRoot("google-apps-script-cheat-sheet-demo")); // google-a
 ##### Find a Folder in Drive #####
 
 ```javascript
+/**
+ * Returns the first matching folder in Drive.
+ *
+ * @param {string} name
+ * @returns {Folder}
+ */
+
 function findFolderInDrive(name) {
   var fi = DriveApp.getFoldersByName(name);
   while (fi.hasNext()){
@@ -982,6 +1051,18 @@ Logger.log(findFolderInDrive("folders")); // folders
 ##### Create or Verify Folders in a Folder #####
 
 ```javascript
+/**
+ * Returns a folder. 
+ * Creates folders within a folder if they don't already exist.
+ *
+ * @requires foldersIn()
+ * @requires folderNames()
+ * @requires checkValIn()
+ * @param {Folder} fldr
+ * @param {string[]} names
+ * @returns {Folder}
+ */
+
 function createVerifyFoldersIn(fldr, names) {
   var fldrs  = foldersIn(fldr);
   var _names = folderNames(fldrs);
@@ -993,14 +1074,22 @@ function createVerifyFoldersIn(fldr, names) {
   return fldr;
 }
 
-var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet-demo");
-Logger.log(createVerifyFoldersIn(fldr_cvfi, ["X", "Y", "Z"])); // google-apps-script-cheat-sheet-demo
+var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet-demo/folders");
+Logger.log(createVerifyFoldersIn(fldr_cvfi, ["X", "Y", "Z"])); // folders
 Logger.log(foldersIn(fldr_cvfi)); // [A,X,Y,Z]
 ```
 
 ##### Create or Verify Folders at Root #####
 
 ```javascipt
+/**
+ * Returns the root folder.
+ * Creates folders at root if they don't exist already.
+ *
+ * @param {string[]} names
+ * @returns {Folder}
+ */
+
 function createVerifyFoldersAtRoot(names) {
   var rfs    = rootFolders();
   var _names = folderNames(rfs);
@@ -1020,6 +1109,15 @@ function createVerifyFoldersAtRoot(names) {
 ##### All Files in a Folder ##### 
 
 ```javascript
+// --- All Files in a Folder
+
+/**
+ * Returns an array of files found at the top level of a folder.
+ *
+ * @param {Folder} fldr
+ * @returns {File[]}
+ */
+
 function filesIn(fldr) {
   var fi  = fldr.getFiles();
   var arr = [];
@@ -1037,6 +1135,12 @@ Logger.log(filesIn(fldr_fin)); // [example-file]
 ##### All Files at Root ##### 
 
 ```javascript
+/**
+ * Returns an array of all files at the root of a user's Drive.
+ *
+ * @returns {File[]}
+ */
+
 function rootFiles() {
   var rf = DriveApp.getRootFolder();
   var fi = rf.getFiles();
@@ -1047,11 +1151,19 @@ function rootFiles() {
   } 
   return arr;
 }
+
+Logger.log(rootFiles());
 ```
 
 ##### All Files in Drive ##### 
 
 ```javascript
+/**
+ * Returns an array of all files in the user's Drive.
+ *
+ * @returns {File[]}
+ */
+
 function allFiles() {
   var fi = DriveApp.getFiles();
   var arr  = [];
@@ -1061,11 +1173,20 @@ function allFiles() {
   } 
   return arr;
 }
+
+Logger.log(allFiles());
 ```
 
 #### Array of All File Names ####
 
 ```javascript
+/**
+ *  Returns an array of file names.
+ *
+ * @param {File[]} files
+ * @returns {string[]}
+ */
+
 function fileNames(files) {
   var arr = [];
   for (var i = 0; i < files.length; i++) {
@@ -1085,6 +1206,17 @@ Logger.log(fileNames(arr_fnam)); // [example-file]
 ##### Find a File in a Folder #####
 
 ```javascript
+/**
+ * Returns a file found at the top level of a folder. 
+ *
+ * @requires filesIn()
+ * @requires fileNames()
+ * @requires checkValIn()
+ * @param {Folder} fldr
+ * @param {string} name
+ * @returns {File}
+ */
+
 function findFileIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
@@ -1101,6 +1233,16 @@ Logger.log(findFileIn(fldr_ffi, "example-file")); // example-file
 ##### Find a File at Root #####
 
 ```javascript
+/**
+ * Returns a file found at the root of a user's Drive.
+ *
+ * @requires rootFiles()
+ * @requires fileNames()
+ * @requires checkValIn()
+ * @param {string} name
+ * @returns {File}
+ */
+
 function findFileAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
   var files = rootFiles();
@@ -1115,6 +1257,13 @@ function findFileAtRoot(name) {
 ##### Find a File in Drive #####
 
 ```javascript
+/**
+ * Returns the first matching file found in the user's Drive.
+ *
+ * @param {string} name
+ * @returns {File}
+ */
+
 function findFileInDrive(name) {
   var fi = DriveApp.getFilesByName(name);
   while (fi.hasNext()){
@@ -1126,13 +1275,61 @@ function findFileInDrive(name) {
 Logger.log(findFileInDrive("example-file")); // example-file
 ```
 
+#### Find at File at Path ####
+
+```javascript
+
+/**
+ * Returns the file found at the end of a path.
+ *
+ * @param {string} path
+ * @returns {File}
+ */
+
+function findFileAtPath(path) {
+  var fi;
+  var split = path.split('/');
+  var file  = split[split.length -1];
+  var fldr;
+  for (i = 0; i < split.length - 1; i++) {
+    if (i === 0) {
+      fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+      if (fi.hasNext()) {
+        fldr = fi.next();
+      } else { 
+        return null;
+      }
+    } else if (i >= 1) {
+        fi = fldr.getFoldersByName(split[i]);
+        if (fi.hasNext()) {
+          fldr = fi.next();
+        } else { 
+          return null;
+        }
+    }
+  } 
+  return findFileIn(fldr, file);
+} 
+
+Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file"));
+```
+
 #### Copy a File to a Folder ####
 
 ```javascript
+/**
+ * Returns the copied file.
+ *
+ * @requires findFileIn()
+ * @param {File} file
+ * @param {Folder} fldr
+ * @returns {File}
+ */
+
 function copyFile(file, fldr) {
   var name = file.getName();
   var dest = findFileIn(fldr, name);
-  if (dest === undefined) { file.makeCopy(name, fldr) }
+  if (dest === undefined) file.makeCopy(name, fldr);
   return findFileIn(fldr, name);
 }
 
@@ -1144,12 +1341,21 @@ Logger.log(copyFile(file_cf, fldr_cf)); // example-file
 #### Move a File to a Folder ####
 
 ```javascript
+/**
+ * Returns the copied file from its new destination.
+ *
+ * @requires findFileIn()
+ * @param {File} file
+ * @param {Folder}  fldr
+ * @returns {File}
+ */
+
 function moveFile(file, fldr) {
   var name = file.getName();
   var dest = findFileIn(fldr, name);
-  if (dest === undefined) { file.makeCopy(name, fldr) }
+  if (dest === undefined) file.makeCopy(name, fldr);
   var _file = findFileIn(fldr, name);
-  if (_file !== undefined) { file.setTrashed(true) }
+  if (_file !== undefined) file.setTrashed(true);
   return _file;
 }
 
