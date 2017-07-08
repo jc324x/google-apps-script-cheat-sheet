@@ -1909,7 +1909,7 @@ function arrForColRange(rangeObj){
 
 // - Managing Document Files
 
-// -- Create or Verify Document in a Folder or at Root 
+// -- Create or Verify Document
 
 // --- Create or Verify Document in a Folder
 

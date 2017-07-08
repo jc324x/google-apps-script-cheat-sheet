@@ -2049,6 +2049,17 @@ Logger.log(arrForColRange(range_vafro)); // ["A", "B", "C", "D"]
 ##### Create or Verify Document in a Folder #####
 
 ```javascript
+// --- Create or Verify Document in a Folder
+
+/**
+ * Returns a document.
+ * This creates the document if it does not already exist.
+ *
+ * @param {Folder} fldr
+ * @param {string} name
+ * @returns {Document}
+ */
+
 function createVerifyDocIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
@@ -2057,16 +2068,24 @@ function createVerifyDocIn(fldr, name) {
     var file = DriveApp.getFileById(doc);
     moveFile(file, fldr);
   }
-  return findFileIn(fldr, name);
+  return openFileAsDocument(findFileIn(fldr, name));
 }
 
-var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet/docs");
+var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet-demo/docs");
 Logger.log(createVerifyDocIn(fldr_cvdi, "example-doc")); // example-doc
 ```
 
 ##### Create or Verify Document at Root #####
 
 ```javascript
+/**
+ * Returns a document.
+ * This creates the document if it does not already exist.
+ *
+ * @param {string} name
+ * @returns {Document}
+ */
+
 function createVerifyDocAtRoot(name) {
   var files = rootFiles();
   var names = fileNames(files);
@@ -2080,6 +2099,12 @@ function createVerifyDocAtRoot(name) {
 #### Id of Active Document ####
 
 ```javascript
+/**
+ * Returns the Id of the active document.
+ *
+ * @returns {string}
+ */
+
 function docId() {
   var _id = DocumentApp.getActiveDocument().getId();
   return _id;
@@ -2089,13 +2114,20 @@ function docId() {
 #### Open File as Document ####
 
 ```javascript
+/**
+ * Returns a file as a document.
+ *
+ * @param {File} file
+ * @returns {Document}
+ */
+
 function openFileAsDocument(file) {
   var _id = file.getId();
   var _doc = DocumentApp.openById(_id);
   return _doc;
 } 
 
-var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs")
+var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
 var file_ofad = findFileIn(fldr_ofad, "example-doc");
 Logger.log(openFileAsDocument(file_ofad));
 ```
