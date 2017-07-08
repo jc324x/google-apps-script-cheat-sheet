@@ -2172,7 +2172,7 @@ function findReplaceinSheet(obj, sheet, delim) {
 // --- Copy Document Template and Replace Object Properties
 
 /**
- * For every object in the array, create a new merged document from a template.
+ * For each object, create a new template document and merge in object values.
  *
  * @requires strFromProp() 
  * @requires copyFile() 
@@ -2214,7 +2214,7 @@ function createDocsFromTemplateArrObj(arrObj, templateDoc, naming, fldr, ts, del
 // --- Copy Spreadsheet Template and Replace Object Properties
 
 /**
- * For every object in the array, create a new merged spreadsheet from a template.
+ * For each object, create a new template spreadsheet and merge in object values.
  *
  * @requires strFromProp() 
  * @requires copyFile() 

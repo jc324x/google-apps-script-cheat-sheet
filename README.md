@@ -2165,26 +2165,40 @@ var ex_obj = {
   state: "MN",
   job:   "IT Administrator"
 };
+```
 
-function strFromProp(obj, str){
-  var arr  = str.split(" ");
-  var _arr = [];
-  for (var i = 0; i < arr.length; i++) {
-    var str = arr[i]; 
+```javascript
+/**
+ * Returns a string. 
+ * Words wrapped by the delimiter are replaced with the matching property value.
+ *
+ * @param {Object} obj
+ * @param {string} str
+ * @param {string} delim
+ * @returns {string}
+ */
+
+function strFromProp(obj, str, delim) {
+  var split  = str.split(" ");
+  var result = [];
+  for (var i = 0; i < split.length; i++) {
+    var _str = split[i]; 
     for (var prop in obj){
-      var mod = str.substr(0, str.length-2).substr(2);
-      if (obj.hasOwnProperty(mod)){
-        _arr.push(obj[mod]);
+      var first = _str.slice().charAt(0);
+      var last  = _str.slice().substr(-1);
+      var mod   = _str.substr(0, _str.length-1).substr(1);
+      if ((obj.hasOwnProperty(mod)) && (first === delim) && (last === delim)) {
+        result.push(obj[mod]);
       } else {
-        _arr.push(str);
+        result.push(_str);
       }
       break;
     }
   } 
-  return _arr.join(" ");
+  return result.join(" ");
 }
 
-Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>")); // name: Jon - state: MN - job: IT Administrator
+Logger.log(strFromProp(ex_obj, "name: %name% - state: %state% - job: %job%", "%")); // "name: Jon - state: MN - job: IT Administrator"
 ```
 
 #### Replace Object Properties #### 
@@ -2192,43 +2206,55 @@ Logger.log(strFromProp(ex_obj, "name: <<name>> - state: <<state>> - job: <<job>>
 ##### Replace Object Properties in Document #####
 
 ```javascript
-function findReplaceInDoc(obj, docObj) {
-  var body = docObj.getBody(); 
+/**
+ * Words wrapped by the delimiter are replaced with the matching property value.
+ *
+ * @param {Object} obj
+ * @param {Document} doc
+ * @param {string} delim
+ */
+
+function findReplaceInDoc(obj, doc, delim) {
+  var body = doc.getBody(); 
   for (var prop in obj) {
-    var query = "<<" + prop + ">>"
+    var query = delim + prop + delim;
     var val   = obj[prop];
     body.replaceText(query, val);
   } 
 } 
 
 var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var file_frid = createVerifyDocIn(fldr_frid, "find-replace-doc");
-var doc_frid  = openFileAsDocument(file_frid);
+var doc_frid  = createVerifyDocIn(fldr_frid, "find-replace-doc");
 var body_frid = doc_frid.getBody();
 body_frid.clear();
-doc_frid.appendParagraph("name: <<name>>");
-doc_frid.appendParagraph("state: <<state>>");
-doc_frid.appendParagraph("job: <<job>>");
-findReplaceInDoc(ex_obj, doc_frid);
+doc_frid.appendParagraph("name: %name%");
+doc_frid.appendParagraph("state: %state%");
+doc_frid.appendParagraph("job: %job%");
+findReplaceInDoc(ex_obj, doc_frid, "%");
 ```
 
 ##### Replace Object Properties in Spreadsheet #####
 
 ```javascript
-function findReplaceinSpreadsheet(obj, ssObj) {
-  var numSheets = ssObj.getNumSheets();
-  var sheets    = ssObj.getSheets();
+/**
+ * Words wrapped by the delimiter are replaced with the matching property value.
+ *
+ * @param {Object} obj
+ * @param {Spreadsheet} ss
+ * @param {string} delim
+ */
+
+function findReplaceInSpreadsheet(obj, ss, delim) {
+  var numSheets = ss.getNumSheets();
+  var sheets    = ss.getSheets();
   for (var i = 0; i < numSheets; i++) {
-    var sheetObj = sheets[i];
-    Logger.log(sheetObj);
-    var values = sheetObj.getDataRange().getValues();
-    Logger.log(values);
-    for(var row in values){
-      var update = values[row].map(function(original){
+    var sheet = sheets[i];
+    var values = sheet.getDataRange().getValues();
+    for (var row in values){
+      var update = values[row].map(function(original) {
         var text = original.toString();
-        Logger.log(text);
         for (var prop in obj) {
-          var query = "<<"+prop+">>"
+          var query = delim + prop+ delim;
           if (text.indexOf(query) !== -1) {
             text = text.replace(query, obj[prop]);
           }
@@ -2237,36 +2263,43 @@ function findReplaceinSpreadsheet(obj, ssObj) {
       });
     values[row] = update;
     }
-    sheetObj.getDataRange().setValues(values);
+    sheet.getDataRange().setValues(values);
   } 
 }
 
-var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var file_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
-var ss_frid   = openFileAsSpreadsheet(file_fris);
+var fldr_fris  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var ss_frid    = createVerifySSIn(fldr_fris, "find-replace-sheet");
 var sheet_frid = ss_frid.getSheets()[0];
 sheet_frid.clear();
 
 var val_frid = [
   [ "name", "state", "job" ],
-  [ "<<name>>", "<<state>>", "<<job>>"]
+  [ "%name%", "%state%", "%job%"]
 ];
 
 var range_frid = sheet_frid.getRange("A1:C2");
 range_frid.setValues(val_frid);
-findReplaceinSpreadsheet(ex_obj, ss_frid);
+findReplaceInSpreadsheet(ex_obj, ss_frid, "%");
 ```
 
 ##### Replace Object Properties in Sheet #####
 
 ```javascript
-function findReplaceinSheet(obj, sheetObj) {
-  var values = sheetObj.getDataRange().getValues();
+/**
+ * Words wrapped by the delimiter are replaced with the matching property value.
+ *
+ * @param {Object} obj
+ * @param {Sheet} sheet
+ * @param {string} delim
+ */
+
+function findReplaceinSheet(obj, sheet, delim) {
+  var values = sheet.getDataRange().getValues();
   for(var row in values){
-    var update = values[row].map(function(original){
+    var update = values[row].map(function(original) {
       var text = original.toString();
       for (var prop in obj) {
-        var query = "<<"+prop+">>"
+        var query = delim + prop + delim;
           if (text.indexOf(query) !== -1) {
             text = text.replace(query, obj[prop]);
           }
@@ -2275,23 +2308,22 @@ function findReplaceinSheet(obj, sheetObj) {
     });
     values[row] = update;
   }
-  sheetObj.getDataRange().setValues(values);
+  sheet.getDataRange().setValues(values);
 }
 
-var fldr_fris = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-var file_fris = createVerifySSIn(fldr_fris, "find-replace-sheet");
-var ss_frid   = openFileAsSpreadsheet(file_fris);
-var sheet_frid = ss_frid.getSheets()[0];
-sheet_frid.clear();
+var fldr_fris  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+var ss_fris    = createVerifySSIn(fldr_fris, "find-replace-sheet");
+var sheet_fris = ss_fris.getSheets()[0];
+sheet_fris.clear();
 
-var val_frid = [
+var val_fris = [
   [ "name", "state", "job" ],
   [ "<<name>>", "<<state>>", "<<job>>"]
 ];
 
-var range_frid = sheet_frid.getRange("A1:C2");
-range_frid.setValues(val_frid);
-findReplaceinSheet(ex_obj, sheet_frid);
+var range_fris = sheet_fris.getRange("A1:C2");
+range_fris.setValues(val_fris);
+findReplaceinSheet(ex_obj, sheet_fris, "%");
 ```
 
 #### Copy Template for Item in Array of Objects and Replace Object Properties #### 
@@ -2299,44 +2331,73 @@ findReplaceinSheet(ex_obj, sheet_frid);
 ##### Copy Document Template and Replace Object Properties #####
 
 ```javascript
-function createDocsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
+/**
+ * For each object, create a new template document and merge in object values.
+ *
+ * @requires strFromProp() 
+ * @requires copyFile() 
+ * @requires findReplaceInDoc() 
+ * @param {Object[]} arrObj
+ * @param {Document} templateDoc
+ * @param {string} naming
+ * @param {Folder} fldr
+ * @param {boolean} ts
+ * @param {string} delim
+ */
+
+function createDocsFromTemplateArrObj(arrObj, templateDoc, naming, fldr, ts, delim) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
-    var name = strFromProp(obj, naming);
-    if (ts == true) name += " - " + fmat12DT();
-    var docId = copyFile(template, fldr).setName(name).getId();
+    var name = strFromProp(obj, naming, delim);
+    if (ts === true) name += " - " + fmat12DT();
+    var file  = DriveApp.getFileById(templateDoc.getId());
+    var docId = copyFile(file, fldr).setName(name).getId();
     var doc   = DocumentApp.openById(docId);
-    findReplaceInDoc(obj, doc);
+    findReplaceInDoc(obj, doc, delim);
     }
 } 
 
 var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
-var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges")
+var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
 var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
-var file_cdftao   = createVerifyDocIn(fldr1_cdftao, "template-doc");
-var doc_cdftao    = openFileAsDocument(file_cdftao);
+var doc_cdftao    = createVerifyDocIn(fldr1_cdftao, "template-doc");
 var body_cdftao   = doc_cdftao.getBody();
 body_cdftao.clear();
-doc_cdftao.appendParagraph("First: <<First>>");
-doc_cdftao.appendParagraph("Last: <<Last>>");
-doc_cdftao.appendParagraph("Grade: <<Grade>>");
-doc_cdftao.appendParagraph("Homeroom: <<Homeroom>>");
-doc_cdftao.appendParagraph("Email: <<Email>>");
-createDocsFromTemplateArrObj(arrObj_cdftao, file_cdftao, "Name: <<Last>> <<First>>", fldr2_cdftao, true);
+doc_cdftao.appendParagraph("First: %First%");
+doc_cdftao.appendParagraph("Last: %Last%");
+doc_cdftao.appendParagraph("Grade: %Grade%");
+doc_cdftao.appendParagraph("Homeroom: %Homeroom%");
+doc_cdftao.appendParagraph("Email: %Email%");
+createDocsFromTemplateArrObj(arrObj_cdftao, doc_cdftao, "Name: %Last% %First%", fldr2_cdftao, true, "%");
 ```
 
 ##### Copy Spreadsheet Template and Replace Object Properties #####
 
 ```javascript
-function createSpreadsheetsFromTemplateArrObj(arrObj, template, naming, fldr, ts) {
+/**
+ * For each object, create a new template spreadsheet and merge in object values.
+ *
+ * @requires strFromProp() 
+ * @requires copyFile() 
+ * @requires findReplaceInSpreadsheet() 
+ * @param {Object[]} arrObj
+ * @param {Spreadsheet} templateDoc
+ * @param {string} naming
+ * @param {Folder} fldr
+ * @param {boolean} ts
+ * @param {string} delim
+ */
+
+function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, ts, delim) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj  = arrObj[i];
-    var name = strFromProp(obj, naming);
-    if (ts == true) name += " - " + fmat12DT();
-    var ssId = copyFile(template, fldr).setName(name).getId()
+    var name = strFromProp(obj, naming, delim);
+    if (ts === true) name += " - " + fmat12DT();
+    var file = DriveApp.getFileById(templateSS.getId());
+    var ssId = copyFile(file, fldr).setName(name).getId();
     var ss   = SpreadsheetApp.openById(ssId);
-    findReplaceinSpreadsheet(obj, ss);
+    findReplaceInSpreadsheet(obj, ss, delim);
     }
 } 
 
@@ -2351,72 +2412,12 @@ var sheet2_csftao = ss2_csftao.getSheets()[0];
 
 var val_csftao = [
   [ "First", "Last", "Grade", "Homeroom", "Email" ],
-  [ "<<First>>", "<<Last>>", "<<Grade>>", "<<Homeroom>>", "<<Email>>"]
+  [ "%First%", "%Last%", "%Grade%", "%Homeroom%", "%Email%"]
 ];
 
 var range_csftao = sheet2_csftao.getRange("A1:E2");
 range_csftao.setValues(val_csftao);
-createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: <<Last>> <<First>>", fldr2_csftao, true)
-```
-
-#### Cell Shading #### 
-
-```javascript
-var values_cs = [
-  "Strongly Disagree",
-  "Somewhat Disagree",
-  "No Opinion",
-  "Somewhat Agree",
-  "Strongly Agree"
-] 
-
-var obj_cs = {
-  "Student Has Good Study Habits":       "Strongly Agree",
-  "Student is Organized":                "No Opinion",
-  "Student Gets Along Well With Others": "Somewhat Agree"
-}
-```
-
-##### Index Object Properties ####
-
-```javascript
-function indexValForObj(obj, indexArray) {
-  var _obj = {};
-  for (var prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      if (indexArray.indexOf(obj[prop]) != -1) {
-        _obj[prop] = (indexArray.indexOf(obj[prop])+1) 
-      }
-    }
-  }
-  return _obj;
-}
-
-Logger.log(indexValForObj(obj_cs, values_cs)); // {Student Has Good Study Habits=5.0, Student Gets Along Well With Others=4.0, Student is Organized=3.0}
-```
-
-##### Shade Cells in Sheet #####
-
-```javascript
-function shadeCellsInSheet(sheetObj, colLetter, obj, color) {
-  var lRow   = sheetObj.getLastRow();
-  var vRange = sheetObj.getRange(colLetter + "1" + ":" + colLetter + lRow);
-  var arrVal = arrForRange(vRange);
-  var index  = colNum(colLetter)
-  for (var i = 0; i < arrVal.length; i++) {
-    for (var prop in obj) {
-      if (prop == arrVal[i]) {
-        var letter = numCol(index + obj[prop]);
-        var sRange = sheetObj.getRange(letter + (i+1));
-        sRange.setBackground(color);
-      }
-    } 
-  } 
-}
-
-var obj_scis   = indexValForObj(obj_cs, values_cs);
-var sheet_scis = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
-shadeCellsInSheet(sheet_scis, "A", obj_scis, "#D3D3D3");
+createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: %Last% %First%", fldr2_csftao, true, "%");
 ```
 
 #### Create Bulleted List in Document for Array of Objects ####
