@@ -1409,7 +1409,19 @@ Logger.log(parentFolderOf(file_pfo)); // files
 
 ## JSON ##  
 
-### Import JSON ###
+```javascript
+function jsonExFile() {
+  var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/json");
+  var file = findFileIn(fldr, "example-json");
+  var json = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+  var text = JSON.stringify(json);
+  if (!(file)){fldr.createFile("example-json");}
+  file.setContent(text);
+  return findFileIn(fldr, "example-json");
+}
+
+jsonExFile();
+```
 
 #### Object From URL #### 
 
@@ -1485,6 +1497,21 @@ Logger.log(JSON.stringify(objFromUrlOrFile("google-apps-script-cheat-sheet-demo/
 ##### Create or Verify Spreadsheet in a Folder #####
 
 ```javascript
+/**
+ * Returns a spreadsheet. 
+ * This creates the spreadsheet if it does not already exist.
+ *
+ * @requires filesIn()
+ * @requires fileNames()
+ * @requires checkValIn
+ * @requires moveFile()
+ * @requires findFileIn()
+ * @requires openFileAsSpreadsheet()
+ * @param {Folder} fldr
+ * @param {string} name
+ * @returns {Spreadsheet}
+ */
+
 function createVerifySSIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
@@ -1493,7 +1520,7 @@ function createVerifySSIn(fldr, name) {
     var file = DriveApp.getFileById(ss);
     moveFile(file, fldr);
   }
-  return findFileIn(fldr, name);
+  return openFileAsSpreadsheet(findFileIn(fldr, name));
 }
 
 var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
@@ -1503,22 +1530,41 @@ Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet")); // example-sheet
 ##### Create or Verify Spreadsheet at Root #####
 
 ```javascript
+/**
+ * Returns a spreadsheet. 
+ * This creates the spreadsheet if it does not already exist.
+ *
+ * @requires rootFiles()
+ * @requires fileNames()
+ * @requires checkValIn() 
+ * @requires findFileAtRoot() 
+ * @requires openFileAsSpreadsheet() 
+ * @param {string} name
+ * @returns {Spreadsheet}
+ */
+
 function createVerifySSAtRoot(name) {
   var files = rootFiles();
   var names = fileNames(files);
   if (!(checkValIn(names, name))) {
     var ss = SpreadsheetApp.create(name);
   }
-  return findFileAtRoot(name);
+  return openFileAsSpreadsheet(findFileAtRoot(name));
 }
 ```
 
 #### Id of Active Spreadsheet ####
 
 ```javascript
+/**
+ * Returns the Id of the active spreadsheet.
+ *
+ * @returns {string}
+ */
+
 function ssId() {
-  var id = SpreadsheetApp.getActiveSpreadsheet().getId();
-  return id;
+  var _id = SpreadsheetApp.getActiveSpreadsheet().getId();
+  return _id;
 }
 
 Logger.log(ssId());
@@ -1527,6 +1573,13 @@ Logger.log(ssId());
 #### Open File as Spreadsheet ####
 
 ```javascipt
+/**
+ * Returns a spreadsheet. 
+ *
+ * @param {string} 
+ * @returns {Spreadsheet}
+ */
+
 function openFileAsSpreadsheet(file) {
   var _id = file.getId();
   var _ss = SpreadsheetApp.openById(_id);
@@ -1535,7 +1588,7 @@ function openFileAsSpreadsheet(file) {
 
 var fldr_ofas = lastFolderIn("google-apps-script-cheat-sheet-demo/sheets")
 var file_ofas = findFileIn(fldr_ofas, "example-sheet");
-var ss_ofas   = openFileAsSpreadsheet(file_ofas); // example-sheet
+Logger.log(openFileAsSpreadsheet(file_ofas));
 ```
 
 ### Utility Functions for Sheets ###
@@ -1543,8 +1596,17 @@ var ss_ofas   = openFileAsSpreadsheet(file_ofas); // example-sheet
 #### Convert Column Number to a Letter #### 
 
 ```javascript
-function numCol(num) {
-  var num = num - 1, chr;
+/**
+ * Returns the column number as a alphabetical column value.
+ * Columns are indexed from 1, not from 0.
+ * "CZ" (104) is the highest supported value.
+ *
+ * @param {number} number
+ * @returns {string}
+ */
+
+function numCol(number) {
+  var num = number - 1, chr;
   if (num <= 25) {
     chr = String.fromCharCode(97 + num).toUpperCase();
     return chr;
@@ -1570,20 +1632,27 @@ function ex_nc() {
  }
 }
 
-ex_nc(); // 1 - A ... 104 - CZ
+ex_nc(); // 1 - A ... CZ - 104
 ```
 
 #### Convert Column Letter to a Number #### 
 
 ```javascript
-function colNum(col) {
-  var col = col.toUpperCase();
+/**
+ * Returns an alphabetical column value as a number.
+ *
+ * @param {string} column
+ * @returns {number}
+ */
+
+function colNum(column) {
+  var col = column.toUpperCase(), chr0, chr1;
   if (col.length === 1)  {
-    var chr0 = col.charCodeAt(0) - 64;
+    chr0 = col.charCodeAt(0) - 64;
     return chr0;
   } else if (col.length === 2) {
-    var chr0 = (col.charCodeAt(0) - 64) * 26;
-    var chr1 = col.charCodeAt(1) - 64;
+    chr0 = (col.charCodeAt(0) - 64) * 26;
+    chr1 = col.charCodeAt(1) - 64;
     return chr0 + chr1;
   }
 }
@@ -1605,7 +1674,13 @@ ex_cn(); // A - 1 ... AZ - 52
 #### Replicating Import Range #### 
 
 ```javascript
-// trigger -> importRange > From spreadsheet > On edit
+/**
+ * Replicating import range in Google Apps Script.
+ * Requires a trigger to function.
+ * importRange : From spreadsheet : On edit
+ *
+ */
+
 function importRange(){
   var get = sheet_gs.getRange("A2:A5").getValues();
   var set = sheet_gs.getRange("B2:B5").setValues(get);
@@ -1615,21 +1690,26 @@ function importRange(){
 #### Evaluating True and False #### 
 
 ```javascript
-// true:  1, t*, T*, y*, Y*
-// false: 0, !t || !y
-// ➡  boolean
+/**
+ * Returns true or false given truthy or falsy values.
+ * true: 1, t*, T*, y*, Y*
+ * false: 0, !t, || !y
+ *
+ * @param {string} input
+ * @returns {boolean}
+ */
 
 function checkTF(input) {
   if (isNaN(input)) {
     var first_letter = input.charAt(0).toLowerCase();
     if (first_letter === 't' || first_letter === 'y') {
-      return true 
+      return true;
     } else {
-      return false
+      return false;
     }
   } else {
     if (input === 1) {
-      return true
+      return true;
     } else { 
       return false;
     }
@@ -1640,40 +1720,74 @@ Logger.log(checkTF("No")); // false
 Logger.log(checkTF("Yes")); // true
 ```
 
+#### Array of Sheet Names ####
+
+```javascript
+/**
+ * Returns an array of the sheet names for a spreadsheet.
+ *
+ * @param {Spreadsheet} ss
+ * @returns {string[]}
+ */
+
+function arrSheetNames(ss) {
+  var sheets = ss.getSheets();
+  var arr    = [];
+  for (var i = 0; i < sheets.length; i++) {
+    arr.push(sheets[i].getName());
+  } 
+  return arr;
+} 
+
+var ss_asn = SpreadsheetApp.getActiveSpreadsheet();
+Logger.log(arrSheetNames(ss_asn)); // ["Sheet1", "Sheet2", "Sheet3"]
+```
+
+### Objects ###
+
+#### Object From Range ####
+
+```javascript
+/**
+ * Returns an object from a range.
+ * The top row of the range is assumed to be the header row.
+ * Values in the header row become the object properties.
+ *
+ * @param {Sheet} sheet
+ * @param {string} a1Notation
+ * @returns {Object}
+ */
+
+function objFromRange(sheet, a1Notation) {
+  var range  = sheet.getRange(a1Notation);
+  var height = range.getHeight();
+  var width  = range.getWidth();
+  var values = range.getValues();
+  var obj    = {};
+  for (var i = 0; i < values.length; i++) {
+    obj[values[i][0]] = values[i][1];
+  } 
+  return obj;
+}
+
+var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
+```
+
 ### Array of Objects ###
 
 #### Utility Functions for Array of Objects ####
 
-##### Header Range #####
-
-```javascript
-function headerRange(sheetObj, a1Notation) {
-  var arr  = a1Notation.split(":");
-  var col0 = arr[0].match(/\D/g,'');
-  var col1 = arr[1].match(/\D/g,'');
-  var row  = arr[0].match(/\d+/g);
-  var a1   = col0 + row + ":" + col1 + row;
-  return sheetObj.getRange(a1);
-}
-```
-
-##### Value Range #####
-
-```javascript
-function valueRange(sheetObj, a1Notation) {
-  var arr  = a1Notation.split(":");
-  var col0 = arr[0].match(/\D/g,'');
-  var row0 = arr[0].match(/\d+/g);
-  var col1 = arr[1].match(/\D/g,'');
-  var row1 = arr[1].match(/\d+/g);
-  var a1   = col0 + (Number(row0) + 1) + ":" + col1 + row1;
-  return sheetObj.getRange(a1);
-}
-```
-
 ##### Header Values #####
 
 ```javascript
+/**
+ * Returns an array of values for the top row of a range object.
+ *
+ * @param {Range} rangeObj
+ * @returns {Array}
+ */
+
 function headerVal(rangeObj){
   var vals = rangeObj.getValues();
   var arr  = [];
@@ -1683,19 +1797,31 @@ function headerVal(rangeObj){
   } 
   return arr;
 }
+
+var sheet_hv = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var range_hv = sheet_hv.getRange("A2:E19");
+Logger.log(headerVal(range_hv)); // ["First", "Last", "Grade", "Homeroom", "Email"]
 ```
 
-##### Values by Row #####
+##### Values By Row #####
 
 ```javascript
+/**
+ * Returns an array of objects representing a range.
+ *
+ * @param {Range} rangeObj
+ * @param {Array} headers
+ * @returns {Object[]}
+ */
+
 function valByRow(rangeObj, headers){
-  var h    = rangeObj.getHeight();
-  var w    = rangeObj.getWidth();
-  var vals = rangeObj.getValues();
+  var height = rangeObj.getHeight();
+  var width  = rangeObj.getWidth();
+  var vals   = rangeObj.getValues();
   var arr  = [];
-  for (var i = 0; i < h; i++) {
+  for (var i = 0; i < height; i++) {
     var row = {};
-    for (var j = 0; j < w; j++) {
+    for (var j = 0; j < width; j++) {
       var prop = headers[j];
       var val  = vals[i][j];
       if (val !== "") {
@@ -1706,39 +1832,116 @@ function valByRow(rangeObj, headers){
   }  
   return arr;
 }
+
+var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var range_vbr   = sheet_hv.getRange("A2:E19");
+var headers_vbr = headerVal(range_vbr);
+Logger.log(valByRow(range_vbr, headers_vbr)); // [{Last=Last, Email=Email, Homeroom=Homeroom, Grade=Grade, First=First}, {Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}...]
+```
+
+##### Header Range #####
+
+```javascript
+/**
+ * Returns the header range for a targeted range.
+ *
+ * @param {Sheet} sheet
+ * @param {string} a1Notation
+ * @returns {Range}
+ */
+
+function headerRange(sheet, a1Notation) {
+  var split = a1Notation.split(":");
+  var col0  = split[0].match(/\D/g,'');
+  var col1  = split[1].match(/\D/g,'');
+  var row   = split[0].match(/\d+/g);
+  var a1    = col0 + row + ":" + col1 + row;
+  return sheet.getRange(a1);
+}
+
+var sheet_hr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(headerRange(sheet_hr, "A2:E19").getA1Notation()); // "A2:E2"
+Logger.log(headerRange(sheet_hr, "A2:E19").getValues()); // [[First, Last, Grade, Homeroom, Email]]
+```
+
+##### Value Range #####
+
+```javascript
+/**
+ * Returns the value range for a targeted range. 
+ *
+ * @param {Sheet} sheet
+ * @param {string} a1Notation
+ * @returns {Range}
+ */
+
+function valueRange(sheet, a1Notation) {
+  var split = a1Notation.split(":");
+  var col0  = split[0].match(/\D/g,'');
+  var row0  = split[0].match(/\d+/g);
+  var col1  = split[1].match(/\D/g,'');
+  var row1  = split[1].match(/\d+/g);
+  var a1    = col0 + (Number(row0) + 1) + ":" + col1 + row1;
+  return sheet.getRange(a1);
+}
+
+var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(valueRange(sheet_vr, "A2:E19").getA1Notation()); // "A3:E19"
+Logger.log(valueRange(sheet_vr, "A2:E19").getValues()); // [[Arienne, Garret, 6.0, Muhsina, agarret@example.com], [Elissa, Jules, 6.0, Lale, ejules@example.com]...]
 ```
 
 #### Array of Objects from Sheet ####
 
 ```javascript
-function arrObjFromSheet(sheetObj, hRow){
-  var lColNum = sheetObj.getLastColumn();
+/**
+ * Returns an array of objects representing the values in a sheet.
+ *
+ * @requires numCol() 
+ * @requires headerVal() 
+ * @requires valByRow() 
+ * @param sheet
+ * @param hRow
+ * @returns {undefined}
+ */
+
+function arrObjFromSheet(sheet, hRow){
+  var lColNum = sheet.getLastColumn();
   var lColABC = numCol(lColNum);
-  var lRow    = sheetObj.getLastRow();
-  var hRange  = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+  var lRow    = sheet.getLastRow();
+  var hRange  = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
   var headers = headerVal(hRange);
-  var vRange  = sheetObj.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
-  return valByRow(vRange, headers)
+  var vRange  = sheet.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
+  return valByRow(vRange, headers);
 }
 
 var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrObjFromSheet(sheet_aofs, 2));
-// [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, {Last=Juda, Email=njuda@example.com, Homeroom=Edvard, Grade=7.0, First=Nerses}, {Last=Armen, Email=garmen@example.com, Homeroom=Waldek, Grade=7.0, First=Gülistan}, {Last=Yeong-Suk, Email=syeong-suk@example.com, Homeroom=Helena, Grade=8.0, First=Syed}, {Last=Coy, Email=icoy@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Isaiah}, {Last=Stevie, Email=sstevie@example.com, Homeroom=Helena, Grade=8.0, First=Stanley}, {Last=Emin, Email=semin@example.com, Homeroom=Lale, Grade=6.0, First=Sára}, {Last=Tiriaq, Email=ktiriaq@example.com, Homeroom=Muhsina, Grade=6.0, First=Kaja}, {Last=Dilay, Email=jdilay@example.com, Homeroom=Waldek, Grade=7.0, First=Józef}, {Last=Kirabo, Email=rkirabo@example.com, Homeroom=Helena, Grade=8.0, First=Radoslava}, {Last=Ariadna, Email=sariadna@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Sarah}, {Last=Devrim, Email=odevrim@example.com, Homeroom=Lale, Grade=6.0, First=Oluwasegun}, {Last=Adjoa, Email=eadjoa@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Ekundayo}, {Last=Suk, Email=gsuk@example.com, Homeroom=Waldek, Grade=7.0, First=Gina}, {Last=Lyle, Email=slyle@example.com, Homeroom=Helena, Grade=8.0, First=Sylvia}, {Last=Edita, Email=cedita@example.com, Homeroom=Lale, Grade=6.0, First=Cemil}]
+Logger.log(arrObjFromSheet(sheet_aofs, 2)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 ```
 
 #### Array of Objects from Range ####
 
 ```javascript
-function arrObjFromRange(sheetObj, a1Notation) {
-  var hRange  = headerRange(sheetObj, a1Notation);
-  var vRange  = valueRange(sheetObj, a1Notation);
+/**
+ * Returns an array of values representing the values in a range.
+ *
+ * @requires headerRange() 
+ * @requires valueRange() 
+ * @requires headerVal() 
+ * @requires valByRow() 
+ * @param sheet
+ * @param a1Notation
+ * @returns {undefined}
+ */
+
+function arrObjFromRange(sheet, a1Notation) {
+  var hRange  = headerRange(sheet, a1Notation);
+  var vRange  = valueRange(sheet, a1Notation);
   var headers = headerVal(hRange);
   return valByRow(vRange, headers);
 }
 
 var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
-// [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, {Last=Juda, Email=njuda@example.com, Homeroom=Edvard, Grade=7.0, First=Nerses}, {Last=Armen, Email=garmen@example.com, Homeroom=Waldek, Grade=7.0, First=Gülistan}, {Last=Yeong-Suk, Email=syeong-suk@example.com, Homeroom=Helena, Grade=8.0, First=Syed}]
+Logger.log(arrObjFromRange(sheet_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 ```
 
 ### Array ###
@@ -1748,18 +1951,27 @@ Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
 ##### For Header Value #####
 
 ```javascript
-function arrForColName(sheetObj, hRow, name){
-  var lColNum  = sheetObj.getLastColumn();
+/**
+ * Returns an array containing all values in a column.
+ *
+ * @param {Sheet} sheet
+ * @param {number} hRow
+ * @param {string} name
+ * @returns {Array}
+ */
+
+function arrForColName(sheet, hRow, name){
+  var lColNum  = sheet.getLastColumn();
   var lColABC  = numCol(lColNum);
-  var lRow     = sheetObj.getLastRow();
-  var hRange   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+  var lRow     = sheet.getLastRow();
+  var hRange   = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
   var headers  = headerVal(hRange);
   var tColABC  = numCol(headers.indexOf(name) + 1);
-  var rangeObj = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
-  var h        = rangeObj.getHeight();
+  var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
+  var height   = rangeObj.getHeight();
   var vals     = rangeObj.getValues();
   var arr      = [];
-  for (var i = 0; i < h; i++) {
+  for (var i = 0; i < height; i++) {
       var val  = vals[i][0];
       arr.push(String(val));
   }  
@@ -1773,17 +1985,26 @@ Logger.log(arrForColName(sheet_afcna, 2, "First")); // [Arienne, Elissa, Nerses,
 ##### For Column Number #####
 
 ```javascript
-function arrForColNo(sheetObj, hRow, colIndex){
-  var lColNum  = sheetObj.getLastColumn();
+/**
+ * Returns an array containing all values in a column.
+ *
+ * @param {Sheet} sheet
+ * @param {number} hRow
+ * @param {number} colIndex
+ * @returns {Array}
+ */
+
+function arrForColNo(sheet, hRow, colIndex){
+  var lColNum  = sheet.getLastColumn();
   var lColABC  = numCol(lColNum);
-  var lRow     = sheetObj.getLastRow();
-  var hRange   = sheetObj.getRange("A" + hRow + ":" + lColABC + hRow);
+  var lRow     = sheet.getLastRow();
+  var hRange   = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
   var tColABC  = numCol(colIndex);
-  var rangeObj = sheetObj.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
-  var h        = rangeObj.getHeight();
+  var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
+  var height   = rangeObj.getHeight();
   var vals     = rangeObj.getValues();
   var arr      = [];
-  for (var i = 0; i < h; i++) {
+  for (var i = 0; i < height; i++) {
       var val  = vals[i][0];
       arr.push(String(val));
   }  
@@ -1797,20 +2018,26 @@ Logger.log(arrForColNo(sheet_afcno, 2, 2)); // [Garret, Jules, Juda, Armen, Yeon
 ##### For Range Object #####
 
 ```javascript
-function arrForRange(rangeObj){
-  var h    = rangeObj.getHeight();
-  var w    = rangeObj.getWidth();
-  var vals = rangeObj.getValues();
-  var arr  = [];
-  for (var i = 0; i < h; i++) {
+/**
+ * Returns an array containing all values in the first column of a range. 
+ *
+ * @param {Range} rangeObj
+ * @returns {Array}
+ */
+
+function arrForColRange(rangeObj){
+  var height = rangeObj.getHeight();
+  var vals   = rangeObj.getValues();
+  var arr    = [];
+  for (var i = 0; i < height; i++) {
     arr.push(vals[i][0]);
   }
   return arr;
 }
 
-var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet3");
-var range_vafro = sheet_vafro.getRange("A1:F5");
-Logger.log(arrForRange(range_vafro)); // [Shading, , Student Has Good Study Habits, Student is Organized, Student Gets Along Well With Others]
+var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var range_vafro = sheet_vafro.getRange("A2:F5");
+Logger.log(arrForColRange(range_vafro)); // ["A", "B", "C", "D"]
 ```
 
 ## Docs ##

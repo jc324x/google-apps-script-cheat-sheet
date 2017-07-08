@@ -59,9 +59,9 @@ Logger.log("Start");
 // | -- Rename a File or Folder
 // | -- Parent Folder of a File or Folder
 // | - JSON
-// | -- Import JSON from URL
-// | -- Import JSON from File
-// | -- Import Script Configuration
+// | -- Object From URL
+// | -- Object From File
+// | -- Object From URL or File
 // | Sheets
 // | - Managing Spreadsheet Files
 // | -- Create or Verify Spreadsheet
@@ -1329,7 +1329,7 @@ function jsonExFile() {
   return findFileIn(fldr, "example-json");
 }
 
-// jsonExFile()
+// jsonExFile();
 
 // -- Object From URL
 
@@ -1346,8 +1346,8 @@ function objFromUrl(url) {
   return JSON.parse(data);
 } 
 
-var obj_ofu = objFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-Logger.log(JSON.stringify(obj_ofu));
+// var obj_ofu = objFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+// Logger.log(JSON.stringify(obj_ofu));
 
 // -- Object From File
 
@@ -1363,9 +1363,9 @@ function objFromFile(file) {
   return JSON.parse(data);
 } 
 
-var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-var obj_off  = objFromFile(file_off);
-Logger.log(JSON.stringify(obj_off));
+// var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+// var obj_off  = objFromFile(file_off);
+// Logger.log(JSON.stringify(obj_off));
 
 // -- Object From URL or File
 
@@ -1387,8 +1387,8 @@ function objFromUrlOrFile(input) {
   }
 }
 
-Logger.log(JSON.stringify(objFromUrlOrFile("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
-Logger.log(JSON.stringify(objFromUrlOrFile("google-apps-script-cheat-sheet-demo/json/example-json")));
+// Logger.log(JSON.stringify(objFromUrlOrFile("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
+// Logger.log(JSON.stringify(objFromUrlOrFile("google-apps-script-cheat-sheet-demo/json/example-json")));
 
 // Sheets
 
@@ -1492,7 +1492,7 @@ function openFileAsSpreadsheet(file) {
 /**
  * Returns the column number as a alphabetical column value.
  * Columns are indexed from 1, not from 0.
- * "CZ" // 103 is the highest supported value.
+ * "CZ" (103) is the highest supported value.
  *
  * @param {number} number
  * @returns {string}
@@ -1518,14 +1518,14 @@ function numCol(number) {
   }
 }
 
-// function ex_nc() {
-//  for (var i = 1; i <= 104; i++) {
-//    var j = numCol(i);
-//    Logger.log(i + " - " + j);
-//  }
-// }
+function ex_nc() {
+ for (var i = 1; i <= 104; i++) {
+   var j = numCol(i);
+   Logger.log(i + " - " + j);
+ }
+}
 
-// ex_nc();
+// ex_nc(); // 1 - A ... CZ - 104
 
 // -- Convert Column Letter to a Number
 
@@ -1626,7 +1626,7 @@ function arrSheetNames(ss) {
 } 
 
 // var ss_asn = SpreadsheetApp.getActiveSpreadsheet();
-// Logger.log(arrSheetNames(ss_asn)); // [Sheet1, Sheet2, Sheet3]
+// Logger.log(arrSheetNames(ss_asn)); // ["Sheet1", "Sheet2", "Sheet3"]
 
 // - Objects
 
@@ -1682,7 +1682,7 @@ function headerVal(rangeObj){
 
 // var sheet_hv = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var range_hv = sheet_hv.getRange("A2:E19");
-// Logger.log(headerVal(range_hv)); // [First, Last, Grade, Homeroom, Email]
+// Logger.log(headerVal(range_hv)); // ["First", "Last", "Grade", "Homeroom", "Email"]
 
 // --- Values by Row 
 
@@ -1727,15 +1727,6 @@ function valByRow(rangeObj, headers){
  * @param {string} a1Notation
  * @returns {Range}
  */
-
-
-// function arrObjFromRange(sheet, a1Notation) {
-//   var hRange  = headerRange(sheet, a1Notation);
-//   var vRange  = valueRange(sheet, a1Notation);
-//   var headers = headerVal(hRange);
-//   return valByRow(vRange, headers);
-// }
-
 
 function headerRange(sheet, a1Notation) {
   var split = a1Notation.split(":");
