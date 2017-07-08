@@ -701,7 +701,7 @@ function fmat12DT() {
  * @returns {Date}
  */
 
-function dateObjectFrom(str) {
+function dateObjectFromString(str) {
   var split  = str.split("-");
   var months = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -709,7 +709,7 @@ function dateObjectFrom(str) {
   return new Date (months[(split[1] - 1)] + " " + split[2] + ", " + split[0]);
 }
 
-// Logger.log(dateObjectFrom("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
+// Logger.log(dateObjectFromString("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
 
 // -- Match a Date to Date Range
 
@@ -1337,65 +1337,58 @@ function jsonExFile() {
  * Returns an object from a URL.
  *
  * @param {string} url
- * @returns {JSON}
+ * @returns {Object}
  */
 
-function parseJSONFromURL(url) {
+function objFromUrl(url) {
   var rsp  = UrlFetchApp.fetch(url);
   var data = rsp.getContentText();
   return JSON.parse(data);
 } 
 
-// var json_jfu     = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-// var glossary_jfu = json_jfu.glossary;
-// Logger.log(JSON.stringify(json_jfu));
-// Logger.log(JSON.stringify(glossary_jfu));
+var obj_ofu = objFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+Logger.log(JSON.stringify(obj_ofu));
 
 // -- Object From File
 
 /**
- * Returns JSON from a file in the user's Drive.
+ * Returns an object from a file in Drive.
  *
  * @param {File} file
- * @returns {JSON}
+ * @returns {Object}
  */
 
-function parseJSONFromFile(file) {
+function objFromFile(file) {
   var data = file.getBlob().getDataAsString();
   return JSON.parse(data);
 } 
 
-// var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-// var json_jff     = jsonFromFile(file_jff);
-// var glossary_jff = json_jff.glossary;
-// Logger.log(JSON.stringify(json_jff));
-// Logger.log(JSON.stringify(glossary_jff));
+var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+var obj_off  = objFromFile(file_off);
+Logger.log(JSON.stringify(obj_off));
 
-// -- Import Script Configuration
+// -- Object From URL or File
 
 /**
- * Returns JSON from a URL or from a file in the user's Drive.
+ * Returns an object from a URL or from a file in Drive.
  *
- * @param {string || File} scriptConfig
- * @returns {JSON}
+ * @param {string || File} input
+ * @returns {Object}
  */
 
-function importConfiguration(scriptConfig) {
+function objFromUrlOrFile(input) {
   var regExp = new RegExp("^(http|https)://");
-  var test   = regExp.test(scriptConfig);
-  var json;
+  var test   = regExp.test(input);
   if (test) {
-    json = jsonFromUrl(scriptConfig); 
-    return json;
+    return objFromUrl(input);
   } else {
-    var file = findFileAtPath(scriptConfig); 
-    json = jsonFromFile(file); 
-    return json;
+    var file = findFileAtPath(input); 
+    return objFromFile(file);
   }
 }
 
-// Logger.log(JSON.stringify(importConfiguration("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
-// Logger.log(JSON.stringify(importConfiguration("google-apps-script-cheat-sheet-demo/json/example-json")));
+Logger.log(JSON.stringify(objFromUrlOrFile("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
+Logger.log(JSON.stringify(objFromUrlOrFile("google-apps-script-cheat-sheet-demo/json/example-json")));
 
 // Sheets
 
