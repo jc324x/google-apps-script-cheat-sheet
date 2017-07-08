@@ -1370,19 +1370,34 @@ Logger.log(moveFile(file_mf, fldr_mf2)); // example-file
 #### Rename a File or Folder ####
 
 ```javascript
-function rename(file_fldr, name) {
-  file_fldr.setName(name)
+/**
+ * Returns a renamed file or a folder.
+ *
+ * @param {File || Folder} file_fldr
+ * @param {string} name
+ * @returns {File || Folder}
+ */
+
+function renameFileFldr(file_fldr, name) {
+  file_fldr.setName(name);
   return file_fldr;
 } 
 
-var fldr_rf = lastFolderIn("google-apps-script-cheat-sheet-demo/files/moved")
+var fldr_rf = lastFolderIn("google-apps-script-cheat-sheet-demo/files/moved");
 var file_rf = findFileIn(fldr_rf, "example-file");
-Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-file
+Logger.log(renameFileFldr(file_rf, "modified-example-file")); // modified-example-file
 ```
 
 #### Parent Folder of a File or Folder ####
 
 ```javascript
+/**
+ * Returns the parent folder or a file or a folder.
+ *
+ * @param {File || Folder} file_fldr
+ * @returns {Folder}
+ */
+
 function parentFolderOf(file_fldr) {
   var fi = file_fldr.getParents();
   return fi.next();
