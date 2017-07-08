@@ -110,17 +110,6 @@
   * [Access Document Body](#access-document-body)
   * [Clear Document Body](#clear-document-body)
 
-[Forms](#)
-=====
-* [Managing Form Files](#)
-  * [Get Form Id](#)
-* [Utility Functions for Forms](#)
-  * [Array of Form Items](#)
-  * [Get Form Item by Name](#)
-  * [Set Item Choices](#)
-  * [Get Destination Sheet](#)
-  * [Get Last Form Response](#)
-
 [Merges](#merges-1)
 =====
 * [Sheets and Docs](#sheets-and-docs)
@@ -132,9 +121,6 @@
   * [Copy Template for Item in Array of Objects and Replace Object Properties](#copy-template-for-item-in-array-of-objects-and-replace-object-properties)
     * [Copy Document Template and Replace Object Properties](#copy-document-template-and-replace-object-properties)
     * [Copy Spreadsheet Template and Replace Object Properties](#copy-spreadsheet-template-and-replace-object-properties)
-  * [Cell Shading](#cell-shading)
-    * [Index Object Propreties](#index-object-properties--return-object)
-    * [Shade Cells in Sheet](#shade-cells-in-sheet)
   * [Create Bulleted List from Array of Objects](#create-bulleted-list-in-document-for-array-of-objects)
     * [Single Division List](#single-division-list)
     * [Multi Division List](#multi-division-list)
