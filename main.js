@@ -305,8 +305,8 @@ function delimStrFromArr(arr, delim) {
   return result;
 }
 
-var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
-Logger.log(delimStrFromArr(arr_da, ",")); // "a@example.com, b@example.com, c@example.com"
+// var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
+// Logger.log(delimStrFromArr(arr_da, ",")); // "a@example.com, b@example.com, c@example.com"
 
 // -- Array as Modified Delimited String
 
@@ -498,9 +498,9 @@ function latestTS(arrObj) {
   }
 } 
 
-var sheet_le  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
-Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
+// var sheet_le  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
+// Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
 // -- Filter by Property Value or Values
 
@@ -568,24 +568,25 @@ var arrObj_upfao  = [
 /**
  * Returns an array of matching properties. 
  *
+ * @requires intersectOf() 
  * @param {Object} obj
  * @param {string[]} props
  * @returns {Array}
  */
 
 function filterValIn(obj, props) {
-  var arr  = [];
-  var keys = intersectOf(Object.keys(obj), props);
+  var result = [];
+  var keys   = intersectOf(Object.keys(obj), props);
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i];
     for (var prop in obj) {
       if (obj.hasOwnProperty(key)) {
-        arr.push(obj[key]);
+        result.push(obj[key]);
         break;
       }
     }
   }
-  return arr;
+  return result;
 }
 
 // var obj_fvi = { 
@@ -713,7 +714,7 @@ function dateObjectFrom(str) {
 // -- Match a Date to Date Range
 
 /**
- * Returns a value matched to a range of dates.
+ * Returns a value associated with a date range.
  *
  * @param {Object[]} arrObj
  * @param {string=new Date()} optDate - Date to match.

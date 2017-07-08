@@ -490,7 +490,7 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
 Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
 ```
 
-#### Find Earliest or Lastest Object by Timestamp | return: `object` #### 
+#### Find Earliest or Lastest Object by Timestamp #### 
 
 ```javascript
 /**
@@ -538,7 +538,7 @@ var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
 Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 ```
 
-#### Filter by Property Value or Values | return: `array (objects)` #### 
+#### Filter by Property Value or Values #### 
 
 ```javascript
 /**
@@ -565,7 +565,7 @@ Logger.log(filterObjIn(ex_arrObj, "a", [10])); // [{a=10.0, b=2.0, c=500.0}]
 Logger.log(filterObjIn(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 ```
 
-#### Unify Properties for Array of Objects | return: `array (objects)` #### 
+#### Unify Properties for Array of Objects ####
 
 ```javascript
 /**
@@ -603,22 +603,31 @@ Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new"));
 
 ### Object ###
 
-#### Array of Matching Property Values | return: `array` #### 
+#### Array of Matching Property Values #### 
 
 ```javascript
+/**
+ * Returns an array of matching properties. 
+ *
+ * @requires intersectOf() 
+ * @param {Object} obj
+ * @param {string[]} props
+ * @returns {Array}
+ */
+
 function filterValIn(obj, props) {
-  var arr  = [];
-  var keys = intersectOf(Object.keys(obj), props);
+  var result = [];
+  var keys   = intersectOf(Object.keys(obj), props);
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i];
     for (var prop in obj) {
       if (obj.hasOwnProperty(key)) {
-        arr.push(obj[key]);
+        result.push(obj[key]);
         break;
       }
     }
   }
-  return arr;
+  return result;
 }
 
 var obj_fvi = { 
@@ -631,9 +640,16 @@ var arr_fvi = ["a", "b", "d"];
 Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
 ```
 
-#### Merge Objects | return: `object` #### 
+#### Merge Objects #### 
 
 ```javascript
+/**
+ * Returns an object with the values of the argument objects.
+ * If multiple objects have the same property value, the last value set is retained. 
+ * @param {...Object}
+ * @returns {Object}
+ */
+
 function mergeObjs() {
   var obj = arguments[0];
   for (i = 1; i < arguments.length; i++) {
@@ -661,41 +677,34 @@ var objB_mo = {
 Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
 ```
 
-#### Object from Range | return: `object` #### 
-
-```javascript
-function objFromRange(sheetObj, a1Notation) {
-  var range  = sheetObj.getRange(a1Notation);
-  var height = range.getHeight();
-  var width  = range.getWidth();
-  var values = range.getValues();
-  var obj    = new Object();
-  for (var i = 0; i < values.length; i++) {
-    obj[values[i][0]] = values[i][1];
-  } 
-  return obj;
-}
-
-var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-Logger.log(objFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
-```
-
 ### Dates and Times ###
 
-#### Formatted Timestamps | return: `string` ####
+#### Formatted Timestamps ####
 
 ```javascript
+/**
+ * Returns a string of today's date formatted "month-day-year".
+ *
+ * @returns {string}
+ */
+
 function fmatD() {
   var n = new Date();
-  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
-    return d.join("/");
+  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ];
+    return d.join("-");
 }
 
-Logger.log(fmatD()); // 4/24/2017
+Logger.log(fmatD()); // "4-24-2017"
+
+/**
+ * Returns a string of the current time formatted "hour:minute:second".
+ *
+ * @returns {string}
+ */
 
 function fmat24T(){
   var n  = new Date();
-  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ];
     for ( var i = 1; i < 3; i++ ) {
       if ( t[i] < 10 ) {
         t[i] = "0" + t[i];
@@ -704,12 +713,18 @@ function fmat24T(){
     }
 }
 
-Logger.log(fmat24T()); // 20:43:40
+Logger.log(fmat24T()); // "20:43:40"
+
+/**
+ * Returns a string of today's date and the current time formatted "month-day-year hour:minute:second AM/PM"
+ *
+ * @returns {string}
+ */
 
 function fmat12DT() {
   var n = new Date();
-  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ]
-    var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ]
+  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ];
+    var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ];
     var s = ( t[0] < 12 ) ? "AM" : "PM";
   t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
   for ( var i = 1; i < 3; i++ ) {
@@ -720,53 +735,76 @@ function fmat12DT() {
   return d.join("/") + " " + t.join(":") + " " + s;
 }
 
-Logger.log(fmat12DT()); // 4/24/2017 8:43:40 PM
+Logger.log(fmat12DT()); // "4-24-2017 8:43:40 PM"
 ```
 
-#### Date Object from String | return: `date` ####
+#### Date Object from String ####
 
 ```javascript
+/**
+ * Returns a new date object from a string formatted year-month-date. 
+ *
+ * @param {string} str
+ * @returns {Date}
+ */
+
 function dateObjectFrom(str) {
-  var arr    = str.split("-");
+  var split  = str.split("-");
   var months = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
     ];
-  return new Date (months[(arr[1] - 1)] + " " + arr[2] + ", " + arr[0]);
+  return new Date (months[(split[1] - 1)] + " " + split[2] + ", " + split[0]);
 }
 
 Logger.log(dateObjectFrom("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
 ```
 
-#### Match a Date to a Range | return: `integer` ####
+#### Match a Date to a Range ####
 
 ```javascript
-var quarterDates = [
-  ["08/01/2016", "10/28/2016"],
-  ["11/02/2016", "1/9/2017"],
-  ["1/15/2017", "3/19/2017"],
-  ["3/21/2017", "6/15/2017"],
-];
+/**
+ * Returns a value associated with a date range.
+ *
+ * @param {Object[]} arrObj
+ * @param {string=new Date()} optDate - Date to match.
+ * @namespace
+ * @property {string} start           - Starting date.
+ * @property {string} end             - Ending date.
+ * @property {*} value                - The value to return for a matching date.
+ * @returns {*}
+ */
 
-function academicQuarter() {
-  var d = new Date();
-  for (i = 0; i < 4; i++){
-    var s = new Date(quarterDates[i][0]);
-    var e = new Date(quarterDates[i][1]);
-    if (d >= s && d <= e ) {
-      var q =  i + 1;
-    } 
+function matchDateRange(arrObj, optDate) {
+  var date = new Date();
+  if (optDate !== undefined) {
+    date = new Date(optDate);
   }
-  if (q) { return q } else { return "date outside of academic calendar"}
+  for (i = 0; i < arrObj.length; i++) {
+    var start = new Date(arrObj[i].start);
+    var end   = new Date(arrObj[i].end);
+    if (date >= start && date <= end ) {
+      return arrObj[i].value;
+    }
+  }
 }
 
-Logger.log(academicQuarter()); // 4 (4/24/2017)
+var quarterDates = [
+  {start: "08/01/2016", end: "10/28/2016", value: 1},
+  {start: "11/02/2016", end: "01/09/2017", value: 2},
+  {start: "01/15/2017", end: "03/19/2017", value: 3},
+  {start: "03/21/2017", end: "06/15/2017", value: 4},
+  {start: "06/16/2017", end: "07/30/2017", value: "summer vacation"}
+];
+
+Logger.log(matchDateRange(quarterDates)); // "summer vacation" (06/25/2017)
+Logger.log(matchDateRange(quarterDates, "08/02/2016")); // 1 
 ```
 
 ## Drive ##
 
 ### Folders ###
 
-#### Create or Verify Folder Path | return: `folder` ####
+#### Create or Verify Folder Path ####
 
 ```javascript
 function createVerifyPath(path) {
@@ -795,7 +833,7 @@ function createVerifyPath(path) {
 Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 ```
 
-#### Last Folder in Folder Path | return: `folder` ####
+#### Last Folder in Folder Path ####
 
 ```javascript
 function lastFolderIn(path) {
@@ -824,7 +862,7 @@ function lastFolderIn(path) {
 Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
 ```
 
-#### Array of All Folders | return: `array (folders)` ####
+#### Array of All Folders ####
 
 ##### All Folders in a Folder #####
 
@@ -875,7 +913,7 @@ function allFolders() {
 Logger.log(allFolders());
 ```
 
-#### Array of All Folder Names | return: `array (strings)` ####
+#### Array of All Folder Names ####
 
 ```javascript
 function folderNames(fldrs) {
@@ -891,7 +929,7 @@ var arr_fn  = foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/folder
 Logger.log(folderNames(arr_fn)); // [C]
 ```
 
-#### Find a Folder | return: `folder` ####
+#### Find a Folder ####
 
 ##### Find a Folder in a Folder #####
 
@@ -939,7 +977,7 @@ function findFolderInDrive(name) {
 Logger.log(findFolderInDrive("folders")); // folders
 ```
 
-#### Create or Verify Folders | return: `folder` ####
+#### Create or Verify Folders ####
 
 ##### Create or Verify Folders in a Folder #####
 
@@ -977,7 +1015,7 @@ function createVerifyFoldersAtRoot(names) {
 
 ### Files ###
 
-#### Array of All Files | return: `array (files)` ####
+#### Array of All Files ####
 
 ##### All Files in a Folder ##### 
 
@@ -1025,7 +1063,7 @@ function allFiles() {
 }
 ```
 
-#### Array of All File Names | return: `array (strings)` ####
+#### Array of All File Names ####
 
 ```javascript
 function fileNames(files) {
@@ -1042,7 +1080,7 @@ var arr_fnam  = filesIn(fldr_fnam);
 Logger.log(fileNames(arr_fnam)); // [example-file]
 ```
 
-#### Find a File | return: `file` ####
+#### Find a File ####
 
 ##### Find a File in a Folder #####
 
@@ -1088,7 +1126,7 @@ function findFileInDrive(name) {
 Logger.log(findFileInDrive("example-file")); // example-file
 ```
 
-#### Copy a File to a Folder | return: `file` ####
+#### Copy a File to a Folder ####
 
 ```javascript
 function copyFile(file, fldr) {
@@ -1103,7 +1141,7 @@ var file_cf = findFileInDrive("example-file");
 Logger.log(copyFile(file_cf, fldr_cf)); // example-file
 ```
 
-#### Move a File to a Folder | return: `file` ####
+#### Move a File to a Folder ####
 
 ```javascript
 function moveFile(file, fldr) {
@@ -1123,7 +1161,7 @@ Logger.log(moveFile(file_mf, fldr_mf2)); // example-file
 
 ### Files and Folders ###
 
-#### Rename a File or Folder | return: `file or folder` ####
+#### Rename a File or Folder ####
 
 ```javascript
 function rename(file_fldr, name) {
@@ -1136,7 +1174,7 @@ var file_rf = findFileIn(fldr_rf, "example-file");
 Logger.log(renameFile(file_rf, "modified-example-file")); // modified-example-file
 ```
 
-#### Parent Folder of a File or Folder | return: `file or folder` ####
+#### Parent Folder of a File or Folder ####
 
 ```javascript
 function parentFolderOf(file_fldr) {
@@ -1166,7 +1204,7 @@ function jsonExFile() {
 jsonExFile()
 ```
 
-#### Import JSON from URL | return: `object` #### 
+#### Import JSON from URL #### 
 
 ```javascript
 function jsonFromUrl(url) {
@@ -1182,7 +1220,7 @@ Logger.log(json_jfu);
 Logger.log(glossary_jfu);
 ```
 
-#### Import JSON from File | return: `object` #### 
+#### Import JSON from File #### 
 
 ```javascript
 function jsonFromFile(file) {
@@ -1198,7 +1236,7 @@ Logger.log(JSON.stringify(json_jff));
 Logger.log(JSON.stringify(glossary_jff));
 ```
 
-#### Import Script Configuration | return: `object` ####
+#### Import Script Configuration ####
 
 ```javascript
 function importConfiguration(scriptConfig) {
@@ -1222,7 +1260,7 @@ Logger.log(importConfiguration("google-apps-script-cheat-sheet-demo/json/example
 
 ### Managing Spreadsheet Files ###
 
-#### Create or Verify Spreadsheet | return: `spreadsheet` ####
+#### Create or Verify Spreadsheet ####
 
 ##### Create or Verify Spreadsheet in a Folder #####
 
@@ -1255,7 +1293,7 @@ function createVerifySSAtRoot(name) {
 }
 ```
 
-#### Id of Active Spreadsheet | return: `string` ####
+#### Id of Active Spreadsheet ####
 
 ```javascript
 function ssId() {
@@ -1266,7 +1304,7 @@ function ssId() {
 Logger.log(ssId());
 ```
 
-#### Open File as Spreadsheet | return: `spreadsheet` ####
+#### Open File as Spreadsheet ####
 
 ```javascipt
 function openFileAsSpreadsheet(file) {
@@ -1282,7 +1320,7 @@ var ss_ofas   = openFileAsSpreadsheet(file_ofas); // example-sheet
 
 ### Utility Functions for Sheets ###
 
-#### Convert Column Number to a Letter | return: `integer` #### 
+#### Convert Column Number to a Letter #### 
 
 ```javascript
 function numCol(num) {
@@ -1315,7 +1353,7 @@ function ex_nc() {
 ex_nc(); // 1 - A ... 104 - CZ
 ```
 
-#### Convert Column Letter to a Number | return: `string` #### 
+#### Convert Column Letter to a Number #### 
 
 ```javascript
 function colNum(col) {
@@ -1354,10 +1392,9 @@ function importRange(){
 }
 ```
 
-#### Evaluating True and False | return:  `boolean` #### 
+#### Evaluating True and False #### 
 
 ```javascript
-// -- Evaluating True and False | return: boolean
 // true:  1, t*, T*, y*, Y*
 // false: 0, !t || !y
 // ➡  boolean
@@ -1387,7 +1424,7 @@ Logger.log(checkTF("Yes")); // true
 
 #### Utility Functions for Array of Objects ####
 
-##### Header Range | return: `range` #####
+##### Header Range #####
 
 ```javascript
 function headerRange(sheetObj, a1Notation) {
@@ -1400,7 +1437,7 @@ function headerRange(sheetObj, a1Notation) {
 }
 ```
 
-##### Value Range | return: `range` #####
+##### Value Range #####
 
 ```javascript
 function valueRange(sheetObj, a1Notation) {
@@ -1414,7 +1451,7 @@ function valueRange(sheetObj, a1Notation) {
 }
 ```
 
-##### Header Values | return: `array` #####
+##### Header Values #####
 
 ```javascript
 function headerVal(rangeObj){
@@ -1428,7 +1465,7 @@ function headerVal(rangeObj){
 }
 ```
 
-##### Values by Row | return: `array (objects)` #####
+##### Values by Row #####
 
 ```javascript
 function valByRow(rangeObj, headers){
@@ -1451,7 +1488,7 @@ function valByRow(rangeObj, headers){
 }
 ```
 
-#### Array of Objects from Sheet | return: `array (objects)` ####
+#### Array of Objects from Sheet ####
 
 ```javascript
 function arrObjFromSheet(sheetObj, hRow){
@@ -1469,7 +1506,7 @@ Logger.log(arrObjFromSheet(sheet_aofs, 2));
 // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}, {Last=Juda, Email=njuda@example.com, Homeroom=Edvard, Grade=7.0, First=Nerses}, {Last=Armen, Email=garmen@example.com, Homeroom=Waldek, Grade=7.0, First=Gülistan}, {Last=Yeong-Suk, Email=syeong-suk@example.com, Homeroom=Helena, Grade=8.0, First=Syed}, {Last=Coy, Email=icoy@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Isaiah}, {Last=Stevie, Email=sstevie@example.com, Homeroom=Helena, Grade=8.0, First=Stanley}, {Last=Emin, Email=semin@example.com, Homeroom=Lale, Grade=6.0, First=Sára}, {Last=Tiriaq, Email=ktiriaq@example.com, Homeroom=Muhsina, Grade=6.0, First=Kaja}, {Last=Dilay, Email=jdilay@example.com, Homeroom=Waldek, Grade=7.0, First=Józef}, {Last=Kirabo, Email=rkirabo@example.com, Homeroom=Helena, Grade=8.0, First=Radoslava}, {Last=Ariadna, Email=sariadna@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Sarah}, {Last=Devrim, Email=odevrim@example.com, Homeroom=Lale, Grade=6.0, First=Oluwasegun}, {Last=Adjoa, Email=eadjoa@example.com, Homeroom=Eun-Jung, Grade=8.0, First=Ekundayo}, {Last=Suk, Email=gsuk@example.com, Homeroom=Waldek, Grade=7.0, First=Gina}, {Last=Lyle, Email=slyle@example.com, Homeroom=Helena, Grade=8.0, First=Sylvia}, {Last=Edita, Email=cedita@example.com, Homeroom=Lale, Grade=6.0, First=Cemil}]
 ```
 
-#### Array of Objects from Range | return: `array (objects)` ####
+#### Array of Objects from Range ####
 
 ```javascript
 function arrObjFromRange(sheetObj, a1Notation) {
@@ -1486,7 +1523,7 @@ Logger.log(arrObjFromRange(sheet_aofr, "A2:E7"));
 
 ### Array ###
 
-#### Array of Values for Column | return: `array (objects)` ####
+#### Array of Values for Column ####
 
 ##### For Header Value #####
 
@@ -1641,7 +1678,7 @@ body_cdb.clear();
 
 ### Sheets and Docs ###
 
-#### String from Object Properties | return: `string` #### 
+#### String from Object Properties #### 
 
 ```javascript
 var ex_obj = { 
@@ -1861,7 +1898,7 @@ var obj_cs = {
 }
 ```
 
-##### Index Object Properties | return: `object` ####
+##### Index Object Properties ####
 
 ```javascript
 function indexValForObj(obj, indexArray) {
@@ -1961,7 +1998,7 @@ var body_mdl   = doc_mdl.getBody();
 
 ### Mail Merge ###
 
-#### Append Subject and Body Properties for Object in Array of Objects | return: `array (objects)` ####
+#### Append Subject and Body Properties for Object in Array of Objects ####
 
 ```javascript
 function appendSubjBodyForArrObj(arrObj, subj, body) {
