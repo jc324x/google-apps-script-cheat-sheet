@@ -82,7 +82,7 @@
   * [Replicating Import Range](#replicating-import-range)
   * [Evaluating True and False](#evaluating-true-and-false)
   * [Array of Sheet Names](#array-of-sheet-names)
-* [Objects](#objects)
+* [Object](#object-1)
   * [Object From Range](#object-from-range)
 * [Array of Objects](#array-of-objects-1)
   * [Utility Functions for Array of Objects](#utility-functions-for-array-of-objects)
@@ -1746,7 +1746,7 @@ var ss_asn = SpreadsheetApp.getActiveSpreadsheet();
 Logger.log(arrSheetNames(ss_asn)); // ["Sheet1", "Sheet2", "Sheet3"]
 ```
 
-### Objects ###
+### Object ###
 
 #### Object From Range ####
 
