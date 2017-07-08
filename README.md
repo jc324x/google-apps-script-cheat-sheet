@@ -5,7 +5,7 @@
 * [Array](#array)
   * [Check for a Value](#check-for-a-value)
   * [Remove Duplicates](#remove-duplicates)
-  * [Remove Empty Values](#remove-empty-values)
+  * [Remove Empty Elements](#remove-empty-elements)
   * [Get Count of Values](#get-count-of-values)
   * [Intersect of Two Arrays](#intersect-of-two-arrays)
   * [Compare Two Arrays](#compare-two-arrays)
@@ -22,7 +22,6 @@
 * [Object](#object)
   * [Array of Matching Property Values](#array-of-matching-property-values--return-array)
   * [Merge Objects](#merge-objects--return-object)
-  * [Object from Range](#object-from-range--return-object)
 * [Dates and Times](#dates-and-times)
   * [Formatted Timestamps](#formatted-timestamps--return-string)
   * [Date Object from String](#date-object-from-string--return-date)
@@ -31,18 +30,19 @@
 [Drive](#drive-1)
 =====
 * [Folders](#folders)
-  * [Create or Verify Folder Path](#create-or-verify-folder-path--return-folder)
-  * [Last Folder in Folder Path](#last-folder-in-folder-path--return-folder)
-  * [Array of All Folders](#array-of-all-folders--return-array-folders)
+  * [Create or Verify Folder Path](#create-or-verify-folder-path)
+  * [Last Folder in Folder Path](#last-folder-in-folder-path)
+  * [Array of All Folders](#array-of-all-folders)
     * [All Folders in a Folder](#all-folders-in-a-folder)
     * [All Folders at Root](#all-folders-at-root)
     * [All Folders in Drive](#all-folders-in-drive)
-  * [Array of All Folder Names](#array-of-all-folder-names--return-array-strings)
+  * [Array of All Folder Names](#array-of-all-folder-names)
   * [Find a Folder](#find-a-folder)
-    * [Find a Folder in a Folder](#find-a-folder--return-folder)
+    * [Find a Folder in a Folder](#find-a-folder)
     * [Find a Folder at Root](#find-a-folder-at-root)
     * [Find a Folder in Drive](#find-a-folder-in-drive)
-  * [Create or Verify Folders](#create-or-verify-folders--return-folder)
+    * [Find a File at Path](#find-a-file-at-path)
+  * [Create or Verify Folders](#create-or-verify-folders)
     * [Create or Verify Folders in a Folder](#create-or-verify-folders-in-a-folder)
     * [Create or Verify Folders at Root](#create-or-verify-folders-at-root)
 * [Files](#files)
@@ -64,33 +64,36 @@
 [JSON](#json-1)
 =====
   * [Import JSON](#import-json)
-    * [Import JSON from URL](#import-json-from-url--return-object)
-    * [Import JSON from File](#import-json-from-file--return-object)
-    * [Import Script Configuration](#import-script-configuration--return-object)
+    * [Object From URL](#object-from-url)
+    * [Object From File](#object-from-file)
+    * [Object From URL or File](#object-from-url-or-file)
 
 [Sheets](#sheets-1)
 =====
 * [Managing Spreadsheet Files](#managing-spreadsheet-files)
-  * [Create or Verify Spreadsheet](#create-or-verify-spreadsheet--return-spreadsheet)
+  * [Create or Verify Spreadsheet](#create-or-verify-spreadsheet)
     * [Create or Verify Spreadsheet in a Folder](#create-or-verify-spreadsheet-in-a-folder)
     * [Create or Verify Spreadsheet at Root](#create-or-verify-spreadsheet-at-root)
-  * [Id of Active Spreadsheet](#id-of-active-spreadsheet--return-string)
-  * [Open File as Spreadsheet](#open-file-as-spreadsheet--return-spreadsheet)
+  * [Id of Active Spreadsheet](#id-of-active-spreadsheet)
+  * [Open File as Spreadsheet](#open-file-as-spreadsheet)
 * [Utility Functions for Sheets](#utility-functions-for-sheets)
-  * [Convert Colmun Number to a Letter](#convert-column-number-to-a-letter--return-integer)
-  * [Convert Column Letter to a Number](#convert-column-letter-to-a-number--return-string)
+  * [Convert Column Number to a Letter](#convert-column-number-to-a-letter)
+  * [Convert Column Letter to a Number](#convert-column-letter-to-a-number)
   * [Replicating Import Range](#replicating-import-range)
-  * [Evaluating True and False](#evaluating-true-and-false--return--boolean)
+  * [Evaluating True and False](#evaluating-true-and-false)
+  * [Array of Sheet Names](#array-of-sheet-names)
+* [Objects](#objects)
+  * [Object From Range](#object-from-range)
 * [Array of Objects](#array-of-objects-1)
   * [Utility Functions for Array of Objects](#utility-functions-for-array-of-objects)
-    * [Header Range](#header-range--return-range)
-    * [Value Range](#value-range--return-range)
-    * [Header Values](#header-values--return-array)
-    * [Values by Row](#values-by-row--return-array-objects)
-  * [Array of Objects from Sheet](#array-of-objects-from-sheet--return-array-objects)
-  * [Array of Objects from Range](#array-of-objects-from-range--return-array-objects)
+    * [Header Range](#header-range)
+    * [Value Range](#value-range)
+    * [Header Values](#header-values)
+    * [Values by Row](#values-by-row)
+  * [Array of Objects from Sheet](#array-of-objects-from-sheet)
+  * [Array of Objects from Range](#array-of-objects-from-range)
 * [Array](#array-1)
-  * [Array of Values for Column](#array-of-values-for-column--return-array-objects)
+  * [Array of Values for Column](#array-of-values-for-column)
     * [For Header Value](#for-header-value)
     * [For Column Number](#for-column-number)
     * [For Range Object](#for-range-object)
@@ -121,7 +124,7 @@
 [Merges](#merges-1)
 =====
 * [Sheets and Docs](#sheets-and-docs)
-  * [String from Object Properties](#string-from-object-properties--return-string)
+  * [String from Object Properties](#string-from-object-properties)
   * [Replace Object Properties](#replace-object-properties)
     * [Replace Object Properties in Document](#replace-object-properties-in-document)
     * [Replace Object Properties in Spreadsheet](#replace-object-properties-in-spreadsheet)
@@ -139,7 +142,7 @@
 [Gmail](#gmail)
 =====
 * [Mail Merge](#mail-merge)
-  * [Append Subject and Body Properties for Object in Array of Objects ](#append-subject-and-body-properties-for-object-in-array-of-objects--return-array-objects)
+  * [Append Subject and Body Properties for Object in Array of Objects ](#append-subject-and-body-properties-for-object-in-array-of-objects)
   * [Run Mail Merge for Array of Objects](#run-mail-merge-for-array-of-objects)
 
 ## General ##
@@ -193,7 +196,7 @@ var arr_rdf = [1, 2, 3, 1, 2, 3, 4,];
 Logger.log(rmDuplicatesFrom(arr_rdf)); // [1, 2, 3, 4]
 ```
 
-#### Remove Empty Values ####
+#### Remove Empty Elements ####
 
 ```javascript
 /**
@@ -1109,8 +1112,6 @@ function createVerifyFoldersAtRoot(names) {
 ##### All Files in a Folder ##### 
 
 ```javascript
-// --- All Files in a Folder
-
 /**
  * Returns an array of files found at the top level of a folder.
  *
@@ -1408,6 +1409,8 @@ Logger.log(parentFolderOf(file_pfo)); // files
 ```
 
 ## JSON ##  
+
+### Import JSON ###
 
 ```javascript
 function jsonExFile() {
