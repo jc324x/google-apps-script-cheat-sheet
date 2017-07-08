@@ -2478,39 +2478,55 @@ var body_mdl   = doc_mdl.getBody();
 
 ### Mail Merge ###
 
-#### Append Subject and Body Properties for Object in Array of Objects ####
+#### Append Subject and Body Properties for Array of Objects ####
 
 ```javascript
-function appendSubjBodyForArrObj(arrObj, subj, body) {
+/**
+ * Returns an array of objects. Subject and Body properties are appended to each object.
+ *
+ * @param {Object[]} arrObj
+ * @param {string} subj
+ * @param {string} body
+ * @param {string} delim
+ * @returns {Object[]}
+ */
+
+function appendSubjBodyForArrObj(arrObj, subj, body, delim) {
   for (var i = 0; i < arrObj.length; i++) {
-    var obj   = arrObj[i];
-    var _body = body;
-    var _subj = subj;
+    var obj = arrObj[i];
     for (var prop in obj) {
-      var search = "%" + prop + "%"
-      if (_body.indexOf(search) !== -1) {
-        _body = _body.replace(search, obj[prop]);
+      var search = delim + prop + delim;
+      if (body.indexOf(search) !== -1) {
+        body = body.replace(search, obj[prop]);
         }
-      if (_subj.indexOf(search) !== -1) {
-        _subj = _subj.replace(search, obj[prop]);
+      if (subj.indexOf(search) !== -1) {
+        subj = subj.replace(search, obj[prop]);
         }
       }
-    obj.Subject = _subj;
-    obj.Body    = _body;
+    obj.Subject = subj;
+    obj.Body    = body;
     }
   return arrObj;
 } 
 
 var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
-var subj_asbfao   = "Classroom update for %First% %Last%"
+var subj_asbfao   = "Classroom update for %First% %Last%";
 var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
-Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao)); //  [{subj=Classroom update for Arienne Garret, body=<p>Arienne Garret is in Muhsina's this fall!</p>}, Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, ...]
+Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao, "%")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, Body=<p>Arienne Garret is in Muhsina's this fall!</p>, Subject=Classroom update for Arienne Garret}...]
 ```
 
 #### Run Mail Merge for Array of Objects ####
 
 ```javascript
+/**
+ * Sends and email for each object in an array of objects.
+ * Properties Email, Subject and Body are used.
+ *
+ * @requires appendSubjBodyForArrObj() 
+ * @param {Object[]} arrObj
+ */
+
 function runMailMergeForArrObj(arrObj) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
@@ -2524,7 +2540,7 @@ function runMailMergeForArrObj(arrObj) {
 
 var sheet_rmmfao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 var arrObj_rmmfao = arrObjFromSheet(sheet_rmmfao, 2);
-var subj_rmmfao   = "Classroom update for %First% %Last%"
+var subj_rmmfao   = "Classroom update for %First% %Last%";
 var body_rmmfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
 arrObj_rmmfao     = appendSubjBodyForArrObj(arrObj_rmmfao, subj_rmmfao, body_rmmfao);
 runMailMergeForArrObj(arrObj_rmmfao);
