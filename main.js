@@ -1331,20 +1331,19 @@ function jsonExFile() {
 
 // jsonExFile()
 
-// -- Import JSON from URL
+// -- Object From URL
 
 /**
- * Returns JSON from a URL.
+ * Returns an object from a URL.
  *
  * @param {string} url
  * @returns {JSON}
  */
 
-function jsonFromUrl(url) {
+function parseJSONFromURL(url) {
   var rsp  = UrlFetchApp.fetch(url);
   var data = rsp.getContentText();
-  var json = JSON.parse(data);
-  return json;
+  return JSON.parse(data);
 } 
 
 // var json_jfu     = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
@@ -1352,7 +1351,7 @@ function jsonFromUrl(url) {
 // Logger.log(JSON.stringify(json_jfu));
 // Logger.log(JSON.stringify(glossary_jfu));
 
-// -- Import JSON from File
+// -- Object From File
 
 /**
  * Returns JSON from a file in the user's Drive.
@@ -1361,10 +1360,9 @@ function jsonFromUrl(url) {
  * @returns {JSON}
  */
 
-function jsonFromFile(file) {
+function parseJSONFromFile(file) {
   var data = file.getBlob().getDataAsString();
-  var json = JSON.parse(data);
-  return json;
+  return JSON.parse(data);
 } 
 
 // var file_jff     = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");

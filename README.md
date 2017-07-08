@@ -1411,21 +1411,7 @@ Logger.log(parentFolderOf(file_pfo)); // files
 
 ### Import JSON ###
 
-```javascript
-function jsonExFile() {
-  var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/json");
-  var file = findFileIn(fldr, "example-json");
-  var json = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-  var text = JSON.stringify(json);
-  if (!(file)){fldr.createFile("example-json");}
-  file.setContent(text);
-  return findFileIn(fldr, "example-json");
-}
-
-jsonExFile()
-```
-
-#### Import JSON from URL #### 
+#### Object From URL #### 
 
 ```javascript
 function jsonFromUrl(url) {
@@ -1441,7 +1427,7 @@ Logger.log(json_jfu);
 Logger.log(glossary_jfu);
 ```
 
-#### Import JSON from File #### 
+#### Object From File #### 
 
 ```javascript
 function jsonFromFile(file) {
@@ -1460,7 +1446,7 @@ Logger.log(JSON.stringify(glossary_jff));
 #### Import Script Configuration ####
 
 ```javascript
-function importConfiguration(scriptConfig) {
+function (scriptConfig) {
   var regExp = new RegExp("^(http|https)://")
   var test   = regExp.test(scriptConfig);
   if (test) {
