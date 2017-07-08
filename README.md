@@ -444,6 +444,15 @@ Logger.log(ex_/rrObj.sort(dynSortM("b", "c")));
 #### Find Object With Unique Property Value #### 
 
 ```javascript
+/**
+ * Returns the first object in an array of objects with the key value pair.
+ *
+ * @param {Object[]} arrObj
+ * @param {string} pQuery
+ * @param {string} val
+ * @returns {Object}
+ */
+
 function findObjIn(arrObj, pQuery, val) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
@@ -456,6 +465,16 @@ function findObjIn(arrObj, pQuery, val) {
 }
 
 Logger.log(findObjIn(ex_arrObj,"a",1000)); // {a=1000.0, b=1.0, c=5.0}
+
+/**
+ * Returns a value from the first matching object in the array.
+ *
+ * @param {Object[]} arrObj
+ * @param {string} pQuery
+ * @param {string} val
+ * @param {string} pReturn
+ * @returns {*}
+ */
 
 function findObjValIn(arrObj, pQuery, val, pReturn) {
   for (var i = 0; i < arrObj.length; i++) {
@@ -474,6 +493,13 @@ Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
 #### Find Earliest or Lastest Object by Timestamp | return: `object` #### 
 
 ```javascript
+/**
+ * Returns the object with the oldest Timestamp value.
+ *
+ * @param {Object[]} arrObj
+ * @returns {Object}
+ */
+
 function earliestTS(arrObj){
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
@@ -488,6 +514,13 @@ function earliestTS(arrObj){
 var sheet_fe  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 var arrObj_fe = arrObjFromRange(sheet_fe, "J1:K4");
 Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
+
+/**
+ * Returns the object with the latest Timestamp value.
+ *
+ * @param {Object[]} arrObj
+ * @returns {Object}
+ */
 
 function latestTS(arrObj) {
   if (arrObj.length >= 2) {
@@ -508,15 +541,24 @@ Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 201
 #### Filter by Property Value or Values | return: `array (objects)` #### 
 
 ```javascript
+/**
+ * Returns an array of objects containing matching objects.
+ *
+ * @param {Object} arrObj
+ * @param {string} pQuery
+ * @param {string[]} arrVal
+ * @returns {Object[]}
+ */
+
 function filterObjIn(arrObj, pQuery, arrVal) {
-  var _arrObj = [];
+  var result = [];
   for (var i = 0; i < arrVal.length; i++) {
     var val = arrVal[i]; 
     for (var j = 0; j < arrObj.length; j++) {
-      if (arrObj[j][pQuery] == val) _arrObj.push(arrObj[j]);
+      if (arrObj[j][pQuery] == val) result.push(arrObj[j]);
     }
   } 
-  return _arrObj;
+  return result;
 }
 
 Logger.log(filterObjIn(ex_arrObj, "a", [10])); // [{a=10.0, b=2.0, c=500.0}]
@@ -526,12 +568,21 @@ Logger.log(filterObjIn(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0},
 #### Unify Properties for Array of Objects | return: `array (objects)` #### 
 
 ```javascript
+/**
+ * Returns an array of objects, with an additional property value added to each matching object.
+ *
+ * @param {Object[]} arrObj
+ * @param {string[]} arrProp
+ * @param {string} newProp 
+ * @returns {Object[]}
+ */
+
 function unifyPropForArrObj(arrObj, arrProp, newProp){
   for (var i = 0; i < arrObj.length; i++){
     var obj = arrObj[i];
     for (var h = 0; h < arrProp.length; h++) {
       for (var prop in obj) {
-        if (obj.hasOwnProperty(prop) && prop == arrProp[h] && obj[prop] != ""){
+        if (obj.hasOwnProperty(prop) && prop == arrProp[h] && obj[prop] !== ""){
               obj[newProp] = obj[prop];
         }
       }
@@ -541,12 +592,13 @@ function unifyPropForArrObj(arrObj, arrProp, newProp){
 }
 
 var arrObj_upfao  = [
-{x: 123},
-{y: 234},
-{z: 345},
+  {x: 123},
+  {y: 234},
+  {z: 345},
 ];
 
-Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new")); // [{new=123.0, x=123.0}, {new=234.0, y=234.0}, {new=345.0, z=345.0}]
+Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new"));
+// [{new=123.0, x=123.0}, {new=234.0, y=234.0}, {new=345.0, z=345.0}]
 ```
 
 ### Object ###
