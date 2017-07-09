@@ -1,3 +1,5 @@
+// v0.2-beta
+
 function test() {}
 Logger.log("Start");
 
@@ -1607,10 +1609,10 @@ function checkTF(input) {
 // Logger.log(checkTF("No")); // false
 // Logger.log(checkTF("Yes")); // true
 
-// -- Array of Sheet Names
+// -- Array of Sheet Names | MOD
 
 /**
- * Returns an array of the sheet names for a spreadsheet.
+ * Returns an array of the names of the sheets in a spreadsheet.
  *
  * @param {Spreadsheet} ss
  * @returns {string[]}
@@ -1618,11 +1620,11 @@ function checkTF(input) {
 
 function arrSheetNames(ss) {
   var sheets = ss.getSheets();
-  var arr    = [];
+  var result = [];
   for (var i = 0; i < sheets.length; i++) {
     arr.push(sheets[i].getName());
   } 
-  return arr;
+  return result;
 } 
 
 // var ss_asn = SpreadsheetApp.getActiveSpreadsheet();

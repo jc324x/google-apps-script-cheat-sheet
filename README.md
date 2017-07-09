@@ -1070,7 +1070,7 @@ Logger.log(foldersIn(fldr_cvfi)); // [A,X,Y,Z]
 
 ##### Create or Verify Folders at Root #####
 
-```javascipt
+```javascript
 /**
  * Returns the root folder.
  * Creates folders at root if they don't exist already.
