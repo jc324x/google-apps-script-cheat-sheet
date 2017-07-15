@@ -1402,11 +1402,71 @@ function objFromUrlOrFile(input) {
 
 // -- On Open
 
+/**
+ * @requires global ui / uProp vlues 
+ * Creates a menu with that allows the user to set the configuration options and run the script.
+ */
+
+// var ui    = SpreadsheetApp.getUi(); // || DocumentApp.getUi();
+// var uProp = PropertiesService.getUserProperties();
+
+// function onOpen() {
+//   ui.createMenu("Easy CSV")
+//   .addItem("Run Script", "runScript")
+//   .addSeparator()
+//   .addSubMenu(ui.createMenu("Configuration")
+//     .addItem("Set Configuration", "setConfiguration")
+//     .addItem("Show Configuration", "showConfiguration")
+//     .addItem("Clear Configuration", "clearConfiguration"))
+//   .addToUi();
+// }
+
 // -- Set Configuration
+
+/**
+ * @requires global ui / uProp values
+ * Parses JSON at the value given and sets config equal to the stringified result.
+ */
+
+function setConfiguration() {
+  var uiPrompt = ui.prompt(
+      "Please enter a URL or a path to a file in Drive:",
+      ui.ButtonSet.OK_CANCEL);
+  var button = uiPrompt.getSelectedButton();
+  if (button == ui.Button.OK) {
+    var text   = uiPrompt.getResponseText();
+    var config = JSON.stringify(objFromUrlOrFile(text));
+    uProp.setProperty("config", config);
+  } 
+}
 
 // -- Show Configuration
 
+/**
+ * @requires global ui / uProp values
+ * Displays an alert of the config value or a displays a message if config is unset.
+ */
+
+function showConfiguration() {
+  var config = uProp.getProperty("config");
+  if (config) {
+    ui.alert(config);
+  } else {
+    ui.alert("No configuration set.");
+  }
+}
+
 // -- Clear Configuration
+
+/**
+ * @requires global ui / uProp values
+ * Clears out all user properties.
+ */
+
+function clearConfiguration() {
+  uProp.deleteAllProperties();
+  ui.alert("All settings cleared.");
+}
 
 // -- Run Script
 
