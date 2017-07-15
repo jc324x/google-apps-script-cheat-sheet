@@ -60,10 +60,16 @@ Logger.log("Start");
 // | - Files and Folders
 // | -- Rename a File or Folder
 // | -- Parent Folder of a File or Folder
-// | - JSON
+// | JSON
 // | -- Object From URL
 // | -- Object From File
 // | -- Object From URL or File
+// | UI
+// | -- On Open
+// | -- Set Configuration
+// | -- Show Configuration
+// | -- Clear Configuration
+// | -- Run Script
 // | Sheets
 // | - Managing Spreadsheet Files
 // | -- Create or Verify Spreadsheet
@@ -1391,6 +1397,19 @@ function objFromUrlOrFile(input) {
 
 // Logger.log(JSON.stringify(objFromUrlOrFile("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
 // Logger.log(JSON.stringify(objFromUrlOrFile("google-apps-script-cheat-sheet-demo/json/example-json")));
+
+// UI
+
+// -- On Open
+
+// -- Set Configuration
+
+// -- Show Configuration
+
+// -- Clear Configuration
+
+// -- Run Script
+
 
 // Sheets
 
