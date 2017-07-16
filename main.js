@@ -773,21 +773,24 @@ function matchDateRange(arrObj, optDate) {
  */
 
 function createVerifyPath(path) {
-  var split = path.split('/');
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
+  }
+  var arr = path.split("/");
   var fldr;
-  for (i = 0; i < split.length; i++) {
-    var fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+  for (i = 0; i < arr.length; i++) {
+    var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
     if (i === 0) {
       if(!(fi.hasNext())) {
-        DriveApp.createFolder(split[i]);
-        fi = DriveApp.getFoldersByName(split[i]);
+        DriveApp.createFolder(arr[i]);
+        fi = DriveApp.getFoldersByName(arr[i]);
       } 
       fldr = fi.next();
     } else if (i >= 1) {
-      fi = fldr.getFoldersByName(split[i]);
+      fi = fldr.getFoldersByName(arr[i]);
       if(!(fi.hasNext())) {
-        fldr.createFolder(split[i]);
-        fi = DriveApp.getFoldersByName(split[i]);
+        fldr.createFolder(arr[i]);
+        fi = DriveApp.getFoldersByName(arr[i]);
       } 
       fldr = fi.next();
     }
@@ -807,8 +810,11 @@ function createVerifyPath(path) {
  */
 
 function lastFolderIn(path) {
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
+  }
   var fi;
-  var split = path.split('/');
+  var split = path.split("/");
   var fldr;
   for (i = 0; i < split.length; i++) {
     if (i === 0) {
@@ -1214,20 +1220,22 @@ function findFileInDrive(name) {
  */
 
 function findFileAtPath(path) {
-  var fi;
-  var split = path.split('/');
-  var file  = split[split.length -1];
-  var fldr;
-  for (i = 0; i < split.length - 1; i++) {
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
+  }
+  var arr  = path.split("/");
+  var file = arr[arr.length -1];
+  var fldr, fi;
+  for (i = 0; i < arr.length - 1; i++) {
     if (i === 0) {
-      fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+      fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
       if (fi.hasNext()) {
         fldr = fi.next();
       } else { 
         return null;
       }
     } else if (i >= 1) {
-        fi = fldr.getFoldersByName(split[i]);
+        fi = fldr.getFoldersByName(arr[i]);
         if (fi.hasNext()) {
           fldr = fi.next();
         } else { 
@@ -1688,6 +1696,7 @@ function checkTF(input) {
 // Logger.log(checkTF("No")); // false
 // Logger.log(checkTF("Yes")); // true
 
+// FLAG -> where?
 // -- Array of Sheet Names | MOD
 
 /**
