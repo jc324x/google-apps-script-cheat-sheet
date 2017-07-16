@@ -60,6 +60,7 @@ Logger.log("Start");
 // | - Files and Folders
 // | -- Rename a File or Folder
 // | -- Parent Folder of a File or Folder
+// | -- Zip All Files in a Folder
 // | JSON
 // | -- Object From URL
 // | -- Object From File
@@ -766,7 +767,7 @@ function matchDateRange(arrObj, optDate) {
 
 /**
  * Returns a folder at the end of a folder path.
- * The folder is created if it does not exist already.
+ * Folders in the path are created if they don't already exist.
  *
  * @param {string} path
  * @returns {Folder}
@@ -1213,7 +1214,7 @@ function findFileInDrive(name) {
 // --- Find at File at Path
 
 /**
- * Returns the file found at the end of a path.
+ * Returns the file at the end of a path.
  *
  * @param {string} path
  * @returns {File}
@@ -1332,6 +1333,51 @@ function parentFolderOf(file_fldr) {
 
 // var file_pfo = findFileInDrive("example-file");
 // Logger.log(parentFolderOf(file_pfo)); // files
+
+// -- Zip All Files in a Folder
+
+/**
+ * Returns a zipped file.
+ *
+ * @param {Folder} fldrIn
+ * @param {string} name
+ * @param {Folder} [fldrOut=fldrIn]
+ * @returns {Folder}
+ */
+
+function zipFilesIn(fldrIn, name, fldrOut) {
+  var validName;
+  if (typeof name === "undefined") {
+    validName = "Archive.zip";
+  } else {
+    validName = name;
+  }
+  var blobs = [];
+  var files = filesIn(fldrIn);
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    var blob = file.getBlob();
+    blobs.push(blob);
+  } 
+  var zips = Utilities.zip(blobs, name);
+  if (typeof fldrOut === "undefined") {
+    fldrIn.createFile(zips);
+    return findFileIn(fldrIn, validName);
+  } else {
+    fldrOut.createFile(zips);
+    return findFileIn(fldrOut, validName);
+  }
+}
+
+// var trashed_zfi = lastFolderIn("google-apps-script-cheat-sheet-demo/zips");
+// Logger.log(trashed_zfi);
+var fldr_zfi = createVerifyPath("google-apps-script-cheat-sheet-demo/zips");
+fldr_zfi.createFile("A","hello, world!");
+fldr_zfi.createFile("B", "hello again, world!");
+fldr_zfi.createFile("C", "world! hi!");
+var zips_zfi = zipFilesIn(fldr_zfi, "Testing");
+var fldr2_zfi = createVerifyPath("google-apps-script-cheat-sheet-demo/zips2");
+var zips2_zfi = zipFilesIn(fldr_zfi, "Archive", fldr2_zfi);
 
 // JSON
 
