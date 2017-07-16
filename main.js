@@ -642,6 +642,7 @@ function mergeObjs() {
 
 // Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
 
+// -- FLAG -- n? d? t? ... just use the long names
 // - Dates and Times
 
 // -- Formatted Timestamps
@@ -688,18 +689,18 @@ function fmat24T(){
 function fmat12DT() {
   var n = new Date();
   var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ];
-    var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ];
-    var s = ( t[0] < 12 ) ? "AM" : "PM";
+  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ];
+  var s = ( t[0] < 12 ) ? "AM" : "PM";
   t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
   for ( var i = 1; i < 3; i++ ) {
     if ( t[i] < 10 ) {
       t[i] = "0" + t[i];
     }
   }
-  return d.join("/") + " " + t.join(":") + " " + s;
+  return d.join("-") + " " + t.join(":") + " " + s;
 }
 
-// Logger.log(fmat12DT()); // "4-24-2017 8:43:40 PM"
+Logger.log(fmat12DT()); // "4-24-2017 8:43:40 PM"
 
 // -- Date Object from String
 
@@ -1337,47 +1338,29 @@ function parentFolderOf(file_fldr) {
 // -- Zip All Files in a Folder
 
 /**
- * Returns a zipped file.
+ * Returns a zipped file. 
  *
- * @param {Folder} fldrIn
+ * @param {Folder} fldr
  * @param {string} name
- * @param {Folder} [fldrOut=fldrIn]
- * @returns {Folder}
+ * @returns {File}
  */
 
-function zipFilesIn(fldrIn, name, fldrOut) {
-  var validName;
-  if (typeof name === "undefined") {
-    validName = "Archive.zip";
-  } else {
-    validName = name;
-  }
+function zipFilesIn(fldr, name) {
   var blobs = [];
-  var files = filesIn(fldrIn);
+  var files = filesIn(fldr);
   for (var i = 0; i < files.length; i++) {
-    var file = files[i];
-    var blob = file.getBlob();
-    blobs.push(blob);
+    blobs.push(files[i].getBlob());
   } 
   var zips = Utilities.zip(blobs, name);
-  if (typeof fldrOut === "undefined") {
-    fldrIn.createFile(zips);
-    return findFileIn(fldrIn, validName);
-  } else {
-    fldrOut.createFile(zips);
-    return findFileIn(fldrOut, validName);
-  }
+  fldr.createFile(zips);
+  return findFileIn(fldr, name);
 }
 
-// var trashed_zfi = lastFolderIn("google-apps-script-cheat-sheet-demo/zips");
-// Logger.log(trashed_zfi);
-var fldr_zfi = createVerifyPath("google-apps-script-cheat-sheet-demo/zips");
-fldr_zfi.createFile("A","hello, world!");
-fldr_zfi.createFile("B", "hello again, world!");
-fldr_zfi.createFile("C", "world! hi!");
-var zips_zfi = zipFilesIn(fldr_zfi, "Testing");
-var fldr2_zfi = createVerifyPath("google-apps-script-cheat-sheet-demo/zips2");
-var zips2_zfi = zipFilesIn(fldr_zfi, "Archive", fldr2_zfi);
+// var fldr_zfi = createVerifyPath("google-apps-script-cheat-sheet-demo/zips");
+// fldr_zfi.createFile("A","hello, world!");
+// fldr_zfi.createFile("B", "hello again, world!");
+// fldr_zfi.createFile("C", "world! hi!");
+// var zips_zfi = zipFilesIn(fldr_zfi, "Archive");
 
 // JSON
 
@@ -1756,7 +1739,7 @@ function arrSheetNames(ss) {
   var sheets = ss.getSheets();
   var result = [];
   for (var i = 0; i < sheets.length; i++) {
-    arr.push(sheets[i].getName());
+    result.push(sheets[i].getName());
   } 
   return result;
 } 
