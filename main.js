@@ -13,6 +13,7 @@ Logger.log("Start");
 // | -- Compare Two Arrays
 // | -- Array as Delimited String
 // | -- Array as Modified Delimited String
+// | -- Array of Matching Values from Array of Objects *
 // | - Two-Dimensional Array
 // | -- Flatten Two-Dimensional Array
 // | - Array of Objects
@@ -20,6 +21,7 @@ Logger.log("Start");
 // | -- Find Object With Unique Property Value
 // | -- Find Earliest or Latest Object by Timestamp
 // | -- Filter by Property Value or Values
+// | -- Filter by Timestamp *
 // | -- Unify Properties for Array of Objects
 // | - Object
 // | -- Array of Matching Property Values
@@ -217,7 +219,7 @@ function rmEmptyEl(x) {
 
 function countOfValIn(arr) {
   var result = [];
-  var copy = arr.slice(0);
+  var copy   = arr.slice(0);
   for (var i = 0; i < arr.length; i++) {
     var myCount = 0;  
     for (var w = 0; w < copy.length; w++) {
