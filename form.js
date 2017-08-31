@@ -113,5 +113,23 @@ function lastResponse(formObj) {
   return j;
 }
 
+// update in cheat-sheet?
+
+// function lastFormResponse(form) {
+//   var allResponses  = form.getResponses();
+//   var lastResponse  = allResponses[allResponses.length - 1];
+//   var itemResponses = lastResponse.getItemResponses();
+//   var result        = {};
+//   for (var i = 0; i < itemResponses.length; i++) {
+//     var item         = itemResponses[i];
+//     var property     = item.getItem().getTitle();
+//     var value        = item.getResponse();
+//     result[property] = value;
+//   } 
+//   result["Email Address"] = lastResponse.getRespondentEmail();
+//   result.Timestamp        = lastResponse.getTimestamp();
+//   return result;
+// }
+
 // var last = lastResponse(form);
 // Logger.log(last);
