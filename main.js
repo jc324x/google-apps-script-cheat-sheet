@@ -417,7 +417,7 @@ function dynSortM() {
   };
 }
 
-// Logger.log(ex_/rrObj.sort(dynSortM("b", "c"))); 
+// Logger.log(ex_ArrObj.sort(dynSortM("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 // -- Find Object With Unique Property Value
@@ -662,6 +662,12 @@ function fmatD() {
 }
 
 // Logger.log(fmatD()); // "4-24-2017"
+
+function dateYYYYMMDD() {
+  var today = new Date();
+  var temp  = [today.getYear(), today.getMonth() + 1, today.getDate()];
+  return temp.join("-");
+} 
 
 /**
  * Returns a string of the current time formatted "hour:minute:second".
@@ -2497,3 +2503,12 @@ function runMailMergeForArrObj(arrObj) {
 // runMailMergeForArrObj(arrObj_rmmfao);
 
 Logger.log("End");
+
+
+// dev
+
+function sheetFromFileAtPath(path, name) {
+  var file = findFileAtPath(path);
+  var ss   = openFileAsSpreadsheet(file);
+  return ss.getSheetByName(name);
+} 
