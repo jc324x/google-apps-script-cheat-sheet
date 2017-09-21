@@ -157,12 +157,12 @@ Logger.log("Start");
  * @returns {boolean}
  */
 
-function checkValIn(arr, val) { 
+function checkArrayForValue(arr, val) { 
   return arr.indexOf(val) > -1; 
 }
 
-// var arr_cvi = [1, 2, 3, 4];
-// Logger.log(checkValIn(arr_cvi, 5)); // false
+// var arr_cafv = [1, 2, 3, 4];
+// Logger.log(checkValIn(arr_cafv, 5)); // false
 
 // -- Remove Duplicates
 
@@ -172,6 +172,8 @@ function checkValIn(arr, val) {
  * @param {Array} arr 
  * @returns {Array}
  */
+
+// function removeDuplicatesFromArray(arr)
 
 function rmDuplicatesFrom(arr) {
   var check  = {};
@@ -199,6 +201,8 @@ function rmDuplicatesFrom(arr) {
  * @returns {Array}
  */
 
+// function removeEmptyElementsFromArray()
+
 function rmEmptyEl(x) {
   return (x !== (undefined || ''));
 }
@@ -216,6 +220,8 @@ function rmEmptyEl(x) {
  * @property {count} count of the value in the array
  * @returns {Object[]}
  */
+
+// function countOfValuesInArray(arr)
 
 function countOfValIn(arr) {
   var result = [];
@@ -251,6 +257,8 @@ function countOfValIn(arr) {
  * @returns {Array}
  */
 
+// function intersectOfTwoArrays()
+
 function intersectOf(arrA, arrB) {
   var a = 0;
   var b = 0;
@@ -281,6 +289,8 @@ function intersectOf(arrA, arrB) {
  * @returns {boolean}
  */
 
+// function compareTwoArrays(arr1, arr2)
+
 function compareArr(arrA, arrB) {
   if(arrA.length !== arrB.length) return false;
   for(var i = arrA.length; i--;) {
@@ -305,6 +315,8 @@ function compareArr(arrA, arrB) {
  * @param {string} delim
  * @returns {string}
  */
+
+// function arrayAsDelimitedString(arr, delim)
 
 function delimStrFromArr(arr, delim) {
   var _arr = rmDuplicatesFrom(arr).sort();
@@ -331,6 +343,8 @@ function delimStrFromArr(arr, delim) {
  * @returns {string}
  */
 
+// function arrayAsModifiedDelimitedString(arr, delim)
+
 function delimStrFromArrMod(arr, delim, mod) {
   var _arr = rmDuplicatesFrom(arr).sort();
   var result  = "";
@@ -354,6 +368,8 @@ function delimStrFromArrMod(arr, delim, mod) {
  * @param {Array[]} twoDArr
  * @returns {Array} 
  */
+
+// flattenTwoDimensionalArray(arr) 
 
 function flattenTwoDArr(twoDArr) {
   var result = twoDArr.reduce(function(a, b) {
@@ -384,6 +400,8 @@ var ex_arrObj = [
  * @returns {Object[]}
  */
 
+// function sortArrayOfObjects()
+
 function dynSort(prop) {
   var sortOrder = 1;
   if(prop[0] === "-") {
@@ -404,6 +422,8 @@ function dynSort(prop) {
  * @param {...string}
  * @returns {Object[]}
  */
+
+// sortArrayOfObjectsByMultipleProperties()
 
 function dynSortM() {
   var props = arguments;
@@ -431,6 +451,9 @@ function dynSortM() {
  * @returns {Object}
  */
 
+
+// function findObjectInArrayOfObjects()
+
 function findObjIn(arrObj, pQuery, val) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
@@ -454,6 +477,8 @@ function findObjIn(arrObj, pQuery, val) {
  * @returns {*}
  */
 
+// findObjectInArrayOfObjectsReturnValue
+
 function findObjValIn(arrObj, pQuery, val, pReturn) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
@@ -476,6 +501,8 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
  * @returns {Object}
  */
 
+// earliestObjectInArrayOfObjects()
+
 function earliestTS(arrObj){
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
@@ -497,6 +524,8 @@ function earliestTS(arrObj){
  * @param {Object[]} arrObj
  * @returns {Object}
  */
+
+// latestObjectInArrayOfObjects()
 
 function latestTS(arrObj) {
   if (arrObj.length >= 2) {
@@ -524,6 +553,9 @@ function latestTS(arrObj) {
  * @returns {Object[]}
  */
 
+// reduceArrayOfObjectsByPropertyValue(arrObj, pQuery, val, bool)
+// Inverse filter?
+
 function filterObjIn(arrObj, pQuery, arrVal) {
   var result = [];
   for (var i = 0; i < arrVal.length; i++) {
@@ -538,6 +570,7 @@ function filterObjIn(arrObj, pQuery, arrVal) {
 // Logger.log(filterObjIn(ex_arrObj, "a", [10])); // [{a=10.0, b=2.0, c=500.0}]
 // Logger.log(filterObjIn(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 
+
 // -- Unify Properties for Array of Objects 
 
 /**
@@ -548,6 +581,8 @@ function filterObjIn(arrObj, pQuery, arrVal) {
  * @param {string} newProp 
  * @returns {Object[]}
  */
+
+// addUnifiedPropertyToObjectsInArrayOfObjects(arrObj, arrProp, newProp)
 
 function unifyPropForArrObj(arrObj, arrProp, newProp){
   for (var i = 0; i < arrObj.length; i++){
@@ -585,6 +620,8 @@ var arrObj_upfao  = [
  * @returns {Array}
  */
 
+// function returnValuesFromObject(obj, arrProp)
+
 function filterValIn(obj, props) {
   var result = [];
   var keys   = intersectOf(Object.keys(obj), props);
@@ -617,6 +654,8 @@ function filterValIn(obj, props) {
  * @param {...Object}
  * @returns {Object}
  */
+
+// combineTwoObjects()
 
 function mergeObjs() {
   var obj = arguments[0];
@@ -655,6 +694,8 @@ function mergeObjs() {
  * @returns {string}
  */
 
+// function dateStringMMDDYYYY
+
 function fmatD() {
   var n = new Date();
   var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ];
@@ -663,7 +704,7 @@ function fmatD() {
 
 // Logger.log(fmatD()); // "4-24-2017"
 
-function dateYYYYMMDD() {
+function dateStringYYYYMMDD() {
   var today = new Date();
   var temp  = [today.getYear(), today.getMonth() + 1, today.getDate()];
   return temp.join("-");
@@ -674,6 +715,8 @@ function dateYYYYMMDD() {
  *
  * @returns {string}
  */
+
+// function dateStringHHMMSS
 
 function fmat24T(){
   var n  = new Date();
@@ -693,6 +736,8 @@ function fmat24T(){
  *
  * @returns {string}
  */
+
+// function dateStringYYYYMMDDHHMMSSAMPM()
 
 function fmat12DT() {
   var n = new Date();
@@ -719,6 +764,8 @@ Logger.log(fmat12DT()); // "4-24-2017 8:43:40 PM"
  * @returns {Date}
  */
 
+// function dateObjectFromString(str) {
+
 function dateObjectFromString(str) {
   var split  = str.split("-");
   var months = ["January", "February", "March", "April", "May", "June",
@@ -742,6 +789,8 @@ function dateObjectFromString(str) {
  * @property {*} value                - The value to return for a matching date.
  * @returns {*}
  */
+
+// matchDateARangeOfDates()
 
 function matchDateRange(arrObj, optDate) {
   var date = new Date();
@@ -782,6 +831,8 @@ function matchDateRange(arrObj, optDate) {
  * @returns {Folder}
  */
 
+// function createOrVerifyFolderPath()
+
 function createVerifyPath(path) {
   if (path.charAt(0) === "/") {
     path = path.substr(1);
@@ -818,6 +869,8 @@ function createVerifyPath(path) {
  * @param path
  * @returns {Folder}
  */
+
+// function lastFolderInFolderPath(path)
 
 function lastFolderIn(path) {
   if (path.charAt(0) === "/") {
@@ -856,6 +909,8 @@ function lastFolderIn(path) {
  * @returns {Folder[]}
  */
 
+// arrayOfFoldersInAFolder(fldr)
+
 function foldersIn(fldr) {
   var fi  = fldr.getFolders();
   var arr = [];
@@ -875,6 +930,8 @@ function foldersIn(fldr) {
  *
  * @returns {Folder[]}
  */
+
+// arrayOfAllRootFolders()
 
 function rootFolders() {
   var rf  = DriveApp.getRootFolder();
@@ -897,6 +954,8 @@ function rootFolders() {
  * @returns {Folder[]}
  */
 
+// arrayOfAllFoldersInDrive()
+
 function allFolders() {
   var fi  = DriveApp.getFolders();
   var arr = [];
@@ -917,6 +976,8 @@ function allFolders() {
  * @param {Folders[]}
  * @returns {string[]}
  */
+
+// arrayOfAllFolderNames()
 
 function folderNames(fldrs) {
   var arr = [];
@@ -945,10 +1006,12 @@ function folderNames(fldrs) {
  * @returns {Folder}
  */
 
+// findAFolderInsideAFolder()
+
 function findFolderIn(fldr, name) {
   var fldrs = foldersIn(fldr);
   var names = folderNames(fldrs);
-  if (checkValIn(names, name)) {
+  if (checkArrayForValue(names, name)) {
     var _fldr = fldr.getFoldersByName(name).next();
     return _fldr;
   }
@@ -964,7 +1027,7 @@ function findFolderIn(fldr, name) {
  *
  * @requires rootFolders()
  * @requires folderNames()
- * @requires checkValIn()
+ * @requires checkArrayForValue()
  * @param {string} name
  * @returns {Folder}
  */
@@ -973,7 +1036,7 @@ function findFolderAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
   var fldrs = rootFolders();
   var names = folderNames(fldrs);
-  if (checkValIn(names, name)) {
+  if (checkArrayForValue(names, name)) {
     var fldr = rf.getFoldersByName(name).next();
     return fldr;
   }
@@ -1010,7 +1073,7 @@ function findFolderInDrive(name) {
  *
  * @requires foldersIn()
  * @requires folderNames()
- * @requires checkValIn()
+ * @requires checkArrayForValue()
  * @param {Folder} fldr
  * @param {string[]} names
  * @returns {Folder}
@@ -1020,7 +1083,7 @@ function createVerifyFoldersIn(fldr, names) {
   var fldrs  = foldersIn(fldr);
   var _names = folderNames(fldrs);
   for (i = 0; i < names.length; i++) {
-    if (!(checkValIn(_names, names[i]))) {
+    if (!(checkArrayForValue(_names, names[i]))) {
       fldr.createFolder(names[i]);
     }
   }
@@ -1045,7 +1108,7 @@ function createVerifyFoldersAtRoot(names) {
   var rfs    = rootFolders();
   var _names = folderNames(rfs);
   for (i=0; i < names.length; i++) {
-    if (!(checkValIn(_names, names[i]))) {
+    if (!(checkArrayForValue(_names, names[i]))) {
       DriveApp.createFolder(names[i]);
     }
   } 
@@ -1161,7 +1224,7 @@ function fileNames(files) {
  *
  * @requires filesIn()
  * @requires fileNames()
- * @requires checkValIn()
+ * @requires checkArrayForValue()
  * @param {Folder} fldr
  * @param {string} name
  * @returns {File}
@@ -1170,7 +1233,7 @@ function fileNames(files) {
 function findFileIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
-  if (checkValIn(names, name)) {
+  if (checkArrayForValue(names, name)) {
     var file = fldr.getFilesByName(name).next();
     return file;
   }
@@ -1186,7 +1249,7 @@ function findFileIn(fldr, name) {
  *
  * @requires rootFiles()
  * @requires fileNames()
- * @requires checkValIn()
+ * @requires checkArrayForValue()
  * @param {string} name
  * @returns {File}
  */
@@ -1195,7 +1258,7 @@ function findFileAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
   var files = rootFiles();
   var names = fileNames(files);
-  if (checkValIn(names, name)) {
+  if (checkArrayForValue(names, name)) {
     var file = rf.getFilesByName(name).next();
     return file;
   }
@@ -1530,7 +1593,7 @@ function clearConfiguration() {
  *
  * @requires filesIn()
  * @requires fileNames()
- * @requires checkValIn
+ * @requires checkArrayForValue()
  * @requires moveFile()
  * @requires findFileIn()
  * @requires openFileAsSpreadsheet()
@@ -1542,7 +1605,7 @@ function clearConfiguration() {
 function createVerifySSIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
-  if (!(checkValIn(names, name))) {
+  if (!(checkArrayForValue(names, name))) {
     var ss   = SpreadsheetApp.create(name).getId();
     var file = DriveApp.getFileById(ss);
     moveFile(file, fldr);
@@ -1561,7 +1624,7 @@ function createVerifySSIn(fldr, name) {
  *
  * @requires rootFiles()
  * @requires fileNames()
- * @requires checkValIn() 
+ * @requires checkArrayForValue() 
  * @requires findFileAtRoot() 
  * @requires openFileAsSpreadsheet() 
  * @param {string} name
@@ -1571,7 +1634,7 @@ function createVerifySSIn(fldr, name) {
 function createVerifySSAtRoot(name) {
   var files = rootFiles();
   var names = fileNames(files);
-  if (!(checkValIn(names, name))) {
+  if (!(checkArrayForValue(names, name))) {
     var ss = SpreadsheetApp.create(name);
   }
   return openFileAsSpreadsheet(findFileAtRoot(name));
@@ -2039,6 +2102,7 @@ function arrForColRange(rangeObj){
 // -- Create or Verify Document
 
 // --- Create or Verify Document in a Folder
+// * requires checkArrayForValue
 
 /**
  * Returns a document.
@@ -2052,7 +2116,7 @@ function arrForColRange(rangeObj){
 function createVerifyDocIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
-  if (!(checkValIn(names, name))) {
+  if (!(checkArrayForValue(names, name))) {
     var doc  = DocumentApp.create(name).getId();
     var file = DriveApp.getFileById(doc);
     moveFile(file, fldr);
@@ -2076,7 +2140,7 @@ function createVerifyDocIn(fldr, name) {
 function createVerifyDocAtRoot(name) {
   var files = rootFiles();
   var names = fileNames(files);
-  if (!(checkValIn(names, name))) {
+  if (!(checkArrayForValue(names, name))) {
     var ss = DocumentApp.create(name);
   }
   return findFileAtRoot(name);
