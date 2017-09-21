@@ -364,14 +364,14 @@ Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "
 
 // flattenTwoDimensionalArray(arr) 
 
-function flattenTwoDArr(twoDArr) {
-  var result = twoDArr.reduce(function(a, b) {
+function flattenTwoDimensionalArray(arr) {
+  var result = arr.reduce(function(a, b) {
     return a.concat(b);
   });
   return result;
 }
 
-// var sheet_fma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var sheet_ftma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var val_fma   = sheet_fma.getRange("G2:H5").getValues();
 // Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
