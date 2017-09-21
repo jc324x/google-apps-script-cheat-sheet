@@ -5,7 +5,7 @@ Logger.log("Start");
 
 // | General
 // | - Array
-// | -- Check for a Value
+// | -- Check Array For a Value
 // | -- Remove Duplicates
 // | -- Remove Empty Elements
 // | -- Get Count of Values
@@ -147,7 +147,7 @@ Logger.log("Start");
 
 // - Array 
 
-// -- Check for a Value
+// -- Check Array For a Value
 
 /**
  * Returns true if the value is in the array.
@@ -162,7 +162,7 @@ function checkArrayForValue(arr, val) {
 }
 
 // var arr_cafv = [1, 2, 3, 4];
-// Logger.log(checkValIn(arr_cafv, 5)); // false
+// Logger.log(checkArrayForValue(arr_cafv, 5)); // false
 
 // -- Remove Duplicates
 
@@ -173,24 +173,21 @@ function checkArrayForValue(arr, val) {
  * @returns {Array}
  */
 
-// function removeDuplicatesFromArray(arr)
-
-function rmDuplicatesFrom(arr) {
+function removeDuplicatesFromArray(arr) {
   var check  = {};
   var result = [];
-  var j = 0;
   for(var i = 0; i < arr.length; i++) {
     var item = arr[i];
     if(check[item] !== 1) {
       check[item] = 1;
-      result[j++] = item;
+      result.push(item);
     }
   }
   return result;
 }
 
-// var arr_rdf = [1, 2, 3, 1, 2, 3, 4,];
-// Logger.log(rmDuplicatesFrom(arr_rdf)); // [1, 2, 3, 4]
+// var arr_rdfa = [1, 2, 3, 1, 2, 3, 4,];
+// Logger.log(removeDuplicatesFromArray(arr_rdfa)); // [1, 2, 3, 4]
 
 // -- Remove Empty Elements
 
@@ -203,12 +200,12 @@ function rmDuplicatesFrom(arr) {
 
 // function removeEmptyElementsFromArray()
 
-function rmEmptyEl(x) {
+function removeEmptyElements(x) {
   return (x !== (undefined || ''));
 }
 
-// var arr_rev = ["a",,"b",,,"c"];
-// Logger.log(arr_rev.filter(rmEmptyEl)); // ["a", "b", "c"]
+// var arr_ree = ["a",,"b",,,"c"];
+// Logger.log(arr_ree.filter(removeEmptyElements)); // ["a", "b", "c"]
 
 // -- Get Count of Values
 
@@ -223,7 +220,7 @@ function rmEmptyEl(x) {
 
 // function countOfValuesInArray(arr)
 
-function countOfValIn(arr) {
+function countOfValuesInArray(arr) {
   var result = [];
   var copy   = arr.slice(0);
   for (var i = 0; i < arr.length; i++) {
@@ -244,8 +241,8 @@ function countOfValIn(arr) {
   return result;
 }
 
-// var arr_covi  = ["a", "b", "c", "a", "b", "c", "a"];
-// Logger.log(countOfValIn(arr_covi)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
+// var arr_covia  = ["a", "b", "c", "a", "b", "c", "a"];
+// Logger.log(countOfValuesInArray(arr_covia)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
 
 // -- Intersect of Two Arrays
 
@@ -259,13 +256,13 @@ function countOfValIn(arr) {
 
 // function intersectOfTwoArrays()
 
-function intersectOf(arrA, arrB) {
+function intersectOfTwoArrays(arrA, arrB) {
   var a = 0;
   var b = 0;
   var result = [];
   while( a < arrA.length && b < arrB.length ) {
-    if (arrA[a] < arrB[b] ) { a++; }
-    else if (arrA[a] > arrB[b] ) { b++; }
+    if (arrA[a] < arrB[b]) a++;
+    else if (arrA[a] > arrB[b]) b++;
     else {
       result.push(arrA[a]);
       a++;
@@ -275,9 +272,9 @@ function intersectOf(arrA, arrB) {
   return result;
 }
 
-// var arrA_io = [1, 2, 3];
-// var arrB_io = [3, 4, 5];
-// Logger.log(intersectOf(arrA_io, arrB_io)); // [3]
+// var arrA_iota = [1, 2, 3];
+// var arrB_iota = [3, 4, 5];
+// Logger.log(intersectOfTwoArrays(arrA_iota, arrB_iota)); // [3]
 
 // -- Compare Two Arrays 
 
@@ -289,9 +286,7 @@ function intersectOf(arrA, arrB) {
  * @returns {boolean}
  */
 
-// function compareTwoArrays(arr1, arr2)
-
-function compareArr(arrA, arrB) {
+function compareTwoArrays(arrA, arrB) {
   if(arrA.length !== arrB.length) return false;
   for(var i = arrA.length; i--;) {
     if(arrA[i] !== arrB[i]) return false;
@@ -299,11 +294,11 @@ function compareArr(arrA, arrB) {
   return true;
 }
 
-// var arrA_ca = [1, 2, 3, 4, 5];
-// var arrB_ca = [1, 2, 3, 4, 5];
-// var arrC_ca = ["a", "b", "c", "d", "e"];
-// Logger.log(compareArr(arrA_ca, arrB_ca)); // true
-// Logger.log(compareArr(arrA_ca, arrC_ca)); // false
+// var arrA_cta = [1, 2, 3, 4, 5];
+// var arrB_cta = [1, 2, 3, 4, 5];
+// var arrC_cta = ["a", "b", "c", "d", "e"];
+// Logger.log(compareTwoArrays(arrA_cta, arrB_cta)); // true
+// Logger.log(compareTwoArrays(arrA_cta, arrC_cta)); // false
 
 // -- Array as Delimited String
 
@@ -316,10 +311,8 @@ function compareArr(arrA, arrB) {
  * @returns {string}
  */
 
-// function arrayAsDelimitedString(arr, delim)
-
-function delimStrFromArr(arr, delim) {
-  var _arr = rmDuplicatesFrom(arr).sort();
+function arrayAsDelimitedString(arr, delim) {
+  var _arr = removeDuplicatesFromArray(arr).sort();
   var result  = "";
   for (var i = 0; i < _arr.length; i++) {
     result += _arr[i] + delim + " ";
@@ -346,7 +339,7 @@ function delimStrFromArr(arr, delim) {
 // function arrayAsModifiedDelimitedString(arr, delim)
 
 function delimStrFromArrMod(arr, delim, mod) {
-  var _arr = rmDuplicatesFrom(arr).sort();
+  var _arr = removeDuplicatesFromArray(arr).sort();
   var result  = "";
   for (var i = 0; i < _arr.length; i++) {
     result += _arr[i] + mod + delim + " "; 
