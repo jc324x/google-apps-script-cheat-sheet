@@ -174,8 +174,8 @@ function checkArrayForValue(arr, val) {
  */
 
 function removeDuplicatesFromArray(arr) {
-  var check  = {};
   var result = [];
+  var check  = {};
   for(var i = 0; i < arr.length; i++) {
     var item = arr[i];
     if(check[item] !== 1) {
@@ -257,9 +257,9 @@ function countOfValuesInArray(arr) {
 // function intersectOfTwoArrays()
 
 function intersectOfTwoArrays(arrA, arrB) {
-  var a = 0;
-  var b = 0;
   var result = [];
+  var a      = 0;
+  var b      = 0;
   while( a < arrA.length && b < arrB.length ) {
     if (arrA[a] < arrB[b]) a++;
     else if (arrA[a] > arrB[b]) b++;
@@ -312,17 +312,17 @@ function compareTwoArrays(arrA, arrB) {
  */
 
 function arrayAsDelimitedString(arr, delim) {
-  var _arr = removeDuplicatesFromArray(arr).sort();
-  var result  = "";
-  for (var i = 0; i < _arr.length; i++) {
-    result += _arr[i] + delim + " ";
+  var result = "";
+  var temp   = removeDuplicatesFromArray(arr);
+  for (var i = 0; i < temp.length; i++) {
+    if (i < temp.length) result += temp[i] + delim + " ";
+    else if (i === temp.length) result += temp[i];
   }
-  result = result.slice(0, -2);
   return result;
 }
 
-// var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
-// Logger.log(delimStrFromArr(arr_da, ",")); // "a@example.com, b@example.com, c@example.com"
+var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
+Logger.log(arrayAsDelimitedString(arr_da, ",", true)); // "c@example.com, b@example.com, a@example.com"
 
 // -- Array as Modified Delimited String
 
@@ -338,18 +338,18 @@ function arrayAsDelimitedString(arr, delim) {
 
 // function arrayAsModifiedDelimitedString(arr, delim)
 
-function delimStrFromArrMod(arr, delim, mod) {
-  var _arr = removeDuplicatesFromArray(arr).sort();
-  var result  = "";
-  for (var i = 0; i < _arr.length; i++) {
-    result += _arr[i] + mod + delim + " "; 
+function arrayAsModifiedDelimitedString(arr, delim, mod) {
+  var result = "";
+  var temp   = removeDuplicatesFromArray(arr);
+  for (var i = 0; i < temp.length; i++) {
+    if (i < temp.length) result += temp[i] + mod + delim + " "; 
+    else if (i === temp.length) result += temp[i] + mod + delim;
   }
-  result = result.slice(0, -2);
   return result;
 }
 
-// var arr_clfd = ["x", "z", "y"];
-// Logger.log(delimStrFromArrMod(arr_clfd, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
+var arr_aamds = ["x", "z", "y"];
+Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
 
 // - Two-Dimensional Array
 
