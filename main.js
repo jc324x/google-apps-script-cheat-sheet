@@ -440,6 +440,7 @@ function multiSortArrayOfObjects() {
  * @param {Object[]} arrObj
  * @param {string} pQuery
  * @param {string} val
+ * @param {string} [pReturn]
  * @returns {Object}
  */
 
@@ -514,35 +515,29 @@ function lastObjectInArrayOfObjects(arrObj) {
  *
  * @param {Object} arrObj
  * @param {string} pQuery
- * @param {string[]} arrVal
+ * @param {string || string[]} valOrValues
  * @returns {Object[]}
  */
 
-function filterArrayOfObjects(arrObj, pQuery, val) {
+function filterArrayOfObjects(arrObj, pQuery, valOrValues) {
   var result = [];
-  if (Array.isArray(val)) {
-    for (var i = 0; i < val.length; i++) {
-      var val = val[i]; 
+  if (Array.isArray(valOrValues)) {
+    for (var i = 0; i < valOrValues.length; i++) {
+      var val = valOrValues[i]; 
       for (var j = 0; j < arrObj.length; j++) {
         if (arrObj[j][pQuery] == val) result.push(arrObj[j]);
       }
+    } 
   } else {
+    for (var k = 0; k < arrObj.length; k++) {
+      if (arrObj[k][pQuery] == valOrValues) result.push(arrObj[k]);
+    }
   }
+  return result;
 }
 
-
-  // var result = [];
-  // for (var i = 0; i < arrVal.length; i++) {
-  //   var val = arrVal[i]; 
-  //   for (var j = 0; j < arrObj.length; j++) {
-  //     if (arrObj[j][pQuery] == val) result.push(arrObj[j]);
-  //   }
-  // } 
-  // return result;
-
-
-Logger.log(filterArrayOfObjects(ex_arrObj, "a", 10)); // [{a=10.0, b=2.0, c=500.0}]
-Logger.log(filterArrayOfObjects(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
+// Logger.log(filterArrayOfObjects(ex_arrObj, "a", 10)); // [{a=10.0, b=2.0, c=500.0}]
+// Logger.log(filterArrayOfObjects(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 
 // -- Unify Properties for Array of Objects 
 
@@ -555,9 +550,7 @@ Logger.log(filterArrayOfObjects(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0
  * @returns {Object[]}
  */
 
-// addUnifiedPropertyToObjectsInArrayOfObjects(arrObj, arrProp, newProp)
-
-function unifyPropForArrObj(arrObj, arrProp, newProp){
+function unifyPropertyInArrayOfObjects(arrObj, arrProp, newProp){
   for (var i = 0; i < arrObj.length; i++){
     var obj = arrObj[i];
     for (var h = 0; h < arrProp.length; h++) {
@@ -577,7 +570,7 @@ var arrObj_upfao  = [
   {z: 345},
 ];
 
-// Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new"));
+// Logger.log(unifyPropertyInArrayOfObjects(arrObj_upfao, ["x","y","z"], "new"));
 // [{new=123.0, x=123.0}, {new=234.0, y=234.0}, {new=345.0, z=345.0}]
 
 // - Object
@@ -587,7 +580,7 @@ var arrObj_upfao  = [
 /**
  * Returns an array of matching properties. 
  *
- * @requires intersectOf() 
+ * @requires intersectOfTwoArrays() 
  * @param {Object} obj
  * @param {string[]} props
  * @returns {Array}
@@ -595,9 +588,9 @@ var arrObj_upfao  = [
 
 // function returnValuesFromObject(obj, arrProp)
 
-function filterValIn(obj, props) {
+function arrayOfObjectValues(obj, arrProp) {
   var result = [];
-  var keys   = intersectOf(Object.keys(obj), props);
+  var keys   = intersectOfTwoArrays(Object.keys(obj), arrProp);
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i];
     for (var prop in obj) {
@@ -610,14 +603,14 @@ function filterValIn(obj, props) {
   return result;
 }
 
-// var obj_fvi = { 
-//  a: 1, 
-//  b: 2, 
-//  c: 3
-// };
+var obj_aoov = { 
+ a: 1, 
+ b: 2, 
+ c: 3
+};
 
-// var arr_fvi = ["a", "b", "d"];
-// Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
+var arr_aoov = ["a", "b", "d"];
+Logger.log(arrayOfObjectValues(obj_aoov, arr_aoov)); // [1, 2]
 
 // Merge Objects
 
