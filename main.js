@@ -609,8 +609,8 @@ var obj_aoov = {
  c: 3
 };
 
-var arr_aoov = ["a", "b", "d"];
-Logger.log(arrayOfObjectValues(obj_aoov, arr_aoov)); // [1, 2]
+// var arr_aoov = ["a", "b", "d"];
+// Logger.log(arrayOfObjectValues(obj_aoov, arr_aoov)); // [1, 2]
 
 // Merge Objects
 
