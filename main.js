@@ -200,12 +200,12 @@ function removeDuplicatesFromArray(arr) {
 
 // function removeEmptyElementsFromArray()
 
-function removeEmptyElements(x) {
+function removeEmptyElementsFromArray(x) {
   return (x !== (undefined || ''));
 }
 
-// var arr_ree = ["a",,"b",,,"c"];
-// Logger.log(arr_ree.filter(removeEmptyElements)); // ["a", "b", "c"]
+// var arr_reefa = ["a",,"b",,,"c"];
+// Logger.log(arr_reefa.filter(removeEmptyElementsFromArray)); // ["a", "b", "c"]
 
 // -- Get Count of Values
 
@@ -321,8 +321,8 @@ function arrayAsDelimitedString(arr, delim) {
   return result;
 }
 
-var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
-Logger.log(arrayAsDelimitedString(arr_da, ",", true)); // "c@example.com, b@example.com, a@example.com"
+// var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
+// Logger.log(arrayAsDelimitedString(arr_da, ",", true)); // "c@example.com, b@example.com, a@example.com"
 
 // -- Array as Modified Delimited String
 
@@ -348,8 +348,8 @@ function arrayAsModifiedDelimitedString(arr, delim, mod) {
   return result;
 }
 
-var arr_aamds = ["x", "z", "y"];
-Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
+// var arr_aamds = ["x", "z", "y"];
+// Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
 
 // - Two-Dimensional Array
 
@@ -384,6 +384,9 @@ var ex_arrObj = [
   {a: 1, b: 1, c: 50}
 ];
 
+// Logger.log(ex_arrObj);
+
+
 // -- Sort by Property or Properties
 
 /**
@@ -393,9 +396,7 @@ var ex_arrObj = [
  * @returns {Object[]}
  */
 
-// function sortArrayOfObjects()
-
-function dynSort(prop) {
+function singleSortArrayOfObjects(prop) {
   var sortOrder = 1;
   if(prop[0] === "-") {
     sortOrder = -1;
@@ -407,7 +408,7 @@ function dynSort(prop) {
   };
 }
 
-// Logger.log(ex_arrObj.sort(dynSort("a"))); 
+// Logger.log(ex_arrObj.sort(singleSortArrayOfObjects("a"))); 
 // [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 /**
@@ -416,21 +417,19 @@ function dynSort(prop) {
  * @returns {Object[]}
  */
 
-// sortArrayOfObjectsByMultipleProperties()
-
-function dynSortM() {
+function multiSortArrayOfObjects() {
   var props = arguments;
   return function (obj1, obj2) {
     var i = 0, result = 0, numberOfProperties = props.length;
     while(result === 0 && i < numberOfProperties) {
-      result = dynSort(props[i])(obj1, obj2);
+      result = singleSortArrayOfObjects(props[i])(obj1, obj2);
       i++;
     }
     return result;
   };
 }
 
-// Logger.log(ex_ArrObj.sort(dynSortM("b", "c"))); 
+// Logger.log(ex_arrObj.sort(multiSortArrayOfObjects("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 // -- Find Object With Unique Property Value
@@ -444,46 +443,23 @@ function dynSortM() {
  * @returns {Object}
  */
 
-
-// function findObjectInArrayOfObjects()
-
-function findObjIn(arrObj, pQuery, val) {
+function findObjectInArrayOfObjects(arrObj, pQuery, val, pReturn) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
     for (var prop in obj) {
       if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
-        return obj;
+        if (pReturn !== undefined) {
+          return obj[pReturn];
+        } else {
+          return obj;
+        }
       }
     }
   }
 }
 
-// Logger.log(findObjIn(ex_arrObj,"a",1000)); // {a=1000.0, b=1.0, c=5.0}
-
-/**
- * Returns a value from the first matching object in the array.
- *
- * @param {Object[]} arrObj
- * @param {string} pQuery
- * @param {string} val
- * @param {string} pReturn
- * @returns {*}
- */
-
-// findObjectInArrayOfObjectsReturnValue
-
-function findObjValIn(arrObj, pQuery, val, pReturn) {
-  for (var i = 0; i < arrObj.length; i++) {
-    var obj = arrObj[i];
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
-        return obj[pReturn];
-      }
-    }
-  }
-}
-
-// Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
+// Logger.log(findObjectInArrayOfObjects(ex_arrObj, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
+// Logger.log(findObjectInArrayOfObjects(ex_arrObj, "c", 500, "a")); // 10
 
 // -- Find Earliest or Latest Object by Timestamp
 
@@ -494,9 +470,7 @@ function findObjValIn(arrObj, pQuery, val, pReturn) {
  * @returns {Object}
  */
 
-// earliestObjectInArrayOfObjects()
-
-function earliestTS(arrObj){
+function firstObjectInArrayOfObjects(arrObj){
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
       return new Date(a.Timestamp) - new Date(b.Timestamp);
@@ -509,7 +483,7 @@ function earliestTS(arrObj){
 
 // var sheet_fe  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var arrObj_fe = arrObjFromRange(sheet_fe, "J1:K4");
-// Logger.log(earliestTS(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
+// Logger.log(firstObjectInArrayOfObjects(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 /**
  * Returns the object with the latest Timestamp value.
@@ -518,9 +492,7 @@ function earliestTS(arrObj){
  * @returns {Object}
  */
 
-// latestObjectInArrayOfObjects()
-
-function latestTS(arrObj) {
+function lastObjectInArrayOfObjects(arrObj) {
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
       return new Date(b.Timestamp) - new Date(a.Timestamp);
@@ -533,7 +505,7 @@ function latestTS(arrObj) {
 
 // var sheet_le  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
-// Logger.log(latestTS(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
+// Logger.log(lastObjectInArrayOfObjects(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
 // -- Filter by Property Value or Values
 
@@ -546,23 +518,31 @@ function latestTS(arrObj) {
  * @returns {Object[]}
  */
 
-// reduceArrayOfObjectsByPropertyValue(arrObj, pQuery, val, bool)
-// Inverse filter?
-
-function filterObjIn(arrObj, pQuery, arrVal) {
+function filterArrayOfObjects(arrObj, pQuery, val) {
   var result = [];
-  for (var i = 0; i < arrVal.length; i++) {
-    var val = arrVal[i]; 
-    for (var j = 0; j < arrObj.length; j++) {
-      if (arrObj[j][pQuery] == val) result.push(arrObj[j]);
-    }
-  } 
-  return result;
+  if (Array.isArray(val)) {
+    for (var i = 0; i < val.length; i++) {
+      var val = val[i]; 
+      for (var j = 0; j < arrObj.length; j++) {
+        if (arrObj[j][pQuery] == val) result.push(arrObj[j]);
+      }
+  } else {
+  }
 }
 
-// Logger.log(filterObjIn(ex_arrObj, "a", [10])); // [{a=10.0, b=2.0, c=500.0}]
-// Logger.log(filterObjIn(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 
+  // var result = [];
+  // for (var i = 0; i < arrVal.length; i++) {
+  //   var val = arrVal[i]; 
+  //   for (var j = 0; j < arrObj.length; j++) {
+  //     if (arrObj[j][pQuery] == val) result.push(arrObj[j]);
+  //   }
+  // } 
+  // return result;
+
+
+Logger.log(filterArrayOfObjects(ex_arrObj, "a", 10)); // [{a=10.0, b=2.0, c=500.0}]
+Logger.log(filterArrayOfObjects(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 
 // -- Unify Properties for Array of Objects 
 
@@ -746,7 +726,7 @@ function fmat12DT() {
   return d.join("-") + " " + t.join(":") + " " + s;
 }
 
-Logger.log(fmat12DT()); // "4-24-2017 8:43:40 PM"
+// Logger.log(fmat12DT()); // "4-24-2017 8:43:40 PM"
 
 // -- Date Object from String
 
