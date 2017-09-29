@@ -621,17 +621,15 @@ var obj_aoov = {
  * @returns {Object}
  */
 
-// combineTwoObjects()
-
 function mergeObjs() {
-  var obj = arguments[0];
+  var result = arguments[0];
   for (i = 1; i < arguments.length; i++) {
     var src = arguments[i]; 
     for (var key in src) {
-      if (src.hasOwnProperty(key)) obj[key] = src[key];
+      if (src.hasOwnProperty(key)) result[key] = src[key];
     }
   } 
-  return obj;
+  return result;
 } 
 
 // var objA_mo = {
@@ -649,7 +647,6 @@ function mergeObjs() {
 
 // Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
 
-// -- FLAG -- n? d? t? ... just use the long names
 // - Dates and Times
 
 // -- Formatted Timestamps
@@ -660,57 +657,59 @@ function mergeObjs() {
  * @returns {string}
  */
 
-// function dateStringMMDDYYYY
-
-function fmatD() {
-  var n = new Date();
-  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ];
-    return d.join("-");
+function timestampMMDDYYYY() {
+  var now  = new Date();
+  var date = [ now.getMonth() + 1, now.getDate(), now.getYear() ];
+  return date.join("-");
 }
 
-// Logger.log(fmatD()); // "4-24-2017"
-
-function dateStringYYYYMMDD() {
-  var today = new Date();
-  var temp  = [today.getYear(), today.getMonth() + 1, today.getDate()];
-  return temp.join("-");
-} 
+Logger.log(timestampMMDDYYYY()); // "4-24-2017"
 
 /**
- * Returns a string of the current time formatted "hour:minute:second".
+ * Returns a string of today's date formatted "year-month-day".
  *
  * @returns {string}
  */
 
-// function dateStringHHMMSS
+function timestampYYYYMMDD() {
+  var now  = new Date();
+  var date = [now.getYear(), now.getMonth() + 1, now.getDate()];
+  return date.join("-");
+} 
 
-function fmat24T(){
-  var n  = new Date();
-  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ];
+Logger.log(timestampYYYYMMDD()); // 2017-09-29
+
+/**
+ * Returns a string of the current time formatted "24 hour:minute:second".
+ *
+ * @returns {string}
+ */
+
+function timestampHHMMSS(){
+  var now  = new Date();
+  var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
     for ( var i = 1; i < 3; i++ ) {
-      if ( t[i] < 10 ) {
-        t[i] = "0" + t[i];
+      if ( [i] < 10 ) {
+        temp[i] = "0" + temp[i];
       }
-      return t.join(":");
+      return temp.join(":");
     }
 }
 
-// Logger.log(fmat24T()); // "20:43:40"
+Logger.log(timestampHHMMSS()); // "20:43:40"
 
 /**
- * Returns a string of today's date and the current time formatted "month-day-year hour:minute:second AM/PM"
+ * Returns a string of today's date and the current time formatted "year-iday-year hour:minute:second AM/PM"
  *
  * @returns {string}
  */
 
-// function dateStringYYYYMMDDHHMMSSAMPM()
-
-function fmat12DT() {
-  var n = new Date();
-  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ];
-  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ];
-  var s = ( t[0] < 12 ) ? "AM" : "PM";
-  t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
+function timestampYYYYMMDDHHMMSSAMPM() {
+  var now = new Date();
+  var date = [ now.getMonth() + 1, now.getDate(), now.getYear() ];
+  var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
+  var ampm = ( time[0] < 12 ) ? "AM" : "PM";
+  time[0]  = ( time[0] <= 12 ) ? time[0] : time[0] - 12;
   for ( var i = 1; i < 3; i++ ) {
     if ( t[i] < 10 ) {
       t[i] = "0" + t[i];
