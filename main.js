@@ -663,7 +663,7 @@ function timestampMMDDYYYY() {
   return date.join("-");
 }
 
-Logger.log(timestampMMDDYYYY()); // "4-24-2017"
+// Logger.log(timestampMMDDYYYY()); // "4-24-2017"
 
 /**
  * Returns a string of today's date formatted "year-month-day".
@@ -677,7 +677,7 @@ function timestampYYYYMMDD() {
   return date.join("-");
 } 
 
-Logger.log(timestampYYYYMMDD()); // 2017-09-29
+// Logger.log(timestampYYYYMMDD()); // 2017-09-29
 
 /**
  * Returns a string of the current time formatted "24 hour:minute:second".
@@ -689,14 +689,14 @@ function timestampHHMMSS(){
   var now  = new Date();
   var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
     for ( var i = 1; i < 3; i++ ) {
-      if ( [i] < 10 ) {
-        temp[i] = "0" + temp[i];
+      if ( time[i] < 10 ) {
+        time[i] = "0" + time[i];
       }
-      return temp.join(":");
+      return time.join(":");
     }
 }
 
-Logger.log(timestampHHMMSS()); // "20:43:40"
+// Logger.log(timestampHHMMSS()); // "20:43:40"
 
 /**
  * Returns a string of today's date and the current time formatted "year-iday-year hour:minute:second AM/PM"
@@ -711,14 +711,14 @@ function timestampYYYYMMDDHHMMSSAMPM() {
   var ampm = ( time[0] < 12 ) ? "AM" : "PM";
   time[0]  = ( time[0] <= 12 ) ? time[0] : time[0] - 12;
   for ( var i = 1; i < 3; i++ ) {
-    if ( t[i] < 10 ) {
-      t[i] = "0" + t[i];
+    if ( time[i] < 10 ) {
+      time[i] = "0" + time[i];
     }
   }
-  return d.join("-") + " " + t.join(":") + " " + s;
+  return date.join("-") + " " + time.join(":") + " " + ampm;
 }
 
-// Logger.log(fmat12DT()); // "4-24-2017 8:43:40 PM"
+// Logger.log(timestampYYYYMMDDHHMMSSAMPM()); // "4-24-2017 8:43:40 PM"
 
 // -- Date Object from String
 
@@ -757,7 +757,7 @@ function dateObjectFromString(str) {
 
 // matchDateARangeOfDates()
 
-function matchDateRange(arrObj, optDate) {
+function matchDateToRange(arrObj, optDate) {
   var date = new Date();
   if (optDate !== undefined) {
     date = new Date(optDate);
@@ -798,25 +798,25 @@ function matchDateRange(arrObj, optDate) {
 
 // function createOrVerifyFolderPath()
 
-function createVerifyPath(path) {
+function createOrVerifyFolderPath(path) {
   if (path.charAt(0) === "/") {
     path = path.substr(1);
   }
-  var arr = path.split("/");
+  var split = path.split("/");
   var fldr;
-  for (i = 0; i < arr.length; i++) {
-    var fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+  for (i = 0; i < split.length; i++) {
+    var fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
     if (i === 0) {
-      if(!(fi.hasNext())) {
-        DriveApp.createFolder(arr[i]);
-        fi = DriveApp.getFoldersByName(arr[i]);
+      if (!(fi.hasNext())) {
+        DriveApp.createFolder(split[i]);
+        fi = DriveApp.getFoldersByName(split[i]);
       } 
       fldr = fi.next();
     } else if (i >= 1) {
-      fi = fldr.getFoldersByName(arr[i]);
-      if(!(fi.hasNext())) {
-        fldr.createFolder(arr[i]);
-        fi = DriveApp.getFoldersByName(arr[i]);
+      fi = fldr.getFoldersByName(split[i]);
+      if (!(fi.hasNext())) {
+        fldr.createFolder(split[i]);
+        fi = DriveApp.getFoldersByName(split[i]);
       } 
       fldr = fi.next();
     }
@@ -824,7 +824,8 @@ function createVerifyPath(path) {
   return fldr;
 }
 
-// Logger.log(createVerifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
+// Logger.log(createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
+// Logger.log(createOrVerifyFolderPath("/google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 
 // -- Last Folder in Folder Path 
 
@@ -835,9 +836,7 @@ function createVerifyPath(path) {
  * @returns {Folder}
  */
 
-// function lastFolderInFolderPath(path)
-
-function lastFolderIn(path) {
+function lastFolderInFolderPath(path) {
   if (path.charAt(0) === "/") {
     path = path.substr(1);
   }
@@ -860,8 +859,8 @@ function lastFolderIn(path) {
   return fldr;
 }
 
-// Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
-// Logger.log(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B/C/D/E/F/G")); // C
+// Logger.log(lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
+// Logger.log(lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B/C/D/E/F/G")); // C
 
 // -- Array of All Folders 
 
@@ -876,7 +875,7 @@ function lastFolderIn(path) {
 
 // arrayOfFoldersInAFolder(fldr)
 
-function foldersIn(fldr) {
+function arrayOfFoldersInFolder(fldr) {
   var fi  = fldr.getFolders();
   var arr = [];
   while (fi.hasNext()) {
@@ -886,7 +885,7 @@ function foldersIn(fldr) {
   return arr;
 }
 
-// Logger.log(foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/"))); // [A]
+// Logger.log(arrayOfFoldersInFolder(lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/folders/"))); // [A]
 
 // --- All Folders at Root
 
@@ -896,20 +895,17 @@ function foldersIn(fldr) {
  * @returns {Folder[]}
  */
 
-// arrayOfAllRootFolders()
-
-function rootFolders() {
-  var rf  = DriveApp.getRootFolder();
-  var fi  = rf.getFolders();
-  var arr = [];
+function arrayOfRootFolders() {
+  var fi     = DriveApp.getRootFolder().getFolders();
+  var result = [];
   while (fi.hasNext()) {
     var fldr = fi.next();
-    arr.push(fldr);
+    result.push(fldr);
   } 
-  return arr;
+  return result;
 }
 
-// Logger.log(rootFolders());
+// Logger.log(arrayOfRootFolders());
 
 // --- All Folders in Drive
 
@@ -919,9 +915,7 @@ function rootFolders() {
  * @returns {Folder[]}
  */
 
-// arrayOfAllFoldersInDrive()
-
-function allFolders() {
+function arrayOfFoldersInDrive() {
   var fi  = DriveApp.getFolders();
   var arr = [];
   while (fi.hasNext()) {
@@ -931,7 +925,7 @@ function allFolders() {
   return arr;
 }
 
-// Logger.log(allFolders());
+// Logger.log(arrayOfFoldersInDrive());
 
 // -- Array of Folder Names
 
@@ -942,9 +936,7 @@ function allFolders() {
  * @returns {string[]}
  */
 
-// arrayOfAllFolderNames()
-
-function folderNames(fldrs) {
+function arrayOfFolderNames(fldrs) {
   var arr = [];
   for (var i = 0; i < fldrs.length; i++) {
     var name = fldrs[i].getName();
@@ -953,8 +945,8 @@ function folderNames(fldrs) {
   return arr;
 }
 
-// var arr_fn  = foldersIn(lastFolderIn("google-apps-script-cheat-sheet-demo/folders/A/B"));
-// Logger.log(folderNames(arr_fn)); // [C]
+// var arr_fn  = foldersIn(lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B"));
+// Logger.log(arrayOfFolderNames(arr_fn)); // [C]
 
 // -- Find a Folder
 
@@ -963,9 +955,9 @@ function folderNames(fldrs) {
 /**
  * Returns a folder.
  *
- * @requires foldersIn() 
- * @requires folderNames() 
- * @requires checkValIn()
+ * @requires arrayOfFoldersInFolder() 
+ * @requires arrayOfFolderNames() 
+ * @requires checkArrayForValue()
  * @param {Folder} fldr
  * @param {string} name
  * @returns {Folder}
@@ -974,15 +966,14 @@ function folderNames(fldrs) {
 // findAFolderInsideAFolder()
 
 function findFolderIn(fldr, name) {
-  var fldrs = foldersIn(fldr);
-  var names = folderNames(fldrs);
+  var fldrs = arrayOfFoldersInFolder(fldr);
+  var names = arrayOfFolderNames(fldrs);
   if (checkArrayForValue(names, name)) {
-    var _fldr = fldr.getFoldersByName(name).next();
-    return _fldr;
+    return fldr.getFoldersByName(name).next();
   }
 }
 
-// var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo/folders");
+// var fldr_ffi = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/folders");
 // Logger.log(findFolderIn(fldr_ffi, "A")); // A
 
 // --- Find a Folder at Root
@@ -990,20 +981,18 @@ function findFolderIn(fldr, name) {
 /**
  * Returns a folder at the root of the user's Drive.
  *
- * @requires rootFolders()
- * @requires folderNames()
+ * @requires arrayOfRootFolders()
+ * @requires arrayOfFolderNames()
  * @requires checkArrayForValue()
  * @param {string} name
  * @returns {Folder}
  */
 
 function findFolderAtRoot(name) {
-  var rf    = DriveApp.getRootFolder();
-  var fldrs = rootFolders();
-  var names = folderNames(fldrs);
+  var fldrs = arrayOfRootFolders();
+  var names = arrayOfFolderNames(fldrs);
   if (checkArrayForValue(names, name)) {
-    var fldr = rf.getFoldersByName(name).next();
-    return fldr;
+    return DriveApp.getRootFolder().getFoldersByName(name).next();
   }
 }
 
@@ -1021,8 +1010,7 @@ function findFolderAtRoot(name) {
 function findFolderInDrive(name) {
   var fi = DriveApp.getFoldersByName(name);
   while (fi.hasNext()){
-    var fldr = fi.next();
-    return fldr;
+    return fi.next();
   }
 }
 
@@ -1036,8 +1024,8 @@ function findFolderInDrive(name) {
  * Returns a folder. 
  * Creates folders within a folder if they don't already exist.
  *
- * @requires foldersIn()
- * @requires folderNames()
+ * @requires arrayOfFoldersInFolder()
+ * @requires arrayOfFolderNames()
  * @requires checkArrayForValue()
  * @param {Folder} fldr
  * @param {string[]} names
@@ -1045,8 +1033,8 @@ function findFolderInDrive(name) {
  */
 
 function createVerifyFoldersIn(fldr, names) {
-  var fldrs  = foldersIn(fldr);
-  var _names = folderNames(fldrs);
+  var fldrs  = arrayOfFoldersInFolder(fldr);
+  var _names = arrayOfFolderNames(fldrs);
   for (i = 0; i < names.length; i++) {
     if (!(checkArrayForValue(_names, names[i]))) {
       fldr.createFolder(names[i]);
@@ -1055,9 +1043,9 @@ function createVerifyFoldersIn(fldr, names) {
   return fldr;
 }
 
-// var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet-demo/folders");
+// var fldr_cvfi = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/folders");
 // Logger.log(createVerifyFoldersIn(fldr_cvfi, ["X", "Y", "Z"])); // folders
-// Logger.log(foldersIn(fldr_cvfi)); // [A,X,Y,Z]
+// Logger.log(arrayOfFoldersInFolder(fldr_cvfi)); // [A,X,Y,Z]
   
 // --- Create or Verify Folders at Root
 
@@ -1070,8 +1058,8 @@ function createVerifyFoldersIn(fldr, names) {
  */
 
 function createVerifyFoldersAtRoot(names) {
-  var rfs    = rootFolders();
-  var _names = folderNames(rfs);
+  var rfs    = arrayOfRootFolders();
+  var _names = arrayOfFolderNames(rfs);
   for (i=0; i < names.length; i++) {
     if (!(checkArrayForValue(_names, names[i]))) {
       DriveApp.createFolder(names[i]);
@@ -1085,7 +1073,7 @@ function createVerifyFoldersAtRoot(names) {
 // checkForExFile creates an empty example file
 
 function checkForExFile() {
-  var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/files");
+  var fldr = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files");
   var file = findFileIn(fldr, "example-file");
   if (!(file)){fldr.createFile("example-file", "example");}
   return findFileIn(fldr, "example-file");
@@ -1114,7 +1102,7 @@ function filesIn(fldr) {
   return arr;
 }
 
-// var fldr_fin = lastFolderIn("google-apps-script-cheat-sheet-demo/files");
+// var fldr_fin = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/files");
 // Logger.log(filesIn(fldr_fin)); // [example-file]
 
 // --- All Files at Root
@@ -1176,7 +1164,7 @@ function fileNames(files) {
   return arr;
 }
 
-// var fldr_fnam = lastFolderIn("google-apps-script-cheat-sheet-demo/files");
+// var fldr_fnam = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/files");
 // var arr_fnam  = filesIn(fldr_fnam);
 // Logger.log(fileNames(arr_fnam)); // [example-file]
 
@@ -1204,7 +1192,7 @@ function findFileIn(fldr, name) {
   }
 }
 
-// var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo/files");
+// var fldr_ffi = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/files");
 // Logger.log(findFileIn(fldr_ffi, "example-file")); // example-file
 
 // --- Find a File at Root
@@ -1304,7 +1292,7 @@ function copyFile(file, fldr) {
   return findFileIn(fldr, name);
 }
 
-// var fldr_cf = createVerifyPath("google-apps-script-cheat-sheet-demo/files/copied");
+// var fldr_cf = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/copied");
 // var file_cf = findFileInDrive("example-file");
 // Logger.log(copyFile(file_cf, fldr_cf)); // example-file
 
@@ -1328,9 +1316,9 @@ function moveFile(file, fldr) {
   return _file;
 }
 
-// var fldr_mf1 = lastFolderIn("google-apps-script-cheat-sheet-demo/files/copied");
+// var fldr_mf1 = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/files/copied");
 // var file_mf  = findFileIn(fldr_mf1, "example-file");
-// var fldr_mf2 = createVerifyPath("google-apps-script-cheat-sheet-demo/files/moved");
+// var fldr_mf2 = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/moved");
 // Logger.log(moveFile(file_mf, fldr_mf2)); // example-file
 
 // - Files and Folders
@@ -1350,7 +1338,7 @@ function renameFileFldr(file_fldr, name) {
   return file_fldr;
 } 
 
-// var fldr_rf = lastFolderIn("google-apps-script-cheat-sheet-demo/files/moved");
+// var fldr_rf = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/files/moved");
 // var file_rf = findFileIn(fldr_rf, "example-file");
 // Logger.log(renameFileFldr(file_rf, "modified-example-file")); // modified-example-file
 
@@ -1392,7 +1380,7 @@ function zipFilesIn(fldr, name) {
   return findFileIn(fldr, name);
 }
 
-// var fldr_zfi = createVerifyPath("google-apps-script-cheat-sheet-demo/zips");
+// var fldr_zfi = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/zips");
 // fldr_zfi.createFile("A","hello, world!");
 // fldr_zfi.createFile("B", "hello again, world!");
 // fldr_zfi.createFile("C", "world! hi!");
@@ -1401,7 +1389,7 @@ function zipFilesIn(fldr, name) {
 // JSON
 
 function jsonExFile() {
-  var fldr = createVerifyPath("google-apps-script-cheat-sheet-demo/json");
+  var fldr = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/json");
   var file = findFileIn(fldr, "example-json");
   var json = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
   var text = JSON.stringify(json);
@@ -1578,7 +1566,7 @@ function createVerifySSIn(fldr, name) {
   return openFileAsSpreadsheet(findFileIn(fldr, name));
 }
 
-// var fldr_cvssi = createVerifyPath("google-apps-script-cheat-sheet-demo/sheets");
+// var fldr_cvssi = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
 // Logger.log(createVerifySSIn(fldr_cvssi, "example-sheet")); // example-sheet
 
 // --- Create or Verify Spreadsheet at Root
@@ -1635,7 +1623,7 @@ function openFileAsSpreadsheet(file) {
   return _ss;
 } 
 
-// var fldr_ofas = lastFolderIn("google-apps-script-cheat-sheet-demo/sheets")
+// var fldr_ofas = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/sheets")
 // var file_ofas = findFileIn(fldr_ofas, "example-sheet");
 // Logger.log(openFileAsSpreadsheet(file_ofas));
 
@@ -2089,7 +2077,7 @@ function createVerifyDocIn(fldr, name) {
   return openFileAsDocument(findFileIn(fldr, name));
 }
 
-// var fldr_cvdi = createVerifyPath("google-apps-script-cheat-sheet-demo/docs");
+// var fldr_cvdi = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/docs");
 // Logger.log(createVerifyDocIn(fldr_cvdi, "example-doc")); // example-doc
 
 // --- Create or Verify Document at Root
@@ -2139,7 +2127,7 @@ function openFileAsDocument(file) {
   return _doc;
 } 
 
-// var fldr_ofad = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
+// var fldr_ofad = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/docs");
 // var file_ofad = findFileIn(fldr_ofad, "example-doc");
 // Logger.log(openFileAsDocument(file_ofad));
 
@@ -2147,14 +2135,14 @@ function openFileAsDocument(file) {
 
 // -- Access Document Body
 
-// var fldr_adb = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
+// var fldr_adb = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/docs");
 // var file_adb = findFileIn(fldr_adb, "example-doc");
 // var doc_adb  = openFileAsDocument(file_adb);
 // doc_adb.appendParagraph("Hello, world!");
 
 // -- Clear Document Body
 
-// var fldr_cdb = lastFolderIn("google-apps-script-cheat-sheet-demo/docs");
+// var fldr_cdb = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/docs");
 // var file_cdb = findFileIn(fldr_cdb, "example-doc");
 // var doc_cdb  = openFileAsDocument(file_cdb);
 // var body_cdb = doc_cdb.getBody();
@@ -2225,7 +2213,7 @@ function findReplaceInDoc(obj, doc, delim) {
   } 
 } 
 
-// var fldr_frid = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var fldr_frid = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
 // var doc_frid  = createVerifyDocIn(fldr_frid, "find-replace-doc");
 // var body_frid = doc_frid.getBody();
 // body_frid.clear();
@@ -2267,7 +2255,7 @@ function findReplaceInSpreadsheet(obj, ss, delim) {
   } 
 }
 
-// var fldr_fris  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var fldr_fris  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
 // var ss_frid    = createVerifySSIn(fldr_fris, "find-replace-sheet");
 // var sheet_frid = ss_frid.getSheets()[0];
 // sheet_frid.clear();
@@ -2309,7 +2297,7 @@ function findReplaceinSheet(obj, sheet, delim) {
   sheet.getDataRange().setValues(values);
 }
 
-// var fldr_fris  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var fldr_fris  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
 // var ss_fris    = createVerifySSIn(fldr_fris, "find-replace-sheet");
 // var sheet_fris = ss_fris.getSheets()[0];
 // sheet_fris.clear();
@@ -2355,8 +2343,8 @@ function createDocsFromTemplateArrObj(arrObj, templateDoc, naming, fldr, ts, del
 
 // var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
-// var fldr1_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var fldr2_cdftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
+// var fldr1_cdftao  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
+// var fldr2_cdftao  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
 // var doc_cdftao    = createVerifyDocIn(fldr1_cdftao, "template-doc");
 // var body_cdftao   = doc_cdftao.getBody();
 // body_cdftao.clear();
@@ -2398,8 +2386,8 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, 
 // var ss1_csftao    = SpreadsheetApp.getActiveSpreadsheet();
 // var sheet1_csftao = ss1_csftao.getSheetByName("Sheet2");
 // var arrObj_csftao = arrObjFromSheet(sheet1_csftao, 2);
-// var fldr1_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var fldr2_csftao  = createVerifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
+// var fldr1_csftao  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
+// var fldr2_csftao  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
 // var file_csftao   = createVerifySSIn(fldr1_csftao, "template-sheet");
 // var ss2_csftao    = openFileAsSpreadsheet(file_csftao);
 // var sheet2_csftao = ss2_csftao.getSheets()[0];
@@ -2419,7 +2407,7 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, 
 
 // var sheet_sdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_sdl = arrObjFromSheet(sheet_sdl, 2);
-// var fldr_sdl   = createVerifyPath("google-apps-script-cheat-sheet-demo/docs");
+// var fldr_sdl   = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/docs");
 // var file_sdl   = createVerifyDocIn(fldr_sdl, "example-doc");
 // var doc_sdl    = openFileAsDocument(file_sdl);
 // var body_sdl   = doc_sdl.getBody();
@@ -2437,7 +2425,7 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, 
 
 // var sheet_mdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_mdl = arrObjFromSheet(sheet_mdl, 2);
-// var fldr_mdl   = createVerifyPath("google-apps-script-cheat-sheet-demo/docs");
+// var fldr_mdl   = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/docs");
 // var file_mdl   = createVerifyDocIn(fldr_mdl, "example-doc");
 // var doc_mdl    = openFileAsDocument(file_mdl);
 // var body_mdl   = doc_mdl.getBody();
