@@ -176,9 +176,9 @@ function checkArrayForValue(arr, val) {
 function removeDuplicatesFromArray(arr) {
   var result = [];
   var check  = {};
-  for(var i = 0; i < arr.length; i++) {
+  for (var i = 0; i < arr.length; i++) {
     var item = arr[i];
-    if(check[item] !== 1) {
+    if (check[item] !== 1) {
       check[item] = 1;
       result.push(item);
     }
@@ -396,6 +396,8 @@ var ex_arrObj = [
  * @returns {Object[]}
  */
 
+// sortArrayOfObjects()
+
 function singleSortArrayOfObjects(prop) {
   var sortOrder = 1;
   if(prop[0] === "-") {
@@ -416,6 +418,8 @@ function singleSortArrayOfObjects(prop) {
  * @param {...string}
  * @returns {Object[]}
  */
+
+// sortArrayOfObjectsMulti()
 
 function multiSortArrayOfObjects() {
   var props = arguments;
@@ -519,6 +523,10 @@ function lastObjectInArrayOfObjects(arrObj) {
  * @returns {Object[]}
  */
 
+
+// filterArrayOfObjects(arrObj, prop, val)
+// filterArrayOfObjectsMulti(arrObj, prop, arr) | new
+
 function filterArrayOfObjects(arrObj, pQuery, valOrValues) {
   var result = [];
   if (Array.isArray(valOrValues)) {
@@ -549,6 +557,8 @@ function filterArrayOfObjects(arrObj, pQuery, valOrValues) {
  * @param {string} newProp 
  * @returns {Object[]}
  */
+
+// function unifyPropertyInArrayOfObjects(arrObj, arr, prop){
 
 function unifyPropertyInArrayOfObjects(arrObj, arrProp, newProp){
   for (var i = 0; i < arrObj.length; i++){
@@ -586,7 +596,7 @@ var arrObj_upfao  = [
  * @returns {Array}
  */
 
-// function returnValuesFromObject(obj, arrProp)
+// function returnValuesFromObject(obj, arr)
 
 function arrayOfObjectValues(obj, arrProp) {
   var result = [];
@@ -729,7 +739,7 @@ function timestampYYYYMMDDHHMMSSAMPM() {
  * @returns {Date}
  */
 
-// function dateObjectFromString(str) {
+// function dateObjectFromString(val) {
 
 function dateObjectFromString(str) {
   var split  = str.split("-");
@@ -756,6 +766,8 @@ function dateObjectFromString(str) {
  */
 
 // matchDateARangeOfDates()
+
+// function matchDateToRange(arrObj, val)
 
 function matchDateToRange(arrObj, optDate) {
   var date = new Date();
@@ -936,6 +948,8 @@ function arrayOfFoldersInDrive() {
  * @returns {string[]}
  */
 
+// function arrayOfFolderNames(fldr)
+
 function arrayOfFolderNames(fldrs) {
   var arr = [];
   for (var i = 0; i < fldrs.length; i++) {
@@ -963,7 +977,7 @@ function arrayOfFolderNames(fldrs) {
  * @returns {Folder}
  */
 
-// findAFolderInsideAFolder()
+// findFolderInFolder()
 
 function findFolderIn(fldr, name) {
   var fldrs = arrayOfFoldersInFolder(fldr);
@@ -1032,6 +1046,8 @@ function findFolderInDrive(name) {
  * @returns {Folder}
  */
 
+// function createVerifyFoldersIn(fldr, arr)
+
 function createVerifyFoldersIn(fldr, names) {
   var fldrs  = arrayOfFoldersInFolder(fldr);
   var _names = arrayOfFolderNames(fldrs);
@@ -1056,6 +1072,8 @@ function createVerifyFoldersIn(fldr, names) {
  * @param {string[]} names
  * @returns {Folder}
  */
+
+// function createVerifyFoldersAtRoot(arr)
 
 function createVerifyFoldersAtRoot(names) {
   var rfs    = arrayOfRootFolders();
@@ -1092,6 +1110,8 @@ function checkForExFile() {
  * @returns {File[]}
  */
 
+// arrayOfFilesInFolder()
+
 function filesIn(fldr) {
   var fi  = fldr.getFiles();
   var arr = [];
@@ -1112,6 +1132,8 @@ function filesIn(fldr) {
  *
  * @returns {File[]}
  */
+
+// arrayOfRootFiles()
 
 function rootFiles() {
   var rf = DriveApp.getRootFolder();
@@ -1134,6 +1156,8 @@ function rootFiles() {
  * @returns {File[]}
  */
 
+// arrayOfFilesInDrive
+
 function allFiles() {
   var fi = DriveApp.getFiles();
   var arr  = [];
@@ -1154,6 +1178,8 @@ function allFiles() {
  * @param {File[]} files
  * @returns {string[]}
  */
+
+// arrayOfNamesForArrayOfFiles
 
 function fileNames(files) {
   var arr = [];
@@ -1182,6 +1208,8 @@ function fileNames(files) {
  * @param {string} name
  * @returns {File}
  */
+
+// findFileInFolder()
 
 function findFileIn(fldr, name) {
   var files = filesIn(fldr);
@@ -1285,6 +1313,8 @@ function findFileAtPath(path) {
  * @returns {File}
  */
 
+// copyFileToFolder
+
 function copyFile(file, fldr) {
   var name = file.getName();
   var dest = findFileIn(fldr, name);
@@ -1306,6 +1336,8 @@ function copyFile(file, fldr) {
  * @param {Folder}  fldr
  * @returns {File}
  */
+
+// moveFileToFolder
 
 function moveFile(file, fldr) {
   var name = file.getName();
@@ -1333,6 +1365,8 @@ function moveFile(file, fldr) {
  * @returns {File || Folder}
  */
 
+// renameFileOrFolder
+
 function renameFileFldr(file_fldr, name) {
   file_fldr.setName(name);
   return file_fldr;
@@ -1351,6 +1385,8 @@ function renameFileFldr(file_fldr, name) {
  * @returns {Folder}
  */
 
+// parentFolderOfFileOrFolder()
+
 function parentFolderOf(file_fldr) {
   var fi = file_fldr.getParents();
   return fi.next();
@@ -1368,6 +1404,8 @@ function parentFolderOf(file_fldr) {
  * @param {string} name
  * @returns {File}
  */
+
+// zipFilesInFolder()
 
 function zipFilesIn(fldr, name) {
   var blobs = [];
@@ -1531,7 +1569,6 @@ function clearConfiguration() {
 
 // -- Run Script
 
-
 // Sheets
 
 // - Managing Spreadsheet Files
@@ -1555,6 +1592,7 @@ function clearConfiguration() {
  * @returns {Spreadsheet}
  */
 
+// function createOrVerifySSInFolder(fldr, name)
 function createVerifySSIn(fldr, name) {
   var files = filesIn(fldr);
   var names = fileNames(files);
@@ -1584,6 +1622,8 @@ function createVerifySSIn(fldr, name) {
  * @returns {Spreadsheet}
  */
 
+// function createOrVerifySSAtRoot(name)
+
 function createVerifySSAtRoot(name) {
   var files = rootFiles();
   var names = fileNames(files);
@@ -1600,6 +1640,8 @@ function createVerifySSAtRoot(name) {
  *
  * @returns {string}
  */
+
+// idOfSS()
 
 function ssId() {
   var _id = SpreadsheetApp.getActiveSpreadsheet().getId();
@@ -1640,6 +1682,8 @@ function openFileAsSpreadsheet(file) {
  * @returns {string}
  */
 
+// function convertColumnIndex(number) {
+
 function numCol(number) {
   var num = number - 1, chr;
   if (num <= 25) {
@@ -1678,6 +1722,8 @@ function ex_nc() {
  * @returns {number}
  */
 
+// function convertColumnLetter(column)
+
 function colNum(column) {
   var col = column.toUpperCase(), chr0, chr1;
   if (col.length === 1)  {
@@ -1713,7 +1759,7 @@ function colNum(column) {
  *
  */
 
-function importRange(){
+function importRange() {
   var get = sheet_gs.getRange("A2:A5").getValues();
   var set = sheet_gs.getRange("B2:B5").setValues(get);
 }
@@ -1728,6 +1774,8 @@ function importRange(){
  * @param {string} input
  * @returns {boolean}
  */
+
+// function booleanFromValue(input)
 
 function checkTF(input) {
   if (isNaN(input)) {
@@ -1759,6 +1807,8 @@ function checkTF(input) {
  * @returns {string[]}
  */
 
+// function arrayOfSheetNames(ss) 
+
 function arrSheetNames(ss) {
   var sheets = ss.getSheets();
   var result = [];
@@ -1784,6 +1834,8 @@ function arrSheetNames(ss) {
  * @param {string} a1Notation
  * @returns {Object}
  */
+
+// objectFromRange
 
 function objFromRange(sheet, a1Notation) {
   var range  = sheet.getRange(a1Notation);
