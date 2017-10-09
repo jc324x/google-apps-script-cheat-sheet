@@ -401,7 +401,7 @@ var ex_arrObj = [
 
 // sortArrayOfObjects()
 
-function singleSortArrayOfObjects(prop) {
+function sortArrayOfObjects(prop) {
   var sortOrder = 1;
   if(prop[0] === "-") {
     sortOrder = -1;
@@ -413,7 +413,7 @@ function singleSortArrayOfObjects(prop) {
   };
 }
 
-// Logger.log(ex_arrObj.sort(singleSortArrayOfObjects("a"))); 
+Logger.log(ex_arrObj.sort(sortArrayOfObjects("a"))); 
 // [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 /**
@@ -424,19 +424,19 @@ function singleSortArrayOfObjects(prop) {
 
 // sortArrayOfObjectsMulti()
 
-function multiSortArrayOfObjects() {
+function sortArrayOfObjectsMulti() {
   var props = arguments;
   return function (obj1, obj2) {
     var i = 0, result = 0, numberOfProperties = props.length;
     while(result === 0 && i < numberOfProperties) {
-      result = singleSortArrayOfObjects(props[i])(obj1, obj2);
+      result = sortArrayOfObjects(props[i])(obj1, obj2);
       i++;
     }
     return result;
   };
 }
 
-// Logger.log(ex_arrObj.sort(multiSortArrayOfObjects("b", "c"))); 
+Logger.log(ex_arrObj.sort(sortArrayOfObjectsMulti("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 // -- Find Object With Unique Property Value
@@ -479,7 +479,8 @@ function findObjectInArrayOfObjects(arrObj, pQuery, val, pReturn) {
  */
 
 // earliestTimestampObjectInArrayOfObjects
-function firstObjectInArrayOfObjects(arrObj){
+
+function earliestTimestampObjectInArrayOfObjects(arrObj){
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
       return new Date(a.Timestamp) - new Date(b.Timestamp);
@@ -1258,7 +1259,7 @@ function findFileInDrive(name) {
   }
 }
 
-Logger.log(findFileInDrive("example-file")); // example-file
+// Logger.log(findFileInDrive("example-file")); // example-file
 
 // --- Find at File at Path
 
