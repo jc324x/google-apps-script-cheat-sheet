@@ -143,6 +143,9 @@ Logger.log("Start");
 // * Count of Value in Array of Objects
 // * Recursive Moving / Copying Folders
 
+// arr, val, arrObj, name, path, delim, mod,
+
+
 // General
 
 // - Array 
@@ -475,6 +478,7 @@ function findObjectInArrayOfObjects(arrObj, pQuery, val, pReturn) {
  * @returns {Object}
  */
 
+// earliestTimestampObjectInArrayOfObjects
 function firstObjectInArrayOfObjects(arrObj){
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
@@ -497,6 +501,7 @@ function firstObjectInArrayOfObjects(arrObj){
  * @returns {Object}
  */
 
+// latestTimestampObjectInArrayOfObjects
 function lastObjectInArrayOfObjects(arrObj) {
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
@@ -522,7 +527,6 @@ function lastObjectInArrayOfObjects(arrObj) {
  * @param {string || string[]} valOrValues
  * @returns {Object[]}
  */
-
 
 // filterArrayOfObjects(arrObj, prop, val)
 // filterArrayOfObjectsMulti(arrObj, prop, arr) | new
@@ -948,19 +952,17 @@ function arrayOfFoldersInDrive() {
  * @returns {string[]}
  */
 
-// function arrayOfFolderNames(fldr)
-
-function arrayOfFolderNames(fldrs) {
-  var arr = [];
-  for (var i = 0; i < fldrs.length; i++) {
-    var name = fldrs[i].getName();
-    arr.push(name);
+function arrayOfFolderNames(arr) {
+  var result = [];
+  for (var i = 0; i < arr.length; i++) {
+    var name = arr[i].getName();
+    result.push(name);
   }
-  return arr;
+  return result;
 }
 
-// var arr_fn  = foldersIn(lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B"));
-// Logger.log(arrayOfFolderNames(arr_fn)); // [C]
+var arr_aofldrn  = arrayOfFoldersInFolder(lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B"));
+Logger.log(arrayOfFolderNames(arr_aofldrn)); // [C]
 
 // -- Find a Folder
 
@@ -1046,22 +1048,22 @@ function findFolderInDrive(name) {
  * @returns {Folder}
  */
 
-// function createVerifyFoldersIn(fldr, arr)
+// function createOrVerifyFoldersIn(fldr, arr)
 
-function createVerifyFoldersIn(fldr, names) {
-  var fldrs  = arrayOfFoldersInFolder(fldr);
-  var _names = arrayOfFolderNames(fldrs);
-  for (i = 0; i < names.length; i++) {
-    if (!(checkArrayForValue(_names, names[i]))) {
-      fldr.createFolder(names[i]);
+function createOrVerifyFoldersInFolder(fldr, arr) {
+  var fldrs = arrayOfFoldersInFolder(fldr);
+  var names = arrayOfFolderNames(fldrs);
+  for (i = 0; i < arr.length; i++) {
+    if (!(checkArrayForValue(names, arr[i]))) {
+      fldr.createFolder(arr[i]);
     }
   }
   return fldr;
 }
 
-// var fldr_cvfi = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/folders");
-// Logger.log(createVerifyFoldersIn(fldr_cvfi, ["X", "Y", "Z"])); // folders
-// Logger.log(arrayOfFoldersInFolder(fldr_cvfi)); // [A,X,Y,Z]
+var fldr_covfif = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/folders");
+Logger.log(createOrVerifyFoldersInFolder(fldr_covfif, ["X", "Y", "Z"])); // folders
+Logger.log(arrayOfFoldersInFolder(fldr_covfif)); // [A,X,Y,Z]
   
 // --- Create or Verify Folders at Root
 
@@ -1073,14 +1075,12 @@ function createVerifyFoldersIn(fldr, names) {
  * @returns {Folder}
  */
 
-// function createVerifyFoldersAtRoot(arr)
-
-function createVerifyFoldersAtRoot(names) {
-  var rfs    = arrayOfRootFolders();
-  var _names = arrayOfFolderNames(rfs);
-  for (i=0; i < names.length; i++) {
-    if (!(checkArrayForValue(_names, names[i]))) {
-      DriveApp.createFolder(names[i]);
+function createOrVerifyFoldersAtRoot(arr) {
+  var rfs   = arrayOfRootFolders();
+  var names = arrayOfFolderNames(rfs);
+  for (i = 0; i < arr.length; i++) {
+    if (!(checkArrayForValue(names, arr[i]))) {
+      DriveApp.createFolder(arr[i]);
     }
   } 
   return DriveApp.getRootFolder();
@@ -1092,12 +1092,12 @@ function createVerifyFoldersAtRoot(names) {
 
 function checkForExFile() {
   var fldr = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files");
-  var file = findFileIn(fldr, "example-file");
+  var file = findFileInFolder(fldr, "example-file");
   if (!(file)){fldr.createFile("example-file", "example");}
-  return findFileIn(fldr, "example-file");
+  return findFileInFolder(fldr, "example-file");
 }
 
-// Logger.log(checkForExFile());
+Logger.log(checkForExFile());
 
 // -- Array of All Files 
 
@@ -1112,63 +1112,61 @@ function checkForExFile() {
 
 // arrayOfFilesInFolder()
 
-function filesIn(fldr) {
-  var fi  = fldr.getFiles();
-  var arr = [];
+function arrayOfFilesInFolder(fldr) {
+  var result = [];
+  var fi     = fldr.getFiles();
   while (fi.hasNext()) {
     var file = fi.next();
-    arr.push(file);
+    result.push(file);
   } 
-  return arr;
+  return result;
 }
 
-// var fldr_fin = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/files");
-// Logger.log(filesIn(fldr_fin)); // [example-file]
+var fldr_fin = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/files");
+Logger.log(arrayOfFilesInFolder(fldr_fin)); // [example-file]
 
 // --- All Files at Root
 
 /**
  * Returns an array of all files at the root of a user's Drive.
+ * Note: Please don't actually use this in production. 
  *
  * @returns {File[]}
  */
 
-// arrayOfRootFiles()
-
-function rootFiles() {
-  var rf = DriveApp.getRootFolder();
-  var fi = rf.getFiles();
-  var arr = [];
+function arrayOfRootFiles() {
+  var result = [];
+  var rf     = DriveApp.getRootFolder();
+  var fi     = rf.getFiles();
   while (fi.hasNext()) {
     var file = fi.next();
-    arr.push(file);
+    result.push(file);
   } 
-  return arr;
+  return result;
 }
 
-// Logger.log(rootFiles());
+// Logger.log(arrayOfRootFiles());
 
 // --- All Files in Drive
 
 /**
  * Returns an array of all files in the user's Drive.
+ * Note: Please don't actually use this in production. 
  *
  * @returns {File[]}
  */
 
-// arrayOfFilesInDrive
-
-function allFiles() {
-  var fi = DriveApp.getFiles();
-  var arr  = [];
+function arrayOfFilesInDrive() {
+  var result = [];
+  var fi     = DriveApp.getFiles();
   while (fi.hasNext()) {
     var file = fi.next();
-    arr.push(file);
+    result.push(file);
   } 
-  return arr;
+  return result;
 }
 
-// Logger.log(allFiles());
+// Logger.log(arrayOfFilesInDrive());
 
 // -- Array of File Names 
 
@@ -1181,18 +1179,18 @@ function allFiles() {
 
 // arrayOfNamesForArrayOfFiles
 
-function fileNames(files) {
-  var arr = [];
-  for (var i = 0; i < files.length; i++) {
-    var name = files[i].getName();
-    arr.push(name);
+function arrayOfFileNames(arr) {
+  var result = [];
+  for (var i = 0; i < arr.length; i++) {
+    var name = arr[i].getName();
+    result.push(name);
   }
-  return arr;
+  return result;
 }
 
-// var fldr_fnam = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/files");
-// var arr_fnam  = filesIn(fldr_fnam);
-// Logger.log(fileNames(arr_fnam)); // [example-file]
+var fldr_aofilen = lastFolderInFolderPath("google-apps-script-cheat-sheet-demo/files");
+var arr_aofilen  = arrayOfFilesInFolder(fldr_aofilen);
+Logger.log(arrayOfFileNames(arr_aofilen)); // [example-file]
 
 // -- Find a File
 
@@ -1209,11 +1207,9 @@ function fileNames(files) {
  * @returns {File}
  */
 
-// findFileInFolder()
-
-function findFileIn(fldr, name) {
-  var files = filesIn(fldr);
-  var names = fileNames(files);
+function findFileInFolder(fldr, name) {
+  var files = arrayOfFilesInFolder(fldr);
+  var names = arrayOfFileNames(files);
   if (checkArrayForValue(names, name)) {
     var file = fldr.getFilesByName(name).next();
     return file;
@@ -1237,8 +1233,8 @@ function findFileIn(fldr, name) {
 
 function findFileAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
-  var files = rootFiles();
-  var names = fileNames(files);
+  var files = arrayOfRootFiles();
+  var names = arrayOfFileNames(files);
   if (checkArrayForValue(names, name)) {
     var file = rf.getFilesByName(name).next();
     return file;
@@ -1262,7 +1258,7 @@ function findFileInDrive(name) {
   }
 }
 
-// Logger.log(findFileInDrive("example-file")); // example-file
+Logger.log(findFileInDrive("example-file")); // example-file
 
 // --- Find at File at Path
 
