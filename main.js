@@ -413,7 +413,7 @@ function sortArrayOfObjects(prop) {
   };
 }
 
-Logger.log(ex_arrObj.sort(sortArrayOfObjects("a"))); 
+// Logger.log(ex_arrObj.sort(sortArrayOfObjects("a"))); 
 // [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 /**
@@ -436,7 +436,7 @@ function sortArrayOfObjectsMulti() {
   };
 }
 
-Logger.log(ex_arrObj.sort(sortArrayOfObjectsMulti("b", "c"))); 
+// Logger.log(ex_arrObj.sort(sortArrayOfObjectsMulti("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 // -- Find Object With Unique Property Value
@@ -963,8 +963,8 @@ function arrayOfFolderNames(arr) {
   return result;
 }
 
-var arr_aofldrn  = arrayOfFoldersInFolder(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B"));
-Logger.log(arrayOfFolderNames(arr_aofldrn)); // [C]
+// var arr_aofldrn  = arrayOfFoldersInFolder(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B"));
+// Logger.log(arrayOfFolderNames(arr_aofldrn)); // [C]
 
 // -- Find a Folder
 
@@ -991,8 +991,8 @@ function findFolderInFolder(fldr, name) {
   }
 }
 
-var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
-Logger.log(findFolderInFolder(fldr_ffi, "A")); // A
+// var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
+// Logger.log(findFolderInFolder(fldr_ffi, "A")); // A
 
 // --- Find a Folder at Root
 
@@ -1063,9 +1063,9 @@ function createOrVerifyFoldersInFolder(fldr, arr) {
   return fldr;
 }
 
-var fldr_covfif = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
-Logger.log(createOrVerifyFoldersInFolder(fldr_covfif, ["X", "Y", "Z"])); // folders
-Logger.log(arrayOfFoldersInFolder(fldr_covfif)); // [A,X,Y,Z]
+// var fldr_covfif = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
+// Logger.log(createOrVerifyFoldersInFolder(fldr_covfif, ["X", "Y", "Z"])); // folders
+// Logger.log(arrayOfFoldersInFolder(fldr_covfif)); // [A,X,Y,Z]
   
 // --- Create or Verify Folders at Root
 
@@ -1099,7 +1099,7 @@ function checkForExFile() {
   return findFileInFolder(fldr, "example-file");
 }
 
-Logger.log(checkForExFile());
+// Logger.log(checkForExFile());
 
 // -- Array of Files 
 
@@ -1124,8 +1124,8 @@ function arrayOfFilesInFolder(fldr) {
   return result;
 }
 
-var fldr_fin = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
-Logger.log(arrayOfFilesInFolder(fldr_fin)); // [example-file]
+// var fldr_fin = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
+// Logger.log(arrayOfFilesInFolder(fldr_fin)); // [example-file]
 
 // --- All of Files at Root
 
@@ -1188,9 +1188,9 @@ function arrayOfFileNames(arr) {
   return result;
 }
 
-var fldr_aofilen = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
-var arr_aofilen  = arrayOfFilesInFolder(fldr_aofilen);
-Logger.log(arrayOfFileNames(arr_aofilen)); // [example-file]
+// var fldr_aofilen = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
+// var arr_aofilen  = arrayOfFilesInFolder(fldr_aofilen);
+// Logger.log(arrayOfFileNames(arr_aofilen)); // [example-file]
 
 // -- Find a File
 
@@ -1216,8 +1216,8 @@ function findFileInFolder(fldr, name) {
   }
 }
 
-var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
-Logger.log(findFileInFolder(fldr_ffi, "example-file")); // example-file
+// var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
+// Logger.log(findFileInFolder(fldr_ffi, "example-file")); // example-file
 
 // --- Find a File at Root
 
@@ -1318,9 +1318,9 @@ function copyFileToFolder(file, fldr) {
   return findFileInFolder(fldr, name);
 }
 
-var fldr_cftf = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/copied");
-var file_cftf = findFileInDrive("example-file");
-Logger.log(copyFile(file_cftf, fldr_cftf)); // example-file
+// var fldr_cftf = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/copied");
+// var file_cftf = findFileInDrive("example-file");
+// Logger.log(copyFileToFolder(file_cftf, fldr_cftf)); // example-file
 
 // -- Move a File to a Folder 
 
@@ -1344,10 +1344,10 @@ function moveFileToFolder(file, fldr) {
   return result;
 }
 
-var fldr_mftf1 = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/copied");
-var file_mftf  = findFileInFolder(fldr_mftf1, "example-file");
-var fldr_mftf2 = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/moved");
-Logger.log(moveFile(file_mftf, fldr_mftf2)); // example-file
+// var fldr_mftf1 = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/copied");
+// var file_mftf  = findFileInFolder(fldr_mftf1, "example-file");
+// var fldr_mftf2 = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/moved");
+// Logger.log(moveFile(file_mftf, fldr_mftf2)); // example-file
 
 // - Files and Folders
 
@@ -1368,9 +1368,9 @@ function renameFileOrFldr(file_fldr, name) {
   return file_fldr;
 } 
 
-var fldr_rfof = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/moved");
-var file_rfof = findFileInFolder(fldr_rfof, "example-file");
-Logger.log(renameFileOrFldr(file_rfof, "modified-example-file")); // modified-example-file
+// var fldr_rfof = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/moved");
+// var file_rfof = findFileInFolder(fldr_rfof, "example-file");
+// Logger.log(renameFileOrFldr(file_rfof, "modified-example-file")); // modified-example-file
 
 // -- Parent Folder of a File or Folder 
 
@@ -1388,8 +1388,8 @@ function parentFolderOfFileOrFolder(file_fldr) {
   return fi.next();
 }
 
-var file_pfofof = findFileInDrive("example-file");
-Logger.log(parentFolderOfFileOrFolder(file_pfofof)); // files
+// var file_pfofof = findFileInDrive("example-file");
+// Logger.log(parentFolderOfFileOrFolder(file_pfofof)); // files
 
 // -- Zip All Files in a Folder
 
@@ -1412,25 +1412,26 @@ function zipFilesInFolder(fldr, name) {
   return findFileInFolder(fldr, name);
 }
 
-var fldr_zfif = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/zips");
-fldr_zfif.createFile("A","hello, world!");
-fldr_zfif.createFile("B", "hello again, world!");
-fldr_zfif.createFile("C", "world! hi!");
-var zips_zfif = zipFilesInFolder(fldr_zfif, "Archive");
+// var fldr_zfif = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/zips");
+// fldr_zfif.createFile("A","hello, world!");
+// fldr_zfif.createFile("B", "hello again, world!");
+// fldr_zfif.createFile("C", "world! hi!");
+// var zips_zfif = zipFilesInFolder(fldr_zfif, "Archive");
 
 // JSON
 
 function jsonExFile() {
   var fldr = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/json");
   var file = findFileInFolder(fldr, "example-json");
-  var json = jsonFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-  var text = JSON.stringify(json);
-  if (!(file)){fldr.createFile("example-json");}
-  file.setContent(text);
+  if (!(file)) {
+    var json = objectFromUrlJSON("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+    var text = JSON.stringify(json);
+    var ex = fldr.createFile('example-json', text);
+  }
   return findFileInFolder(fldr, "example-json");
 }
 
-// jsonExFile();
+jsonExFile();
 
 // -- Object From URL
 
@@ -1441,13 +1442,13 @@ function jsonExFile() {
  * @returns {Object}
  */
 
-function objFromUrl(url) {
+function objectFromUrlJSON(url) {
   var rsp  = UrlFetchApp.fetch(url);
   var data = rsp.getContentText();
   return JSON.parse(data);
 } 
 
-// var obj_ofu = objFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+// var obj_ofu = objectFromUrlJSON("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
 // Logger.log(JSON.stringify(obj_ofu));
 
 // -- Object From File
@@ -1459,13 +1460,13 @@ function objFromUrl(url) {
  * @returns {Object}
  */
 
-function objFromFile(file) {
+function objectFromFileJSON(file) {
   var data = file.getBlob().getDataAsString();
   return JSON.parse(data);
 } 
 
 // var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-// var obj_off  = objFromFile(file_off);
+// var obj_off  = objectFromFileJSON(file_off);
 // Logger.log(JSON.stringify(obj_off));
 
 // -- Object From URL or File
@@ -1477,19 +1478,20 @@ function objFromFile(file) {
  * @returns {Object}
  */
 
-function objFromUrlOrFile(input) {
+function objectFromUrlOrFileAtPath(input) {
   var regExp = new RegExp("^(http|https)://");
-  var test   = regExp.test(input);
-  if (test) {
-    return objFromUrl(input);
+  // var test   = regExp.test(input);
+  if (regExp.test(input)) {
+    return objectFromUrlJSON(input);
   } else {
     var file = findFileAtPath(input); 
-    return objFromFile(file);
+    Logger.log(file.getName());
+    return objectFromFileJSON(file);
   }
 }
 
-// Logger.log(JSON.stringify(objFromUrlOrFile("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
-// Logger.log(JSON.stringify(objFromUrlOrFile("google-apps-script-cheat-sheet-demo/json/example-json")));
+// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
+// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json")));
 
 // UI
 
