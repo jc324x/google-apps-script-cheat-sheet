@@ -6,22 +6,20 @@ Logger.log("Start");
 // | General
 // | - Array
 // | -- Check Array For a Value
-// | -- Remove Duplicates
-// | -- Remove Empty Elements
-// | -- Get Count of Values
+// | -- Remove Duplicates from Array
+// | -- Remove Empty Elements from Array
+// | -- Get Count of Values in Array
 // | -- Intersect of Two Arrays
 // | -- Compare Two Arrays
 // | -- Array as Delimited String
 // | -- Array as Modified Delimited String
-// | -- Array of Matching Values from Array of Objects *
 // | - Two-Dimensional Array
 // | -- Flatten Two-Dimensional Array
 // | - Array of Objects
-// | -- Sort by Property or Properties
-// | -- Find Object With Unique Property Value
-// | -- Find Earliest or Latest Object by Timestamp
-// | -- Filter by Property Value or Values
-// | -- Filter by Timestamp *
+// | -- Sort Array of Objects by Property or Properties
+// | -- Find Object in Array of Objects
+// | -- Find Earliest or Latest Object in Array of Objects by Timestamp
+// | -- Filter Array of Objects by Property Value or Values
 // | -- Unify Properties for Array of Objects
 // | - Object
 // | -- Array of Matching Property Values
@@ -142,9 +140,6 @@ Logger.log("Start");
 // * Multidimensional Array from Array of Objects
 // * Count of Value in Array of Objects
 // * Recursive Moving / Copying Folders
-
-// arr, val, arrObj, name, path, delim, mod,
-
 
 // General
 
@@ -439,6 +434,7 @@ function sortArrayOfObjectsMulti() {
 // Logger.log(ex_arrObj.sort(sortArrayOfObjectsMulti("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
+// NAME
 // -- Find Object With Unique Property Value
 
 /**
