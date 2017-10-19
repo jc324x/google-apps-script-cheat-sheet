@@ -3,130 +3,130 @@
 function test() {}
 Logger.log("Start");
 
-// | General
-// | - Array
-// | -- Check Array For a Value
-// | -- Remove Duplicates from Array
-// | -- Remove Empty Elements from Array
-// | -- Get Count of Values in Array
-// | -- Intersect of Two Arrays
-// | -- Compare Two Arrays
-// | -- Array as Delimited String
-// | -- Array as Modified Delimited String
-// | - Two-Dimensional Array
-// | -- Flatten Two-Dimensional Array
-// | - Array of Objects
-// | -- Sort Array of Objects by Property or Properties
-// | -- Find Object in Array of Objects
-// | -- Find Earliest or Latest Object in Array of Objects by Timestamp
-// | -- Filter Array of Objects by Property Value or Values
-// | -- Unify Properties for Array of Objects
-// | - Object
-// | -- Array of Matching Property Values
-// | -- Merge Objects
-// | - Dates and Times
-// | -- Formatted Timestamps
-// | -- Date Object from String
-// | -- Match a Date to a Date Range
-// | Drive
-// | - Folders
-// | -- Create or Verify Folder Path
-// | -- Last Folder in Folder Path
-// | -- Array of All Folders
-// | --- All Folders in a Folder
-// | --- All Folders at Root
-// | --- All Folders in Drive
-// | -- Array of All Folder Names
-// | -- Find a Folder
-// | --- Find a Folder in a Folder
-// | --- Find a Folder at Root
-// | --- Find a Folder in Drive
-// | -- Create or Verify Folders
-// | --- Create or Verify Folders in a Folder
-// | --- Create or Verify Folders at Root
-// | - Files
-// | -- Array of All Files
-// | --- All Files in a Folder
-// | --- All Files at Root
-// | --- All Files in Drive
-// | -- Array of All File Names
-// | -- Find a File
-// | --- Find a File in a Folder
-// | --- Find a File at Root
-// | --- Find a File in Drive
-// | --- Find a File at Path
-// | -- Copy a File to a Folder
-// | -- Move a File to a Folder
-// | - Files and Folders
-// | -- Rename a File or Folder
-// | -- Parent Folder of a File or Folder
-// | -- Zip All Files in a Folder
-// | JSON
-// | -- Object From URL
-// | -- Object From File
-// | -- Object From URL or File
-// | UI
-// | -- On Open
-// | -- Set Configuration
-// | -- Show Configuration
-// | -- Clear Configuration
-// | -- Run Script
-// | Sheets
-// | - Managing Spreadsheet Files
-// | -- Create or Verify Spreadsheet
-// | --- Create or Verify Spreadsheet in a Folder
-// | --- Create or Verify Spreadsheet at Root
-// | -- Id of Active Spreadsheet
-// | -- Open File as Spreadsheet
-// | - Utility Functions for Sheets
-// | -- Convert Column Number to a Letter
-// | -- Convert Column Letter to a Number
-// | -- Replicating Import Range
-// | -- Evaluating True and False
-// | - Object
-// | -- Object from Range 
-// | -  Array of Objects
-// | -- Utility Functions for Array of Objects
-// | --- Header Range
-// | --- Value Range
-// | --- Header Values
-// | --- Values by Row
-// | -- Array of Objects from Sheet
-// | -- Array of Objects from Range
-// | - Array 
-// | -- Array of Values for Column
-// | --- For Header Value
-// | --- For Column Number
-// | --- For Range Object 
-// | Docs
-// | - Managing Document Files
-// | -- Create or Verify Document
-// | --- Create or Verify Document in a Folder
-// | --- Create or Verify Document at Root
-// | -- Id of Active Document
-// | -- Open File as Document
-// | - Utility Functions for Docs
-// | -- Access Document Body
-// | -- Clear Document Body
-// | Merges
-// | - Sheets and Docs
-// | -- String From Object Properties 
-// | -- Replace Object Properties 
-// | --- Replace Object Properties in Document
-// | --- Replace Object Properties in Spreadsheet
-// | --- Replace Object Properties in Sheet
-// | -- Copy Template for Item in Array of Objects and Replace Object Properties
-// | --- Copy Document Template and Replace Object Properties
-// | --- Copy Spreadsheet Template and Replace Object Properties
-// | -- Cell Shading
-// | --- Index Object Properties
-// | -- Create Bulleted List in Document for Array of Objects
-// | --- Single Division List
-// | --- Multi Division List
-// | - Gmail
-// | -- Mail Merge
-// | --- Append Body Property for Object in Array of Objects 
-// | --- Run Mail Merge for Array of Objects
+// | | General
+// | | - Array
+// |*| -- Check Array For a Value
+// |*| -- Remove Duplicates from Array
+// |*| -- Remove Empty Elements from Array
+// | | -- Get Count of Values in Array
+// | | -- Intersect of Two Arrays
+// | | -- Compare Two Arrays
+// | | -- Array as Delimited String
+// | | -- Array as Modified Delimited String
+// | | - Two-Dimensional Array
+// | | -- Flatten Two-Dimensional Array
+// | | - Array of Objects
+// | | -- Sort Array of Objects by Property or Properties
+// | | -- Find Object in Array of Objects
+// | | -- Find Earliest or Latest Object in Array of Objects by Timestamp
+// | | -- Filter Array of Objects by Property Value or Values
+// | | -- Unify Properties for Array of Objects
+// | | - Object
+// | | -- Array of Matching Property Values
+// | | -- Merge Objects
+// | | - Dates and Times
+// | | -- Formatted Timestamps
+// | | -- Date Object from String
+// | | -- Match a Date to a Date Range
+// | | Drive
+// | | - Folders
+// | | -- Create or Verify Folder Path
+// | | -- Last Folder in Folder Path
+// | | -- Array of All Folders
+// | | --- All Folders in a Folder
+// | | --- All Folders at Root
+// | | --- All Folders in Drive
+// | | -- Array of All Folder Names
+// | | -- Find a Folder
+// | | --- Find a Folder in a Folder
+// | | --- Find a Folder at Root
+// | | --- Find a Folder in Drive
+// | | -- Create or Verify Folders
+// | | --- Create or Verify Folders in a Folder
+// | | --- Create or Verify Folders at Root
+// | | - Files
+// | | -- Array of All Files
+// | | --- All Files in a Folder
+// | | --- All Files at Root
+// | | --- All Files in Drive
+// | | -- Array of All File Names
+// | | -- Find a File
+// | | --- Find a File in a Folder
+// | | --- Find a File at Root
+// | | --- Find a File in Drive
+// | | --- Find a File at Path
+// | | -- Copy a File to a Folder
+// | | -- Move a File to a Folder
+// | | - Files and Folders
+// | | -- Rename a File or Folder
+// | | -- Parent Folder of a File or Folder
+// | | -- Zip All Files in a Folder
+// | | JSON
+// | | -- Object From URL
+// | | -- Object From File
+// | | -- Object From URL or File
+// | | UI
+// | | -- On Open
+// | | -- Set Configuration
+// | | -- Show Configuration
+// | | -- Clear Configuration
+// | | -- Run Script
+// | | Sheets
+// | | - Managing Spreadsheet Files
+// | | -- Create or Verify Spreadsheet
+// | | --- Create or Verify Spreadsheet in a Folder
+// | | --- Create or Verify Spreadsheet at Root
+// | | -- Id of Active Spreadsheet
+// | | -- Open File as Spreadsheet
+// | | - Utility Functions for Sheets
+// | | -- Convert Column Number to a Letter
+// | | -- Convert Column Letter to a Number
+// | | -- Replicating Import Range
+// | | -- Evaluating True and False
+// | | - Object
+// | | -- Object from Range 
+// | | -  Array of Objects
+// | | -- Utility Functions for Array of Objects
+// | | --- Header Range
+// | | --- Value Range
+// | | --- Header Values
+// | | --- Values by Row
+// | | -- Array of Objects from Sheet
+// | | -- Array of Objects from Range
+// | | - Array 
+// | | -- Array of Values for Column
+// | | --- For Header Value
+// | | --- For Column Number
+// | | --- For Range Object 
+// | | Docs
+// | | - Managing Document Files
+// | | -- Create or Verify Document
+// | | --- Create or Verify Document in a Folder
+// | | --- Create or Verify Document at Root
+// | | -- Id of Active Document
+// | | -- Open File as Document
+// | | - Utility Functions for Docs
+// | | -- Access Document Body
+// | | -- Clear Document Body
+// | | Merges
+// | | - Sheets and Docs
+// | | -- String From Object Properties 
+// | | -- Replace Object Properties 
+// | | --- Replace Object Properties in Document
+// | | --- Replace Object Properties in Spreadsheet
+// | | --- Replace Object Properties in Sheet
+// | | -- Copy Template for Item in Array of Objects and Replace Object Properties
+// | | --- Copy Document Template and Replace Object Properties
+// | | --- Copy Spreadsheet Template and Replace Object Properties
+// | | -- Cell Shading
+// | | --- Index Object Properties
+// | | -- Create Bulleted List in Document for Array of Objects
+// | | --- Single Division List
+// | | --- Multi Division List
+// | | - Gmail
+// | | -- Mail Merge
+// | | --- Append Body Property for Object in Array of Objects 
+// | | --- Run Mail Merge for Array of Objects
 
 // Future Additions: 
 // * Timestamp on Cell Change
@@ -162,7 +162,7 @@ function checkArrayForValue(arr, val) {
 // var arr_cafv = [1, 2, 3, 4];
 // Logger.log(checkArrayForValue(arr_cafv, 5)); // false
 
-// -- Remove Duplicates
+// -- Remove Duplicates from Array
 
 /**
  * Returns an array with no duplicate values.
@@ -187,7 +187,7 @@ function removeDuplicatesFromArray(arr) {
 // var arr_rdfa = [1, 2, 3, 1, 2, 3, 4,];
 // Logger.log(removeDuplicatesFromArray(arr_rdfa)); // [1, 2, 3, 4]
 
-// -- Remove Empty Elements
+// -- Remove Empty Elements from Array
 
 /**
  * Returns an array with no empty elements.

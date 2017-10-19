@@ -135,7 +135,7 @@
 
 ### Array ###
 
-#### Check for a Value ####
+#### Check Array for a Value ####
 
 ```javascript
 /**
@@ -146,15 +146,15 @@
  * @returns {boolean}
  */
 
-function checkValIn(arr, val) { 
+function checkArrayForValue(arr, val) { 
   return arr.indexOf(val) > -1; 
 }
 
-var arr_cvi = [1, 2, 3, 4];
-Logger.log(checkValIn(arr_cvi, 5)); // false
+var arr_cafv = [1, 2, 3, 4];
+Logger.log(checkArrayForValue(arr_cafv, 5)); // false
 ```
 
-#### Remove Duplicates ####
+#### Remove Duplicates from Array ####
 
 ```javascript
 /**
@@ -164,25 +164,24 @@ Logger.log(checkValIn(arr_cvi, 5)); // false
  * @returns {Array}
  */
 
-function rmDuplicatesFrom(arr) {
-  var check  = {};
+function removeDuplicatesFromArray(arr) {
   var result = [];
-  var j = 0;
-  for(var i = 0; i < arr.length; i++) {
+  var check  = {};
+  for (var i = 0; i < arr.length; i++) {
     var item = arr[i];
-    if(check[item] !== 1) {
+    if (check[item] !== 1) {
       check[item] = 1;
-      result[j++] = item;
+      result.push(item);
     }
   }
   return result;
 }
 
-var arr_rdf = [1, 2, 3, 1, 2, 3, 4,];
-Logger.log(rmDuplicatesFrom(arr_rdf)); // [1, 2, 3, 4]
+var arr_rdfa = [1, 2, 3, 1, 2, 3, 4,];
+Logger.log(removeDuplicatesFromArray(arr_rdfa)); // [1, 2, 3, 4]
 ```
 
-#### Remove Empty Elements ####
+#### Remove Empty Elements from Array ####
 
 ```javascript
 /**
@@ -192,12 +191,14 @@ Logger.log(rmDuplicatesFrom(arr_rdf)); // [1, 2, 3, 4]
  * @returns {Array}
  */
 
-function rmEmptyEl(x) {
+// function removeEmptyElementsFromArray()
+
+function removeEmptyElementsFromArray(x) {
   return (x !== (undefined || ''));
 }
 
-var arr_rev = ["a",,"b",,,"c"];
-Logger.log(arr_rev.filter(rmEmptyEl)); // ["a", "b", "c"]
+var arr_reefa = ["a",,"b",,,"c"];
+Logger.log(arr_reefa.filter(removeEmptyElementsFromArray)); // ["a", "b", "c"]
 ```
 
 #### Get Count of Values #### 
