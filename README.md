@@ -5,8 +5,8 @@
 * [Array](#array)
   * [Check Array For a Value](#check-array-for-a-value)
   * [Remove Duplicates from Array](#remove-duplicates-from-array)
-  * [Remove Empty Elements from Array](#remove-empty-elements)
-  * [Get Count of Values in Array](#get-count-of-values)
+  * [Remove Empty Elements from Array](#remove-empty-elements-from-array)
+  * [Get Count of Values in Array](#get-count-of-values-in-array)
   * [Intersect of Two Arrays](#intersect-of-two-arrays)
   * [Compare Two Arrays](#compare-two-arrays)
   * [Array as Delimited String](#array-as-delimited-string)
@@ -191,8 +191,6 @@ Logger.log(removeDuplicatesFromArray(arr_rdfa)); // [1, 2, 3, 4]
  * @returns {Array}
  */
 
-// function removeEmptyElementsFromArray()
-
 function removeEmptyElementsFromArray(x) {
   return (x !== (undefined || ''));
 }
@@ -201,7 +199,7 @@ var arr_reefa = ["a",,"b",,,"c"];
 Logger.log(arr_reefa.filter(removeEmptyElementsFromArray)); // ["a", "b", "c"]
 ```
 
-#### Get Count of Values #### 
+#### Get Count of Values in Array #### 
 
 ```javascript
 /**
@@ -213,9 +211,9 @@ Logger.log(arr_reefa.filter(removeEmptyElementsFromArray)); // ["a", "b", "c"]
  * @returns {Object[]}
  */
 
-function countOfValIn(arr) {
+function countOfValuesInArray(arr) {
   var result = [];
-  var copy = arr.slice(0);
+  var copy   = arr.slice(0);
   for (var i = 0; i < arr.length; i++) {
     var myCount = 0;  
     for (var w = 0; w < copy.length; w++) {
@@ -234,8 +232,8 @@ function countOfValIn(arr) {
   return result;
 }
 
-var arr_covi  = ["a", "b", "c", "a", "b", "c", "a"];
-Logger.log(countOfValIn(arr_covi)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
+// var arr_covia  = ["a", "b", "c", "a", "b", "c", "a"];
+// Logger.log(countOfValuesInArray(arr_covia)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
 ```
 
 #### Intersect of Two Arrays #### 

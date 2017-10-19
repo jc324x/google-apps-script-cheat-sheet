@@ -8,7 +8,7 @@ Logger.log("Start");
 // |*| -- Check Array For a Value
 // |*| -- Remove Duplicates from Array
 // |*| -- Remove Empty Elements from Array
-// | | -- Get Count of Values in Array
+// |*| -- Get Count of Values in Array
 // | | -- Intersect of Two Arrays
 // | | -- Compare Two Arrays
 // | | -- Array as Delimited String
@@ -196,8 +196,6 @@ function removeDuplicatesFromArray(arr) {
  * @returns {Array}
  */
 
-// function removeEmptyElementsFromArray()
-
 function removeEmptyElementsFromArray(x) {
   return (x !== (undefined || ''));
 }
@@ -205,7 +203,7 @@ function removeEmptyElementsFromArray(x) {
 // var arr_reefa = ["a",,"b",,,"c"];
 // Logger.log(arr_reefa.filter(removeEmptyElementsFromArray)); // ["a", "b", "c"]
 
-// -- Get Count of Values
+// -- Get Count of Values in Array
 
 /**
  * Returns an array of objects. Objects have two properties, count and value.
@@ -215,8 +213,6 @@ function removeEmptyElementsFromArray(x) {
  * @property {count} count of the value in the array
  * @returns {Object[]}
  */
-
-// function countOfValuesInArray(arr)
 
 function countOfValuesInArray(arr) {
   var result = [];
