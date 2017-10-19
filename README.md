@@ -16,7 +16,7 @@
 * [Array of Objects](#array-of-objects)
   * [Sort Array of Objects by Property or Properties](#sort-array-of-objects-by-property-or-properties)
   * [Find Object in Array of Objects](#find-object-in-array-of-objects)
-  * [Find First or Last Object in Array of Objects by Timestamp](#find-first-or-last-object-in-array-of-objects)
+  * [Find First or Last Object in Array of Objects by Timestamp](#find-first-or-last-object-in-array-of-objects-by-timestamp)
   * [Filter by Property Value or Values](#filter-by-property-value-or-values)
   * [Unify Properties for Array of Objects](#unify-properties-for-array-of-objects)
 * [Object](#object)
