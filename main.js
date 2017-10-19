@@ -372,8 +372,7 @@ var ex_arrObj = [
 
 // Logger.log(ex_arrObj);
 
-
-// -- Sort by Property or Properties
+// -- Sort Array of Objects by Property or Properties
 
 /**
  * Returns an array of objects sorted by a single property value.
@@ -381,8 +380,6 @@ var ex_arrObj = [
  * @param {string} prop
  * @returns {Object[]}
  */
-
-// sortArrayOfObjects()
 
 function sortArrayOfObjects(prop) {
   var sortOrder = 1;
@@ -405,8 +402,6 @@ function sortArrayOfObjects(prop) {
  * @returns {Object[]}
  */
 
-// sortArrayOfObjectsMulti()
-
 function sortArrayOfObjectsMulti() {
   var props = arguments;
   return function (obj1, obj2) {
@@ -422,8 +417,7 @@ function sortArrayOfObjectsMulti() {
 // Logger.log(ex_arrObj.sort(sortArrayOfObjectsMulti("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
-// NAME
-// -- Find Object With Unique Property Value
+// -- Find Object in Array of Objects
 
 /**
  * Returns the first object in an array of objects with the key value pair.
@@ -450,8 +444,8 @@ function findObjectInArrayOfObjects(arrObj, pQuery, val, pReturn) {
   }
 }
 
-// Logger.log(findObjectInArrayOfObjects(ex_arrObj, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
-// Logger.log(findObjectInArrayOfObjects(ex_arrObj, "c", 500, "a")); // 10
+Logger.log(findObjectInArrayOfObjects(ex_arrObj, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
+Logger.log(findObjectInArrayOfObjects(ex_arrObj, "c", 500, "a")); // 10
 
 // -- Find Earliest or Latest Object by Timestamp
 

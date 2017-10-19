@@ -14,8 +14,8 @@
 * [Two-Dimensional Array](#two-dimensional-array)
   * [Flatten Two-Dimensional Array](#flatten-two-dimensional-array)
 * [Array of Objects](#array-of-objects)
-  * [Sort by Property or Properties](#sort-by-property-or-properties)
-  * [Find Object With Unique Property Value](#find-object-with-unique-property-value)
+  * [Sort Array of Objects by Property or Properties](#sort-array-of-object-by-property-or-properties)
+  * [Find Object in Array of Objects](#find-object-in-array-of-objects)
   * [Find Earliest or Latest Object by Timestamp](#find-earliest-or-lastest-object-by-timestamp)
   * [Filter by Property Value or Values](#filter-by-property-value-or-values)
   * [Unify Properties for Array of Objects](#unify-properties-for-array-of-objects)
@@ -382,7 +382,7 @@ var ex_arrObj = [
 ]
 ```
 
-#### Sort by Property or Properties ####
+#### Sort Array of Objects by Property or Properties ####
 
 ```javascript
 /**
@@ -392,7 +392,7 @@ var ex_arrObj = [
  * @returns {Object[]}
  */
 
-function dynSort(prop) {
+function sortArrayOfObjects(prop) {
   var sortOrder = 1;
   if(prop[0] === "-") {
     sortOrder = -1;
@@ -404,7 +404,7 @@ function dynSort(prop) {
   };
 }
 
-Logger.log(ex_arrObj.sort(dynSort("a"))); 
+Logger.log(ex_arrObj.sort(sortArrayOfObjects("a"))); 
 // [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 /**
@@ -413,23 +413,23 @@ Logger.log(ex_arrObj.sort(dynSort("a")));
  * @returns {Object[]}
  */
 
-function dynSortM() {
+function sortArrayOfObjectsMulti() {
   var props = arguments;
   return function (obj1, obj2) {
     var i = 0, result = 0, numberOfProperties = props.length;
     while(result === 0 && i < numberOfProperties) {
-      result = dynSort(props[i])(obj1, obj2);
+      result = sortArrayOfObjects(props[i])(obj1, obj2);
       i++;
     }
     return result;
   };
 }
 
-Logger.log(ex_/rrObj.sort(dynSortM("b", "c"))); 
+Logger.log(ex_arrObj.sort(sortArrayOfObjectsMulti("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 ```
 
-#### Find Object With Unique Property Value #### 
+#### Find Object in Array of Objects #### 
 
 ```javascript
 /**
@@ -438,47 +438,30 @@ Logger.log(ex_/rrObj.sort(dynSortM("b", "c")));
  * @param {Object[]} arrObj
  * @param {string} pQuery
  * @param {string} val
+ * @param {string} [pReturn]
  * @returns {Object}
  */
 
-function findObjIn(arrObj, pQuery, val) {
+function findObjectInArrayOfObjects(arrObj, pQuery, val, pReturn) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
     for (var prop in obj) {
       if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
-        return obj;
+        if (pReturn !== undefined) {
+          return obj[pReturn];
+        } else {
+          return obj;
+        }
       }
     }
   }
 }
 
-Logger.log(findObjIn(ex_arrObj,"a",1000)); // {a=1000.0, b=1.0, c=5.0}
-
-/**
- * Returns a value from the first matching object in the array.
- *
- * @param {Object[]} arrObj
- * @param {string} pQuery
- * @param {string} val
- * @param {string} pReturn
- * @returns {*}
- */
-
-function findObjValIn(arrObj, pQuery, val, pReturn) {
-  for (var i = 0; i < arrObj.length; i++) {
-    var obj = arrObj[i];
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
-        return obj[pReturn];
-      }
-    }
-  }
-}
-
-Logger.log(findObjValIn(ex_arrObj, "c", 500, "a")); // 10
+Logger.log(findObjectInArrayOfObjects(ex_arrObj, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
+Logger.log(findObjectInArrayOfObjects(ex_arrObj, "c", 500, "a")); // 10
 ```
 
-#### Find Earliest or Lastest Object by Timestamp #### 
+#### Find Earliest or Latest Object by Timestamp #### 
 
 ```javascript
 /**
