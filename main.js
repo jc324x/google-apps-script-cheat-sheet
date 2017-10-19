@@ -16,7 +16,7 @@ Logger.log("Start");
 // |*| - Two-Dimensional Array
 // |*| -- Flatten Two-Dimensional Array
 // | | - Array of Objects
-// | | -- Sort Array of Objects by Property or Properties
+// |*| -- Sort Array of Objects by Property or Properties
 // | | -- Find Object in Array of Objects
 // | | -- Find Earliest or Latest Object in Array of Objects by Timestamp
 // | | -- Filter Array of Objects by Property Value or Values

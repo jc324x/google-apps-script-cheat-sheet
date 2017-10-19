@@ -14,7 +14,7 @@
 * [Two-Dimensional Array](#two-dimensional-array)
   * [Flatten Two-Dimensional Array](#flatten-two-dimensional-array)
 * [Array of Objects](#array-of-objects)
-  * [Sort Array of Objects by Property or Properties](#sort-array-of-object-by-property-or-properties)
+  * [Sort Array of Objects by Property or Properties](#sort-array-of-objects-by-property-or-properties)
   * [Find Object in Array of Objects](#find-object-in-array-of-objects)
   * [Find Earliest or Latest Object by Timestamp](#find-earliest-or-lastest-object-by-timestamp)
   * [Filter by Property Value or Values](#filter-by-property-value-or-values)
