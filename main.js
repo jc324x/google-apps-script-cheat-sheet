@@ -17,8 +17,8 @@ Logger.log("Start");
 // |*| -- Flatten Two-Dimensional Array
 // | | - Array of Objects
 // |*| -- Sort Array of Objects by Property or Properties
-// | | -- Find Object in Array of Objects
-// | | -- First or Last Object in Array of Objects by Timestamp
+// |*| -- Find Object in Array of Objects
+// |*| -- Find First or Last Object in Array of Objects by Timestamp
 // | | -- Filter Array of Objects by Property Value or Values
 // | | -- Unify Properties for Array of Objects
 // | | - Object
@@ -286,11 +286,11 @@ function compareTwoArrays(arrA, arrB) {
   return true;
 }
 
-var arrA_cta = [1, 2, 3, 4, 5];
-var arrB_cta = [1, 2, 3, 4, 5];
-var arrC_cta = ["a", "b", "c", "d", "e"];
-Logger.log(compareTwoArrays(arrA_cta, arrB_cta)); // true
-Logger.log(compareTwoArrays(arrA_cta, arrC_cta)); // false
+// var arrA_cta = [1, 2, 3, 4, 5];
+// var arrB_cta = [1, 2, 3, 4, 5];
+// var arrC_cta = ["a", "b", "c", "d", "e"];
+// Logger.log(compareTwoArrays(arrA_cta, arrB_cta)); // true
+// Logger.log(compareTwoArrays(arrA_cta, arrC_cta)); // false
 
 // -- Array as Delimited String
 
@@ -447,7 +447,7 @@ function findObjectInArrayOfObjects(arrObj, pQuery, val, pReturn) {
 // Logger.log(findObjectInArrayOfObjects(ex_arrObj, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
 // Logger.log(findObjectInArrayOfObjects(ex_arrObj, "c", 500, "a")); // 10
 
-// First or Last Object in Array of Objects by Timestamp
+// Find First or Last Object in Array of Objects by Timestamp
 
 /**
  * Returns the object with the oldest Timestamp value.
@@ -456,7 +456,7 @@ function findObjectInArrayOfObjects(arrObj, pQuery, val, pReturn) {
  * @returns {Object}
  */
 
-function firstObjectByTimestampInArrayOfObjects(arrObj){
+function findFirstObjectByTimestampInArrayOfObjects(arrObj){
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
       return new Date(a.Timestamp) - new Date(b.Timestamp);
@@ -467,9 +467,9 @@ function firstObjectByTimestampInArrayOfObjects(arrObj){
   }
 }
 
-var sheet_fe  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var arrObj_fe = arrObjFromRange(sheet_fe, "J1:K4");
-Logger.log(firstObjectByTimestampInArrayOfObjects(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
+// var sheet_fe  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var arrObj_fe = arrObjFromRange(sheet_fe, "J1:K4");
+// Logger.log(findFirstObjectByTimestampInArrayOfObjects(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 /**
  * Returns the object with the latest Timestamp value.
@@ -478,7 +478,7 @@ Logger.log(firstObjectByTimestampInArrayOfObjects(arrObj_fe)); // {Timestamp=Sun
  * @returns {Object}
  */
 
-function lastObjectByTimestampInArrayOfObjects(arrObj) {
+function findLastObjectByTimestampInArrayOfObjects(arrObj) {
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a,b){
       return new Date(b.Timestamp) - new Date(a.Timestamp);
@@ -489,9 +489,9 @@ function lastObjectByTimestampInArrayOfObjects(arrObj) {
   }
 } 
 
-var sheet_le  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
-Logger.log(lastObjectByTimestampInArrayOfObjects(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
+// var sheet_le  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
+// Logger.log(findLastObjectByTimestampInArrayOfObjects(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
 // -- Filter by Property Value or Values
 
