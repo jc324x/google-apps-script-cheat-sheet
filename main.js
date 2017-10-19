@@ -4,17 +4,17 @@ function test() {}
 Logger.log("Start");
 
 // | | General
-// | | - Array
+// |*| - Array
 // |*| -- Check Array For a Value
 // |*| -- Remove Duplicates from Array
 // |*| -- Remove Empty Elements from Array
 // |*| -- Get Count of Values in Array
-// | | -- Intersect of Two Arrays
-// | | -- Compare Two Arrays
-// | | -- Array as Delimited String
-// | | -- Array as Modified Delimited String
-// | | - Two-Dimensional Array
-// | | -- Flatten Two-Dimensional Array
+// |*| -- Intersect of Two Arrays
+// |*| -- Compare Two Arrays
+// |*| -- Array as Delimited String
+// |*| -- Array as Modified Delimited String
+// |*| - Two-Dimensional Array
+// |*| -- Flatten Two-Dimensional Array
 // | | - Array of Objects
 // | | -- Sort Array of Objects by Property or Properties
 // | | -- Find Object in Array of Objects
@@ -348,7 +348,7 @@ function arrayAsModifiedDelimitedString(arr, delim, mod) {
 /**
  * Returns an array containing all values in a two-dimensional array.
  *
- * @param {Array[]} twoDArr
+ * @param {Array[]} arr
  * @returns {Array} 
  */
 
@@ -362,7 +362,7 @@ function flattenTwoDimensionalArray(arr) {
 }
 
 // var sheet_ftma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var val_fma   = sheet_fma.getRange("G2:H5").getValues();
+// var val_fma    = sheet_fma.getRange("G2:H5").getValues();
 // Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
