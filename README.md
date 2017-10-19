@@ -232,28 +232,28 @@ function countOfValuesInArray(arr) {
   return result;
 }
 
-// var arr_covia  = ["a", "b", "c", "a", "b", "c", "a"];
-// Logger.log(countOfValuesInArray(arr_covia)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
+var arr_covia  = ["a", "b", "c", "a", "b", "c", "a"];
+Logger.log(countOfValuesInArray(arr_covia)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
 ```
 
 #### Intersect of Two Arrays #### 
 
 ```javascript
 /**
- * Returns an array of the elements in both arrays.
+ * Returns an array containing the elements in both arrays.
  *
  * @param {Array} arrA
  * @param {Array} arrB
  * @returns {Array}
  */
 
-function intersectOf(arrA, arrB) {
-  var a = 0;
-  var b = 0;
+function intersectOfTwoArrays(arrA, arrB) {
   var result = [];
+  var a      = 0;
+  var b      = 0;
   while( a < arrA.length && b < arrB.length ) {
-    if (arrA[a] < arrB[b] ) { a++; }
-    else if (arrA[a] > arrB[b] ) { b++; }
+    if (arrA[a] < arrB[b]) a++;
+    else if (arrA[a] > arrB[b]) b++;
     else {
       result.push(arrA[a]);
       a++;
@@ -263,9 +263,9 @@ function intersectOf(arrA, arrB) {
   return result;
 }
 
-var arrA_io = [1, 2, 3];
-var arrB_io = [3, 4, 5];
-Logger.log(intersectOf(arrA_io, arrB_io)); // [3]
+var arrA_iota = [1, 2, 3];
+var arrB_iota = [3, 4, 5];
+Logger.log(intersectOfTwoArrays(arrA_iota, arrB_iota)); // [3]
 ```
 
 #### Compare Two Arrays #### 
@@ -279,7 +279,7 @@ Logger.log(intersectOf(arrA_io, arrB_io)); // [3]
  * @returns {boolean}
  */
 
-function compareArr(arrA, arrB) {
+function compareTwoArrays(arrA, arrB) {
   if(arrA.length !== arrB.length) return false;
   for(var i = arrA.length; i--;) {
     if(arrA[i] !== arrB[i]) return false;
@@ -287,11 +287,11 @@ function compareArr(arrA, arrB) {
   return true;
 }
 
-var arrA_ca = [1, 2, 3, 4, 5];
-var arrB_ca = [1, 2, 3, 4, 5];
-var arrC_ca = ["a", "b", "c", "d", "e"];
-Logger.log(compareArr(arrA_ca, arrB_ca)); // true
-Logger.log(compareArr(arrA_ca, arrC_ca)); // false
+var arrA_cta = [1, 2, 3, 4, 5];
+var arrB_cta = [1, 2, 3, 4, 5];
+var arrC_cta = ["a", "b", "c", "d", "e"];
+Logger.log(compareTwoArrays(arrA_cta, arrB_cta)); // true
+Logger.log(compareTwoArrays(arrA_cta, arrC_cta)); // false
 ```
 
 #### Array as Delimited String #### 
@@ -306,18 +306,18 @@ Logger.log(compareArr(arrA_ca, arrC_ca)); // false
  * @returns {string}
  */
 
-function delimStrFromArr(arr, delim) {
-  var _arr = rmDuplicatesFrom(arr).sort();
-  var result  = "";
-  for (var i = 0; i < _arr.length; i++) {
-    result += _arr[i] + delim + " ";
+function arrayAsDelimitedString(arr, delim) {
+  var result = "";
+  var temp   = removeDuplicatesFromArray(arr);
+  for (var i = 0; i < temp.length; i++) {
+    if (i < temp.length) result += temp[i] + delim + " ";
+    else if (i === temp.length) result += temp[i];
   }
-  result = result.slice(0, -2);
   return result;
 }
 
 var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
-Logger.log(delimStrFromArr(arr_da, ",")); // "a@example.com, b@example.com, c@example.com"
+Logger.log(arrayAsDelimitedString(arr_da, ",", true)); // "c@example.com, b@example.com, a@example.com"
 ```
 
 #### Array as Modified Delimited String #### 
@@ -333,18 +333,18 @@ Logger.log(delimStrFromArr(arr_da, ",")); // "a@example.com, b@example.com, c@ex
  * @returns {string}
  */
 
-function delimStrFromArrMod(arr, delim, mod) {
-  var _arr = rmDuplicatesFrom(arr).sort();
-  var result  = "";
-  for (var i = 0; i < _arr.length; i++) {
-    result += _arr[i] + mod + delim + " "; 
+function arrayAsModifiedDelimitedString(arr, delim, mod) {
+  var result = "";
+  var temp   = removeDuplicatesFromArray(arr);
+  for (var i = 0; i < temp.length; i++) {
+    if (i < temp.length) result += temp[i] + mod + delim + " "; 
+    else if (i === temp.length) result += temp[i] + mod + delim;
   }
-  result = result.slice(0, -2);
   return result;
 }
 
-var arr_clfd = ["x", "z", "y"];
-Logger.log(delimStrFromArrMod(arr_clfd, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
+var arr_aamds = ["x", "z", "y"];
+Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
 ```
 
 ### Two-Dimensional Array ###

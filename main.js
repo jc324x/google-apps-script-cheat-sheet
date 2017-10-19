@@ -241,14 +241,12 @@ function countOfValuesInArray(arr) {
 // -- Intersect of Two Arrays
 
 /**
- * Returns an array of the elements in both arrays.
+ * Returns an array containing the elements in both arrays.
  *
  * @param {Array} arrA
  * @param {Array} arrB
  * @returns {Array}
  */
-
-// function intersectOfTwoArrays()
 
 function intersectOfTwoArrays(arrA, arrB) {
   var result = [];
@@ -288,11 +286,11 @@ function compareTwoArrays(arrA, arrB) {
   return true;
 }
 
-// var arrA_cta = [1, 2, 3, 4, 5];
-// var arrB_cta = [1, 2, 3, 4, 5];
-// var arrC_cta = ["a", "b", "c", "d", "e"];
-// Logger.log(compareTwoArrays(arrA_cta, arrB_cta)); // true
-// Logger.log(compareTwoArrays(arrA_cta, arrC_cta)); // false
+var arrA_cta = [1, 2, 3, 4, 5];
+var arrB_cta = [1, 2, 3, 4, 5];
+var arrC_cta = ["a", "b", "c", "d", "e"];
+Logger.log(compareTwoArrays(arrA_cta, arrB_cta)); // true
+Logger.log(compareTwoArrays(arrA_cta, arrC_cta)); // false
 
 // -- Array as Delimited String
 
@@ -329,8 +327,6 @@ function arrayAsDelimitedString(arr, delim) {
  * @param {string} mod Modification to append to each item in the array.
  * @returns {string}
  */
-
-// function arrayAsModifiedDelimitedString(arr, delim)
 
 function arrayAsModifiedDelimitedString(arr, delim, mod) {
   var result = "";
