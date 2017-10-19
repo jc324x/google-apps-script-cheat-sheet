@@ -343,16 +343,12 @@ function arrayAsModifiedDelimitedString(arr, delim, mod) {
 
 // - Two-Dimensional Array
 
-// -- Flatten Two-Dimensional Array
-
 /**
  * Returns an array containing all values in a two-dimensional array.
  *
  * @param {Array[]} arr
  * @returns {Array} 
  */
-
-// flattenTwoDimensionalArray(arr) 
 
 function flattenTwoDimensionalArray(arr) {
   var result = arr.reduce(function(a, b) {

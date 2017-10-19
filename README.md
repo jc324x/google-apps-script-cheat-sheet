@@ -359,8 +359,6 @@ Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "
  * @returns {Array} 
  */
 
-// flattenTwoDimensionalArray(arr) 
-
 function flattenTwoDimensionalArray(arr) {
   var result = arr.reduce(function(a, b) {
     return a.concat(b);
