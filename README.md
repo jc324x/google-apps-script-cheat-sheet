@@ -21,7 +21,7 @@
   * [Add Property to Objects in Array of Objects](#add-property-to-objects-in-array-of-objects)
 * [Object](#object)
   * [Array of Object Values](#array-of-object-values)
-  * [Merge Objects](#merge-objects--return-object)
+  * [Merge Objects](#merge-objects)
 * [Dates and Times](#dates-and-times)
   * [Formatted Timestamps](#formatted-timestamps--return-string)
   * [Date Object from String](#date-object-from-string--return-date)
