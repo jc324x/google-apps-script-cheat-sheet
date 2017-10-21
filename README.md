@@ -17,8 +17,8 @@
   * [Sort Array of Objects by Property or Properties](#sort-array-of-objects-by-property-or-properties)
   * [Find Object in Array of Objects](#find-object-in-array-of-objects)
   * [Find First or Last Object in Array of Objects by Timestamp](#find-first-or-last-object-in-array-of-objects-by-timestamp)
-  * [Filter by Property Value or Values](#filter-by-property-value-or-values)
-  * [Unify Properties for Array of Objects](#unify-properties-for-array-of-objects)
+  * [Filter Array of Objects by Value or Values](#filter-array-of-objects-by-value-or-values)
+  * [Add Property to Objects in Array of Objects](#add-property-to-object-in-array-of-objects)
 * [Object](#object)
   * [Array of Matching Property Values](#array-of-matching-property-values--return-array)
   * [Merge Objects](#merge-objects--return-object)
@@ -511,7 +511,7 @@ Logger.log(findLastObjectByTimestampInArrayOfObjects(arrObj_le));
 // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 ```
 
-#### Filter by Property Value or Values #### 
+#### Filter Array of Objects by Value or Values #### 
 
 ```javascript
 /**
@@ -519,26 +519,32 @@ Logger.log(findLastObjectByTimestampInArrayOfObjects(arrObj_le));
  *
  * @param {Object} arrObj
  * @param {string} pQuery
- * @param {string[]} arrVal
+ * @param {string || string[]} val
  * @returns {Object[]}
  */
 
-function filterObjIn(arrObj, pQuery, arrVal) {
+function filterArrayOfObjectsByValueOrValues(arrObj, pQuery, valOrValues) {
   var result = [];
-  for (var i = 0; i < arrVal.length; i++) {
-    var val = arrVal[i]; 
-    for (var j = 0; j < arrObj.length; j++) {
-      if (arrObj[j][pQuery] == val) result.push(arrObj[j]);
+  if (Array.isArray(valOrValues)) {
+    for (var i = 0; i < valOrValues.length; i++) {
+      var val = valOrValues[i]; 
+      for (var j = 0; j < arrObj.length; j++) {
+        if (arrObj[j][pQuery] == val) result.push(arrObj[j]);
+      }
+    } 
+  } else {
+    for (var k = 0; k < arrObj.length; k++) {
+      if (arrObj[k][pQuery] == valOrValues) result.push(arrObj[k]);
     }
-  } 
+  }
   return result;
 }
 
-Logger.log(filterObjIn(ex_arrObj, "a", [10])); // [{a=10.0, b=2.0, c=500.0}]
-Logger.log(filterObjIn(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
+Logger.log(filterArrayOfObjectsByValueOrValues(ex_arrObj, "a", 10)); // [{a=10.0, b=2.0, c=500.0}]
+Logger.log(filterArrayOfObjectsByValueOrValues(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 ```
 
-#### Unify Properties for Array of Objects ####
+#### Add Property to Objects in Array of Objects ####
 
 ```javascript
 /**
@@ -550,7 +556,7 @@ Logger.log(filterObjIn(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0},
  * @returns {Object[]}
  */
 
-function unifyPropForArrObj(arrObj, arrProp, newProp){
+function addPropertyToObjectsInArrayOfObjects(arrObj, arrProp, newProp){
   for (var i = 0; i < arrObj.length; i++){
     var obj = arrObj[i];
     for (var h = 0; h < arrProp.length; h++) {
@@ -570,7 +576,7 @@ var arrObj_upfao  = [
   {z: 345},
 ];
 
-Logger.log(unifyPropForArrObj(arrObj_upfao, ["x","y","z"], "new"));
+Logger.log(addPropertyToObjectsInArrayOfObjects(arrObj_upfao, ["x","y","z"], "new"));
 // [{new=123.0, x=123.0}, {new=234.0, y=234.0}, {new=345.0, z=345.0}]
 ```
 

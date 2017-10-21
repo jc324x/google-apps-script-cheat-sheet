@@ -15,12 +15,12 @@ Logger.log("Start");
 // |*| -- Array as Modified Delimited String
 // |*| - Two-Dimensional Array
 // |*| -- Flatten Two-Dimensional Array
-// | | - Array of Objects
+// |*| - Array of Objects
 // |*| -- Sort Array of Objects by Property or Properties
 // |*| -- Find Object in Array of Objects
 // |*| -- Find First or Last Object in Array of Objects by Timestamp
-// | | -- Filter Array of Objects by Property Value or Values
-// | | -- Unify Properties for Array of Objects
+// |*| -- Filter Array of Objects by Value or Values
+// |*| -- Add Property to Objects in Array of Objects
 // | | - Object
 // | | -- Array of Matching Property Values
 // | | -- Merge Objects
@@ -493,21 +493,18 @@ function findLastObjectByTimestampInArrayOfObjects(arrObj) {
 // var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
 // Logger.log(findLastObjectByTimestampInArrayOfObjects(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
-// -- Filter by Property Value or Values
+// -- Filter Array of Objects by Value or Values
 
 /**
  * Returns an array of objects containing matching objects.
  *
  * @param {Object} arrObj
  * @param {string} pQuery
- * @param {string || string[]} valOrValues
+ * @param {string || string[]} val
  * @returns {Object[]}
  */
 
-// filterArrayOfObjects(arrObj, prop, val)
-// filterArrayOfObjectsMulti(arrObj, prop, arr) | new
-
-function filterArrayOfObjects(arrObj, pQuery, valOrValues) {
+function filterArrayOfObjectsByValueOrValues(arrObj, pQuery, valOrValues) {
   var result = [];
   if (Array.isArray(valOrValues)) {
     for (var i = 0; i < valOrValues.length; i++) {
@@ -524,10 +521,10 @@ function filterArrayOfObjects(arrObj, pQuery, valOrValues) {
   return result;
 }
 
-// Logger.log(filterArrayOfObjects(ex_arrObj, "a", 10)); // [{a=10.0, b=2.0, c=500.0}]
-// Logger.log(filterArrayOfObjects(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
+// Logger.log(filterArrayOfObjectsByValueOrValues(ex_arrObj, "a", 10)); // [{a=10.0, b=2.0, c=500.0}]
+// Logger.log(filterArrayOfObjectsByValueOrValues(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 
-// -- Unify Properties for Array of Objects 
+// -- Add Property to Objects in Array of Objects
 
 /**
  * Returns an array of objects, with an additional property value added to each matching object.
@@ -538,9 +535,7 @@ function filterArrayOfObjects(arrObj, pQuery, valOrValues) {
  * @returns {Object[]}
  */
 
-// function unifyPropertyInArrayOfObjects(arrObj, arr, prop){
-
-function unifyPropertyInArrayOfObjects(arrObj, arrProp, newProp){
+function addPropertyToObjectsInArrayOfObjects(arrObj, arrProp, newProp){
   for (var i = 0; i < arrObj.length; i++){
     var obj = arrObj[i];
     for (var h = 0; h < arrProp.length; h++) {
@@ -560,7 +555,7 @@ var arrObj_upfao  = [
   {z: 345},
 ];
 
-// Logger.log(unifyPropertyInArrayOfObjects(arrObj_upfao, ["x","y","z"], "new"));
+Logger.log(addPropertyToObjectsInArrayOfObjects(arrObj_upfao, ["x","y","z"], "new"));
 // [{new=123.0, x=123.0}, {new=234.0, y=234.0}, {new=345.0, z=345.0}]
 
 // - Object
