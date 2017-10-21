@@ -3,7 +3,7 @@
 function test() {}
 Logger.log("Start");
 
-// | | General
+// |*| General
 // |*| - Array
 // |*| -- Check Array For a Value
 // |*| -- Remove Duplicates from Array
@@ -24,10 +24,10 @@ Logger.log("Start");
 // |*| - Object
 // |*| -- Array of Object Values
 // |*| -- Merge Objects
-// | | - Dates and Times
-// | | -- Formatted Timestamps
-// | | -- Date Object from String
-// | | -- Match a Date to a Date Range
+// |*| - Dates and Times
+// |*| -- Formatted Timestamps
+// |*| -- Date Object from String
+// |*| -- Match a Date to a Date Range
 // | | Drive
 // | | - Folders
 // | | -- Create or Verify Folder Path
