@@ -667,54 +667,68 @@ Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, 
  * @returns {string}
  */
 
-function fmatD() {
-  var n = new Date();
-  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ];
-    return d.join("-");
+function timestampMMDDYYYY() {
+  var now  = new Date();
+  var date = [ now.getMonth() + 1, now.getDate(), now.getYear() ];
+  return date.join("-");
 }
 
-Logger.log(fmatD()); // "4-24-2017"
+Logger.log(timestampMMDDYYYY()); // "4-24-2017"
 
 /**
- * Returns a string of the current time formatted "hour:minute:second".
+ * Returns a string of today's date formatted "year-month-day".
  *
  * @returns {string}
  */
 
-function fmat24T(){
-  var n  = new Date();
-  var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ];
+function timestampYYYYMMDD() {
+  var now  = new Date();
+  var date = [now.getYear(), now.getMonth() + 1, now.getDate()];
+  return date.join("-");
+} 
+
+Logger.log(timestampYYYYMMDD()); // 2017-09-29
+
+/**
+ * Returns a string of the current time formatted "24 hour:minute:second".
+ *
+ * @returns {string}
+ */
+
+function timestampHHMMSS(){
+  var now  = new Date();
+  var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
     for ( var i = 1; i < 3; i++ ) {
-      if ( t[i] < 10 ) {
-        t[i] = "0" + t[i];
+      if ( time[i] < 10 ) {
+        time[i] = "0" + time[i];
       }
-      return t.join(":");
+      return time.join(":");
     }
 }
 
-Logger.log(fmat24T()); // "20:43:40"
+Logger.log(timestampHHMMSS()); // "20:43:40"
 
 /**
- * Returns a string of today's date and the current time formatted "month-day-year hour:minute:second AM/PM"
+ * Returns a string of today's date and the current time formatted "year-iday-year hour:minute:second AM/PM"
  *
  * @returns {string}
  */
 
-function fmat12DT() {
-  var n = new Date();
-  var d = [ n.getMonth() + 1, n.getDate(), n.getYear() ];
-    var t = [ n.getHours(), n.getMinutes(), n.getSeconds() ];
-    var s = ( t[0] < 12 ) ? "AM" : "PM";
-  t[0]  = ( t[0] <= 12 ) ? t[0] : t[0] - 12;
+function timestampYYYYMMDDHHMMSSAMPM() {
+  var now = new Date();
+  var date = [ now.getMonth() + 1, now.getDate(), now.getYear() ];
+  var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
+  var ampm = ( time[0] < 12 ) ? "AM" : "PM";
+  time[0]  = ( time[0] <= 12 ) ? time[0] : time[0] - 12;
   for ( var i = 1; i < 3; i++ ) {
-    if ( t[i] < 10 ) {
-      t[i] = "0" + t[i];
+    if ( time[i] < 10 ) {
+      time[i] = "0" + time[i];
     }
   }
-  return d.join("/") + " " + t.join(":") + " " + s;
+  return date.join("-") + " " + time.join(":") + " " + ampm;
 }
 
-Logger.log(fmat12DT()); // "4-24-2017 8:43:40 PM"
+Logger.log(timestampYYYYMMDDHHMMSSAMPM()); // "4-24-2017 8:43:40 PM"
 ```
 
 #### Date Object from String ####
@@ -753,7 +767,7 @@ Logger.log(dateObjectFromString("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00
  * @returns {*}
  */
 
-function matchDateRange(arrObj, optDate) {
+function matchDateToRangeOfDates(arrObj, optDate) {
   var date = new Date();
   if (optDate !== undefined) {
     date = new Date(optDate);
@@ -768,15 +782,15 @@ function matchDateRange(arrObj, optDate) {
 }
 
 var quarterDates = [
-  {start: "08/01/2016", end: "10/28/2016", value: 1},
-  {start: "11/02/2016", end: "01/09/2017", value: 2},
-  {start: "01/15/2017", end: "03/19/2017", value: 3},
-  {start: "03/21/2017", end: "06/15/2017", value: 4},
-  {start: "06/16/2017", end: "07/30/2017", value: "summer vacation"}
+  {start: "08/01/2017", end: "10/28/2017", value: 1},
+  {start: "11/02/2017", end: "01/09/2018", value: 2},
+  {start: "01/15/2018", end: "03/19/2018", value: 3},
+  {start: "03/21/2018", end: "06/15/2018", value: 4},
+  {start: "06/16/2018", end: "08/30/2018", value: "summer vacation"}
 ];
 
-Logger.log(matchDateRange(quarterDates)); // "summer vacation" (06/25/2017)
-Logger.log(matchDateRange(quarterDates, "08/02/2016")); // 1 
+Logger.log(matchDateToRangeOfDates(quarterDates)); // "summer vacation" (pretend that today is 06/25/2018)
+Logger.log(matchDateToRangeOfDates(quarterDates, "08/02/2017")); // 1 
 ```
 
 ## Drive ##

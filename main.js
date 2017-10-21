@@ -671,12 +671,12 @@ function timestampYYYYMMDD() {
 function timestampHHMMSS(){
   var now  = new Date();
   var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
-    for ( var i = 1; i < 3; i++ ) {
-      if ( time[i] < 10 ) {
-        time[i] = "0" + time[i];
-      }
-      return time.join(":");
+  for ( var i = 1; i < 3; i++ ) {
+    if ( time[i] < 10 ) {
+      time[i] = "0" + time[i];
     }
+    return time.join(":");
+  }
 }
 
 // Logger.log(timestampHHMMSS()); // "20:43:40"
@@ -712,19 +712,17 @@ function timestampYYYYMMDDHHMMSSAMPM() {
  * @returns {Date}
  */
 
-// function dateObjectFromString(val) {
-
 function dateObjectFromString(str) {
   var split  = str.split("-");
   var months = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
-    ];
+  ];
   return new Date (months[(split[1] - 1)] + " " + split[2] + ", " + split[0]);
 }
 
 // Logger.log(dateObjectFromString("2017-04-24")); // Mon Apr 24 00:00:00 GMT-05:00 2017
 
-// -- Match a Date to Date Range
+// -- Match a Date to a Range of Dates
 
 /**
  * Returns a value associated with a date range.
@@ -738,11 +736,7 @@ function dateObjectFromString(str) {
  * @returns {*}
  */
 
-// matchDateARangeOfDates()
-
-// function matchDateToRange(arrObj, val)
-
-function matchDateToRange(arrObj, optDate) {
+function matchDateToRangeOfDates(arrObj, optDate) {
   var date = new Date();
   if (optDate !== undefined) {
     date = new Date(optDate);
@@ -756,16 +750,16 @@ function matchDateToRange(arrObj, optDate) {
   }
 }
 
-// var quarterDates = [
-//   {start: "08/01/2016", end: "10/28/2016", value: 1},
-//   {start: "11/02/2016", end: "01/09/2017", value: 2},
-//   {start: "01/15/2017", end: "03/19/2017", value: 3},
-//   {start: "03/21/2017", end: "06/15/2017", value: 4},
-//   {start: "06/16/2017", end: "07/30/2017", value: "summer vacation"}
-// ];
+var quarterDates = [
+  {start: "08/01/2017", end: "10/28/2017", value: 1},
+  {start: "11/02/2017", end: "01/09/2018", value: 2},
+  {start: "01/15/2018", end: "03/19/2018", value: 3},
+  {start: "03/21/2018", end: "06/15/2018", value: 4},
+  {start: "06/16/2018", end: "08/30/2018", value: "summer vacation"}
+];
 
-// Logger.log(matchDateRange(quarterDates)); // "summer vacation" (06/25/2017)
-// Logger.log(matchDateRange(quarterDates, "08/02/2016")); // 1 
+Logger.log(matchDateToRangeOfDates(quarterDates)); // "summer vacation" (pretend that today is 06/25/2018)
+Logger.log(matchDateToRangeOfDates(quarterDates, "08/02/2017")); // 1 
 
 // Drive
 
