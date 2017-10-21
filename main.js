@@ -21,9 +21,9 @@ Logger.log("Start");
 // |*| -- Find First or Last Object in Array of Objects by Timestamp
 // |*| -- Filter Array of Objects by Value or Values
 // |*| -- Add Property to Objects in Array of Objects
-// | | - Object
-// | | -- Array of Matching Property Values
-// | | -- Merge Objects
+// |*| - Object
+// |*| -- Array of Object Values
+// |*| -- Merge Objects
 // | | - Dates and Times
 // | | -- Formatted Timestamps
 // | | -- Date Object from String
@@ -555,12 +555,12 @@ var arrObj_upfao  = [
   {z: 345},
 ];
 
-Logger.log(addPropertyToObjectsInArrayOfObjects(arrObj_upfao, ["x","y","z"], "new"));
+// Logger.log(addPropertyToObjectsInArrayOfObjects(arrObj_upfao, ["x","y","z"], "new"));
 // [{new=123.0, x=123.0}, {new=234.0, y=234.0}, {new=345.0, z=345.0}]
 
 // - Object
 
-// -- Array of Matching Property Values 
+// -- Array of Object Values
 
 /**
  * Returns an array of matching properties. 
@@ -570,8 +570,6 @@ Logger.log(addPropertyToObjectsInArrayOfObjects(arrObj_upfao, ["x","y","z"], "ne
  * @param {string[]} props
  * @returns {Array}
  */
-
-// function returnValuesFromObject(obj, arr)
 
 function arrayOfObjectValues(obj, arrProp) {
   var result = [];

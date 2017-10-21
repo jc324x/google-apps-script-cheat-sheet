@@ -20,7 +20,7 @@
   * [Filter Array of Objects by Value or Values](#filter-array-of-objects-by-value-or-values)
   * [Add Property to Objects in Array of Objects](#add-property-to-objects-in-array-of-objects)
 * [Object](#object)
-  * [Array of Matching Property Values](#array-of-matching-property-values--return-array)
+  * [Array of Object Values](#array-of-object-values)
   * [Merge Objects](#merge-objects--return-object)
 * [Dates and Times](#dates-and-times)
   * [Formatted Timestamps](#formatted-timestamps--return-string)
@@ -582,21 +582,21 @@ Logger.log(addPropertyToObjectsInArrayOfObjects(arrObj_upfao, ["x","y","z"], "ne
 
 ### Object ###
 
-#### Array of Matching Property Values #### 
+#### Array of Object Values #### 
 
 ```javascript
 /**
  * Returns an array of matching properties. 
  *
- * @requires intersectOf() 
+ * @requires intersectOfTwoArrays() 
  * @param {Object} obj
  * @param {string[]} props
  * @returns {Array}
  */
 
-function filterValIn(obj, props) {
+function arrayOfObjectValues(obj, arrProp) {
   var result = [];
-  var keys   = intersectOf(Object.keys(obj), props);
+  var keys   = intersectOfTwoArrays(Object.keys(obj), arrProp);
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i];
     for (var prop in obj) {
@@ -609,14 +609,14 @@ function filterValIn(obj, props) {
   return result;
 }
 
-var obj_fvi = { 
+var obj_aoov = { 
  a: 1, 
  b: 2, 
  c: 3
 };
 
-var arr_fvi = ["a", "b", "d"];
-Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
+var arr_aoov = ["a", "b", "d"];
+Logger.log(arrayOfObjectValues(obj_aoov, arr_aoov)); // [1, 2]
 ```
 
 #### Merge Objects #### 
@@ -630,14 +630,14 @@ Logger.log(filterValIn(obj_fvi, arr_fvi)); // [1, 2]
  */
 
 function mergeObjs() {
-  var obj = arguments[0];
+  var result = arguments[0];
   for (i = 1; i < arguments.length; i++) {
     var src = arguments[i]; 
     for (var key in src) {
-      if (src.hasOwnProperty(key)) obj[key] = src[key];
+      if (src.hasOwnProperty(key)) result[key] = src[key];
     }
   } 
-  return obj;
+  return result;
 } 
 
 var objA_mo = {
