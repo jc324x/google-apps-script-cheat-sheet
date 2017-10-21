@@ -18,7 +18,7 @@
   * [Find Object in Array of Objects](#find-object-in-array-of-objects)
   * [Find First or Last Object in Array of Objects by Timestamp](#find-first-or-last-object-in-array-of-objects-by-timestamp)
   * [Filter Array of Objects by Value or Values](#filter-array-of-objects-by-value-or-values)
-  * [Add Property to Objects in Array of Objects](#add-property-to-object-in-array-of-objects)
+  * [Add Property to Objects in Array of Objects](#add-property-to-objects-in-array-of-objects)
 * [Object](#object)
   * [Array of Matching Property Values](#array-of-matching-property-values--return-array)
   * [Merge Objects](#merge-objects--return-object)
