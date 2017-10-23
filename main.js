@@ -1007,8 +1007,6 @@ Logger.log(findFolderInDrive("folders")); // folders
  * @returns {Folder}
  */
 
-// function createOrVerifyFoldersIn(fldr, arr)
-
 function createOrVerifyFoldersInFolder(fldr, arr) {
   var fldrs = arrayOfFoldersInFolder(fldr);
   var names = arrayOfFolderNames(fldrs);

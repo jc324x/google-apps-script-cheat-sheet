@@ -1050,28 +1050,28 @@ Logger.log(findFolderInDrive("folders")); // folders
  * Returns a folder. 
  * Creates folders within a folder if they don't already exist.
  *
- * @requires foldersIn()
- * @requires folderNames()
- * @requires checkValIn()
+ * @requires arrayOfFoldersInFolder()
+ * @requires arrayOfFolderNames()
+ * @requires checkArrayForValue()
  * @param {Folder} fldr
  * @param {string[]} names
  * @returns {Folder}
  */
 
-function createVerifyFoldersIn(fldr, names) {
-  var fldrs  = foldersIn(fldr);
-  var _names = folderNames(fldrs);
-  for (i = 0; i < names.length; i++) {
-    if (!(checkValIn(_names, names[i]))) {
-      fldr.createFolder(names[i]);
+function createOrVerifyFoldersInFolder(fldr, arr) {
+  var fldrs = arrayOfFoldersInFolder(fldr);
+  var names = arrayOfFolderNames(fldrs);
+  for (i = 0; i < arr.length; i++) {
+    if (!(checkArrayForValue(names, arr[i]))) {
+      fldr.createFolder(arr[i]);
     }
   }
   return fldr;
 }
 
-var fldr_cvfi = lastFolderIn("google-apps-script-cheat-sheet-demo/folders");
-Logger.log(createVerifyFoldersIn(fldr_cvfi, ["X", "Y", "Z"])); // folders
-Logger.log(foldersIn(fldr_cvfi)); // [A,X,Y,Z]
+var fldr_covfif = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
+Logger.log(createOrVerifyFoldersInFolder(fldr_covfif, ["X", "Y", "Z"])); // folders
+Logger.log(arrayOfFoldersInFolder(fldr_covfif)); // [A,X,Y,Z]
 ```
 
 ##### Create or Verify Folders at Root #####
@@ -1085,12 +1085,12 @@ Logger.log(foldersIn(fldr_cvfi)); // [A,X,Y,Z]
  * @returns {Folder}
  */
 
-function createVerifyFoldersAtRoot(names) {
-  var rfs    = rootFolders();
-  var _names = folderNames(rfs);
-  for (i=0; i < names.length; i++) {
-    if (!(checkValIn(_names, names[i]))) {
-      DriveApp.createFolder(names[i]);
+function createOrVerifyFoldersAtRoot(arr) {
+  var rfs   = arrayOfRootFolders();
+  var names = arrayOfFolderNames(rfs);
+  for (i = 0; i < arr.length; i++) {
+    if (!(checkArrayForValue(names, arr[i]))) {
+      DriveApp.createFolder(arr[i]);
     }
   } 
   return DriveApp.getRootFolder();
