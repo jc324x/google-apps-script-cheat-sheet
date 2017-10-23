@@ -29,14 +29,14 @@ Logger.log("Start");
 // |*| -- Date Object from String
 // |*| -- Match a Date to a Date Range
 // | | Drive
-// | | - Folders
-// | | -- Create or Verify Folder Path
-// | | -- Last Folder in Folder Path
-// | | -- Array of Folders
-// | | --- Array of Folders in a Folder
-// | | --- Array of Root Folders
-// | | --- Array of All Folders in Drive
-// | | -- Array of Folder Names
+// |*| - Folders
+// |*| -- Create or Verify Folder Path
+// |*| -- Last Folder in Folder Path
+// |*| -- Array of Folders
+// |*| --- Array of Folders in a Folder
+// |*| --- Array of Root Folders
+// |*| --- Array of All Folders in Drive
+// |*| -- Array of Folder Names
 // | | -- Find a Folder
 // | | --- Find a Folder in a Folder
 // | | --- Find a Folder at Root
@@ -939,7 +939,6 @@ function arrayOfFolderNames(arr) {
  * @returns {Folder}
  */
 
-// findFolderInFolder()
 
 function findFolderInFolder(fldr, name) {
   var fldrs = arrayOfFoldersInFolder(fldr);
@@ -957,7 +956,7 @@ function findFolderInFolder(fldr, name) {
 /**
  * Returns a folder at the root of the user's Drive.
  *
- * @requires arrayOfRootFolders()
+ * @requires arrayOfFoldersAtRoot()
  * @requires arrayOfFolderNames()
  * @requires checkArrayForValue()
  * @param {string} name
@@ -965,14 +964,14 @@ function findFolderInFolder(fldr, name) {
  */
 
 function findFolderAtRoot(name) {
-  var fldrs = arrayOfRootFolders();
+  var fldrs = arrayOfFoldersAtRoot();
   var names = arrayOfFolderNames(fldrs);
   if (checkArrayForValue(names, name)) {
     return DriveApp.getRootFolder().getFoldersByName(name).next();
   }
 }
 
-// Logger.log(findFolderAtRoot("google-apps-script-cheat-sheet-demo")); // google-apps-script-cheat-sheet-demo
+Logger.log(findFolderAtRoot("google-apps-script-cheat-sheet-demo")); // google-apps-script-cheat-sheet-demo
 
 // --- Find a Folder in Drive
 
@@ -990,7 +989,7 @@ function findFolderInDrive(name) {
   }
 }
 
-// Logger.log(findFolderInDrive("folders")); // folders
+Logger.log(findFolderInDrive("folders")); // folders
 
 // -- Create or Verify Folders
 

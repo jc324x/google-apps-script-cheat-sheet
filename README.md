@@ -976,25 +976,25 @@ Logger.log(arrayOfFolderNames(arr_aofldrn)); // [C]
 /**
  * Returns a folder.
  *
- * @requires foldersIn() 
- * @requires folderNames() 
- * @requires checkValIn()
+ * @requires arrayOfFoldersInFolder() 
+ * @requires arrayOfFolderNames() 
+ * @requires checkArrayForValue()
  * @param {Folder} fldr
  * @param {string} name
  * @returns {Folder}
  */
 
-function findFolderIn(fldr, name) {
-  var fldrs = foldersIn(fldr);
-  var names = folderNames(fldrs);
-  if (checkValIn(names, name)) {
-    var _fldr = fldr.getFoldersByName(name).next();
-    return _fldr;
+
+function findFolderInFolder(fldr, name) {
+  var fldrs = arrayOfFoldersInFolder(fldr);
+  var names = arrayOfFolderNames(fldrs);
+  if (checkArrayForValue(names, name)) {
+    return fldr.getFoldersByName(name).next();
   }
 }
 
-var fldr_ffi = lastFolderIn("google-apps-script-cheat-sheet-demo/folders");
-Logger.log(findFolderIn(fldr_ffi, "A")); // A
+var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
+Logger.log(findFolderInFolder(fldr_ffi, "A")); // A
 ```
 
 ##### Find a Folder at Root #####
@@ -1003,20 +1003,18 @@ Logger.log(findFolderIn(fldr_ffi, "A")); // A
 /**
  * Returns a folder at the root of the user's Drive.
  *
- * @requires rootFolders()
- * @requires folderNames()
- * @requires checkValIn()
+ * @requires arrayOfFoldersAtRoot()
+ * @requires arrayOfFolderNames()
+ * @requires checkArrayForValue()
  * @param {string} name
  * @returns {Folder}
  */
 
 function findFolderAtRoot(name) {
-  var rf    = DriveApp.getRootFolder();
-  var fldrs = rootFolders();
-  var names = folderNames(fldrs);
-  if (checkValIn(names, name)) {
-    var fldr = rf.getFoldersByName(name).next();
-    return fldr;
+  var fldrs = arrayOfFoldersAtRoot();
+  var names = arrayOfFolderNames(fldrs);
+  if (checkArrayForValue(names, name)) {
+    return DriveApp.getRootFolder().getFoldersByName(name).next();
   }
 }
 
@@ -1036,8 +1034,7 @@ Logger.log(findFolderAtRoot("google-apps-script-cheat-sheet-demo")); // google-a
 function findFolderInDrive(name) {
   var fi = DriveApp.getFoldersByName(name);
   while (fi.hasNext()){
-    var fldr = fi.next();
-    return fldr;
+    return fi.next();
   }
 }
 
