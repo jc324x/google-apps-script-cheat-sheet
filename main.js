@@ -31,7 +31,6 @@ Logger.log("Start");
 // | | Drive
 // |*| - Folders
 // |*| -- Create or Verify Folder Path
-// |*| -- Last Folder in Folder Path
 // |*| -- Array of Folders
 // |*| --- Array of Folders in a Folder
 // |*| --- Array of Root Folders
@@ -41,6 +40,7 @@ Logger.log("Start");
 // |*| --- Find a Folder in a Folder
 // |*| --- Find a Folder at Root
 // |*| --- Find a Folder in Drive
+// | | --- Find Folder at Path || // -- Last Folder in Folder Path
 // |*| -- Create or Verify Folders
 // |*| --- Create or Verify Folders in a Folder
 // |*| --- Create or Verify Folders at Root
@@ -54,7 +54,7 @@ Logger.log("Start");
 // | | --- Find a File in a Folder
 // | | --- Find a File at Root
 // | | --- Find a File in Drive
-// | | --- Find a File at Path
+// | | --- Find File at Path
 // | | -- Copy a File to a Folder
 // | | -- Move a File to a Folder
 // | | - Files and Folders
@@ -1213,7 +1213,7 @@ function findFileInDrive(name) {
 
 // Logger.log(findFileInDrive("example-file")); // example-file
 
-// --- Find at File at Path
+// --- Find File at Path
 
 /**
  * Returns the file at the end of a path.
@@ -1249,7 +1249,7 @@ function findFileAtPath(path) {
   return findFileInFolder(fldr, file);
 } 
 
-// Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file"));
+Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file")); // example-file
 
 // -- Copy a File to a Folder
 

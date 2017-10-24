@@ -41,7 +41,6 @@
     * [Find a Folder in a Folder](#find-a-folder)
     * [Find a Folder at Root](#find-a-folder-at-root)
     * [Find a Folder in Drive](#find-a-folder-in-drive)
-    * [Find a File at Path](#find-a-file-at-path)
   * [Create or Verify Folders](#create-or-verify-folders)
     * [Create or Verify Folders in a Folder](#create-or-verify-folders-in-a-folder)
     * [Create or Verify Folders at Root](#create-or-verify-folders-at-root)
@@ -55,6 +54,7 @@
     * [Find a File in a Folder](#find-a-file-in-a-folder)
     * [Find a File at Root](#find-a-file-at-root)
     * [Find a File in Drive](#find-a-file-in-drive)
+    * [Find File at Path](#find-file-at-path)
   * [Copy a File to a Folder](#copy-a-file-to-a-folder--return-file)
   * [Move a File to a Folder](#move-a-file-to-a-folder--return-file)
 * [Files and Folders](#files-and-folders)
@@ -1270,32 +1270,33 @@ function findFileInDrive(name) {
 Logger.log(findFileInDrive("example-file")); // example-file
 ```
 
-#### Find at File at Path ####
+#### Find File at Path ####
 
 ```javascript
-
 /**
- * Returns the file found at the end of a path.
+ * Returns the file at the end of a path.
  *
  * @param {string} path
  * @returns {File}
  */
 
 function findFileAtPath(path) {
-  var fi;
-  var split = path.split('/');
-  var file  = split[split.length -1];
-  var fldr;
-  for (i = 0; i < split.length - 1; i++) {
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
+  }
+  var arr  = path.split("/");
+  var file = arr[arr.length -1];
+  var fldr, fi;
+  for (i = 0; i < arr.length - 1; i++) {
     if (i === 0) {
-      fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+      fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
       if (fi.hasNext()) {
         fldr = fi.next();
       } else { 
         return null;
       }
     } else if (i >= 1) {
-        fi = fldr.getFoldersByName(split[i]);
+        fi = fldr.getFoldersByName(arr[i]);
         if (fi.hasNext()) {
           fldr = fi.next();
         } else { 
@@ -1303,10 +1304,10 @@ function findFileAtPath(path) {
         }
     }
   } 
-  return findFileIn(fldr, file);
+  return findFileInFolder(fldr, file);
 } 
 
-Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file"));
+Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file")); // example-file
 ```
 
 #### Copy a File to a Folder ####
