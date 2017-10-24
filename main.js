@@ -37,13 +37,13 @@ Logger.log("Start");
 // |*| --- Array of Root Folders
 // |*| --- Array of All Folders in Drive
 // |*| -- Array of Folder Names
-// | | -- Find a Folder
-// | | --- Find a Folder in a Folder
-// | | --- Find a Folder at Root
-// | | --- Find a Folder in Drive
-// | | -- Create or Verify Folders
-// | | --- Create or Verify Folders in a Folder
-// | | --- Create or Verify Folders at Root
+// |*| -- Find a Folder
+// |*| --- Find a Folder in a Folder
+// |*| --- Find a Folder at Root
+// |*| --- Find a Folder in Drive
+// |*| -- Create or Verify Folders
+// |*| --- Create or Verify Folders in a Folder
+// |*| --- Create or Verify Folders at Root
 // | | - Files
 // | | -- Array of All Files
 // | | --- All Files in a Folder
@@ -1020,7 +1020,7 @@ function createOrVerifyFoldersInFolder(fldr, arr) {
 
 // var fldr_covfif = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
 // Logger.log(createOrVerifyFoldersInFolder(fldr_covfif, ["X", "Y", "Z"])); // folders
-// Logger.log(arrayOfFoldersInFolder(fldr_covfif)); // [A,X,Y,Z]
+// Logger.log(arrayOfFoldersInFolder(fldr_covfif)); // [A, X, Y, Z]
   
 // --- Create or Verify Folders at Root
 
@@ -1067,8 +1067,6 @@ function checkForExFile() {
  * @returns {File[]}
  */
 
-// arrayOfFilesInFolder()
-
 function arrayOfFilesInFolder(fldr) {
   var result = [];
   var fi     = fldr.getFiles();
@@ -1082,7 +1080,7 @@ function arrayOfFilesInFolder(fldr) {
 // var fldr_fin = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
 // Logger.log(arrayOfFilesInFolder(fldr_fin)); // [example-file]
 
-// --- All of Files at Root
+// --- Array of Files at Root
 
 /**
  * Returns an array of all files at the root of a user's Drive.
@@ -1104,7 +1102,7 @@ function arrayOfRootFiles() {
 
 // Logger.log(arrayOfRootFiles());
 
-// --- All of All Files in Drive
+// --- Array of All Files in Drive
 
 /**
  * Returns an array of all files in the user's Drive.
@@ -1123,7 +1121,7 @@ function arrayOfFilesInDrive() {
   return result;
 }
 
-// Logger.log(arrayOfFilesInDrive());
+Logger.log(arrayOfFilesInDrive());
 
 // -- Array of File Names 
 

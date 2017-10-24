@@ -46,12 +46,12 @@
     * [Create or Verify Folders in a Folder](#create-or-verify-folders-in-a-folder)
     * [Create or Verify Folders at Root](#create-or-verify-folders-at-root)
 * [Files](#files)
-  * [Array of All Files](#array-of-all-files--return-array-files)
-    * [All Files in a Folder](#all-files-in-a-folder)
-    * [All Files at Root](#all-files-at-root)
-    * [All Files in Drive](#all-files-in-drive)
-  * [Array of All File Names](#array-of-all-file-names--return-array-strings)
-  * [Find a File](#find-a-file--return-file)
+  * [Array of Files](#array-of-files)
+    * [Array of Files in a Folder](#array-of-files-in-a-folder)
+    * [Array of Files at Root](#array-of-files-at-root)
+    * [Array of All Files in Drive](#array-of-all-files-in-drive)
+  * [Array of All File Names](#array-of-all-file-names)
+  * [Find a File](#find-a-file)
     * [Find a File in a Folder](#find-a-file-in-a-folder)
     * [Find a File at Root](#find-a-file-at-root)
     * [Find a File in Drive](#find-a-file-in-drive)
@@ -1071,7 +1071,7 @@ function createOrVerifyFoldersInFolder(fldr, arr) {
 
 var fldr_covfif = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
 Logger.log(createOrVerifyFoldersInFolder(fldr_covfif, ["X", "Y", "Z"])); // folders
-Logger.log(arrayOfFoldersInFolder(fldr_covfif)); // [A,X,Y,Z]
+Logger.log(arrayOfFoldersInFolder(fldr_covfif)); // [A, X, Y, Z]
 ```
 
 ##### Create or Verify Folders at Root #####
@@ -1099,9 +1099,9 @@ function createOrVerifyFoldersAtRoot(arr) {
 
 ### Files ###
 
-#### Array of All Files ####
+#### Array of Files ####
 
-##### All Files in a Folder ##### 
+##### Array of Files in a Folder ##### 
 
 ```javascript
 /**
@@ -1111,18 +1111,18 @@ function createOrVerifyFoldersAtRoot(arr) {
  * @returns {File[]}
  */
 
-function filesIn(fldr) {
-  var fi  = fldr.getFiles();
-  var arr = [];
+function arrayOfFilesInFolder(fldr) {
+  var result = [];
+  var fi     = fldr.getFiles();
   while (fi.hasNext()) {
     var file = fi.next();
-    arr.push(file);
+    result.push(file);
   } 
-  return arr;
+  return result;
 }
 
-var fldr_fin = lastFolderIn("google-apps-script-cheat-sheet-demo/files");
-Logger.log(filesIn(fldr_fin)); // [example-file]
+var fldr_fin = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
+Logger.log(arrayOfFilesInFolder(fldr_fin)); // [example-file]
 ```
 
 ##### All Files at Root ##### 
@@ -1130,47 +1130,49 @@ Logger.log(filesIn(fldr_fin)); // [example-file]
 ```javascript
 /**
  * Returns an array of all files at the root of a user's Drive.
+ * Note: Please don't actually use this in production. 
  *
  * @returns {File[]}
  */
 
-function rootFiles() {
-  var rf = DriveApp.getRootFolder();
-  var fi = rf.getFiles();
-  var arr = [];
+function arrayOfRootFiles() {
+  var result = [];
+  var rf     = DriveApp.getRootFolder();
+  var fi     = rf.getFiles();
   while (fi.hasNext()) {
     var file = fi.next();
-    arr.push(file);
+    result.push(file);
   } 
-  return arr;
+  return result;
 }
 
-Logger.log(rootFiles());
+Logger.log(arrayOfRootFiles());
 ```
 
-##### All Files in Drive ##### 
+##### Array of All Files in Drive ##### 
 
 ```javascript
 /**
  * Returns an array of all files in the user's Drive.
+ * Note: Please don't actually use this in production. 
  *
  * @returns {File[]}
  */
 
-function allFiles() {
-  var fi = DriveApp.getFiles();
-  var arr  = [];
+function arrayOfFilesInDrive() {
+  var result = [];
+  var fi     = DriveApp.getFiles();
   while (fi.hasNext()) {
     var file = fi.next();
-    arr.push(file);
+    result.push(file);
   } 
-  return arr;
+  return result;
 }
 
-Logger.log(allFiles());
+Logger.log(arrayOfFilesInDrive());
 ```
 
-#### Array of All File Names ####
+#### Array of File Names ####
 
 ```javascript
 /**
@@ -1180,18 +1182,18 @@ Logger.log(allFiles());
  * @returns {string[]}
  */
 
-function fileNames(files) {
-  var arr = [];
-  for (var i = 0; i < files.length; i++) {
-    var name = files[i].getName();
-    arr.push(name);
+function arrayOfFileNames(arr) {
+  var result = [];
+  for (var i = 0; i < arr.length; i++) {
+    var name = arr[i].getName();
+    result.push(name);
   }
-  return arr;
+  return result;
 }
 
-var fldr_fnam = lastFolderIn("google-apps-script-cheat-sheet-demo/files");
-var arr_fnam  = filesIn(fldr_fnam);
-Logger.log(fileNames(arr_fnam)); // [example-file]
+var fldr_aofilen = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
+var arr_aofilen  = arrayOfFilesInFolder(fldr_aofilen);
+Logger.log(arrayOfFileNames(arr_aofilen)); // [example-file]
 ```
 
 #### Find a File ####
