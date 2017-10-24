@@ -50,10 +50,10 @@ Logger.log("Start");
 // | | --- All Files at Root
 // | | --- All Files in Drive
 // | | -- Array of All File Names
-// | | -- Find a File
-// | | --- Find a File in a Folder
-// | | --- Find a File at Root
-// | | --- Find a File in Drive
+// |*| -- Find a File
+// |*| --- Find a File in a Folder
+// |*| --- Find a File at Root
+// |*| --- Find a File in Drive
 // | | --- Find File at Path
 // | | -- Copy a File to a Folder
 // | | -- Move a File to a Folder
