@@ -28,27 +28,27 @@ Logger.log("Start");
 // |*| -- Formatted Timestamps
 // |*| -- Date Object from String
 // |*| -- Match a Date to a Date Range
-// | | Drive
+// |*| Drive
 // |*| - Folders
 // |*| -- Create or Verify Folder Path
 // |*| -- Array of Folders
 // |*| --- Array of Folders in a Folder
-// |*| --- Array of Root Folders
+// |*| --- Array of Folders at Root
 // |*| --- Array of All Folders in Drive
 // |*| -- Array of Folder Names
 // |*| -- Find a Folder
 // |*| --- Find a Folder in a Folder
 // |*| --- Find a Folder at Root
 // |*| --- Find a Folder in Drive
-// | | --- Find Folder at Path || // -- Last Folder in Folder Path
+// |*| --- Find Folder at Path
 // |*| -- Create or Verify Folders
 // |*| --- Create or Verify Folders in a Folder
 // |*| --- Create or Verify Folders at Root
 // | | - Files
-// | | -- Array of All Files
-// | | --- All Files in a Folder
-// | | --- All Files at Root
-// | | --- All Files in Drive
+// | | -- Array of Files
+// | | --- Array of Files in a Folder
+// | | --- Array of Files at Root
+// | | --- Array of All Files in Drive
 // | | -- Array of All File Names
 // |*| -- Find a File
 // |*| --- Find a File in a Folder
@@ -805,41 +805,6 @@ function createOrVerifyFolderPath(path) {
 // Logger.log(createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 // Logger.log(createOrVerifyFolderPath("/google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 
-// -- Last Folder in Folder Path 
-
-/**
- * Returns the last folder in a folder path.
- *
- * @param path
- * @returns {Folder}
- */
-
-function findFolderAtPath(path) {
-  if (path.charAt(0) === "/") {
-    path = path.substr(1);
-  }
-  var fi;
-  var split = path.split("/");
-  var fldr;
-  for (i = 0; i < split.length; i++) {
-    if (i === 0) {
-      fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
-      if (fi.hasNext()) {
-        fldr = fi.next();
-      } 
-    } else if (i >= 1) {
-        fi = fldr.getFoldersByName(split[i]);
-        if (fi.hasNext()) {
-          fldr = fi.next();
-        } 
-    }
-  } 
-  return fldr;
-}
-
-// Logger.log(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
-// Logger.log(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B/C/D/E/F/G")); // C
-
 // -- Array of Folders 
 
 // --- Array of Folders in a Folder 
@@ -863,7 +828,7 @@ function arrayOfFoldersInFolder(fldr) {
 
 // Logger.log(arrayOfFoldersInFolder(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/"))); // [A]
 
-// --- Array of Root Folders
+// --- Array of Folders at Root
 
 /**
  * Returns an array of all folders in the root of the user's Drive.
@@ -872,8 +837,8 @@ function arrayOfFoldersInFolder(fldr) {
  */
 
 function arrayOfFoldersAtRoot() {
-  var fi     = DriveApp.getRootFolder().getFolders();
   var result = [];
+  var fi     = DriveApp.getRootFolder().getFolders();
   while (fi.hasNext()) {
     var fldr = fi.next();
     result.push(fldr);
@@ -991,6 +956,41 @@ function findFolderInDrive(name) {
 
 Logger.log(findFolderInDrive("folders")); // folders
 
+// -- Find Folder at Path
+
+/**
+ * Returns the last folder in a folder path.
+ *
+ * @param path
+ * @returns {Folder}
+ */
+
+function findFolderAtPath(path) {
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
+  }
+  var fi;
+  var split = path.split("/");
+  var fldr;
+  for (i = 0; i < split.length; i++) {
+    if (i === 0) {
+      fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+      if (fi.hasNext()) {
+        fldr = fi.next();
+      } 
+    } else if (i >= 1) {
+        fi = fldr.getFoldersByName(split[i]);
+        if (fi.hasNext()) {
+          fldr = fi.next();
+        } 
+    }
+  } 
+  return fldr;
+}
+
+// Logger.log(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B")); // B
+// Logger.log(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B/C/D/E/F/G")); // C
+
 // -- Create or Verify Folders
 
 // --- Create or Verify Folders in a Folder
@@ -1077,8 +1077,8 @@ function arrayOfFilesInFolder(fldr) {
   return result;
 }
 
-// var fldr_fin = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
-// Logger.log(arrayOfFilesInFolder(fldr_fin)); // [example-file]
+var fldr_fin = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
+Logger.log(arrayOfFilesInFolder(fldr_fin)); // [example-file]
 
 // --- Array of Files at Root
 
@@ -1089,7 +1089,7 @@ function arrayOfFilesInFolder(fldr) {
  * @returns {File[]}
  */
 
-function arrayOfRootFiles() {
+function arrayOfFilesAtRoot() {
   var result = [];
   var rf     = DriveApp.getRootFolder();
   var fi     = rf.getFiles();
@@ -1100,7 +1100,7 @@ function arrayOfRootFiles() {
   return result;
 }
 
-// Logger.log(arrayOfRootFiles());
+Logger.log(arrayOfFilesAtRoot());
 
 // --- Array of All Files in Drive
 
