@@ -50,7 +50,7 @@
     * [Array of Files in a Folder](#array-of-files-in-a-folder)
     * [Array of Files at Root](#array-of-files-at-root)
     * [Array of All Files in Drive](#array-of-all-files-in-drive)
-  * [Array of All File Names](#array-of-all-file-names)
+  * [Array of File Names](#array-of-file-names)
   * [Find a File](#find-a-file)
     * [Find a File in a Folder](#find-a-file-in-a-folder)
     * [Find a File at Root](#find-a-file-at-root)
