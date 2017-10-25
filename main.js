@@ -50,10 +50,10 @@ Logger.log("Start");
 // | | --- Array of Files at Root
 // | | --- Array of All Files in Drive
 // | | -- Array of All File Names
-// |*| -- Find a File
-// |*| --- Find a File in a Folder
-// |*| --- Find a File at Root
-// |*| --- Find a File in Drive
+// | | -- Find a File
+// | | --- Find a File in a Folder
+// | | --- Find a File at Root
+// | | --- Find a File in Drive
 // | | --- Find File at Path
 // | | -- Copy a File to a Folder
 // | | -- Move a File to a Folder
@@ -904,7 +904,6 @@ function arrayOfFolderNames(arr) {
  * @returns {Folder}
  */
 
-
 function findFolderInFolder(fldr, name) {
   var fldrs = arrayOfFoldersInFolder(fldr);
   var names = arrayOfFolderNames(fldrs);
@@ -1100,7 +1099,7 @@ function arrayOfFilesAtRoot() {
   return result;
 }
 
-Logger.log(arrayOfFilesAtRoot());
+// Logger.log(arrayOfFilesAtRoot());
 
 // --- Array of All Files in Drive
 
@@ -1121,7 +1120,7 @@ function arrayOfFilesInDrive() {
   return result;
 }
 
-Logger.log(arrayOfFilesInDrive());
+// Logger.log(arrayOfFilesInDrive());
 
 // -- Array of File Names 
 
@@ -1152,8 +1151,8 @@ function arrayOfFileNames(arr) {
 /**
  * Returns a file found at the top level of a folder. 
  *
- * @requires filesIn()
- * @requires fileNames()
+ * @requires arrayOfFilesInFolder()
+ * @requires arrayOfFileNames()
  * @requires checkArrayForValue()
  * @param {Folder} fldr
  * @param {string} name
@@ -1169,16 +1168,16 @@ function findFileInFolder(fldr, name) {
   }
 }
 
-// var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
-// Logger.log(findFileInFolder(fldr_ffi, "example-file")); // example-file
+var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
+Logger.log(findFileInFolder(fldr_ffi, "example-file")); // example-file
 
 // --- Find a File at Root
 
 /**
  * Returns a file found at the root of a user's Drive.
  *
- * @requires rootFiles()
- * @requires fileNames()
+ * @requires arrayOfRootFiles()
+ * @requires arrayOfFileNames()
  * @requires checkArrayForValue()
  * @param {string} name
  * @returns {File}
@@ -1262,8 +1261,6 @@ Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-fil
  * @returns {File}
  */
 
-// copyFileToFolder
-
 function copyFileToFolder(file, fldr) {
   var name = file.getName();
   var dest = findFileInFolder(fldr, name);
@@ -1271,9 +1268,9 @@ function copyFileToFolder(file, fldr) {
   return findFileInFolder(fldr, name);
 }
 
-// var fldr_cftf = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/copied");
-// var file_cftf = findFileInDrive("example-file");
-// Logger.log(copyFileToFolder(file_cftf, fldr_cftf)); // example-file
+var fldr_cftf = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/copied");
+var file_cftf = findFileInDrive("example-file");
+Logger.log(copyFileToFolder(file_cftf, fldr_cftf)); // example-file
 
 // -- Move a File to a Folder 
 
@@ -1286,8 +1283,6 @@ function copyFileToFolder(file, fldr) {
  * @returns {File}
  */
 
-// moveFileToFolder
-
 function moveFileToFolder(file, fldr) {
   var name = file.getName();
   var dest = findFileInFolder(fldr, name);
@@ -1297,10 +1292,10 @@ function moveFileToFolder(file, fldr) {
   return result;
 }
 
-// var fldr_mftf1 = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/copied");
-// var file_mftf  = findFileInFolder(fldr_mftf1, "example-file");
-// var fldr_mftf2 = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/moved");
-// Logger.log(moveFile(file_mftf, fldr_mftf2)); // example-file
+var fldr_mftf1 = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/copied");
+var file_mftf  = findFileInFolder(fldr_mftf1, "example-file");
+var fldr_mftf2 = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/moved");
+Logger.log(moveFileToFolder(file_mftf, fldr_mftf2)); // example-file
 
 // - Files and Folders
 
@@ -1314,16 +1309,14 @@ function moveFileToFolder(file, fldr) {
  * @returns {File || Folder}
  */
 
-// renameFileOrFolder
-
-function renameFileOrFldr(file_fldr, name) {
+function renameFileOrFolder(file_fldr, name) {
   file_fldr.setName(name);
   return file_fldr;
 } 
 
-// var fldr_rfof = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/moved");
-// var file_rfof = findFileInFolder(fldr_rfof, "example-file");
-// Logger.log(renameFileOrFldr(file_rfof, "modified-example-file")); // modified-example-file
+var fldr_rfof = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/moved");
+var file_rfof = findFileInFolder(fldr_rfof, "example-file");
+Logger.log(renameFileOrFolder(file_rfof, "modified-example-file")); // modified-example-file
 
 // -- Parent Folder of a File or Folder 
 
@@ -1334,21 +1327,21 @@ function renameFileOrFldr(file_fldr, name) {
  * @returns {Folder}
  */
 
-// parentFolderOfFileOrFolder()
-
 function parentFolderOfFileOrFolder(file_fldr) {
   var fi = file_fldr.getParents();
   return fi.next();
 }
 
-// var file_pfofof = findFileInDrive("example-file");
-// Logger.log(parentFolderOfFileOrFolder(file_pfofof)); // files
+var file_pfofof = findFileInDrive("example-file");
+Logger.log(parentFolderOfFileOrFolder(file_pfofof)); // files
 
 // -- Zip All Files in a Folder
 
 /**
  * Returns a zipped file. 
  *
+ * @requires arrayOfFilesInFolder()
+ * @requires findFileInFolder()
  * @param {Folder} fldr
  * @param {string} name
  * @returns {File}
@@ -1356,7 +1349,7 @@ function parentFolderOfFileOrFolder(file_fldr) {
 
 function zipFilesInFolder(fldr, name) {
   var blobs = [];
-  var files = filesIn(fldr);
+  var files = arrayOfFilesInFolder(fldr);
   for (var i = 0; i < files.length; i++) {
     blobs.push(files[i].getBlob());
   } 
@@ -1365,6 +1358,7 @@ function zipFilesInFolder(fldr, name) {
   return findFileInFolder(fldr, name);
 }
 
+// remove existing zip before demo runs...function?
 // var fldr_zfif = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/zips");
 // fldr_zfif.createFile("A","hello, world!");
 // fldr_zfif.createFile("B", "hello again, world!");
@@ -1401,8 +1395,8 @@ function objectFromUrlJSON(url) {
   return JSON.parse(data);
 } 
 
-// var obj_ofu = objectFromUrlJSON("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-// Logger.log(JSON.stringify(obj_ofu));
+var obj_ofu = objectFromUrlJSON("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+Logger.log(JSON.stringify(obj_ofu));
 
 // -- Object From File
 
@@ -1418,9 +1412,9 @@ function objectFromFileJSON(file) {
   return JSON.parse(data);
 } 
 
-// var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-// var obj_off  = objectFromFileJSON(file_off);
-// Logger.log(JSON.stringify(obj_off));
+var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+var obj_off  = objectFromFileJSON(file_off);
+Logger.log(JSON.stringify(obj_off));
 
 // -- Object From URL or File
 
@@ -1443,34 +1437,32 @@ function objectFromUrlOrFileAtPath(input) {
   }
 }
 
-// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
-// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json")));
+Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
+Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json")));
 
 // UI
 
-// -- On Open
-// FLAG
-
 /**
  * @requires global ui / uProp vlues 
+ * @requires a custom trigger -> Run: 'exampleUI', Events: 'From spreadsheet', 'On open'
  * Creates a menu with that allows the user to set the configuration options and run the script.
+ * 
  */
 
-// var ui    = SpreadsheetApp.getUi(); // || DocumentApp.getUi();
-// var uProp = PropertiesService.getUserProperties();
+var ui    = SpreadsheetApp.getUi(); // || DocumentApp.getUi();
+var uProp = PropertiesService.getUserProperties();
 
-// function onOpen() {
-//   ui.createMenu("Easy CSV")
-//   .addItem("Run Script", "runScript")
-//   .addSeparator()
-//   .addSubMenu(ui.createMenu("Configuration")
-//     .addItem("Set Configuration", "setConfiguration")
-//     .addItem("Show Configuration", "showConfiguration")
-//     .addItem("Clear Configuration", "clearConfiguration"))
-//   .addToUi();
-// }
+function exampleUI() {
+  ui.createMenu("Example UI")
+  .addItem("Run Script", "runScript")
+  .addSeparator()
+  .addSubMenu(ui.createMenu("Configuration")
+    .addItem("Set Configuration", "setConfiguration")
+    .addItem("Show Configuration", "showConfiguration")
+    .addItem("Clear Configuration", "clearConfiguration"))
+  .addToUi();
+}
 
-// FLAG
 // -- Set Configuration
 
 /**
@@ -1518,9 +1510,6 @@ function clearConfiguration() {
   ui.alert("All settings cleared.");
 }
 
-// FLAG
-// -- Run Script
-
 // Sheets
 
 // - Managing Spreadsheet Files
@@ -1533,10 +1522,10 @@ function clearConfiguration() {
  * Returns a spreadsheet. 
  * This creates the spreadsheet if it does not already exist.
  *
- * @requires filesIn()
- * @requires fileNames()
+ * @requires arrayOfFilesInFolder()
+ * @requires arrayOfFileNames()
  * @requires checkArrayForValue()
- * @requires moveFile()
+ * @requires moveFileToFolder()
  * @requires findFileInFolder()
  * @requires openFileAsSpreadsheet()
  * @param {Folder} fldr
@@ -1564,8 +1553,8 @@ function createOrVerifySpreadsheetInFolder(fldr, name) {
  * Returns a spreadsheet. 
  * This creates the spreadsheet if it does not already exist.
  *
- * @requires rootFiles()
- * @requires fileNames()
+ * @requires arrayOfRootFiles()
+ * @requires arrayOfFileNames()
  * @requires checkArrayForValue() 
  * @requires findFileAtRoot() 
  * @requires openFileAsSpreadsheet() 
@@ -1574,8 +1563,8 @@ function createOrVerifySpreadsheetInFolder(fldr, name) {
  */
 
 function createOrVerifySpreadsheetAtRoot(name) {
-  var files = rootFiles();
-  var names = fileNames(files);
+  var files = arrayOfRootFiles();
+  var names = arrayOfFileNames(files);
   if (!(checkArrayForValue(names, name))) {
     var ss = SpreadsheetApp.create(name);
   }
@@ -2064,12 +2053,12 @@ function arrForColRange(rangeObj){
  */
 
 function createVerifyDocIn(fldr, name) {
-  var files = filesIn(fldr);
-  var names = fileNames(files);
+  var files = arrayOfFilesInFolder(fldr);
+  var names = arrayOfFileNames(files);
   if (!(checkArrayForValue(names, name))) {
     var doc  = DocumentApp.create(name).getId();
     var file = DriveApp.getFileById(doc);
-    moveFile(file, fldr);
+    moveFileToFolder(file, fldr);
   }
   return openFileAsDocument(findFileInFolder(fldr, name));
 }
@@ -2088,8 +2077,8 @@ function createVerifyDocIn(fldr, name) {
  */
 
 function createVerifyDocAtRoot(name) {
-  var files = rootFiles();
-  var names = fileNames(files);
+  var files = arrayOfRootFiles();
+  var names = arrayOfFileNames(files);
   if (!(checkArrayForValue(names, name))) {
     var ss = DocumentApp.create(name);
   }
