@@ -30,7 +30,7 @@
 [Drive](#drive-1)
 =====
 * [Folders](#folders)
-  * [Create or Verify Folder Path](#create-or-verify-folder-path)
+  * [Verify Folder Path](#verify-folder-path)
   * [Last Folder in Folder Path](#last-folder-in-folder-path)
   * [Array of Folders](#array-of-folders)
     * [Array of Folders in a Folder](#array-of-folders-in-a-folder)
@@ -798,7 +798,7 @@ Logger.log(matchDateToRangeOfDates(quarterDates, "08/02/2017")); // 1
 
 ### Folders ###
 
-#### Create or Verify Folder Path ####
+#### Verify Folder Path ####
 
 ```javascript
 /**
@@ -810,7 +810,7 @@ Logger.log(matchDateToRangeOfDates(quarterDates, "08/02/2017")); // 1
  * @returns {Folder}
  */
 
-function createOrVerifyFolderPath(path) {
+function verifyPath(path) {
   if (path.charAt(0) === "/") {
     path = path.substr(1);
   }
@@ -836,8 +836,7 @@ function createOrVerifyFolderPath(path) {
   return fldr;
 }
 
-Logger.log(createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
-Logger.log(createOrVerifyFolderPath("/google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
+Logger.log(verifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 ```
 
 #### Array of Folders ####

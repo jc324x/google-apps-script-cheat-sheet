@@ -30,7 +30,7 @@ Logger.log("Start");
 // |*| -- Match a Date to a Date Range
 // |*| Drive
 // |*| - Folders
-// |*| -- Create or Verify Folder Path
+// |*| -- Verify Folder Path
 // |*| -- Array of Folders
 // |*| --- Array of Folders in a Folder
 // |*| --- Array of Folders at Root
@@ -46,10 +46,10 @@ Logger.log("Start");
 // |*| --- Create or Verify Folders at Root
 // | | - Files
 // | | -- Array of Files
-// | | --- Array of Files in a Folder
-// | | --- Array of Files at Root
-// | | --- Array of All Files in Drive
-// | | -- Array of All File Names
+// |*| --- Array of Files in a Folder
+// |*| --- Array of Files at Root
+// |*| --- Array of All Files in Drive
+// |*| -- Array of File Names
 // | | -- Find a File
 // | | --- Find a File in a Folder
 // | | --- Find a File at Root
@@ -765,7 +765,7 @@ Logger.log(matchDateToRangeOfDates(quarterDates, "08/02/2017")); // 1
 
 // - Folders
 
-// -- Create or Verify Folder Path
+// -- Verify Folder Path
 
 /**
 
@@ -776,7 +776,7 @@ Logger.log(matchDateToRangeOfDates(quarterDates, "08/02/2017")); // 1
  * @returns {Folder}
  */
 
-function createOrVerifyFolderPath(path) {
+function verifyPath(path) {
   if (path.charAt(0) === "/") {
     path = path.substr(1);
   }
@@ -802,8 +802,7 @@ function createOrVerifyFolderPath(path) {
   return fldr;
 }
 
-// Logger.log(createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
-// Logger.log(createOrVerifyFolderPath("/google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
+Logger.log(verifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 
 // -- Array of Folders 
 
@@ -1047,7 +1046,7 @@ function createOrVerifyFoldersAtRoot(arr) {
 // checkForExFile creates an empty example file
 
 function checkForExFile() {
-  var fldr = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files");
+  var fldr = verifyPath("google-apps-script-cheat-sheet-demo/files");
   var file = findFileInFolder(fldr, "example-file");
   if (!(file)){fldr.createFile("example-file", "example");}
   return findFileInFolder(fldr, "example-file");
@@ -1083,7 +1082,7 @@ Logger.log(arrayOfFilesInFolder(fldr_fin)); // [example-file]
 
 /**
  * Returns an array of all files at the root of a user's Drive.
- * Note: Please don't actually use this in production. 
+ * Note: Please *don't* actually use this in production. 
  *
  * @returns {File[]}
  */
@@ -1168,8 +1167,8 @@ function findFileInFolder(fldr, name) {
   }
 }
 
-var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
-Logger.log(findFileInFolder(fldr_ffi, "example-file")); // example-file
+var fldr_ffif = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
+Logger.log(findFileInFolder(fldr_ffif, "example-file")); // example-file
 
 // --- Find a File at Root
 
@@ -1268,7 +1267,7 @@ function copyFileToFolder(file, fldr) {
   return findFileInFolder(fldr, name);
 }
 
-var fldr_cftf = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/copied");
+var fldr_cftf = verifyPath("google-apps-script-cheat-sheet-demo/files/copied");
 var file_cftf = findFileInDrive("example-file");
 Logger.log(copyFileToFolder(file_cftf, fldr_cftf)); // example-file
 
@@ -1294,7 +1293,7 @@ function moveFileToFolder(file, fldr) {
 
 var fldr_mftf1 = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/copied");
 var file_mftf  = findFileInFolder(fldr_mftf1, "example-file");
-var fldr_mftf2 = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/files/moved");
+var fldr_mftf2 = verifyPath("google-apps-script-cheat-sheet-demo/files/moved");
 Logger.log(moveFileToFolder(file_mftf, fldr_mftf2)); // example-file
 
 // - Files and Folders
@@ -1359,7 +1358,7 @@ function zipFilesInFolder(fldr, name) {
 }
 
 // remove existing zip before demo runs...function?
-// var fldr_zfif = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/zips");
+// var fldr_zfif = verifyPath("google-apps-script-cheat-sheet-demo/zips");
 // fldr_zfif.createFile("A","hello, world!");
 // fldr_zfif.createFile("B", "hello again, world!");
 // fldr_zfif.createFile("C", "world! hi!");
@@ -1368,7 +1367,7 @@ function zipFilesInFolder(fldr, name) {
 // JSON
 
 function jsonExFile() {
-  var fldr = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/json");
+  var fldr = verifyPath("google-apps-script-cheat-sheet-demo/json");
   var file = findFileInFolder(fldr, "example-json");
   if (!(file)) {
     var json = objectFromUrlJSON("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
@@ -1533,7 +1532,7 @@ function clearConfiguration() {
  * @returns {Spreadsheet}
  */
 
-function createOrVerifySpreadsheetInFolder(fldr, name) {
+function verifySpreadsheetInFolder(fldr, name) {
   var files = arrayOfFilesInFolder(fldr);
   var names = arrayOfFileNames(files);
   if (!(checkArrayForValue(names, name))) {
@@ -1544,8 +1543,8 @@ function createOrVerifySpreadsheetInFolder(fldr, name) {
   return openFileAsSpreadsheet(findFileInFolder(fldr, name));
 }
 
-// var fldr_cvssi = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
-// Logger.log(createOrVerifySpreadsheetInFolder(fldr_cvssi, "example-sheet")); // example-sheet
+// var fldr_cvssi = verifyPath("google-apps-script-cheat-sheet-demo/sheets");
+// Logger.log(verifySpreadsheetInFolder(fldr_cvssi, "example-sheet")); // example-sheet
 
 // --- Create or Verify Spreadsheet at Root
 
@@ -1569,6 +1568,19 @@ function createOrVerifySpreadsheetAtRoot(name) {
     var ss = SpreadsheetApp.create(name);
   }
   return openFileAsSpreadsheet(findFileAtRoot(name));
+}
+
+// -- Verify Spreadsheet
+
+function verifySpreadsheetInFolder(fldr, name) {
+  var files = arrayOfFilesInFolder(fldr);
+  var names = arrayOfFileNames(files);
+  if (!(checkArrayForValue(names, name))) {
+    var ss   = SpreadsheetApp.create(name).getId();
+    var file = DriveApp.getFileById(ss);
+    moveFileToFolder(file, fldr);
+  }
+  return openFileAsSpreadsheet(findFileInFolder(fldr, name));
 }
 
 // -- Id of Active Spreadsheet 
@@ -2052,7 +2064,7 @@ function arrForColRange(rangeObj){
  * @returns {Document}
  */
 
-function createVerifyDocIn(fldr, name) {
+function verifyDocumentInFolder(fldr, name) {
   var files = arrayOfFilesInFolder(fldr);
   var names = arrayOfFileNames(files);
   if (!(checkArrayForValue(names, name))) {
@@ -2063,8 +2075,8 @@ function createVerifyDocIn(fldr, name) {
   return openFileAsDocument(findFileInFolder(fldr, name));
 }
 
-// var fldr_cvdi = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/docs");
-// Logger.log(createVerifyDocIn(fldr_cvdi, "example-doc")); // example-doc
+// var fldr_cvdi = verifyPath("google-apps-script-cheat-sheet-demo/docs");
+// Logger.log(verifyDocumentInFolder(fldr_cvdi, "example-doc")); // example-doc
 
 // --- Create or Verify Document at Root
 
@@ -2199,8 +2211,8 @@ function findReplaceInDoc(obj, doc, delim) {
   } 
 } 
 
-// var fldr_frid = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
-// var doc_frid  = createVerifyDocIn(fldr_frid, "find-replace-doc");
+// var fldr_frid = verifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var doc_frid  = verifyDocumentInFolder(fldr_frid, "find-replace-doc");
 // var body_frid = doc_frid.getBody();
 // body_frid.clear();
 // doc_frid.appendParagraph("name: %name%");
@@ -2241,8 +2253,8 @@ function findReplaceInSpreadsheet(obj, ss, delim) {
   } 
 }
 
-// var fldr_fris  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
-// var ss_frid    = createOrVerifySpreadsheetInFolder(fldr_fris, "find-replace-sheet");
+// var fldr_fris  = verifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var ss_frid    = verifySpreadsheetInFolder(fldr_fris, "find-replace-sheet");
 // var sheet_frid = ss_frid.getSheets()[0];
 // sheet_frid.clear();
 
@@ -2283,8 +2295,8 @@ function findReplaceinSheet(obj, sheet, delim) {
   sheet.getDataRange().setValues(values);
 }
 
-// var fldr_fris  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
-// var ss_fris    = createOrVerifySpreadsheetInFolder(fldr_fris, "find-replace-sheet");
+// var fldr_fris  = verifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var ss_fris    = verifySpreadsheetInFolder(fldr_fris, "find-replace-sheet");
 // var sheet_fris = ss_fris.getSheets()[0];
 // sheet_fris.clear();
 
@@ -2329,8 +2341,8 @@ function createDocsFromTemplateArrObj(arrObj, templateDoc, naming, fldr, ts, del
 
 // var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
-// var fldr1_cdftao  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
-// var fldr2_cdftao  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
+// var fldr1_cdftao  = verifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var fldr2_cdftao  = verifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
 // var doc_cdftao    = createVerifyDocIn(fldr1_cdftao, "template-doc");
 // var body_cdftao   = doc_cdftao.getBody();
 // body_cdftao.clear();
@@ -2372,9 +2384,9 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, 
 // var ss1_csftao    = SpreadsheetApp.getActiveSpreadsheet();
 // var sheet1_csftao = ss1_csftao.getSheetByName("Sheet2");
 // var arrObj_csftao = arrObjFromSheet(sheet1_csftao, 2);
-// var fldr1_csftao  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
-// var fldr2_csftao  = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
-// var file_csftao   = createOrVerifySpreadsheetInFolder(fldr1_csftao, "template-sheet");
+// var fldr1_csftao  = verifyPath("google-apps-script-cheat-sheet-demo/merges");
+// var fldr2_csftao  = verifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
+// var file_csftao   = verifySpreadsheetInFolder(fldr1_csftao, "template-sheet");
 // var ss2_csftao    = openFileAsSpreadsheet(file_csftao);
 // var sheet2_csftao = ss2_csftao.getSheets()[0];
 
@@ -2393,7 +2405,7 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, 
 
 // var sheet_sdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_sdl = arrObjFromSheet(sheet_sdl, 2);
-// var fldr_sdl   = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/docs");
+// var fldr_sdl   = verifyPath("google-apps-script-cheat-sheet-demo/docs");
 // var file_sdl   = createVerifyDocIn(fldr_sdl, "example-doc");
 // var doc_sdl    = openFileAsDocument(file_sdl);
 // var body_sdl   = doc_sdl.getBody();
@@ -2411,7 +2423,7 @@ function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, 
 
 // var sheet_mdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_mdl = arrObjFromSheet(sheet_mdl, 2);
-// var fldr_mdl   = createOrVerifyFolderPath("google-apps-script-cheat-sheet-demo/docs");
+// var fldr_mdl   = verifyPath("google-apps-script-cheat-sheet-demo/docs");
 // var file_mdl   = createVerifyDocIn(fldr_mdl, "example-doc");
 // var doc_mdl    = openFileAsDocument(file_mdl);
 // var body_mdl   = doc_mdl.getBody();
@@ -2506,7 +2518,6 @@ function runMailMergeForArrObj(arrObj) {
 // runMailMergeForArrObj(arrObj_rmmfao);
 
 Logger.log("End");
-
 
 // dev
 
