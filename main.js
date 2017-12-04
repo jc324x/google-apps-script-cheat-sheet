@@ -31,6 +31,7 @@ Logger.log("Start");
 // |*| Drive
 // |*| - Folders
 // |*| -- Verify Folder Path
+// | | -- Check for Folder
 // |*| -- Array of Folders
 // |*| --- Array of Folders in a Folder
 // |*| --- Array of Folders at Root
@@ -831,6 +832,41 @@ function verifyPath(path) {
 // Logger.log("verifyPath");
 // Logger.log(verifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 
+// -- Check for Folder
+
+// --- Check for Folder at Path
+
+function checkForFolderAtPath(path) {
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
+  }
+  var fi;
+  var split = path.split("/");
+  var fldr;
+  for (i = 0; i < split.length; i++) {
+    if (i === 0) {
+      fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+      if (fi.hasNext()) {
+        fldr = fi.next();
+      } else {
+        return false;
+      }
+    } else if (i >= 1) {
+        fi = fldr.getFoldersByName(split[i]);
+        if (fi.hasNext()) {
+          fldr = fi.next();
+        } else {
+          return false;
+        }
+    }
+  } 
+  return true;
+}
+
+// --- Check for Folder in Folder
+
+// --- Check for Folder at Root
+
 // -- Array of Folders 
 
 // --- Array of Folders in a Folder 
@@ -1384,6 +1420,17 @@ function parentFolderOfFileOrFolder(file_fldr) {
 
 // -- Zip All Files in a Folder
 
+function filesForZipExample() {
+  Logger.log("zipExFiles");
+
+  if (!(checkForFolderAtPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip"))) {
+    var fldr = verifyPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip");
+    fldr.createFile("A","hello, world!");
+    fldr.createFile("B", "hello again, world!");
+    fldr.createFile("C", "world! hi!");
+  }
+}
+
 /**
  * Returns a zipped file. 
  *
@@ -1394,28 +1441,33 @@ function parentFolderOfFileOrFolder(file_fldr) {
  * @returns {File}
  */
 
-function zipFilesInFolder(fldr, name) {
+function zipFilesInFolder(fldr, name, dest) {
   var blobs = [];
   var files = arrayOfFilesInFolder(fldr);
+
   for (var i = 0; i < files.length; i++) {
     blobs.push(files[i].getBlob());
+    Logger.log(blobs);
+    Logger.log(blobs.length);
   } 
+
   var zips = Utilities.zip(blobs, name);
-  fldr.createFile(zips);
-  return findFileInFolder(fldr, name);
+
+  if (dest !== null) {
+    dest.createFile(zips);
+    return findFileInFolder(dest, name);
+  }
 }
 
-// FLAG remove existing zip before demo runs...function?
 // Logger.log("zipFilesInFolder");
-// var fldr_zfif = verifyPath("google-apps-script-cheat-sheet-demo/zips");
-// fldr_zfif.createFile("A","hello, world!");
-// fldr_zfif.createFile("B", "hello again, world!");
-// fldr_zfif.createFile("C", "world! hi!");
-// var zips_zfif = zipFilesInFolder(fldr_zfif, "Archive");
+// filesForZipExample();
+// var fldr_zfif = verifyPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip");
+// var dest_zfif = verifyPath("google-apps-script-cheat-sheet-demo/zip/destination");
+// zipFilesInFolder(fldr_zfif, "Archive", dest_zfif);
 
 // JSON
 
-function jsonExFile() {
+function fileForJSONExample() {
   var fldr = verifyPath("google-apps-script-cheat-sheet-demo/json");
   var file = findFileInFolder(fldr, "example-json");
   if (!(file)) {
@@ -1426,9 +1478,6 @@ function jsonExFile() {
   return findFileInFolder(fldr, "example-json");
 }
 
-// Logger.log("jsonExFile");
-// jsonExFile();
-
 // -- Object From URL
 
 /**
@@ -1438,14 +1487,15 @@ function jsonExFile() {
  * @returns {Object}
  */
 
-function objectFromUrlJSON(url) {
+function objectFromUrl(url) {
   var rsp  = UrlFetchApp.fetch(url);
   var data = rsp.getContentText();
   return JSON.parse(data);
 } 
 
-// var obj_ofu = objectFromUrlJSON("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-// Logger.log(JSON.stringify(obj_ofu));
+Logger.log("objectFromUrl");
+var obj_ofu = objectFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+Logger.log(JSON.stringify(obj_ofu));
 
 // -- Object From File
 
@@ -1456,15 +1506,16 @@ function objectFromUrlJSON(url) {
  * @returns {Object}
  */
 
-function objectFromFileJSON(file) {
+function objectFromFile(file) {
   var data = file.getBlob().getDataAsString();
   return JSON.parse(data);
 } 
 
-// Logger.log("objectFromFileJSON");
-// var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-// var obj_off  = objectFromFileJSON(file_off);
-// Logger.log(JSON.stringify(obj_off));
+Logger.log("objectFromFile");
+fileForJSONExample();
+var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+var obj_off  = objectFromFileJSON(file_off);
+Logger.log(JSON.stringify(obj_off));
 
 // -- Object From URL or File
 
@@ -1477,7 +1528,7 @@ function objectFromFileJSON(file) {
 
 function objectFromUrlOrFileAtPath(input) {
   var regExp = new RegExp("^(http|https)://");
-  // var test   = regExp.test(input);
+  var test   = regExp.test(input);
   if (regExp.test(input)) {
     return objectFromUrlJSON(input);
   } else {
@@ -1487,9 +1538,9 @@ function objectFromUrlOrFileAtPath(input) {
   }
 }
 
-// Logger.log("objectFromUrlOrFileAtPath");
-// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
-// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json")));
+Logger.log("objectFromUrlOrFileAtPath");
+Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
+Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json")));
 
 // UI
 
