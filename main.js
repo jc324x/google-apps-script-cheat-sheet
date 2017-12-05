@@ -31,7 +31,10 @@ Logger.log("Start");
 // |*| Drive
 // |*| - Folders
 // |*| -- Verify Folder Path
-// | | -- Check for Folder
+// | | -- Check for a Folder
+// | | --- Check for Folder in a Folder
+// | | --- Check for a Folder at Root
+// | | --- Check for a Folder at Path
 // |*| -- Array of Folders
 // |*| --- Array of Folders in a Folder
 // |*| --- Array of Folders at Root
@@ -46,6 +49,10 @@ Logger.log("Start");
 // |*| --- Create or Verify Folders in a Folder
 // |*| --- Create or Verify Folders at Root
 // | | - Files
+// | | -- Check for a File
+// | | --- Check for File in a Folder
+// | | --- Check for a File at Root
+// | | --- Check for a File at Path
 // | | -- Array of Files
 // |*| --- Array of Files in a Folder
 // |*| --- Array of Files at Root
@@ -58,25 +65,27 @@ Logger.log("Start");
 // |*| --- Find File at Path
 // |*| -- Copy a File to a Folder
 // |*| -- Move a File to a Folder
+// | | -- Check for File at Path
 // |*| - Files and Folders
 // |*| -- Rename a File or Folder
 // |*| -- Parent Folder of a File or Folder
-// | | -- Zip All Files in a Folder
-// | | JSON
-// | | -- Object From URL
-// | | -- Object From File
-// | | -- Object From URL or File
-// | | UI
-// | | -- On Open
-// | | -- Set Configuration
-// | | -- Show Configuration
-// | | -- Clear Configuration
-// | | -- Run Script
+// |*| -- Zip All Files in a Folder
+// |*| JSON
+// |*| -- Object From URL
+// |*| -- Object From File
+// |*| -- Object From URL or File
+// |*| UI
+// |*| -- On Open
+// |*| -- Set Configuration
+// |*| -- Show Configuration
+// |*| -- Clear Configuration
+// |*| -- Run Script
 // | | Sheets
 // | | - Managing Spreadsheet Files
-// | | -- Create or Verify Spreadsheet
-// | | --- Create or Verify Spreadsheet in a Folder
-// | | --- Create or Verify Spreadsheet at Root
+// | | -- Verify Spreadsheet
+// | | --- Verify Spreadsheet in a Folder
+// | | --- Verify Spreadsheet at Root
+// | | --- Verify Spreadsheet at Path
 // | | -- Id of Active Spreadsheet
 // | | -- Open File as Spreadsheet
 // | | - Utility Functions for Sheets
@@ -832,9 +841,13 @@ function verifyPath(path) {
 // Logger.log("verifyPath");
 // Logger.log(verifyPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
 
-// -- Check for Folder
+// -- Check for a Folder
 
-// --- Check for Folder at Path
+// --- Check for a Folder in Folder
+
+// --- Check for a Folder at Root
+
+// --- Check for a Folder at Path
 
 function checkForFolderAtPath(path) {
   if (path.charAt(0) === "/") {
@@ -862,10 +875,6 @@ function checkForFolderAtPath(path) {
   } 
   return true;
 }
-
-// --- Check for Folder in Folder
-
-// --- Check for Folder at Root
 
 // -- Array of Folders 
 
@@ -1115,6 +1124,59 @@ function verifyFoldersAtRoot(arr) {
 
 // - Files
 
+// -- Check for a File
+
+// --- Check for File in a Folder
+
+function checkForFileInFolder(file, folder) {
+  Logger.log("OK");
+}
+ 
+// --- Check for a File at Root
+
+function checkForFileAtRoot(file) {
+  Logger.log("OK");  
+} 
+
+//  --- Check for File at Path
+
+function checkForFileAtPath(path) {
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
+  }
+
+  var fi, fldr;
+  var split = path.split("/");
+
+  if (split.length === 0) {
+    Logger.log("Not really a path, just a search request...");
+    checkForFileAtRoot(path);
+  } else {
+    for (i = 0; i < split.length; i++) {
+      if (i === 0) {
+        fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+        if (fi.hasNext()) {
+          fldr = fi.next();
+        } else {
+          return false;
+        }
+      } else if (i >= 1 && i !== split.length - 1) {
+          fi = fldr.getFoldersByName(split[i]);
+          if (fi.hasNext()) {
+            fldr = fi.next();
+          } else {
+            return false;
+          }
+      } else if (i === split.length - 1) {
+        Logger.log(fldr.getName());
+      }
+    } 
+    return true;
+  }
+}
+
+Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
+
 // checkForExFile creates an empty example file
 
 function checkForExFile() {
@@ -1253,7 +1315,7 @@ function findFileInFolder(fldr, name) {
 /**
  * Returns a file found at the root of a user's Drive.
  *
- * @requires arrayOfRootFiles()
+ * @requires arrayOfFilesAtRoot()
  * @requires arrayOfFileNames()
  * @requires checkArrayForValue()
  * @param {string} name
@@ -1262,7 +1324,7 @@ function findFileInFolder(fldr, name) {
 
 function findFileAtRoot(name) {
   var rf    = DriveApp.getRootFolder();
-  var files = arrayOfRootFiles();
+  var files = arrayOfFilesAtRoot();
   var names = arrayOfFileNames(files);
   if (checkArrayForValue(names, name)) {
     var file = rf.getFilesByName(name).next();
@@ -1493,9 +1555,9 @@ function objectFromUrl(url) {
   return JSON.parse(data);
 } 
 
-Logger.log("objectFromUrl");
-var obj_ofu = objectFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-Logger.log(JSON.stringify(obj_ofu));
+// Logger.log("objectFromUrl");
+// var obj_ofu = objectFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+// Logger.log(JSON.stringify(obj_ofu));
 
 // -- Object From File
 
@@ -1511,11 +1573,11 @@ function objectFromFile(file) {
   return JSON.parse(data);
 } 
 
-Logger.log("objectFromFile");
-fileForJSONExample();
-var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-var obj_off  = objectFromFileJSON(file_off);
-Logger.log(JSON.stringify(obj_off));
+// Logger.log("objectFromFile");
+// fileForJSONExample();
+// var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+// var obj_off  = objectFromFile(file_off);
+// Logger.log(JSON.stringify(obj_off));
 
 // -- Object From URL or File
 
@@ -1530,17 +1592,16 @@ function objectFromUrlOrFileAtPath(input) {
   var regExp = new RegExp("^(http|https)://");
   var test   = regExp.test(input);
   if (regExp.test(input)) {
-    return objectFromUrlJSON(input);
+    return objectFromUrl(input);
   } else {
     var file = findFileAtPath(input); 
-    Logger.log(file.getName());
-    return objectFromFileJSON(file);
+    return objectFromFile(file);
   }
 }
 
-Logger.log("objectFromUrlOrFileAtPath");
-Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
-Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json")));
+// Logger.log("objectFromUrlOrFileAtPath");
+// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
+// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json")));
 
 // UI
 
@@ -1551,7 +1612,7 @@ Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sh
  * 
  */
 
-var ui    = SpreadsheetApp.getUi(); // || DocumentApp.getUi();
+var ui    = SpreadsheetApp.getUi(); // or DocumentApp.getUi();
 var uProp = PropertiesService.getUserProperties();
 
 function exampleUI() {
@@ -1616,9 +1677,9 @@ function clearConfiguration() {
 
 // - Managing Spreadsheet Files
 
-// -- Create or Verify Spreadsheet 
+// -- Verify Spreadsheet 
 
-// --- Create or Verify Spreadsheet in a Folder
+// --- Verify Spreadsheet in a Folder
 
 /**
  * Returns a spreadsheet. 
@@ -1646,16 +1707,17 @@ function verifySpreadsheetInFolder(fldr, name) {
   return openFileAsSpreadsheet(findFileInFolder(fldr, name));
 }
 
+// Logger.log("verifySpreadsheetInFolder");
 // var fldr_cvssi = verifyPath("google-apps-script-cheat-sheet-demo/sheets");
 // Logger.log(verifySpreadsheetInFolder(fldr_cvssi, "example-sheet")); // example-sheet
 
-// --- Create or Verify Spreadsheet at Root
+// --- Verify Spreadsheet at Root
 
 /**
  * Returns a spreadsheet. 
  * This creates the spreadsheet if it does not already exist.
  *
- * @requires arrayOfRootFiles()
+ * @requires arrayOfFilesAtRoot()
  * @requires arrayOfFileNames()
  * @requires checkArrayForValue() 
  * @requires findFileAtRoot() 
@@ -1664,8 +1726,8 @@ function verifySpreadsheetInFolder(fldr, name) {
  * @returns {Spreadsheet}
  */
 
-function createOrVerifySpreadsheetAtRoot(name) {
-  var files = arrayOfRootFiles();
+function verifySpreadsheetAtRoot(name) {
+  var files = arrayOfFilesAtRoot();
   var names = arrayOfFileNames(files);
   if (!(checkArrayForValue(names, name))) {
     var ss = SpreadsheetApp.create(name);
@@ -1673,21 +1735,42 @@ function createOrVerifySpreadsheetAtRoot(name) {
   return openFileAsSpreadsheet(findFileAtRoot(name));
 }
 
-// -- Verify Spreadsheet
+// Logger.log("verifySpreadsheetAtRoot");
 
-function verifySpreadsheet(name, fldr) {
-  if (pReturn !== undefined) {
-    Logger.log("ok");
+// -- Verify Spreadsheet at Path
+// -- FLAG -- write checkForFileAtPath first
+ 
+function verifySpreadsheetAtPath(path) {
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
   }
-  var files = arrayOfFilesInFolder(fldr);
-  var names = arrayOfFileNames(files);
-  if (!(checkArrayForValue(names, name))) {
-    var ss   = SpreadsheetApp.create(name).getId();
-    var file = DriveApp.getFileById(ss);
-    moveFileToFolder(file, fldr);
-  }
-  return openFileAsSpreadsheet(findFileInFolder(fldr, name));
+
+  var arr  = path.split("/");
+  var file = arr[arr.length -1];
+  var fldr, fi;
+
+  for (i = 0; i < arr.length - 1; i++) {
+    if (i === 0) {
+      fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
+      if (fi.hasNext()) {
+        fldr = fi.next();
+      } else { 
+        return null;
+      }
+    } else if (i >= 1) {
+        fi = fldr.getFoldersByName(arr[i]);
+        if (fi.hasNext()) {
+          fldr = fi.next();
+        } else { 
+          return null;
+        }
+    }
+  } 
+  return openFileAsSpreadsheet(findFileInFolder(fldr, file));
 }
+
+// Logger.log("verifySpreadsheetAtPath");
+// Logger.log(verifySpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet").getName());
 
 // -- Id of Active Spreadsheet 
 
@@ -1717,8 +1800,6 @@ function idOfActiveSpreadsheet() {
 function openFileAsSpreadsheet(file) {
   var id = file.getId();
   return SpreadsheetApp.openById(id);
-  // var ss = SpreadsheetApp.openById(id);
-  // return ss;
 } 
 
 // var fldr_ofas = findFolderAtPath("google-apps-script-cheat-sheet-demo/sheets")
@@ -2195,7 +2276,7 @@ function verifyDocumentInFolder(fldr, name) {
  */
 
 function createVerifyDocAtRoot(name) {
-  var files = arrayOfRootFiles();
+  var files = arrayOfFilesAtRoot();
   var names = arrayOfFileNames(files);
   if (!(checkArrayForValue(names, name))) {
     var ss = DocumentApp.create(name);
