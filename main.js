@@ -1748,8 +1748,6 @@ function verifySpreadsheetAtPath(path) {
     return findFileAtPath(path);
   } else {
     // pop file from path
-    //
-  
   }
 }
 
