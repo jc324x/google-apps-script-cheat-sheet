@@ -1128,14 +1128,26 @@ function verifyFoldersAtRoot(arr) {
 
 // --- Check for File in a Folder
 
-function checkForFileInFolder(file, folder) {
-  Logger.log("OK");
+function checkForFileInFolder(name, fldr) {
+  var files = arrayOfFilesInFolder(fldr); 
+  var names = arrayOfFileNames(files);
+  if (checkArrayForValue(names, name)) {
+    return true;
+  } else {
+    return false;
+  }
 }
  
 // --- Check for a File at Root
 
 function checkForFileAtRoot(file) {
-  Logger.log("OK");  
+  var files = arrayOfFilesAtRoot(); 
+  var names = arrayOfFileNames(files);
+  if (checkArrayForValue(names, name)) {
+    return true;
+  } else {
+    return false;
+  }
 } 
 
 //  --- Check for File at Path
@@ -1175,7 +1187,7 @@ function checkForFileAtPath(path) {
   }
 }
 
-Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
+// Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
 
 // checkForExFile creates an empty example file
 
