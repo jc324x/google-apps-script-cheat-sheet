@@ -1128,10 +1128,10 @@ function verifyFoldersAtRoot(arr) {
 
 // --- Check for File in a Folder
 
-function checkForFileInFolder(name, fldr) {
+function checkForFileInFolder(file, fldr) {
   var files = arrayOfFilesInFolder(fldr); 
   var names = arrayOfFileNames(files);
-  if (checkArrayForValue(names, name)) {
+  if (checkArrayForValue(names, file)) {
     return true;
   } else {
     return false;
@@ -1143,12 +1143,14 @@ function checkForFileInFolder(name, fldr) {
 function checkForFileAtRoot(file) {
   var files = arrayOfFilesAtRoot(); 
   var names = arrayOfFileNames(files);
-  if (checkArrayForValue(names, name)) {
+  if (checkArrayForValue(names, file)) {
     return true;
   } else {
     return false;
   }
 } 
+
+// Logger.log(checkForFileAtRoot("OK"));
 
 //  --- Check for File at Path
 
@@ -1157,37 +1159,20 @@ function checkForFileAtPath(path) {
     path = path.substr(1);
   }
 
-  var fi, fldr;
   var split = path.split("/");
 
-  if (split.length === 0) {
-    Logger.log("Not really a path, just a search request...");
-    checkForFileAtRoot(path);
+  if (split.length === 1) {
+    return checkForFileAtRoot(path);
   } else {
-    for (i = 0; i < split.length; i++) {
-      if (i === 0) {
-        fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
-        if (fi.hasNext()) {
-          fldr = fi.next();
-        } else {
-          return false;
-        }
-      } else if (i >= 1 && i !== split.length - 1) {
-          fi = fldr.getFoldersByName(split[i]);
-          if (fi.hasNext()) {
-            fldr = fi.next();
-          } else {
-            return false;
-          }
-      } else if (i === split.length - 1) {
-        Logger.log(fldr.getName());
-      }
-    } 
-    return true;
+    var file = split.pop();
+    path = split.join("/");
+    var fldr = findFolderAtPath(path);
+    return checkForFileInFolder(file, fldr);
   }
 }
-
-// Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
+ 
+// -- FLAG -- Update with example file and all that
+Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
 
 // checkForExFile creates an empty example file
 
@@ -1751,35 +1736,29 @@ function verifySpreadsheetAtRoot(name) {
 
 // -- Verify Spreadsheet at Path
 // -- FLAG -- write checkForFileAtPath first
- 
+
+// application/vnd.google-apps.spreadsheet
+// https://developers.google.com/drive/v3/web/mime-types
+
 function verifySpreadsheetAtPath(path) {
-  if (path.charAt(0) === "/") {
-    path = path.substr(1);
+  var file        = findFileAtPath(path);
+  var mime        = file.getType();
+  var spreadsheet = "application/vnd.google-apps.spreadsheet";
+  if (checkForFileAtPath(path) && mime === spreadsheet) {
+    return findFileAtPath(path);
+  } else {
+    // pop file from path
+    //
+  
   }
-
-  var arr  = path.split("/");
-  var file = arr[arr.length -1];
-  var fldr, fi;
-
-  for (i = 0; i < arr.length - 1; i++) {
-    if (i === 0) {
-      fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
-      if (fi.hasNext()) {
-        fldr = fi.next();
-      } else { 
-        return null;
-      }
-    } else if (i >= 1) {
-        fi = fldr.getFoldersByName(arr[i]);
-        if (fi.hasNext()) {
-          fldr = fi.next();
-        } else { 
-          return null;
-        }
-    }
-  } 
-  return openFileAsSpreadsheet(findFileInFolder(fldr, file));
 }
+
+var folder = findFolderAtPath("google-apps-script-cheat-sheet-demo");
+
+ // var ssNew = SpreadsheetApp.create("Finances");
+
+var sheet = findFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet");
+Logger.log(sheet.getMimeType());
 
 // Logger.log("verifySpreadsheetAtPath");
 // Logger.log(verifySpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet").getName());
