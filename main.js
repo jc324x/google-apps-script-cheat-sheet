@@ -1939,13 +1939,15 @@ function openFileAsSpreadsheet(file) {
 /**
  * Returns the column number as a alphabetical column value.
  * Columns are indexed from 1, not from 0.
- * "CZ" (103) is the highest supported value.
+ * "CZ" (104) is the highest supported value.
  *
  * @param {number} number
  * @returns {string}
  */
 
-function columnNumberAsLetter(number) {
+// function columnNumberAsLetter(number) {
+
+function columnForIndex(number) {
   var num = number - 1, chr;
   if (num <= 25) {
     chr = String.fromCharCode(97 + num).toUpperCase();
@@ -1965,13 +1967,14 @@ function columnNumberAsLetter(number) {
   }
 }
 
-// function ex_cnal() {
-//  for (var i = 1; i <= 104; i++) {
-//    var j = columnNumberAsLetter(i);
-//    Logger.log(i + " - " + j);
-//  }
-// }
+function ex_cnal() {
+ for (var i = 1; i <= 104; i++) {
+   var j = columnForIndex(i);
+   Logger.log(i + " - " + j);
+ }
+}
 
+// Logger.log("columnForIndex");
 // ex_cnal(); // 1 - A ... CZ - 104
 
 // -- Convert Column Letter to a Number
@@ -1983,8 +1986,9 @@ function columnNumberAsLetter(number) {
  * @returns {number}
  */
 
-function columnLetterAsNumber(column) {
-  var col = column.toUpperCase(), chr0, chr1;
+function indexForColumn(column) {
+  var chr0, chr1;
+  var col = column.toUpperCase();
   if (col.length === 1)  {
     chr0 = col.charCodeAt(0) - 64;
     return chr0;
@@ -1995,18 +1999,19 @@ function columnLetterAsNumber(column) {
   }
 }
 
-// function ex_clan() {
-//   var abc;
-//  for (var i = 0; i <= 25; i++) {
-//    abc = String.fromCharCode(97 + i).toUpperCase();
-//    Logger.log(abc + " - " + columnLetterAsNumber(abc));
-//  }
-//  for (var j = 26; j <= 51; j++) {
-//    abc = "A" + String.fromCharCode(97 - 26 + j).toUpperCase();
-//    Logger.log(abc + " - " + columnLetterAsNumber(abc));
-//  }
-// }
+function ex_clan() {
+  var abc;
+ for (var i = 0; i <= 25; i++) {
+   abc = String.fromCharCode(97 + i).toUpperCase();
+   Logger.log(abc + " - " + indexForColumn(abc));
+ }
+ for (var j = 26; j <= 51; j++) {
+   abc = "A" + String.fromCharCode(97 - 26 + j).toUpperCase();
+   Logger.log(abc + " - " + indexForColumn(abc));
+ }
+}
 
+// Logger.log("indexForColumn");
 // ex_clan();
 
 // -- Replicating Import Range 
@@ -2038,7 +2043,7 @@ function importRange() {
 
 // function booleanFromValue(input)
 
-function evaluateTrueFalse(input) {
+function checkInput(input) {
   if (isNaN(input)) {
     var first_letter = input.charAt(0).toLowerCase();
     if (first_letter === 't' || first_letter === 'y') {
@@ -2055,8 +2060,9 @@ function evaluateTrueFalse(input) {
   }
 }
 
-// Logger.log(evaluateTrueFalse("No")); // false
-// Logger.log(evaluateTrueFalse("Yes")); // true
+// Logger.log("checkInput");
+// Logger.log(checkInput("No")); // false
+// Logger.log(checkInput("Yes")); // true
 
 // -- Array of Sheet Names
 
@@ -2076,11 +2082,45 @@ function arrayOfSheetNames(ss) {
   return result;
 } 
 
+// Logger.log("arrayOfSheetNames");
 // var ss_aosn = SpreadsheetApp.getActiveSpreadsheet();
 // Logger.log(arrayOfSheetNames(ss_aosn)); // ["Sheet1", "Sheet2", "Sheet3"]
 
 // - Objects
 
+// Don't reinvent the wheel...
+ 
+// function headerRange(sheet, a1Notation) {
+//   var split = a1Notation.split(":");
+//   var col0  = split[0].match(/\D/g,'');
+//   var col1  = split[1].match(/\D/g,'');
+//   var row   = split[0].match(/\d+/g);
+//   var a1    = col0 + row + ":" + col1 + row;
+//   return sheet.getRange(a1);
+// }
+
+
+function A1(sheet) {
+  // var lastColumn  = sheet.getLastColumn();
+  this.lastRow    = sheet.getLastRow();
+  this.lastColumn = columnForIndex(sheet.getLastColumn());
+}
+
+A1.prototype.lastValues = function() {
+  return "A1:" + this.lastColumn + this.lastRow;
+};
+
+A1.prototype.validate = function(test) {
+  Logger.log(test);
+  return true;
+};
+
+var sheet_A1 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var testing = new A1(sheet_A1);
+Logger.log(sheet_A1.getDataRange().getA1Notation());
+// Logger.log(testing.notation());
+// Logger.log(testing.validate("OK"));
+ 
 // -- Object from Range
 
 /**
@@ -2105,7 +2145,12 @@ function objectFromRange(sheet, a1Notation) {
   return result;
 }
 
+// Logger.log("objectFromRange");
 // var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// Logger.log(sheet_ofr.getLastColumn());
+// Logger.log(sheet_ofr.getLastRow());
+ 
+// Logger.log(sheet_ofr.getActiveRange().getA1Notation());
 // Logger.log(objectFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 
 // - Array of Objects
@@ -2315,7 +2360,9 @@ function arrForColName(sheet, hRow, name){
  * @returns {Array}
  */
 
+// arrayOfValuesForColumn(sheet, hRow, column) || check if number or letter?
 // function arrayOfValuesForColumnNumber(sheet, hRow, colIndex){
+
 function arrForColNo(sheet, hRow, colIndex){
   var lColNum  = sheet.getLastColumn();
   var lColABC  = numCol(lColNum);
