@@ -1894,8 +1894,9 @@ function verifySpreadsheetAtPath(path) {
   }
 }
  
-Logger.log("verifySpreadsheetAtPath");
-Logger.log(verifySpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet").getName()); // example-sheet
+// Logger.log("verifySpreadsheetAtPath");
+// var path_vsap = "google-apps-script-cheat-sheet-demo/sheets/example-sheet"; 
+// Logger.log(verifySpreadsheetAtPath(path_vsap).getName()); // example-sheet
 
 // -- Id of Active Spreadsheet 
 
@@ -1907,10 +1908,9 @@ Logger.log(verifySpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/e
 
 function idOfActiveSpreadsheet() {
   return SpreadsheetApp.getActiveSpreadsheet().getId();
-  // var id = SpreadsheetApp.getActiveSpreadsheet().getId();
-  // return id;
 }
 
+// Logger.log("idOfActiveSpreadsheet");
 // Logger.log(idOfActiveSpreadsheet());
 
 // -- Open File as Spreadsheet
@@ -1927,9 +1927,10 @@ function openFileAsSpreadsheet(file) {
   return SpreadsheetApp.openById(id);
 } 
 
-// var fldr_ofas = findFolderAtPath("google-apps-script-cheat-sheet-demo/sheets")
-// var file_ofas = findFileInFolder(fldr_ofas, "example-sheet");
-// Logger.log(openFileAsSpreadsheet(file_ofas));
+// Logger.log("openFileAsSpreadsheet");
+// var fldr_ofas = findFolderAtPath("google-apps-script-cheat-sheet-demo/sheets");
+// var file_ofas = findFileInFolder("example-sheet", fldr_ofas);
+// Logger.log(openFileAsSpreadsheet(file_ofas).getName()); // example-sheet
 
 // - Utility Functions for Sheets
 
@@ -2384,7 +2385,7 @@ function verifyDocumentInFolder(fldr, name) {
     var file = DriveApp.getFileById(doc);
     moveFileToFolder(file, fldr);
   }
-  return openFileAsDocument(findFileInFolder(fldr, name));
+  return openFileAsDocument(findFileInFolder(name, fldr));
 }
 
 // var fldr_cvdi = verifyPath("google-apps-script-cheat-sheet-demo/docs");
