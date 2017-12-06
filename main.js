@@ -32,6 +32,7 @@ Logger.log("Start");
 // | | -- Check String for Substring
 // |*| Drive
 // |*| - Folders
+// | | -- Valide Path
 // |*| -- Verify Folder Path
 // | | -- Check for a Folder
 // | | --- Check for Folder in a Folder
@@ -823,6 +824,20 @@ function checkStringForSubstring(text, sub) {
 
 // - Folders
 
+// -- Validate Path
+
+function validatePath(path) {
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
+  }
+
+  if (checkStringForSubstring(path, "/")) {
+    return path;
+  } else {
+    return false;
+  }
+}
+
 // -- Verify Folder Path
 
 /**
@@ -1203,9 +1218,9 @@ function checkForFileAtPath(path) {
 
 function checkForExFile() {
   var fldr = verifyPath("google-apps-script-cheat-sheet-demo/files");
-  var file = findFileInFolder(fldr, "example-file");
+  var file = findFileInFolder("example-file", fldr);
   if (!(file)){fldr.createFile("example-file", "example");}
-  return findFileInFolder(fldr, "example-file");
+  return findFileInFolder("example-file", fldr);
 }
 
 // Logger.log("checkForExFile");
@@ -1319,7 +1334,7 @@ function arrayOfFileNames(arr) {
  * @returns {File}
  */
 
-function findFileInFolder(fldr, name) {
+function findFileInFolder(name, fldr) {
   var files = arrayOfFilesInFolder(fldr);
   var names = arrayOfFileNames(files);
   if (checkArrayForValue(names, name)) {
@@ -1328,9 +1343,9 @@ function findFileInFolder(fldr, name) {
   }
 }
 
-// Logger.log("findFileInFolder");
-// var fldr_ffif = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
-// Logger.log(findFileInFolder(fldr_ffif, "example-file")); // example-file
+Logger.log("findFileInFolder");
+var fldr_ffif = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
+Logger.log(findFileInFolder("example-file", fldr_ffif)); // example-file
 
 // --- Find a File at Root
 
@@ -1407,7 +1422,7 @@ function findFileAtPath(path) {
         }
     }
   } 
-  return findFileInFolder(fldr, file);
+  return findFileInFolder(file, fldr);
 } 
 
 // Logger.log("findFileAtPath");
@@ -1426,9 +1441,9 @@ function findFileAtPath(path) {
 
 function copyFileToFolder(file, fldr) {
   var name = file.getName();
-  var dest = findFileInFolder(fldr, name);
+  var dest = findFileInFolder(name, fldr);
   if (dest === undefined) file.makeCopy(name, fldr);
-  return findFileInFolder(fldr, name);
+  return findFileInFolder(name, fldr);
 }
 
 // Logger.log("copyFileToFolder");
@@ -1449,16 +1464,16 @@ function copyFileToFolder(file, fldr) {
 
 function moveFileToFolder(file, fldr) {
   var name = file.getName();
-  var dest = findFileInFolder(fldr, name);
+  var dest = findFileInFolder(name, fldr);
   if (dest === undefined) file.makeCopy(name, fldr);
-  var result = findFileInFolder(fldr, name);
+  var result = findFileInFolder(name, fldr);
   if (result !== undefined) file.setTrashed(true);
   return result;
 }
 
 // Logger.log("moveFileToFolder");
 // var fldr_mftf1 = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/copied");
-// var file_mftf  = findFileInFolder(fldr_mftf1, "example-file");
+// var file_mftf  = findFileInFolder("example-file", fldr_mftf1);
 // var fldr_mftf2 = verifyPath("google-apps-script-cheat-sheet-demo/files/moved");
 // Logger.log(moveFileToFolder(file_mftf, fldr_mftf2)); // example-file
 
@@ -1481,7 +1496,7 @@ function renameFileOrFolder(file_fldr, name) {
 
 // Logger.log("renameFileOrFolder");
 // var fldr_rfof = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/moved");
-// var file_rfof = findFileInFolder(fldr_rfof, "example-file");
+// var file_rfof = findFileInFolder("example-file", fldr_rfof);
 // Logger.log(renameFileOrFolder(file_rfof, "modified-example-file")); // modified-example-file
 
 // -- Parent Folder of a File or Folder 
@@ -1539,7 +1554,7 @@ function zipFilesInFolder(fldr, name, dest) {
 
   if (dest !== null) {
     dest.createFile(zips);
-    return findFileInFolder(dest, name);
+    return findFileInFolder(name, dest);
   }
 }
 
@@ -1553,13 +1568,13 @@ function zipFilesInFolder(fldr, name, dest) {
 
 function fileForJSONExample() {
   var fldr = verifyPath("google-apps-script-cheat-sheet-demo/json");
-  var file = findFileInFolder(fldr, "example-json");
+  var file = findFileInFolder("example-json", fldr);
   if (!(file)) {
     var json = objectFromUrlJSON("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
     var text = JSON.stringify(json);
     var ex = fldr.createFile('example-json', text);
   }
-  return findFileInFolder(fldr, "example-json");
+  return findFileInFolder("example-json", fldr);
 }
 
 // -- Object From URL
@@ -1702,44 +1717,46 @@ function clearConfiguration() {
 // -- Check for a Spreadsheet
 
 // --- Check for a Spreadsheet in a Folder
- 
-// --- Check for a Spreadsheet at Root
- 
-// --- Check for a Spreadsheet at Path
 
-function validatePath(path) {
-  if (path.charAt(0) === "/") {
-    path = path.substr(1);
-  }
-
-  if (checkStringForSubstring(path, "/")) {
-    return path;
+function checkForSpreadsheetInFolder(ss, fldr) {
+  var files = arrayOfFilesInFolder(fldr); 
+  var names = arrayOfFileNames(files);
+  if (checkArrayForValue(names, ss)) {
+    var file = findFileInFolder(ss, fldr);
+    var type = file.getMimeType(); 
+    if (type === "application/vnd.google-apps.spreadsheet") {
+      return true;
+    }
   } else {
     return false;
   }
 }
 
+Logger.log("checkForSpreadsheetInFolder");
+var fldr_cfsif = verifyPath("google-apps-script-cheat-sheet-demo/sheets");
+Logger.log(checkForSpreadsheetInFolder("example-sheet", fldr_cfsif));
+
+// --- Check for a Spreadsheet at Root
+ 
+// --- Check for a Spreadsheet at Path
+
 function checkForSpreadsheetAtPath(path) {
-  if (path.charAt(0) === "/") {
-    path = path.substr(1);
-  }
-  
-  if (checkStringForSubstring(path, "/")) {
+  path = validatePath(path);
+  if (path) {
     var split = path.split("/");
     var ss    = split.pop;
-    path = split.join("/");
-    var folder = findFolderAtPath(path);
-    Logger.log(folder.getName());
-    // checkForSpreadsheetInFolder();
+    path      = split.join("/");
+    var fldr  = findFolderAtPath(path);
+    return checkForSpreadsheetInFolder(ss, fldr);
   } else {
-    Logger.log(path);
-    // checkForSpreadsheetAtRoot(path);
+    return false;
   }
 } 
 
-checkForSpreadsheetAtPath("Testing");
-checkForSpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet");
-
+Logger.log("checkForSpreadsheetAtPath");
+Logger.log(checkForSpreadsheetAtPath("not-a-valid-path"));
+Logger.log(checkForSpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
+ 
 // -- Create Spreadsheet
 
 // --- Create Spreadsheet in a Folder
