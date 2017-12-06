@@ -1206,8 +1206,8 @@ function checkForFileAtPath(path) {
 }
  
 // -- FLAG -- Update with example file and all that
-Logger.log("checkForFileAtPath"); 
-Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
+// Logger.log("checkForFileAtPath"); 
+// Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
 
 // checkForExFile creates an empty example file
 
@@ -1884,35 +1884,18 @@ function verifySpreadsheetAtRoot(name) {
 // -- Verify Spreadsheet at Path
 
 function verifySpreadsheetAtPath(path) {
-  var type = findFileAtPath(path).getType();
-  if (type !== "application/vnd.google-apps.spreadsheet") {
-  
-  }
-
-   
-  var spreadsheet = "application/vnd.google-apps.spreadsheet";
-  if (checkForFileAtPath(path) && mime === spreadsheet) {
-    return findFileAtPath(path);
-  } else {
-    // pop file from path
+  path = validatePath(path);
+  if (path) {
+    var split = path.split("/");
+    var ss    = split.pop();
+    path      = split.join("/");
+    var fldr  = verifyPath(path);
+    return verifySpreadsheetInFolder(ss, fldr);
   }
 }
-
-// function checkForSpreadsheetAtPath(path) {
-//   path = validatePath(path);
-//   if (path) {
-//     var split = path.split("/");
-//     var ss    = split.pop();
-//     path      = split.join("/");
-//     var fldr  = findFolderAtPath(path);
-//     return checkForSpreadsheetInFolder(ss, fldr);
-//   } else {
-//     return false;
-//   }
-// } 
-
-// Logger.log("verifySpreadsheetAtPath");
-// Logger.log(verifySpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet").getName()); // example-sheet
+ 
+Logger.log("verifySpreadsheetAtPath");
+Logger.log(verifySpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet").getName()); // example-sheet
 
 // -- Id of Active Spreadsheet 
 
