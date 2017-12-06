@@ -5,7 +5,7 @@ Logger.log("Start");
 
 // |*| General
 // |*| - Array
-// |*| -- Check Array For a Value
+// |*| -- Check Array for a Value
 // |*| -- Remove Duplicates from Array
 // |*| -- Remove Empty Elements from Array
 // |*| -- Get Count of Values in Array
@@ -28,6 +28,8 @@ Logger.log("Start");
 // |*| -- Formatted Timestamps
 // |*| -- Date Object from String
 // |*| -- Match a Date to a Date Range
+// | | - String
+// | | -- Check String for Substring
 // |*| Drive
 // |*| - Folders
 // |*| -- Verify Folder Path
@@ -82,6 +84,14 @@ Logger.log("Start");
 // |*| -- Run Script
 // | | Sheets
 // | | - Managing Spreadsheet Files
+// | | -- Check for a Spreadsheet
+// | | --- Check for a Spreadsheet in a Folder
+// | | --- Check for a Spreadsheet at Root
+// | | --- Check for a Spreadsheet at Path
+// | | -- Create Spreadsheet
+// | | --- Create Spreadsheet in a Folder
+// | | --- Create Spreadsheet at Root
+// | | --- Create Spreadsheet at Path
 // | | -- Verify Spreadsheet
 // | | --- Verify Spreadsheet in a Folder
 // | | --- Verify Spreadsheet at Root
@@ -797,6 +807,18 @@ var quarterDates = [
 // Logger.log(matchDateToRangeOfDates(quarterDates)); // "summer vacation" (pretend that today is 06/25/2018)
 // Logger.log(matchDateToRangeOfDates(quarterDates, "08/02/2017")); // 1 
 
+// - String
+ 
+// -- Check String for Substring
+
+function checkStringForSubstring(text, sub) {
+  if (text.indexOf(sub) > -1 ) {
+    return true;
+  } else {
+    return false;
+  }
+} 
+
 // Drive
 
 // - Folders
@@ -811,6 +833,8 @@ var quarterDates = [
  * @param {string} path
  * @returns {Folder}
  */
+
+// -- FLAG -- Can this verify a path of "/testing"?
 
 function verifyPath(path) {
   if (path.charAt(0) === "/") {
@@ -1172,7 +1196,8 @@ function checkForFileAtPath(path) {
 }
  
 // -- FLAG -- Update with example file and all that
-Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
+// Logger.log("checkForFileAtPath"); 
+// Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
 
 // checkForExFile creates an empty example file
 
@@ -1674,19 +1699,142 @@ function clearConfiguration() {
 
 // - Managing Spreadsheet Files
 
+// -- Check for a Spreadsheet
+
+// --- Check for a Spreadsheet in a Folder
+ 
+// --- Check for a Spreadsheet at Root
+ 
+// --- Check for a Spreadsheet at Path
+
+function validatePath(path) {
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
+  }
+
+  if (checkStringForSubstring(path, "/")) {
+    return path;
+  } else {
+    return false;
+  }
+}
+
+function checkForSpreadsheetAtPath(path) {
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
+  }
+  
+  if (checkStringForSubstring(path, "/")) {
+    var split = path.split("/");
+    var ss    = split.pop;
+    path = split.join("/");
+    var folder = findFolderAtPath(path);
+    Logger.log(folder.getName());
+    // checkForSpreadsheetInFolder();
+  } else {
+    Logger.log(path);
+    // checkForSpreadsheetAtRoot(path);
+  }
+} 
+
+checkForSpreadsheetAtPath("Testing");
+checkForSpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet");
+
+// -- Create Spreadsheet
+
+// --- Create Spreadsheet in a Folder
+
+/**
+ * Creates a spreadsheet in a folder. 
+ * This will create duplicate spreadsheets in a folder if called directly.
+ *
+ * @param {Folder} fldr
+ * @param {string} name
+ * @returns {Spreadsheet}
+ */
+
+function createSpreadsheetInFolder(fldr, name) {
+  var ss   = SpreadsheetApp.create(name).getId();
+  var file = DriveApp.getFileById(ss);
+  file     = moveFileToFolder(file, fldr);
+  return openFileAsSpreadsheet(file);
+} 
+
+// --- Create Spreadsheet at Root
+
+/**
+ * createSpreadsheetAtRoot
+ *
+ * @param {string} name
+ * @returns {Spreadsheet}
+ */
+
+function createSpreadsheetAtRoot(name) {
+  var ss   = SpreadsheetApp.create(name).getId();
+  var file = DriveApp.getFileById(ss);
+  return openFileAsSpreadsheet(file);
+} 
+
+// --- Create Spreadsheet at Path
+
+function createSpreadsheetAtPath(path) {
+  if (path.charAt(0) === "/") {
+    path = path.substr(1);
+  }
+
+  if (checkStringForSubstring(path, "/")) {
+    Logger.log("FOUND A '/'");
+    Logger.log(path);
+  } else {
+    Logger.log("NO SLASH");
+    Logger.log(path);
+    // createSpreadsheetAtRoot(path);
+  }
+} 
+
+// createSpreadsheetAtPath("OK");
+// createSpreadsheetAtPath("/This/Is/Valid");
+
+// minimum of one '/' somewhere in the path
+
+// function verifyPath(path) {
+//   if (path.charAt(0) === "/") {
+//     path = path.substr(1);
+//   }
+//   var split = path.split("/");
+//   var fldr;
+//   for (i = 0; i < split.length; i++) {
+//     var fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+//     if (i === 0) {
+//       if (!(fi.hasNext())) {
+//         DriveApp.createFolder(split[i]);
+//         fi = DriveApp.getFoldersByName(split[i]);
+//       } 
+//       fldr = fi.next();
+//     } else if (i >= 1) {
+//       fi = fldr.getFoldersByName(split[i]);
+//       if (!(fi.hasNext())) {
+//         fldr.createFolder(split[i]);
+//         fi = DriveApp.getFoldersByName(split[i]);
+//       } 
+//       fldr = fi.next();
+//     }
+//   } 
+//   return fldr;
+// }
+
 // -- Verify Spreadsheet 
 
 // --- Verify Spreadsheet in a Folder
 
 /**
  * Returns a spreadsheet. 
- * This creates the spreadsheet if it does not already exist.
+ * This creates a spreadsheet if it does not already exist.
  *
  * @requires arrayOfFilesInFolder()
  * @requires arrayOfFileNames()
  * @requires checkArrayForValue()
- * @requires moveFileToFolder()
- * @requires findFileInFolder()
+ * @requires createSpreadsheetInFolder() 
  * @requires openFileAsSpreadsheet()
  * @param {Folder} fldr
  * @param {string} name
@@ -1697,9 +1845,13 @@ function verifySpreadsheetInFolder(fldr, name) {
   var files = arrayOfFilesInFolder(fldr);
   var names = arrayOfFileNames(files);
   if (!(checkArrayForValue(names, name))) {
-    var ss   = SpreadsheetApp.create(name).getId();
-    var file = DriveApp.getFileById(ss);
-    moveFileToFolder(file, fldr);
+    createSpreadsheetInFolder(fldr, name);
+  } else {
+    var file = findFileInFolder(fldr, name);
+    var type = file.getMimeType(); 
+    if (type !== "application/vnd.google-apps.spreadsheet") {
+      createSpreadsheetInFolder(fldr, name);
+    }
   }
   return openFileAsSpreadsheet(findFileInFolder(fldr, name));
 }
@@ -1723,16 +1875,23 @@ function verifySpreadsheetInFolder(fldr, name) {
  * @returns {Spreadsheet}
  */
 
-function verifySpreadsheetAtRoot(name) {
-  var files = arrayOfFilesAtRoot();
-  var names = arrayOfFileNames(files);
-  if (!(checkArrayForValue(names, name))) {
-    var ss = SpreadsheetApp.create(name);
-  }
-  return openFileAsSpreadsheet(findFileAtRoot(name));
-}
+// function verifySpreadsheetAtRoot(name) {
+//   var files = arrayOfFilesAtRoot();
+//   var names = arrayOfFileNames(files);
+//   if (!(checkArrayForValue(names, name))) {
+//     createSpreadsheetInFolder(fldr, name);
+//   } else {
+//     var file = findFileInFolder(fldr, name);
+//     var type = file.getMimeType(); 
+//     if (type !== "application/vnd.google-apps.spreadsheet") {
+//       createSpreadsheetInFolder(fldr, name);
+//     }
+//   }
+//   return openFileAsSpreadsheet(findFileInFolder(fldr, name));
+// }
 
 // Logger.log("verifySpreadsheetAtRoot");
+// Logger.log(verifySpreadsheetAtRoot("TESTING-example-sheet")); // -- FLAG -- DON'T PUBLISH WITH ROOT TESTS
 
 // -- Verify Spreadsheet at Path
 // -- FLAG -- write checkForFileAtPath first
@@ -1751,12 +1910,11 @@ function verifySpreadsheetAtPath(path) {
   }
 }
 
-var folder = findFolderAtPath("google-apps-script-cheat-sheet-demo");
-
- // var ssNew = SpreadsheetApp.create("Finances");
-
-var sheet = findFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet");
-Logger.log(sheet.getMimeType());
+// Logger.log("verifySpreadsheetAtPath");
+// var folder = findFolderAtPath("google-apps-script-cheat-sheet-demo");
+// var ssNew = SpreadsheetApp.create("Finances");
+// var sheet = findFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet");
+// Logger.log(sheet.getMimeType());
 
 // Logger.log("verifySpreadsheetAtPath");
 // Logger.log(verifySpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet").getName());
