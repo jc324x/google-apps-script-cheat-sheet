@@ -2088,36 +2088,28 @@ function arrayOfSheetNames(ss) {
 
 // - Objects
 
-// Don't reinvent the wheel...
- 
-// function headerRange(sheet, a1Notation) {
-//   var split = a1Notation.split(":");
-//   var col0  = split[0].match(/\D/g,'');
-//   var col1  = split[1].match(/\D/g,'');
-//   var row   = split[0].match(/\d+/g);
-//   var a1    = col0 + row + ":" + col1 + row;
-//   return sheet.getRange(a1);
-// }
-
-
-function A1(sheet) {
-  // var lastColumn  = sheet.getLastColumn();
-  this.lastRow    = sheet.getLastRow();
-  this.lastColumn = columnForIndex(sheet.getLastColumn());
+function A1Coordinates(a1Notation) {
+  var split = a1Notation.split(":"); 
+  // this.col0 = indexForColumn(split[0].match(/\D/g,''));
+  // Logger.log(this.col0);
+  // var row0 = split[0].match(/\d+/g);
+  // var row0 = split[0];
+  // Logger.log(row0);
+  // var test = String(row0.match(/\D/g,''));
+  // Logger.log(test);
+   
+  // this.col1 = indexForColumn(split[1].match(/\D/g,''));
+  // Logger.log(this.col1);
+  // this.row1 = split[1].match(/\d+/g);
+  // Logger.log(this.row1);
 }
 
-A1.prototype.lastValues = function() {
-  return "A1:" + this.lastColumn + this.lastRow;
-};
+// var sheet_a1c = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var a1Notation_a1c = sheet_a1c.getDataRange().getA1Notation();
+// var a1c_a1c = new A1Coordinates(a1Notation_a1c); 
 
-A1.prototype.validate = function(test) {
-  Logger.log(test);
-  return true;
-};
-
-var sheet_A1 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var testing = new A1(sheet_A1);
-Logger.log(sheet_A1.getDataRange().getA1Notation());
+// Logger.log(sheet_A1.getDataRange().getA1Notation());
 // Logger.log(testing.notation());
 // Logger.log(testing.validate("OK"));
  
