@@ -104,6 +104,8 @@ Logger.log("Start");
 // | | -- Convert Column Letter to a Number
 // | | -- Replicating Import Range
 // | | -- Evaluating True and False
+// | | - Range
+// | | -- Validate Range
 // | | - Object
 // | | -- Object from Range 
 // | | -  Array of Objects
@@ -825,6 +827,8 @@ function checkStringForSubstring(text, sub) {
 // - Folders
 
 // -- Validate Path
+// -- FLAG -- match style of validateA1Notation (return value order)
+// also validatePathString instead of validatePath?
 
 function validatePath(path) {
   if (path.charAt(0) === "/") {
@@ -1947,7 +1951,17 @@ function openFileAsSpreadsheet(file) {
 
 // function columnNumberAsLetter(number) {
 
-function columnForIndex(number) {
+// -- FLAG -- Consistent naming scheme
+ 
+// function convertColumnToIndex() {
+  
+// } 
+
+// function convertIndexToColumn() {
+  
+// } 
+
+function convertIndexToColumn(number) {
   var num = number - 1, chr;
   if (num <= 25) {
     chr = String.fromCharCode(97 + num).toUpperCase();
@@ -1969,12 +1983,12 @@ function columnForIndex(number) {
 
 function ex_cnal() {
  for (var i = 1; i <= 104; i++) {
-   var j = columnForIndex(i);
+   var j = convertIndexToColumn(i);
    Logger.log(i + " - " + j);
  }
 }
 
-// Logger.log("columnForIndex");
+// Logger.log("convertIndexToColumn");
 // ex_cnal(); // 1 - A ... CZ - 104
 
 // -- Convert Column Letter to a Number
@@ -1986,7 +2000,7 @@ function ex_cnal() {
  * @returns {number}
  */
 
-function indexForColumn(column) {
+function convertColumnToIndex(column) {
   var chr0, chr1;
   var col = column.toUpperCase();
   if (col.length === 1)  {
@@ -2003,15 +2017,15 @@ function ex_clan() {
   var abc;
  for (var i = 0; i <= 25; i++) {
    abc = String.fromCharCode(97 + i).toUpperCase();
-   Logger.log(abc + " - " + indexForColumn(abc));
+   Logger.log(abc + " - " + convertColumnToIndex(abc));
  }
  for (var j = 26; j <= 51; j++) {
    abc = "A" + String.fromCharCode(97 - 26 + j).toUpperCase();
-   Logger.log(abc + " - " + indexForColumn(abc));
+   Logger.log(abc + " - " + convertColumnToIndex(abc));
  }
 }
 
-// Logger.log("indexForColumn");
+// Logger.log("convertColumnToIndex");
 // ex_clan();
 
 // -- Replicating Import Range 
@@ -2086,33 +2100,62 @@ function arrayOfSheetNames(ss) {
 // var ss_aosn = SpreadsheetApp.getActiveSpreadsheet();
 // Logger.log(arrayOfSheetNames(ss_aosn)); // ["Sheet1", "Sheet2", "Sheet3"]
 
-// - Objects
+// - A1 Notation
 
-function A1Coordinates(a1Notation) {
-  var split = a1Notation.split(":"); 
-  // this.col0 = indexForColumn(split[0].match(/\D/g,''));
-  // Logger.log(this.col0);
-  // var row0 = split[0].match(/\d+/g);
-  // var row0 = split[0];
-  // Logger.log(row0);
-  // var test = String(row0.match(/\D/g,''));
-  // Logger.log(test);
-   
-  // this.col1 = indexForColumn(split[1].match(/\D/g,''));
-  // Logger.log(this.col1);
-  // this.row1 = split[1].match(/\d+/g);
-  // Logger.log(this.row1);
+// -- Convert A1 Notation to Array
+
+function convertA1ToArray(a1Notation) {
+  var result = [];
+  var split = a1Notation.split(":");
+  var tmp = split[0].match(/\D/g,'');
+  tmp = convertColumnToIndex(String(tmp));
+  result.push(tmp);
+  tmp = Number(split[0].match(/\d+/g));
+  result.push(tmp);
+  tmp = split[1].match(/\D/g,'');
+  tmp = convertColumnToIndex(String(tmp));
+  result.push(tmp);
+  tmp = Number(split[1].match(/\d+/g));
+  result.push(tmp);
+  return result;
 }
 
-// var sheet_a1c = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var a1Notation_a1c = sheet_a1c.getDataRange().getA1Notation();
-// var a1c_a1c = new A1Coordinates(a1Notation_a1c); 
+// Logger.log(convertA1ToArray("A1:J10")); // [1, 1, 10, 10]
 
-// var testing = new A1(sheet_A1);
-// Logger.log(sheet_A1.getDataRange().getA1Notation());
-// Logger.log(testing.notation());
-// Logger.log(testing.validate("OK"));
- 
+// -- Validate A1 Notation
+
+function validateA1(sheet, a1Notation) {
+  var col, row;
+  var inputArray     = convertA1ToArray(a1Notation);
+  var dataRangeA1    = sheet.getDataRange().getA1Notation();
+  var dataRangeArray = convertA1ToArray(dataRangeA1);
+
+  if ((inputArray[0] <= dataRangeArray[2]) && (inputArray[2]) <= dataRangeArray[2]) {
+    col = true;
+  } else {
+    col = false;
+  }
+
+  if ((inputArray[1] <= dataRangeArray[3]) && (inputArray[3]) <= dataRangeArray[3]) {
+    row = true;
+  } else {
+    row = false;
+  }
+
+  if (row && col) {
+    return a1Notation;
+  } else {
+    return false;
+  }
+}
+
+// Logger.log("validateA1Notation");
+// var sheet_van = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// Logger.log(validateA1(sheet_van, "A1:B2")); // "A1:B2"
+// Logger.log(validateA1(sheet_van, "A10000, ZZZ:50000")); // false
+
+// - Objects
+
 // -- Object from Range
 
 /**
@@ -2126,23 +2169,20 @@ function A1Coordinates(a1Notation) {
  */
 
 function objectFromRange(sheet, a1Notation) {
-  var result = {};
-  var range  = sheet.getRange(a1Notation);
-  var height = range.getHeight();
-  var width  = range.getWidth();
-  var values = range.getValues();
-  for (var i = 0; i < values.length; i++) {
-    result[values[i][0]] = values[i][1];
-  } 
-  return result;
+  a1Notation = validateA1(sheet, a1Notation);
+  if (a1Notation) {
+    var result = {};
+    var range  = sheet.getRange(a1Notation);
+    var values = range.getValues();
+    for (var i = 0; i < values.length; i++) {
+      result[values[i][0]] = values[i][1];
+    } 
+    return result;
+  }
 }
 
 // Logger.log("objectFromRange");
 // var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// Logger.log(sheet_ofr.getLastColumn());
-// Logger.log(sheet_ofr.getLastRow());
- 
-// Logger.log(sheet_ofr.getActiveRange().getA1Notation());
 // Logger.log(objectFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 
 // - Array of Objects
