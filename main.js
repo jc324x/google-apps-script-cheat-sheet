@@ -2106,25 +2106,30 @@ function arrayOfSheetNames(ss) {
 
 function convertA1ToArray(a1Notation) {
   var result = [];
-  var split = a1Notation.split(":");
-  var tmp = split[0].match(/\D/g,'');
-  tmp = convertColumnToIndex(String(tmp));
-  result.push(tmp);
-  tmp = Number(split[0].match(/\d+/g));
-  result.push(tmp);
-  tmp = split[1].match(/\D/g,'');
-  tmp = convertColumnToIndex(String(tmp));
-  result.push(tmp);
-  tmp = Number(split[1].match(/\d+/g));
-  result.push(tmp);
-  return result;
+  var split  = a1Notation.split(":");
+  if (split.length === 2) {
+    var tmp = split[0].match(/\D/g,'');
+    tmp = convertColumnToIndex(String(tmp));
+    result.push(tmp);
+    tmp = Number(split[0].match(/\d+/g));
+    result.push(tmp);
+    tmp = split[1].match(/\D/g,'');
+    tmp = convertColumnToIndex(String(tmp));
+    result.push(tmp);
+    tmp = Number(split[1].match(/\d+/g));
+    result.push(tmp);
+    return result;
+  } else {
+    return false;
+  }
 }
 
+// Logger.log("convertA1ToArray");
 // Logger.log(convertA1ToArray("A1:J10")); // [1, 1, 10, 10]
 
 // -- Validate A1 Notation
 
-function validateA1(sheet, a1Notation) {
+function validateA1(a1Notation, sheet) {
   var col, row;
   var inputArray     = convertA1ToArray(a1Notation);
   var dataRangeA1    = sheet.getDataRange().getA1Notation();
@@ -2151,12 +2156,13 @@ function validateA1(sheet, a1Notation) {
 
 // Logger.log("validateA1Notation");
 // var sheet_van = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// Logger.log(validateA1(sheet_van, "A1:B2")); // "A1:B2"
-// Logger.log(validateA1(sheet_van, "A10000, ZZZ:50000")); // false
+// Logger.log(validateA1("A1:B2", sheet_van)); // "A1:B2"
+// Logger.log(validateA1("A10000, ZZZ:50000", sheet_van)); // false
 
 // - Objects
 
 // -- Object from Range
+// -- FLAG -- | a1Notation, sheet (!)
 
 /**
  * Returns an object from a range.
@@ -2200,14 +2206,15 @@ function objectFromRange(sheet, a1Notation) {
 
 function arrayOfHeaderValues(rangeObj){
   var result = [];
-  var vals   = rangeObj.getValues();
-  for (var i = 0; i < vals[0].length; i++) {
-    var val = vals[0][i];
+  var values = rangeObj.getValues();
+  for (var i = 0; i < values[0].length; i++) {
+    var val = values[0][i];
     result.push(val);
   } 
   return result;
 }
 
+// Logger.log("arrayOfHeaderValues");
 // var sheet_hv = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var range_hv = sheet_hv.getRange("A2:E19");
 // Logger.log(arrayOfHeaderValues(range_hv)); // ["First", "Last", "Grade", "Homeroom", "Email"]
@@ -2225,13 +2232,13 @@ function arrayOfHeaderValues(rangeObj){
 function arrayOfValuesByRow(rangeObj, headers){
   var height = rangeObj.getHeight();
   var width  = rangeObj.getWidth();
-  var vals   = rangeObj.getValues();
-  var result    = [];
+  var values = rangeObj.getValues();
+  var result = [];
   for (var i = 0; i < height; i++) {
     var row = {};
     for (var j = 0; j < width; j++) {
       var prop = headers[j];
-      var val  = vals[i][j];
+      var val  = values[i][j];
       if (val !== "") {
         row[prop] = val;
       } 
@@ -2241,8 +2248,9 @@ function arrayOfValuesByRow(rangeObj, headers){
   return result;
 }
 
+// Logger.log("arrayOfValuesByRow");
 // var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var range_vbr   = sheet_hv.getRange("A2:E19");
+// var range_vbr   = sheet_vbr.getRange("A2:E19");
 // var headers_vbr = arrayOfHeaderValues(range_vbr);
 // Logger.log(arrayOfValuesByRow(range_vbr, headers_vbr)); 
 // [{Last=Last, Email=Email, Homeroom=Homeroom, Grade=Grade, First=First}, {Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}...]
@@ -2258,14 +2266,18 @@ function arrayOfValuesByRow(rangeObj, headers){
  */
 
 function headerRange(sheet, a1Notation) {
-  var split = a1Notation.split(":");
-  var col0  = split[0].match(/\D/g,'');
-  var col1  = split[1].match(/\D/g,'');
-  var row   = split[0].match(/\d+/g);
-  var a1    = col0 + row + ":" + col1 + row;
-  return sheet.getRange(a1);
+  a1Notation = validateA1(a1Notation, sheet);
+  if (a1Notation) {
+    var split = a1Notation.split(":");
+    var col0  = split[0].match(/\D/g,'');
+    var col1  = split[1].match(/\D/g,'');
+    var row   = split[0].match(/\d+/g);
+    var a1    = col0 + row + ":" + col1 + row;
+    return sheet.getRange(a1);
+  }
 }
 
+// Logger.log("headerRange");
 // var sheet_hr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // Logger.log(headerRange(sheet_hr, "A2:E19").getA1Notation()); // "A2:E2"
 // Logger.log(headerRange(sheet_hr, "A2:E19").getValues()); // [[First, Last, Grade, Homeroom, Email]]
@@ -2290,8 +2302,9 @@ function valueRange(sheet, a1Notation) {
   return sheet.getRange(a1);
 }
 
-// var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(valueRange(sheet_vr, "A2:E19").getA1Notation()); // "A3:E19"
+Logger.log("valueRange");
+var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(valueRange(sheet_vr, "A2:E19").getA1Notation()); // "A3:E19"
 
 // -- Array of Objects from Sheet 
 
@@ -2336,12 +2349,15 @@ function arrObjFromSheet(sheet, hRow){
 function arrObjFromRange(sheet, a1Notation) {
   var hRange  = headerRange(sheet, a1Notation);
   var vRange  = valueRange(sheet, a1Notation);
+  Logger.log("vRange");
+  Logger.log(vRange);
   var headers = arrayOfHeaderValues(hRange);
   return arrayOfValuesByRow(vRange, headers);
 }
 
-// var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrObjFromRange(sheet_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
+Logger.log("arrObjFromRange");
+var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrObjFromRange(sheet_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 
 // - Array 
 
@@ -2369,10 +2385,10 @@ function arrForColName(sheet, hRow, name){
   var tColABC  = numCol(headers.indexOf(name) + 1);
   var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
   var height   = rangeObj.getHeight();
-  var vals     = rangeObj.getValues();
+  var values     = rangeObj.getValues();
   var arr      = [];
   for (var i = 0; i < height; i++) {
-      var val  = vals[i][0];
+      var val  = values[i][0];
       arr.push(String(val));
   }  
   return arr;
@@ -2403,10 +2419,10 @@ function arrForColNo(sheet, hRow, colIndex){
   var tColABC  = numCol(colIndex);
   var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
   var height   = rangeObj.getHeight();
-  var vals     = rangeObj.getValues();
+  var values     = rangeObj.getValues();
   var arr      = [];
   for (var i = 0; i < height; i++) {
-      var val  = vals[i][0];
+      var val  = values[i][0];
       arr.push(String(val));
   }  
   return arr;
@@ -2426,10 +2442,10 @@ function arrForColNo(sheet, hRow, colIndex){
 
 function arrForColRange(rangeObj){
   var height = rangeObj.getHeight();
-  var vals   = rangeObj.getValues();
+  var values   = rangeObj.getValues();
   var arr    = [];
   for (var i = 0; i < height; i++) {
-    arr.push(vals[i][0]);
+    arr.push(values[i][0]);
   }
   return arr;
 }
