@@ -73,32 +73,22 @@ Logger.log("Start");
 // |*| -- Rename a File or Folder
 // |*| -- Parent Folder of a File or Folder
 // |*| -- Zip All Files in a Folder
-// |*| JSON
-// |*| -- Object From URL
-// |*| -- Object From File
-// |*| -- Object From URL or File
-// |*| UI
-// |*| -- On Open
-// |*| -- Set Configuration
-// |*| -- Show Configuration
-// |*| -- Clear Configuration
-// |*| -- Run Script
+// | | - Google Suite Files 
+// | | -- Check for a G Suite File
+// | | --- Check for a G Suite File in a Folder
+// | | --- Check for a G Suite File at Root
+// | | --- Check for a G Suite File at Path
+// | | -- Create G Suite File
+// | | --- Create G Suite File in a Folder
+// | | --- Create G Suite File at Root
+// | | --- Create G Suite File at Path
+// | | -- Verify G Suite File
+// | | --- Verify G Suite File in a Folder
+// | | --- Verify G Suite File at Root
+// | | --- Verify G Suite File at Path
+// | | -- Id of Active G Suite File
+// | | -- Open File as G Suite File
 // | | Sheets
-// | | - Managing Spreadsheet Files
-// | | -- Check for a Spreadsheet
-// | | --- Check for a Spreadsheet in a Folder
-// | | --- Check for a Spreadsheet at Root
-// | | --- Check for a Spreadsheet at Path
-// | | -- Create Spreadsheet
-// | | --- Create Spreadsheet in a Folder
-// | | --- Create Spreadsheet at Root
-// | | --- Create Spreadsheet at Path
-// | | -- Verify Spreadsheet
-// | | --- Verify Spreadsheet in a Folder
-// | | --- Verify Spreadsheet at Root
-// | | --- Verify Spreadsheet at Path
-// | | -- Id of Active Spreadsheet
-// | | -- Open File as Spreadsheet
 // | | - Utility Functions for Sheets
 // | | -- Convert Column Number to a Letter
 // | | -- Convert Column Letter to a Number
@@ -122,21 +112,6 @@ Logger.log("Start");
 // | | --- For Column Number
 // | | --- For Range Object 
 // | | Docs
-// | | - Managing Document Files
-// | | -- Check for a Document
-// | | --- Check for a Document in a Folder
-// | | --- Check for a Document at Root
-// | | --- Check for a Document at Path
-// | | -- Create Document
-// | | --- Create Document in a Folder
-// | | --- Create Document at Root
-// | | --- Create Document at Path
-// | | -- Verify Document
-// | | --- Verify Document in a Folder
-// | | --- Verify Document at Root
-// | | --- Verify Document at Path
-// | | -- Id of Active Document
-// | | -- Open File as Document
 // | | - Utility Functions for Docs
 // | | -- Access Document Body
 // | | -- Clear Document Body
@@ -159,6 +134,16 @@ Logger.log("Start");
 // | | -- Mail Merge
 // | | --- Append Body Property for Object in Array of Objects 
 // | | --- Run Mail Merge for Array of Objects
+// |*| JSON
+// |*| -- Object From URL
+// |*| -- Object From File
+// |*| -- Object From URL or File
+// |*| UI
+// |*| -- On Open
+// |*| -- Set Configuration
+// |*| -- Show Configuration
+// |*| -- Clear Configuration
+// |*| -- Run Script
 
 // Future Additions: 
 // * Timestamp on Cell Change
@@ -2478,8 +2463,6 @@ function arrayForColumnRange(rangeObj){
 // --- Verify Document in a Folder
 // --- Verify Document at Root
 // --- Verify Document at Path
-
-// - Managing Document Files
 
 // -- Create or Verify Document
 
