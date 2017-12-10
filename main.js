@@ -123,9 +123,18 @@ Logger.log("Start");
 // | | --- For Range Object 
 // | | Docs
 // | | - Managing Document Files
-// | | -- Create or Verify Document
-// | | --- Create or Verify Document in a Folder
-// | | --- Create or Verify Document at Root
+// | | -- Check for a Document
+// | | --- Check for a Document in a Folder
+// | | --- Check for a Document at Root
+// | | --- Check for a Document at Path
+// | | -- Create Document
+// | | --- Create Document in a Folder
+// | | --- Create Document at Root
+// | | --- Create Document at Path
+// | | -- Verify Document
+// | | --- Verify Document in a Folder
+// | | --- Verify Document at Root
+// | | --- Verify Document at Path
 // | | -- Id of Active Document
 // | | -- Open File as Document
 // | | - Utility Functions for Docs
@@ -786,9 +795,11 @@ function dateObjectFromString(str) {
 
 function matchDateToRangeOfDates(arrObj, optDate) {
   var date = new Date();
+
   if (optDate !== undefined) {
     date = new Date(optDate);
   }
+
   for (i = 0; i < arrObj.length; i++) {
     var start = new Date(arrObj[i].start);
     var end   = new Date(arrObj[i].end);
@@ -1949,18 +1960,6 @@ function openFileAsSpreadsheet(file) {
  * @returns {string}
  */
 
-// function columnNumberAsLetter(number) {
-
-// -- FLAG -- Consistent naming scheme
- 
-// function convertColumnToIndex() {
-  
-// } 
-
-// function convertIndexToColumn() {
-  
-// } 
-
 function convertIndexToColumn(number) {
   var num = number - 1, chr;
   if (num <= 25) {
@@ -2162,7 +2161,6 @@ function validateA1(a1Notation, sheet) {
 // - Objects
 
 // -- Object from Range
-// -- FLAG -- | a1Notation, sheet (!)
 
 /**
  * Returns an object from a range.
@@ -2174,8 +2172,8 @@ function validateA1(a1Notation, sheet) {
  * @returns {Object}
  */
 
-function objectFromRange(sheet, a1Notation) {
-  a1Notation = validateA1(sheet, a1Notation);
+function objectFromRange(a1Notation, sheet) {
+  a1Notation = validateA1(a1Notation, sheet);
   if (a1Notation) {
     var result = {};
     var range  = sheet.getRange(a1Notation);
@@ -2189,7 +2187,7 @@ function objectFromRange(sheet, a1Notation) {
 
 // Logger.log("objectFromRange");
 // var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// Logger.log(objectFromRange(sheet_ofr, "D2:E5")); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
+// Logger.log(objectFromRange("D2:E5", sheet_ofr)); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 
 // - Array of Objects
 
@@ -2265,7 +2263,7 @@ function arrayOfValuesByRow(rangeObj, headers){
  * @returns {Range}
  */
 
-function headerRange(sheet, a1Notation) {
+function headerRange(a1Notation, sheet) {
   a1Notation = validateA1(a1Notation, sheet);
   if (a1Notation) {
     var split = a1Notation.split(":");
@@ -2279,8 +2277,8 @@ function headerRange(sheet, a1Notation) {
 
 // Logger.log("headerRange");
 // var sheet_hr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(headerRange(sheet_hr, "A2:E19").getA1Notation()); // "A2:E2"
-// Logger.log(headerRange(sheet_hr, "A2:E19").getValues()); // [[First, Last, Grade, Homeroom, Email]]
+// Logger.log(headerRange("A2:E19", sheet_hr).getA1Notation()); // "A2:E2"
+// Logger.log(headerRange("A2:E19", sheet_hr).getValues()); // [[First, Last, Grade, Homeroom, Email]]
 
 // --- Value Range 
 
@@ -2292,7 +2290,7 @@ function headerRange(sheet, a1Notation) {
  * @returns {Range}
  */
 
-function valueRange(sheet, a1Notation) {
+function valueRange(a1Notation, sheet) {
   var split = a1Notation.split(":");
   var col0  = split[0].match(/\D/g,'');
   var row0  = split[0].match(/\d+/g);
@@ -2302,26 +2300,30 @@ function valueRange(sheet, a1Notation) {
   return sheet.getRange(a1);
 }
 
-Logger.log("valueRange");
-var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(valueRange(sheet_vr, "A2:E19").getA1Notation()); // "A3:E19"
+// Logger.log("valueRange");
+// var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
 
 // -- Array of Objects from Sheet 
 
 /**
  * Returns an array of objects representing the values in a sheet.
  *
- * @requires numCol() 
+ * @requires convertIndexToColumn() 
  * @requires arrayOfHeaderValues() 
  * @requires arrayOfValuesByRow() 
  * @param sheet
  * @param hRow
- * @returns {undefined}
+ * @returns {undefined} -- FLAG -- 
  */
 
 function arrObjFromSheet(sheet, hRow){
+  if (hRow === undefined) {
+    hRow = 1;
+  }
+
   var lColNum = sheet.getLastColumn();
-  var lColABC = numCol(lColNum);
+  var lColABC = convertIndexToColumn(lColNum);
   var lRow    = sheet.getLastRow();
   var hRange  = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
   var headers = arrayOfHeaderValues(hRange);
@@ -2347,17 +2349,17 @@ function arrObjFromSheet(sheet, hRow){
  */
 
 function arrObjFromRange(sheet, a1Notation) {
-  var hRange  = headerRange(sheet, a1Notation);
-  var vRange  = valueRange(sheet, a1Notation);
+  var hRange  = headerRange(a1Notation, sheet);
+  var vRange  = valueRange(a1Notation, sheet);
   Logger.log("vRange");
   Logger.log(vRange);
   var headers = arrayOfHeaderValues(hRange);
   return arrayOfValuesByRow(vRange, headers);
 }
 
-Logger.log("arrObjFromRange");
-var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrObjFromRange(sheet_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
+// Logger.log("arrObjFromRange");
+// var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(arrObjFromRange(sheet_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 
 // - Array 
 
@@ -2369,23 +2371,25 @@ Logger.log(arrObjFromRange(sheet_aofr, "A2:E7")); // [{Last=Garret, Email=agarre
  * Returns an array containing all values in a column.
  *
  * @param {Sheet} sheet
- * @param {number} hRow
+ * @param {number} 
  * @param {string} name
  * @returns {Array}
  */
 
-// function arrayOfValuesForColumnName(sheet, hRow, name){
+function arrayForColumnName(sheet, name, hRow){
+  if (hRow === undefined) {
+    hRow = 1;
+  }
 
-function arrForColName(sheet, hRow, name){
   var lColNum  = sheet.getLastColumn();
-  var lColABC  = numCol(lColNum);
+  var lColABC  = convertIndexToColumn(lColNum);
   var lRow     = sheet.getLastRow();
   var hRange   = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
   var headers  = arrayOfHeaderValues(hRange);
-  var tColABC  = numCol(headers.indexOf(name) + 1);
+  var tColABC  = convertIndexToColumn(headers.indexOf(name) + 1);
   var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
   var height   = rangeObj.getHeight();
-  var values     = rangeObj.getValues();
+  var values   = rangeObj.getValues();
   var arr      = [];
   for (var i = 0; i < height; i++) {
       var val  = values[i][0];
@@ -2394,8 +2398,9 @@ function arrForColName(sheet, hRow, name){
   return arr;
 }
 
+// Logger.log("arrayForColumnName");
 // var sheet_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrForColName(sheet_afcna, 2, "First")); // [Arienne, Elissa, Nerses, Gülistan, Syed, Isaiah, Stanley, Sára, Kaja, Józef, Radoslava, Sarah, Oluwasegun, Ekundayo, Gina, Sylvia, Cemil]
+// Logger.log(arrayForColumnName(sheet_afcna, "First", 2)); // [Arienne, Elissa, Nerses, Gülistan, Syed, Isaiah, Stanley, Sára, Kaja, Józef, Radoslava, Sarah, ...]
 
 // --- For Column Number
 
@@ -2408,18 +2413,19 @@ function arrForColName(sheet, hRow, name){
  * @returns {Array}
  */
 
-// arrayOfValuesForColumn(sheet, hRow, column) || check if number or letter?
-// function arrayOfValuesForColumnNumber(sheet, hRow, colIndex){
+function arrayForColumnIndex(sheet, colIndex, hRow){
+  if (hRow === undefined) {
+    hRow = 1;
+  }
 
-function arrForColNo(sheet, hRow, colIndex){
   var lColNum  = sheet.getLastColumn();
-  var lColABC  = numCol(lColNum);
+  var lColABC  = convertIndexToColumn(lColNum);
   var lRow     = sheet.getLastRow();
   var hRange   = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
-  var tColABC  = numCol(colIndex);
+  var tColABC  = convertIndexToColumn(colIndex);
   var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
   var height   = rangeObj.getHeight();
-  var values     = rangeObj.getValues();
+  var values   = rangeObj.getValues();
   var arr      = [];
   for (var i = 0; i < height; i++) {
       var val  = values[i][0];
@@ -2428,8 +2434,9 @@ function arrForColNo(sheet, hRow, colIndex){
   return arr;
 }
 
+// Logger.log("arrayForColumnIndex");
 // var sheet_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
-// Logger.log(arrForColNo(sheet_afcno, 2, 2)); // [Garret, Jules, Juda, Armen, Yeong-Suk, Coy, Stevie, Emin, Tiriaq, Dilay, Kirabo, Ariadna, Devrim, Adjoa, Suk, Lyle, Edita]
+// Logger.log(arrayForColumnIndex(sheet_afcno, 2, 2)); // [Garret, Jules, Juda, Armen, Yeong-Suk, Coy, Stevie, Emin, Tiriaq, Dilay, Kirabo, Ariadna, Devrim, Adjoa, Suk, Lyle, Edita]
 
 // --- For Range Object
 
@@ -2440,9 +2447,10 @@ function arrForColNo(sheet, hRow, colIndex){
  * @returns {Array}
  */
 
-function arrForColRange(rangeObj){
+function arrayForColumnRange(rangeObj){
+  var result = [];
   var height = rangeObj.getHeight();
-  var values   = rangeObj.getValues();
+  var values = rangeObj.getValues();
   var arr    = [];
   for (var i = 0; i < height; i++) {
     arr.push(values[i][0]);
@@ -2450,11 +2458,26 @@ function arrForColRange(rangeObj){
   return arr;
 }
 
+// Logger.log("arrayForColumnRange");
 // var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var range_vafro = sheet_vafro.getRange("A2:F5");
-// Logger.log(arrForColRange(range_vafro)); // ["A", "B", "C", "D"]
+// Logger.log(arrayForColumnRange(range_vafro)); // ["A", "B", "C", "D"]
 
 // Docs
+
+// - Managing Document Files
+// -- Check for a Document
+// --- Check for a Document in a Folder
+// --- Check for a Document at Root
+// --- Check for a Document at Path
+// -- Create Document
+// --- Create Document in a Folder
+// --- Create Document at Root
+// --- Create Document at Path
+// -- Verify Document
+// --- Verify Document in a Folder
+// --- Verify Document at Root
+// --- Verify Document at Path
 
 // - Managing Document Files
 
