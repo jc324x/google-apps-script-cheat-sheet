@@ -73,21 +73,21 @@ Logger.log("Start");
 // |*| -- Rename a File or Folder
 // |*| -- Parent Folder of a File or Folder
 // |*| -- Zip All Files in a Folder
-// | | - Google Suite Files 
-// | | -- Check for a G Suite File
-// | | --- Check for a G Suite File in a Folder
-// | | --- Check for a G Suite File at Root
-// | | --- Check for a G Suite File at Path
-// | | -- Create G Suite File
-// | | --- Create G Suite File in a Folder
-// | | --- Create G Suite File at Root
-// | | --- Create G Suite File at Path
-// | | -- Verify G Suite File
-// | | --- Verify G Suite File in a Folder
-// | | --- Verify G Suite File at Root
-// | | --- Verify G Suite File at Path
-// | | -- Id of Active G Suite File
-// | | -- Open File as G Suite File
+// | | - Google Drive Files 
+// | | -- Check for a Google Drive File
+// | | --- Check for a Google Drive File in a Folder
+// | | --- Check for a Google Drive File at Root
+// | | --- Check for a Google Drive File at Path
+// | | -- Create Google Drive File
+// | | --- Create Google Drive File in a Folder
+// | | --- Create Google Drive File at Root
+// | | --- Create Google Drive File at Path
+// | | -- Verify Google Drive File
+// | | --- Verify Google Drive File in a Folder
+// | | --- Verify Google Drive File at Root
+// | | --- Verify Google Drive File at Path
+// | | -- Id of Active Google Drive File
+// | | -- Open File as Google Drive File
 // | | Sheets
 // | | - Utility Functions for Sheets
 // | | -- Convert Column Number to a Letter
@@ -1559,155 +1559,22 @@ function zipFilesInFolder(fldr, name, dest) {
 // var dest_zfif = verifyPath("google-apps-script-cheat-sheet-demo/zip/destination");
 // zipFilesInFolder(fldr_zfif, "Archive", dest_zfif);
 
-// JSON
+// Google Drive Files
 
-function fileForJSONExample() {
-  var fldr = verifyPath("google-apps-script-cheat-sheet-demo/json");
-  var file = findFileInFolder("example-json", fldr);
-  if (!(file)) {
-    var json = objectFromUrlJSON("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-    var text = JSON.stringify(json);
-    var ex = fldr.createFile('example-json', text);
-  }
-  return findFileInFolder("example-json", fldr);
-}
-
-// -- Object From URL
-
-/**
- * Returns an object from a URL.
- *
- * @param {string} url
- * @returns {Object}
- */
-
-function objectFromUrl(url) {
-  var rsp  = UrlFetchApp.fetch(url);
-  var data = rsp.getContentText();
-  return JSON.parse(data);
-} 
-
-// Logger.log("objectFromUrl");
-// var obj_ofu = objectFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-// Logger.log(JSON.stringify(obj_ofu));
-
-// -- Object From File
-
-/**
- * Returns an object from a file in Drive.
- *
- * @param {File} file
- * @returns {Object}
- */
-
-function objectFromFile(file) {
-  var data = file.getBlob().getDataAsString();
-  return JSON.parse(data);
-} 
-
-// Logger.log("objectFromFile");
-// fileForJSONExample();
-// var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-// var obj_off  = objectFromFile(file_off);
-// Logger.log(JSON.stringify(obj_off));
-
-// -- Object From URL or File
-
-/**
- * Returns an object from a URL or from a file in Drive.
- *
- * @param {string || File} input
- * @returns {Object}
- */
-
-function objectFromUrlOrFileAtPath(input) {
-  var regExp = new RegExp("^(http|https)://");
-  var test   = regExp.test(input);
-  if (regExp.test(input)) {
-    return objectFromUrl(input);
-  } else {
-    var file = findFileAtPath(input); 
-    return objectFromFile(file);
-  }
-}
-
-// Logger.log("objectFromUrlOrFileAtPath");
-// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
-// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json")));
-
-// UI
-
-/**
- * @requires global ui / uProp vlues 
- * @requires a custom trigger -> Run: 'exampleUI', Events: 'From spreadsheet', 'On open'
- * Creates a menu with that allows the user to set the configuration options and run the script.
- * 
- */
-
-var ui    = SpreadsheetApp.getUi(); // or DocumentApp.getUi();
-var uProp = PropertiesService.getUserProperties();
-
-function exampleUI() {
-  ui.createMenu("Example UI")
-  .addItem("Run Script", "runScript")
-  .addSeparator()
-  .addSubMenu(ui.createMenu("Configuration")
-    .addItem("Set Configuration", "setConfiguration")
-    .addItem("Show Configuration", "showConfiguration")
-    .addItem("Clear Configuration", "clearConfiguration"))
-  .addToUi();
-}
-
-// -- Set Configuration
-
-/**
- * @requires global ui / uProp values
- * Parses JSON at the value given and sets config equal to the stringified result.
- */
-
-function setConfiguration() {
-  var uiPrompt = ui.prompt(
-      "Please enter a URL or a path to a file in Drive:",
-      ui.ButtonSet.OK_CANCEL);
-  var button = uiPrompt.getSelectedButton();
-  if (button == ui.Button.OK) {
-    var text   = uiPrompt.getResponseText();
-    var config = JSON.stringify(objFromUrlOrFile(text));
-    uProp.setProperty("config", config);
-  } 
-}
-
-// -- Show Configuration
-
-/**
- * @requires global ui / uProp values
- * Displays an alert of the config value or a displays a message if config is unset.
- */
-
-function showConfiguration() {
-  var config = uProp.getProperty("config");
-  if (config) {
-    ui.alert(config);
-  } else {
-    ui.alert("No configuration set.");
-  }
-}
-
-// -- Clear Configuration
-
-/**
- * @requires global ui / uProp values
- * Clears out all user properties.
- */
-
-function clearConfiguration() {
-  uProp.deleteAllProperties();
-  ui.alert("All settings cleared.");
-}
-
-// Sheets
-
-// - Managing Spreadsheet Files
+// -- Check for a Google Drive File
+// --- Check for a Google Drive File in a Folder
+// --- Check for a Google Drive File at Root
+// --- Check for a Google Drive File at Path
+// -- Create Google Drive File
+// --- Create Google Drive File in a Folder
+// --- Create Google Drive File at Root
+// --- Create Google Drive File at Path
+// -- Verify Google Drive File
+// --- Verify Google Drive File in a Folder
+// --- Verify Google Drive File at Root
+// --- Verify Google Drive File at Path
+// -- Id of Active Google Drive File
+// -- Open File as Google Drive File
 
 // -- Check for a Spreadsheet
 
@@ -1931,6 +1798,153 @@ function openFileAsSpreadsheet(file) {
 // var fldr_ofas = findFolderAtPath("google-apps-script-cheat-sheet-demo/sheets");
 // var file_ofas = findFileInFolder("example-sheet", fldr_ofas);
 // Logger.log(openFileAsSpreadsheet(file_ofas).getName()); // example-sheet
+
+
+// JSON
+
+function fileForJSONExample() {
+  var fldr = verifyPath("google-apps-script-cheat-sheet-demo/json");
+  var file = findFileInFolder("example-json", fldr);
+  if (!(file)) {
+    var json = objectFromUrlJSON("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+    var text = JSON.stringify(json);
+    var ex = fldr.createFile('example-json', text);
+  }
+  return findFileInFolder("example-json", fldr);
+}
+
+// -- Object From URL
+
+/**
+ * Returns an object from a URL.
+ *
+ * @param {string} url
+ * @returns {Object}
+ */
+
+function objectFromUrl(url) {
+  var rsp  = UrlFetchApp.fetch(url);
+  var data = rsp.getContentText();
+  return JSON.parse(data);
+} 
+
+// Logger.log("objectFromUrl");
+// var obj_ofu = objectFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+// Logger.log(JSON.stringify(obj_ofu));
+
+// -- Object From File
+
+/**
+ * Returns an object from a file in Drive.
+ *
+ * @param {File} file
+ * @returns {Object}
+ */
+
+function objectFromFile(file) {
+  var data = file.getBlob().getDataAsString();
+  return JSON.parse(data);
+} 
+
+// Logger.log("objectFromFile");
+// fileForJSONExample();
+// var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+// var obj_off  = objectFromFile(file_off);
+// Logger.log(JSON.stringify(obj_off));
+
+// -- Object From URL or File
+
+/**
+ * Returns an object from a URL or from a file in Drive.
+ *
+ * @param {string || File} input
+ * @returns {Object}
+ */
+
+function objectFromUrlOrFileAtPath(input) {
+  var regExp = new RegExp("^(http|https)://");
+  var test   = regExp.test(input);
+  if (regExp.test(input)) {
+    return objectFromUrl(input);
+  } else {
+    var file = findFileAtPath(input); 
+    return objectFromFile(file);
+  }
+}
+
+// Logger.log("objectFromUrlOrFileAtPath");
+// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
+// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json")));
+
+// UI
+
+/**
+ * @requires global ui / uProp vlues 
+ * @requires a custom trigger -> Run: 'exampleUI', Events: 'From spreadsheet', 'On open'
+ * Creates a menu with that allows the user to set the configuration options and run the script.
+ * 
+ */
+
+var ui    = SpreadsheetApp.getUi(); // or DocumentApp.getUi();
+var uProp = PropertiesService.getUserProperties();
+
+function exampleUI() {
+  ui.createMenu("Example UI")
+  .addItem("Run Script", "runScript")
+  .addSeparator()
+  .addSubMenu(ui.createMenu("Configuration")
+    .addItem("Set Configuration", "setConfiguration")
+    .addItem("Show Configuration", "showConfiguration")
+    .addItem("Clear Configuration", "clearConfiguration"))
+  .addToUi();
+}
+
+// -- Set Configuration
+
+/**
+ * @requires global ui / uProp values
+ * Parses JSON at the value given and sets config equal to the stringified result.
+ */
+
+function setConfiguration() {
+  var uiPrompt = ui.prompt(
+      "Please enter a URL or a path to a file in Drive:",
+      ui.ButtonSet.OK_CANCEL);
+  var button = uiPrompt.getSelectedButton();
+  if (button == ui.Button.OK) {
+    var text   = uiPrompt.getResponseText();
+    var config = JSON.stringify(objFromUrlOrFile(text));
+    uProp.setProperty("config", config);
+  } 
+}
+
+// -- Show Configuration
+
+/**
+ * @requires global ui / uProp values
+ * Displays an alert of the config value or a displays a message if config is unset.
+ */
+
+function showConfiguration() {
+  var config = uProp.getProperty("config");
+  if (config) {
+    ui.alert(config);
+  } else {
+    ui.alert("No configuration set.");
+  }
+}
+
+// -- Clear Configuration
+
+/**
+ * @requires global ui / uProp values
+ * Clears out all user properties.
+ */
+
+function clearConfiguration() {
+  uProp.deleteAllProperties();
+  ui.alert("All settings cleared.");
+}
 
 // - Utility Functions for Sheets
 
