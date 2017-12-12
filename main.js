@@ -32,7 +32,7 @@ Logger.log("Start");
 // | | -- Check String for Substring
 // |*| Drive
 // |*| - Folders
-// | | -- Valide Path
+// | | -- Valid Path
 // |*| -- Verify Folder Path
 // | | -- Check for a Folder
 // | | --- Check for Folder in a Folder
@@ -1168,15 +1168,15 @@ function verifyFoldersAtRoot(arr) {
 
 // --- Check for File in a Folder
 
-function checkForFileInFolder(file, fldr) {
-  var files = arrayOfFilesInFolder(fldr); 
-  var names = arrayOfFileNames(files);
-  if (checkArrayForValue(names, file)) {
-    return true;
-  } else {
-    return false;
-  }
-}
+// function checkForFileInFolder(file, fldr) {
+//   var files = arrayOfFilesInFolder(fldr); 
+//   var names = arrayOfFileNames(files);
+//   if (checkArrayForValue(names, file)) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
  
 // --- Check for a File at Root
 
@@ -1206,8 +1206,8 @@ function checkForFileAtPath(path) {
 }
  
 // -- FLAG -- Update with example file and all that
-// Logger.log("checkForFileAtPath"); 
-// Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
+Logger.log("checkForFileAtPath"); 
+Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
 
 // checkForExFile creates an empty example file
 
@@ -1562,6 +1562,39 @@ function zipFilesInFolder(fldr, name, dest) {
 // Google Drive Files
 
 // -- Check for a Google Drive File
+
+// --- Check for a Google Drive File in a Folder
+
+/**
+ * checkForGDriveFileInFolder
+ *
+ * @param name
+ * @param fldr
+ * @param type
+ * @returns {undefined}
+ */
+
+function checkForFileInFolder(name, fldr, type) {
+  var files = arrayOfFilesInFolder(fldr);
+  var names = arrayOfFileNames(files);
+  if (checkArrayForValue(names, name)) {
+    var mime = findFileInFolder(name, fldr).getMimeType();
+    if (type === undefined) {
+      return true;
+    } else if (type === mime) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+Logger.log("checkForFileInFolder");
+var fldr_cfgdfif = verifyPath("google-apps-script-cheat-sheet-demo/files");
+Logger.log(checkForFileInFolder("testing", fldr_cfgdfif)); 
+Logger.log(checkForFileInFolder("testing", fldr_cfgdfif, "application/vnd.google-apps.document"));
+Logger.log(checkForFileInFolder("another", fldr_cfgdfif, "application/vnd.google-apps.document"));
+
 // --- Check for a Google Drive File in a Folder
 // --- Check for a Google Drive File at Root
 // --- Check for a Google Drive File at Path
@@ -1576,26 +1609,6 @@ function zipFilesInFolder(fldr, name, dest) {
 // -- Id of Active Google Drive File
 // -- Open File as Google Drive File
 
-// -- Check for a Spreadsheet
-
-// --- Check for a Spreadsheet in a Folder
-
-function checkForSpreadsheetInFolder(ss, fldr) {
-  var files = arrayOfFilesInFolder(fldr); 
-  var names = arrayOfFileNames(files);
-  if (checkArrayForValue(names, ss)) {
-    var type = findFileInFolder(ss, fldr).getMimeType();
-    if (type === "application/vnd.google-apps.spreadsheet") {
-      return true;
-    }
-  } else {
-    return false;
-  }
-}
-
-// Logger.log("checkForSpreadsheetInFolder");
-// var fldr_cfsif = verifyPath("google-apps-script-cheat-sheet-demo/sheets");
-// Logger.log(checkForSpreadsheetInFolder("example-sheet", fldr_cfsif)); // true
 
 // --- Check for a Spreadsheet at Root
 
