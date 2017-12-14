@@ -3,91 +3,86 @@
 function test() {}
 Logger.log("Start");
 
-// |*| General
-// |*| - Array
-// |*| -- Check Array for a Value
-// |*| -- Remove Duplicates from Array
-// |*| -- Remove Empty Elements from Array
-// |*| -- Get Count of Values in Array
-// |*| -- Intersect of Two Arrays
-// |*| -- Compare Two Arrays
-// |*| -- Array as Delimited String
-// |*| -- Array as Modified Delimited String
-// |*| - Two-Dimensional Array
-// |*| -- Flatten Two-Dimensional Array
-// |*| - Array of Objects
-// |*| -- Sort Array of Objects by Property or Properties
-// |*| -- Find Object in Array of Objects
-// |*| -- Find First or Last Object in Array of Objects by Timestamp
-// |*| -- Filter Array of Objects by Value or Values
-// |*| -- Add Property to Objects in Array of Objects
-// |*| - Object
-// |*| -- Array of Object Values
-// |*| -- Merge Objects
-// |*| - Dates and Times
-// |*| -- Formatted Timestamps
-// |*| -- Date Object from String
-// |*| -- Match a Date to a Date Range
+// | | General
+// | | - Array
+// | | -- Check Array for a Value
+// | | -- Remove Duplicates from Array
+// | | -- Remove Empty Elements from Array
+// | | -- Get Count of Values in Array
+// | | -- Intersect of Two Arrays
+// | | -- Compare Two Arrays
+// | | -- Array as Delimited String
+// | | -- Array as Modified Delimited String
+// | | - Two-Dimensional Array
+// | | -- Flatten Two-Dimensional Array
+// | | - Array of Objects
+// | | -- Sort Array of Objects by Property or Properties
+// | | -- Find Object in Array of Objects
+// | | -- Find First or Last Object in Array of Objects by Timestamp
+// | | -- Filter Array of Objects by Value or Values
+// | | -- Add Property to Objects in Array of Objects
+// | | - Object
+// | | -- Array of Object Values
+// | | -- Merge Objects
+// | | - Dates and Times
+// | | -- Formatted Timestamps
+// | | -- Date Object from String
+// | | -- Match a Date to a Date Range
 // | | - String
 // | | -- Check String for Substring
-// |*| Drive
-// |*| - Folders
-// | | -- Valid Path
-// |*| -- Verify Folder Path
+// | | Drive
+// | | - Utility Functions for Drive
+// | | -- Validate Path
+// | | - Folders
 // | | -- Check for a Folder
 // | | --- Check for Folder in a Folder
 // | | --- Check for a Folder at Root
 // | | --- Check for a Folder at Path
-// |*| -- Array of Folders
-// |*| --- Array of Folders in a Folder
-// |*| --- Array of Folders at Root
-// |*| --- Array of All Folders in Drive
-// |*| -- Array of Folder Names
-// |*| -- Find a Folder
-// |*| --- Find a Folder in a Folder
-// |*| --- Find a Folder at Root
-// |*| --- Find a Folder in Drive
-// |*| --- Find Folder at Path
-// |*| -- Create or Verify Folders
-// |*| --- Create or Verify Folders in a Folder
-// |*| --- Create or Verify Folders at Root
+// | | -- Find a Folder
+// | | --- Find a Folder in a Folder
+// | | --- Find a Folder at Root
+// | | --- Find a Folder in Drive
+// | | --- Find Folder at Path
+// | | -- Create or Verify Folders
+// | | --- Create or Verify Folders in a Folder
+// | | --- Create or Verify Folders at Root
+// | | -- Verify Folder Path
+// | | -- Array of Folders
+// | | --- Array of Folders in a Folder
+// | | --- Array of Folders at Root
+// | | --- Array of All Folders in Drive
+// | | -- Array of Folder Names
 // | | - Files
 // | | -- Check for a File
-// | | --- Check for File in a Folder
+// | | --- Check for a File in a Folder
 // | | --- Check for a File at Root
 // | | --- Check for a File at Path
-// | | -- Array of Files
-// |*| --- Array of Files in a Folder
-// |*| --- Array of Files at Root
-// |*| --- Array of All Files in Drive
-// |*| -- Array of File Names
-// |*| -- Find a File
-// |*| --- Find a File in a Folder
-// |*| --- Find a File at Root
-// |*| --- Find a File in Drive
-// |*| --- Find File at Path
-// |*| -- Copy a File to a Folder
-// |*| -- Move a File to a Folder
-// | | -- Check for File at Path
-// |*| - Files and Folders
-// |*| -- Rename a File or Folder
-// |*| -- Parent Folder of a File or Folder
-// |*| -- Zip All Files in a Folder
-// | | - Google Drive Files 
-// | | -- Check for a Google Drive File
-// | | --- Check for a Google Drive File in a Folder
-// | | --- Check for a Google Drive File at Root
-// | | --- Check for a Google Drive File at Path
-// | | -- Create Google Drive File
-// | | --- Create Google Drive File in a Folder
-// | | --- Create Google Drive File at Root
-// | | --- Create Google Drive File at Path
+// | | -- Find a File
+// | | --- Find a File in a Folder
+// | | --- Find a File at Root
+// | | --- Find a File in Drive
+// | | --- Find File at Path
+// | | -- Create a File
+// | | --- Create File in a Folder
+// | | --- Create File at Root
+// | | --- Create File at Path
 // | | -- Verify Google Drive File
 // | | --- Verify Google Drive File in a Folder
 // | | --- Verify Google Drive File at Root
 // | | --- Verify Google Drive File at Path
-// | | -- Id of Active Google Drive File
-// | | -- Open File as Google Drive File
+// | | -- Array of Files
+// | | --- Array of Files in a Folder
+// | | --- Array of Files at Root
+// | | --- Array of All Files in Drive
+// | | -- Array of File Names
+// | | -- Id of Active File
+// | | -- Open File as Type
+// | | -- Copy a File to a Folder
+// | | -- Move a File to a Folder
+// | | - Files and Folders
+// | | -- Rename a File or Folder
+// | | -- Parent Folder of a File or Folder
+// | | -- Zip All Files in a Folder
 // | | Sheets
 // | | - Utility Functions for Sheets
 // | | -- Convert Column Number to a Letter
@@ -134,16 +129,16 @@ Logger.log("Start");
 // | | -- Mail Merge
 // | | --- Append Body Property for Object in Array of Objects 
 // | | --- Run Mail Merge for Array of Objects
-// |*| JSON
-// |*| -- Object From URL
-// |*| -- Object From File
-// |*| -- Object From URL or File
-// |*| UI
-// |*| -- On Open
-// |*| -- Set Configuration
-// |*| -- Show Configuration
-// |*| -- Clear Configuration
-// |*| -- Run Script
+// | | JSON
+// | | -- Object From URL
+// | | -- Object From File
+// | | -- Object From URL or File
+// | | UI
+// | | -- On Open
+// | | -- Set Configuration
+// | | -- Show Configuration
+// | | -- Clear Configuration
+// | | -- Run Script
 
 // Future Additions: 
 // * Timestamp on Cell Change
@@ -820,13 +815,17 @@ function checkStringForSubstring(text, sub) {
 
 // Drive
 
-// - Folders
+// - Utility Functions for Drive
 
-// -- Validate Path
-// -- FLAG -- match style of validateA1Notation (return value order)
-// also validatePathString instead of validatePath?
+/**
+ * validatePathString
+ *
+ * @param {string} path
+ * @requires checkStringForSubstring() 
+ * @returns {string || boolean}
+ */
 
-function validatePath(path) {
+function validatePathString(path) {
   if (path.charAt(0) === "/") {
     path = path.substr(1);
   }
@@ -837,6 +836,8 @@ function validatePath(path) {
     return false;
   }
 }
+ 
+// - Folders
 
 // -- Verify Folder Path
 
