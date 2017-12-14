@@ -32,7 +32,7 @@ Logger.log("Start");
 // | | -- Check String for Substring
 // | | Drive
 // | | - Utility Functions for Drive
-// | | -- Validate Path
+// | | -- Validate Path String
 // | | - Folders
 // | | -- Check for a Folder
 // | | --- Check for Folder in a Folder
@@ -43,10 +43,20 @@ Logger.log("Start");
 // | | --- Find a Folder at Root
 // | | --- Find a Folder in Drive
 // | | --- Find Folder at Path
-// | | -- Create or Verify Folders
-// | | --- Create or Verify Folders in a Folder
-// | | --- Create or Verify Folders at Root
-// | | -- Verify Folder Path
+// | | -- Create Folder
+// | | --- Create Folder in a Folder
+// | | --- Create Folder at Root
+// | | --- Create Folder at Path
+// | | -- Create Folders
+// | | --- Create Folders at Root
+// | | --- Create Folders in a Folder
+// | | --- Create Folders at Path
+// | | -- Verify Folder
+// | | --- Verify Folder in a Folder
+// | | --- Verify Folder at Root
+// | | -- Verify Folders
+// | | --- Verify Folders in a Folder
+// | | --- Verify Folders at Root
 // | | -- Array of Folders
 // | | --- Array of Folders in a Folder
 // | | --- Array of Folders at Root
@@ -817,6 +827,8 @@ function checkStringForSubstring(text, sub) {
 
 // - Utility Functions for Drive
 
+// -- Validate Path String
+
 /**
  * validatePathString
  *
@@ -851,8 +863,9 @@ function validatePathString(path) {
  */
 
 // -- FLAG -- Can this verify a path of "/testing"?
+// -- FLAG -- was verifyPath
 
-function verifyPath(path) {
+function verifyFolderPath(path) {
   if (path.charAt(0) === "/") {
     path = path.substr(1);
   }
