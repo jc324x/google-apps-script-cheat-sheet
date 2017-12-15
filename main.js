@@ -25,7 +25,7 @@ Logger.log("Start");
 // | | -- Array of Object Values
 // | | -- Merge Objects
 // | | - Dates and Times
-// | | -- Formatted Timestamps
+// | | -- Formatted Date Time
 // | | -- Date Object from String
 // | | -- Match a Date to a Date Range
 // | | - String
@@ -34,10 +34,10 @@ Logger.log("Start");
 // | | - Utility Functions for Drive
 // | | -- Validate Path String
 // | | - Folders
-// | | -- Check for a Folder
-// | | --- Check for a Folder at Root
-// | | --- Check for Folder in a Folder
-// | | --- Check for a Folder at Path
+// |+| -- Check for a Folder
+// |+| --- Check for a Folder at Root
+// |+| --- Check for Folder in a Folder
+// |+| --- Check for a Folder at Path
 // | | -- Find a Folder
 // | | --- Find a Folder at Root
 // | | --- Find a Folder in a Folder
@@ -394,6 +394,7 @@ function flattenTwoDimensionalArray(arr) {
 // Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
+// -- FLAG -- example_arrObj
 
 var ex_arrObj = [
   {a: 1000, b: 1, c: 5}, 
@@ -403,7 +404,6 @@ var ex_arrObj = [
 ];
 
 // Logger.log("ex_arrObj");
-// Logger.log(ex_arrObj);
 
 // -- Sort Array of Objects by Property or Properties
 
@@ -675,80 +675,56 @@ function mergeObjs() {
 
 // - Dates and Times
 
-// -- Formatted Timestamps
+// -- Formatted Date Time
 
-/**
- * Returns a string of today's date formatted "month-day-year".
- *
- * @returns {string}
- */
+function dateTime(opt) {
+  var now = new Date();
+  var date, time;
 
-function timestampMMDDYYYY() {
-  var now  = new Date();
-  var date = [ now.getMonth() + 1, now.getDate(), now.getYear() ];
-  return date.join("-");
-}
-
-// Logger.log("timestampMMDDYYYY");
-// Logger.log(timestampMMDDYYYY()); // "4-24-2017"
-
-/**
- * Returns a string of today's date formatted "year-month-day".
- *
- * @returns {string}
- */
-
-function timestampYYYYMMDD() {
-  var now  = new Date();
-  var date = [now.getYear(), now.getMonth() + 1, now.getDate()];
-  return date.join("-");
+  switch(opt) {
+    case "hms":
+      time = [now.getHours(), now.getMinutes(), now.getSeconds()];
+      for ( var i = 1; i < 3; i++ ) {
+        if ( time[i] < 10 ) {
+          time[i] = "0" + time[i];
+        }
+      }
+      return time.join(":");
+    case "mdy":
+      date = [now.getMonth() + 1, now.getDate(), now.getYear()];
+      return date.join("-");
+    case "ymd":
+      date = [now.getYear(), now.getMonth() + 1, now.getDate()];
+      return date.join("-");
+    case "mdyampm":
+      date = [ now.getMonth() + 1, now.getDate(), now.getYear() ];
+      time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
+      var ampm = ( time[0] < 12 ) ? "AM" : "PM";
+      time[0]  = ( time[0] <= 12 ) ? time[0] : time[0] - 12;
+      for ( var j = 1; j < 3; j++ ) {
+        if ( time[j] < 10 ) {
+          time[j] = "0" + time[j];
+        }
+      }
+      return date.join("-") + " " + time.join(":") + " " + ampm;
+    default:
+      date = [now.getYear(), now.getMonth() + 1, now.getDate()];
+      time = [now.getHours(), now.getMinutes(), now.getSeconds()];
+      for ( var k = 1; k < 3; k++ ) {
+        if ( time[k] < 10 ) {
+          time[k] = "0" + time[k];
+        }
+      }
+      return date.join("-") + " " + time.join(":");
+  } 
 } 
 
-// Logger.log("timestampYYYYMMDD");
-// Logger.log(timestampYYYYMMDD()); // 2017-09-29
-
-/**
- * Returns a string of the current time formatted "24 hour:minute:second".
- *
- * @returns {string}
- */
-
-function timestampHHMMSS(){
-  var now  = new Date();
-  var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
-  for ( var i = 1; i < 3; i++ ) {
-    if ( time[i] < 10 ) {
-      time[i] = "0" + time[i];
-    }
-    return time.join(":");
-  }
-}
-
-// Logger.log("timestampHHMMSS");
-// Logger.log(timestampHHMMSS()); // "20:43:40"
-
-/**
- * Returns a string of today's date and the current time formatted "year-iday-year hour:minute:second AM/PM"
- *
- * @returns {string}
- */
-
-function timestampYYYYMMDDHHMMSSAMPM() {
-  var now = new Date();
-  var date = [ now.getMonth() + 1, now.getDate(), now.getYear() ];
-  var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
-  var ampm = ( time[0] < 12 ) ? "AM" : "PM";
-  time[0]  = ( time[0] <= 12 ) ? time[0] : time[0] - 12;
-  for ( var i = 1; i < 3; i++ ) {
-    if ( time[i] < 10 ) {
-      time[i] = "0" + time[i];
-    }
-  }
-  return date.join("-") + " " + time.join(":") + " " + ampm;
-}
-
-// Logger.log("timestampYYYYMMDDHHMMSSAMPM");
-// Logger.log(timestampYYYYMMDDHHMMSSAMPM()); // "4-24-2017 8:43:40 PM"
+// Logger.log("dateTime");
+// Logger.log(dateTime("hms"));
+// Logger.log(dateTime("mdy"));
+// Logger.log(dateTime("ymd"));
+// Logger.log(dateTime("mdyampm"));
+// Logger.log(dateTime());
 
 // -- Date Object from String
 
@@ -857,6 +833,12 @@ function validatePathString(path) {
  
 // - Folders
 
+function createExampleFolders() {
+  verifyPath("google-apps-script-cheat-sheet-demo/folders");
+} 
+
+createExampleFolders(); 
+
 // -- Check for a Folder
 
 // --- Check for a Folder at Root
@@ -953,8 +935,10 @@ function checkForFolderAtPath(path) {
 function findFolderAtRoot(name) {
   var fldrs = arrayOfFoldersAtRoot();
   var names = arrayOfFolderNames(fldrs);
-  if (checkArrayForValue(names, name)) {
+  if (checkArrayForValue(name, names)) {
     return DriveApp.getRootFolder().getFoldersByName(name).next();
+  } else {
+    return false;
   }
 }
 
@@ -974,17 +958,19 @@ function findFolderAtRoot(name) {
  * @returns {Folder}
  */
 
-function findFolderInFolder(fldr, name) {
+function findFolderInFolder(name, fldr) {
   var fldrs = arrayOfFoldersInFolder(fldr);
   var names = arrayOfFolderNames(fldrs);
-  if (checkArrayForValue(names, name)) {
+  if (checkArrayForValue(name, names)) {
     return fldr.getFoldersByName(name).next();
+  } else {
+    return false;
   }
 }
 
 // Logger.log("findFolderInFolder");
 // var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
-// Logger.log(findFolderInFolder(fldr_ffi, "A")); // A
+// Logger.log(findFolderInFolder("A", fldr_ffi)); // A
 
 // -- Find Folder at Path
 
@@ -999,9 +985,10 @@ function findFolderAtPath(path) {
   if (path.charAt(0) === "/") {
     path = path.substr(1);
   }
-  var fi;
+
+  var fi, fldr;
   var split = path.split("/");
-  var fldr;
+
   for (i = 0; i < split.length; i++) {
     if (i === 0) {
       fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
@@ -1015,6 +1002,8 @@ function findFolderAtPath(path) {
         } 
     }
   } 
+  
+  // -- FLAG -- check if fldr.getName() = last part of the path
   return fldr;
 }
 
@@ -1044,6 +1033,7 @@ function findFolderInDrive(name) {
 // -- Create Folder
   
 // --- Create Folder at Root
+// -- FLAG -- date stamped folder
   
 function createFoldersAtRoot(arr) {
   for (i = 0; i < arr.length; i++) {
@@ -1200,6 +1190,7 @@ function arrayOfFolderNames(arr) {
 // -- Create or Verify Folders
 
 // --- Create or Verify Folders in a Folder
+// -- FLAG -- argument order (!)
 
 /**
  * Returns a folder. 
@@ -1213,7 +1204,7 @@ function arrayOfFolderNames(arr) {
  * @returns {Folder}
  */
 
-function verifyFoldersInFolder(fldr, arr) {
+function verifyFoldersInFolder(arr, fldr) {
   var fldrs = arrayOfFoldersInFolder(fldr);
   var names = arrayOfFolderNames(fldrs);
   for (i = 0; i < arr.length; i++) {
@@ -1295,10 +1286,12 @@ function checkForFileAtPath(path) {
 }
  
 // -- FLAG -- Update with example file and all that
+// -- FLAG -- Why is this weirdly compressed?
+ 
 // Logger.log("checkForFileAtPath"); 
 // Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
 
-// checkForExFile creates an empty example file
+// -- FLAG -- createExampleFiles
 
 function checkForExFile() {
   var fldr = verifyPath("google-apps-script-cheat-sheet-demo/files");
