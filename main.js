@@ -830,11 +830,28 @@ function validatePathString(path) {
 // Logger.log(validatePathString("too-short")); // false
 // Logger.log(validatePathString("valid/path")); // "valid/path"
 // Logger.log(validatePathString("/valid/path")); // "valid/path"
+
+// -- Target Path String
+
+/**
+ * Returns a string path to the penultimate folder in a given path.
+ *
+ * @param {String} path
+ * @returns {String}
+ */
+
+function targetPathString(path) {
+  path = validatePathString(path);
+  if (path) {
+    var split = path.split("/").pop();
+    path      = split.join("/");
+  }
+} 
  
 // - Folders
 
 function createExampleFolders() {
-  verifyPath("google-apps-script-cheat-sheet-demo/folders");
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/folders");
 } 
 
 createExampleFolders(); 
@@ -1033,7 +1050,37 @@ function findFolderInDrive(name) {
 // -- Create Folder
   
 // --- Create Folder at Root
-// -- FLAG -- date stamped folder
+
+function createFolderAtRoot(name) {
+  return DriveApp.getRootFolder().createFolder(name);
+} 
+
+// Logger.log("createFolderAtRoot");
+// -- FLAG -- don't write to root
+// var now_cfar = dateTime();
+// Logger.log(createFolderAtRoot(now_cfar));
+
+// --- Create Folder in a Folder
+
+function createFolderInFolder(name, fldr) {
+  return fldr.createFolder(name);
+} 
+
+Logger.log("createFolderInFolder");
+var now_cfif = dateTime();
+var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/folders/create");
+Logger.log(createFolderInFolder(now_cfif, fldr_cfif));
+
+// --- Create Folder at Path
+
+function createFolderAtPath(path) {
+
+} 
+
+  
+// -- Create Folders
+  
+// --- Create Folders at Root
   
 function createFoldersAtRoot(arr) {
   for (i = 0; i < arr.length; i++) {
@@ -1044,14 +1091,6 @@ function createFoldersAtRoot(arr) {
 
 // Logger.log("createFoldersAtRoot");
 
-// --- Create Folder in a Folder
-  
-// --- Create Folder at Path
-  
-// -- Create Folders
-  
-// --- Create Folders at Root
-  
 // --- Create Folders in a Folder
   
 // --- Create Folders at Path
@@ -1479,6 +1518,7 @@ function findFileAtPath(path) {
   if (path.charAt(0) === "/") {
     path = path.substr(1);
   }
+
   var arr  = path.split("/");
   var file = arr[arr.length -1];
   var fldr, fi;
