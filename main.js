@@ -931,30 +931,8 @@ function checkForFolderInFolder(name, fldr) {
 function checkForFolderAtPath(path) {
   path = validatePath(path);
   if (path) {
-    var fi, fldr;
-    var split = path.split("/");
-
-    for (i = 0; i < split.length; i++) {
-      if (i === 0) {
-        fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
-        if (fi.hasNext()) {
-          fldr = fi.next();
-        } else {
-          return false;
-        }
-      } else if (i >= 1) {
-          fi = fldr.getFoldersByName(split[i]);
-          if (fi.hasNext()) {
-            fldr = fi.next();
-          } else {
-            return false;
-          }
-      }
-    } 
-
-    var last = validatePathTarget(path);
-
-    if (fldr.getName() === last) {
+    var fldr = findFolderAtPath(path);
+    if (fldr) {
       return true;
     } else {
       return false;
@@ -1053,7 +1031,7 @@ function findFolderAtPath(path) {
       }
     } 
 
-    var last = lastFolderInStringPath(path);
+    var last = validatePathTarget(path);
     if (fldr.getName() === last) {
       return fldr;
     } else {
@@ -1114,10 +1092,26 @@ function createFolderInFolder(name, fldr) {
  */
 
 function createFolderAtPath(path) {
-
+  path = validatePath(path);
+  if (path) {
+    var target = validatePathTarget(path, 1);
+    Logger.log(target);
+    var fldr = findFolderAtPath(target); 
+    Logger.log(fldr);
+    if (fldr) {
+      target = validatePathTarget(path);
+      return fldr.createFolder(target);
+    } else {
+      return false;
+    }
+  }
 } 
 
-  
+Logger.log("createFolderAtPath");
+var dt = dateTime();
+Logger.log(createFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B/C/" + dt)); // 2017-12-16 13:34:38
+Logger.log(createFolderAtPath("no/path/here")); // false
+
 // -- Create Folders
   
 // --- Create Folders at Root
