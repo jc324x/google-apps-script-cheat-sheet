@@ -840,13 +840,17 @@ function validatePathString(path) {
  * @returns {String}
  */
 
-function targetPathString(path) {
+function validateTargetPathString(path) {
   path = validatePathString(path);
   if (path) {
     var split = path.split("/").pop();
-    path      = split.join("/");
+    return (split.join("/"));
+  } else {
+    return false;
   }
 } 
+
+Logger.log(targetPathString("google-apps-script-cheat-sheet-demo/folders"));
  
 // - Folders
 
@@ -877,8 +881,8 @@ function checkForFolderAtRoot(name) {
   }
 } 
 
-// Logger.log("checkForFolderAtRoot");
-// Logger.log(checkForFolderAtRoot("google-apps-script-cheat-sheet-demo")); // true
+Logger.log("checkForFolderAtRoot");
+Logger.log(checkForFolderAtRoot("google-apps-script-cheat-sheet-demo")); // true
 
 // --- Check for a Folder in Folder
 
@@ -900,11 +904,12 @@ function checkForFolderInFolder(name, fldr) {
   }
 }
 
-// Logger.log("checkForFolderInFolder");
-// var fldr_cffif = verifyFolderPath("google-apps-script-cheat-sheet-demo");
-// Logger.log(checkForFolderInFolder("folders", fldr_cffif)); // true
+Logger.log("checkForFolderInFolder");
+var fldr_cffif = verifyFolderPath("google-apps-script-cheat-sheet-demo");
+Logger.log(checkForFolderInFolder("folders", fldr_cffif)); // true
 
 // --- Check for a Folder at Path
+// -- FLAG -- targetPath()
 
 function checkForFolderAtPath(path) {
   path = validatePathString(path);
