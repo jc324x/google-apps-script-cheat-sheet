@@ -804,17 +804,14 @@ function checkStringForSubstring(text, sub) {
 
 // - Utility Functions for Drive
 
-// -- Validate Path String
+// -- Verify Path
 
 /**
- * -- FLAG -- validatePath
+ * Removes leading '/' from a path string.
  *
  * @param {string} path
- * @requires checkStringForSubstring() 
- * @returns {string || boolean}
+ * @returns {string}
  */
-
-// function validatePath(path) {
 
 function verifyPath(path) {
   if (path.charAt(0) === "/") {
@@ -827,36 +824,34 @@ function verifyPath(path) {
 // Logger.log(verifyPath("valid/path")); // "valid/path"
 // Logger.log(verifyPath("/valid/path")); // "valid/path"
 
-// -- Last Folder in String Path
+// -- Get Path Target
 
 /**
- * Returns the last folder in a path string
+ * Returns: 
+ * (1) The path to the penultimate folder or file in a path.
+ * (0) The name of the last file or folder in a path.
  *
  * @param {String} path
  * @returns {String}
  */
 
-// function validatePathTarget(path, index) {
 function getPathTarget(path, index) {
-  path = verifyPath(path);
-  if (path) {
-    var split = path.split("/");
-    if (index === 0 || index === undefined) {
-      return split.pop();
-    } else if (index === 1) {
-      split.pop();
-      return split.join("/");
-    } 
-  } else {
-    return false;
-  }
+  path      = verifyPath(path);
+  var split = path.split("/");
+
+  if (index === 0 || index === undefined) {
+    return split.pop();
+  } else if (index === 1) {
+    split.pop();
+    return split.join("/");
+  } 
 } 
 
-// Logger.log("validatePathTarget");
-// Logger.log(validatePathTarget("example-path/a/b/c")); // c
-// Logger.log(validatePathTarget("example-path/a/b/c", 0)); // c
-// Logger.log(validatePathTarget("example-path/a/b/c", 1)); // example-path/a/b
-// Logger.log(validatePathTarget("not-a-valid-path")); // false
+// Logger.log("getPathTarget");
+// Logger.log(getPathTarget("example-path/a/b/c")); // c
+// Logger.log(getPathTarget("example-path/a/b/c", 0)); // c
+// Logger.log(getPathTarget("example-path/a/b/c", 1)); // example-path/a/b
+// Logger.log(getPathTarget("not-a-valid-path")); // false
 
 // - Folders
 
@@ -931,7 +926,6 @@ function findFolderInFolder(name, fldr) {
 
 function findFolderAtPath(path) {
   path = verifyPath(path);
-  if (path) { 
     var fi, fldr;
     var split = path.split("/");
 
@@ -953,18 +947,16 @@ function findFolderAtPath(path) {
       }
     } 
 
-    var last = validatePathTarget(path);
+    var last = getPathTarget(path);
     if (fldr.getName() === last) {
       return fldr;
     } else {
       return false;
     }
-  }
 }
 
 // Logger.log("findFolderAtPath");
 // Logger.log(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
-// Logger.log(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/1/10/100")); // false
 
 // --- Find a Folder in Drive
 
@@ -979,18 +971,18 @@ function findFolderInDrive(name) {
   var fi = DriveApp.getFoldersByName(name);
   while (fi.hasNext()){
     return fi.next();
-  }
+  } 
+  return false;
 }
 
 // Logger.log("findFolderInDrive");
-// Logger.log(findFolderInDrive("folders")); // folders
+// Logger.log(findFolderInDrive("google-apps-script-cheat-sheet-demo")); // google-apps-script-cheat-sheet-demo
 
 // -- Check for a Folder
 
 // --- Check for a Folder at Root
 
 /**
- * -- FLAG -- checkForFolderAtRoot 
  *
  * @param name
  * @returns {undefined}
@@ -1004,8 +996,8 @@ function checkForFolderAtRoot(name) {
   }
 } 
 
-Logger.log("checkForFolderAtRoot");
-Logger.log(checkForFolderAtRoot("google-apps-script-cheat-sheet-demo")); // true
+// Logger.log("checkForFolderAtRoot");
+// Logger.log(checkForFolderAtRoot("google-apps-script-cheat-sheet-demo")); // true
 
 // --- Check for a Folder in Folder
 
@@ -1040,14 +1032,12 @@ function checkForFolderInFolder(name, fldr) {
 
 function checkForFolderAtPath(path) {
   path = verifyPath(path);
-  if (path) {
     var fldr = findFolderAtPath(path);
     if (fldr) {
       return true;
     } else {
       return false;
     }
-  }
 }
 
 // Logger.log("checkForFolderAtPath");
@@ -1091,19 +1081,17 @@ function createFolderInFolder(name, fldr) {
  */
 
 function createFolderAtPath(path) {
-  path = validatePath(path);
-  if (path) {
-    var target = validatePathTarget(path, 1);
+  path = verifyPath(path);
+    var target = getPathTarget(path, 1);
     Logger.log(target);
     var fldr = findFolderAtPath(target); 
     Logger.log(fldr);
     if (fldr) {
-      target = validatePathTarget(path);
+      target = getPathTarget(path);
       return fldr.createFolder(target);
     } else {
       return false;
     }
-  }
 } 
 
 // Logger.log("createFolderAtPath");
@@ -1149,8 +1137,7 @@ function createFoldersAtRoot(arr) {
 // -- FLAG -- was verifyPath
 
 function verifyFolderPath(path) {
-  path = validatePath(path);
-  if (path) {
+  path = verifyPath(path);
     var split = path.split("/");
     var fldr;
     for (i = 0; i < split.length; i++) {
@@ -1171,14 +1158,11 @@ function verifyFolderPath(path) {
       }
     } 
     return fldr;
-  } else {
-    return createFolderAtRoot(path);
-  }
 }
 
-Logger.log("verifyFolderPath");
-Logger.log(verifyFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
-Logger.log(verifyFolderPath("not-a-valid-path-but-it-will-get-created-anyways"));
+// Logger.log("verifyFolderPath");
+// Logger.log(verifyFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
+// Logger.log(verifyFolderPath("not-a-valid-path-but-it-will-get-created-anyways"));
 
 // -- Array of Folders 
 
@@ -1356,14 +1340,12 @@ function checkForFileAtRoot(file) {
 //  --- Check for File at Path
 
 function checkForFileAtPath(path) {
-  path = validatePath(path);
-  if (path) {
-    var split = path.split("/");
-    var file  = split.pop();
-    path      = split.join("/");
-    var fldr  = findFolderAtPath(path);
-    return checkForFileInFolder(file, fldr);
-  }
+  path = verifyPath(path);
+  var split = path.split("/");
+  var file  = split.pop();
+  path      = split.join("/");
+  var fldr  = findFolderAtPath(path);
+  return checkForFileInFolder(file, fldr);
 }
  
 // -- FLAG -- Update with example file and all that
@@ -1790,18 +1772,15 @@ function checkForSpreadsheetAtRoot(ss) {
 } 
 
 // --- Check for a Spreadsheet at Path
+// -- FLAG -- 
 
 function checkForSpreadsheetAtPath(path) {
-  path = validatePath(path);
-  if (path) {
-    var split = path.split("/");
-    var ss    = split.pop();
-    path      = split.join("/");
-    var fldr  = findFolderAtPath(path);
-    return checkForSpreadsheetInFolder(ss, fldr);
-  } else {
-    return false;
-  }
+  path = verifyPath(path);
+  var split = path.split("/");
+  var ss    = split.pop();
+  path      = split.join("/");
+  var fldr  = findFolderAtPath(path);
+  return checkForSpreadsheetInFolder(ss, fldr);
 } 
 
 // Logger.log("checkForSpreadsheetAtPath");
@@ -1847,14 +1826,12 @@ function createSpreadsheetAtRoot(name) {
 // --- Create Spreadsheet at Path
 
 function createSpreadsheetAtPath(path) {
-  path = validatePath(path);
-  if (path) {
+  path = verifyPath(path);
     var split = path.split("/");
     var ss    = split.pop();
     path      = split.join("/");
     var fldr  = verifyPath(path);
     return createSpreadsheetInFolder(ss, fldr);
-  }
 }
 
 // Logger.log("createSpreadsheetAtPath");
@@ -1928,14 +1905,12 @@ function verifySpreadsheetAtRoot(name) {
 // -- Verify Spreadsheet at Path
 
 function verifySpreadsheetAtPath(path) {
-  path = validatePath(path);
-  if (path) {
+  path = verifyPath(path);
     var split = path.split("/");
     var ss    = split.pop();
     path      = split.join("/");
     var fldr  = verifyPath(path);
     return verifySpreadsheetInFolder(ss, fldr);
-  }
 }
  
 // Logger.log("verifySpreadsheetAtPath");
