@@ -400,7 +400,7 @@ function flattenTwoDimensionalArray(arr) {
 // Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
-// -- FLAG -- example_arrObj
+// TODO: rename to arrObj_ex
 
 var ex_arrObj = [
   {a: 1000, b: 1, c: 5}, 
@@ -642,7 +642,7 @@ var obj_aoov = {
 // var arr_aoov = ["a", "b", "d"];
 // Logger.log(arrayOfObjectValues(obj_aoov, arr_aoov)); // [1, 2]
 
-// FLAG
+// TODO
 // Merge Objects
 
 /**
@@ -877,7 +877,7 @@ createExampleFolders();
 // --- Array of Folders at Root
 
 /**
- * Returns an array of all folders in the root of the user's Drive.
+ * Returns an array containing all folders at root.
  *
  * @returns {Folder[]}
  */
@@ -1124,7 +1124,7 @@ function checkForFolderAtRoot(name) {
 // --- Check for a Folder in Folder
 
 /**
- * -- FLAG -- checkForFolderInFolder
+ * -- // TODO: write up
  *
  * @param name
  * @param fldr
@@ -1146,7 +1146,7 @@ function checkForFolderInFolder(name, fldr) {
 // --- Check for a Folder at Path
 
 /**
- * -- FLAG -- checkForFolderAtPath
+ * -- // TODO: write up
  *
  * @param path
  * @returns {undefined}
@@ -1423,13 +1423,11 @@ function checkForFileAtPath(path) {
   return checkForFileInFolder(file, fldr);
 }
  
-// -- FLAG -- Update with example file and all that
-// -- FLAG -- Why is this weirdly compressed?
- 
+// TODO: Update with example file and all that
+// TODO: Why is this weirdly compressed?
 // Logger.log("checkForFileAtPath"); 
 // Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
-
-// -- FLAG -- createExampleFiles
+// TODO: createExampleFiles
 
 function checkForExFile() {
   var fldr = verifyPath("google-apps-script-cheat-sheet-demo/files");
@@ -1847,7 +1845,13 @@ function checkForSpreadsheetAtRoot(ss) {
 } 
 
 // --- Check for a Spreadsheet at Path
-// -- FLAG -- 
+
+/**
+ * TODO: checkForSpreadsheetAtPath
+ *
+ * @param path
+ * @returns {undefined}
+ */
 
 function checkForSpreadsheetAtPath(path) {
   path = verifyPath(path);
@@ -2540,7 +2544,7 @@ function valueRange(a1Notation, sheet) {
  * @requires arrayOfValuesByRow() 
  * @param sheet
  * @param hRow
- * @returns {undefined} -- FLAG -- 
+ * TODO:  @returns {undefined}
  */
 
 function arrObjFromSheet(sheet, hRow){
