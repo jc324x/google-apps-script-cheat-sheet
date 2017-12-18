@@ -32,13 +32,19 @@ Logger.log("Start");
 // | | -- Check String for Substring
 // | | Drive
 // | | - Utility Functions for Drive
-// | | -- Validate Path String
+// | | -- Verify Path
+// | | -- Target Path
 // | | - Folders
+// | | -- Array Of Folders
+// | | --- Array of Folders at Root
+// | | --- Array of Folders in Folder
+// | | --- Array of Folders at Path
+// | | --- Array of Folders in Drive
 // | | -- Find a Folder
-// | | --- Find a Folder at Root
-// | | --- Find a Folder in a Folder
+// | | --- Find Folder at Root
+// | | --- Find Folder in Folder
 // | | --- Find Folder at Path
-// | | --- Find a Folder in Drive
+// | | --- Find Folder in Drive
 // |+| -- Check for a Folder
 // |+| --- Check for Folder at Root
 // |+| --- Check for Folder in Folder
@@ -807,22 +813,27 @@ function checkStringForSubstring(text, sub) {
 // -- Verify Path
 
 /**
- * Removes leading '/' from a path string.
+ * Removes leading and trailing '/' from a path string.
  *
  * @param {string} path
  * @returns {string}
  */
 
 function verifyPath(path) {
-  if (path.charAt(0) === "/") {
+  if ((path.charAt(0)) === "/") {
     path = path.substr(1);
   }
+  
+  if ((path.charAt(path.length - 1) === "/")) {
+    path = path.slice(0, -1);
+  }
+
   return path;
 }
 
 // Logger.log("verifyPath");
 // Logger.log(verifyPath("valid/path")); // "valid/path"
-// Logger.log(verifyPath("/valid/path")); // "valid/path"
+// Logger.log(verifyPath("/valid/path/")); // "valid/path"
 
 // -- Get Path Target
 
@@ -835,7 +846,7 @@ function verifyPath(path) {
  * @returns {String}
  */
 
-function getPathTarget(path, index) {
+function targetPath(path, index) {
   path      = verifyPath(path);
   var split = path.split("/");
 
@@ -847,11 +858,11 @@ function getPathTarget(path, index) {
   } 
 } 
 
-// Logger.log("getPathTarget");
-// Logger.log(getPathTarget("example-path/a/b/c")); // c
-// Logger.log(getPathTarget("example-path/a/b/c", 0)); // c
-// Logger.log(getPathTarget("example-path/a/b/c", 1)); // example-path/a/b
-// Logger.log(getPathTarget("not-a-valid-path")); // false
+// Logger.log("targetPath");
+// Logger.log(targetPath("example-path/a/b/c")); // c
+// Logger.log(targetPath("example-path/a/b/c", 0)); // c
+// Logger.log(targetPath("example-path/a/b/c", 1)); // example-path/a/b
+// Logger.log(targetPath("not-a-valid-path")); // false
 
 // - Folders
 
@@ -860,6 +871,109 @@ function createExampleFolders() {
 } 
 
 createExampleFolders(); 
+
+// -- Array of Folders 
+
+// --- Array of Folders at Root
+
+/**
+ * Returns an array of all folders in the root of the user's Drive.
+ *
+ * @returns {Folder[]}
+ */
+
+function arrayOfFoldersAtRoot() {
+  var result = [];
+  var fi     = DriveApp.getRootFolder().getFolders();
+  while (fi.hasNext()) {
+    var fldr = fi.next();
+    result.push(fldr);
+  } 
+  return result;
+}
+
+// Logger.log("arrayOfFoldersAtRoot");
+// Logger.log(arrayOfFoldersAtRoot());
+ 
+// --- Array of Folders in a Folder 
+
+/**
+ * Returns an array of all folders in a folder.
+ *
+ * @param {Folder} fldr
+ * @returns {Folder[]}
+ */
+
+function arrayOfFoldersInFolder(fldr) {
+  var result = [];
+  var fi     = fldr.getFolders();
+  while (fi.hasNext()) {
+    var _fldr = fi.next();
+    result.push(_fldr);
+  } 
+  return result;
+}
+
+// Logger.log("arrayOfFoldersInFolder");
+// var fldr_aofif = findFolderAtPath("google-apps-script-cheat-sheet-demo"); 
+// Logger.log(arrayOfFoldersInFolder(fldr_aofif));
+
+function arrayOfFoldersAtPath(path) {
+  path       = verifyPath(path);
+  var result = [];
+  var fldr   = findFolderAtPath(path);
+  if (fldr) {
+    return arrayOfFoldersInFolder(fldr);
+  } else {
+    return false;
+  }
+} 
+
+// Logger.log("arrayOfFoldersAtPath");
+// Logger.log(arrayOfFoldersAtPath("google-apps-script-cheat-sheet-demo")); //
+
+// --- Array of All Folders in Drive
+
+/**
+ * Returns an array of all folders in the user's Drive.
+ *
+ * @returns {Folder[]}
+ */
+
+function arrayOfFoldersInDrive() {
+  var fi  = DriveApp.getFolders();
+  var arr = [];
+  while (fi.hasNext()) {
+    var fldr = fi.next();
+    arr.push(fldr);
+  } 
+  return arr;
+}
+
+// Logger.log("arrayOfFoldersInDrive");
+// Logger.log(arrayOfFoldersInDrive());
+
+// -- Array of Folder Names
+
+/**
+ * Returns an array of folder names.
+ *
+ * @param {Folders[]}
+ * @returns {string[]}
+ */
+
+function arrayOfFolderNames(arr) {
+  var result = [];
+  for (var i = 0; i < arr.length; i++) {
+    var name = arr[i].getName();
+    result.push(name);
+  }
+  return result;
+}
+
+// Logger.log("arrayOfFolderNames");
+// var arr_aofldrn  = arrayOfFoldersInFolder(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B"));
+// Logger.log(arrayOfFolderNames(arr_aofldrn)); // [C]
 
 // -- Find a Folder
 
@@ -947,8 +1061,8 @@ function findFolderAtPath(path) {
       }
     } 
 
-    var last = getPathTarget(path);
-    if (fldr.getName() === last) {
+    var target = targetPath(path);
+    if (fldr.getName() === target) {
       return fldr;
     } else {
       return false;
@@ -985,6 +1099,7 @@ function findFolderInDrive(name) {
 /**
  *
  * @param name
+ * @requires findFolderAtRoot() 
  * @returns {undefined}
  */
 
@@ -1032,12 +1147,12 @@ function checkForFolderInFolder(name, fldr) {
 
 function checkForFolderAtPath(path) {
   path = verifyPath(path);
-    var fldr = findFolderAtPath(path);
-    if (fldr) {
-      return true;
-    } else {
-      return false;
-    }
+  var fldr = findFolderAtPath(path);
+  if (fldr) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Logger.log("checkForFolderAtPath");
@@ -1061,6 +1176,14 @@ function createFolderAtRoot(name) {
 
 // --- Create Folder in a Folder
 
+/**
+ * createFolderInFolder
+ *
+ * @param name
+ * @param fldr
+ * @returns {undefined}
+ */
+
 function createFolderInFolder(name, fldr) {
   return fldr.createFolder(name);
 } 
@@ -1081,22 +1204,20 @@ function createFolderInFolder(name, fldr) {
  */
 
 function createFolderAtPath(path) {
-  path = verifyPath(path);
-    var target = getPathTarget(path, 1);
-    Logger.log(target);
-    var fldr = findFolderAtPath(target); 
-    Logger.log(fldr);
-    if (fldr) {
-      target = getPathTarget(path);
-      return fldr.createFolder(target);
-    } else {
-      return false;
-    }
+  path       = verifyPath(path);
+  var target = targetPath(path, 1);
+  var fldr   = findFolderAtPath(target);
+  if (fldr) {
+    target = targetPath(path);
+    return fldr.createFolder(target);
+  } else {
+    return false;
+  }
 } 
 
 // Logger.log("createFolderAtPath");
-// var dt = dateTime();
-// Logger.log(createFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B/C/" + dt)); // 2017-12-16 13:34:38
+// var dt_cfap = dateTime();
+// Logger.log(createFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B/C/" + dt_cfap)); // 2017-12-16 13:34:38
 // Logger.log(createFolderAtPath("no/path/here")); // false
 
 // -- Create Folders
@@ -1105,7 +1226,7 @@ function createFolderAtPath(path) {
   
 /**
  * Creates a multitude of folders at Root.
- * There are no checks in place, this can create duplicate folders
+ * There are no checks in this function; this can create duplicate folders
  *
  * @param arr
  * @returns {undefined}
@@ -1113,16 +1234,53 @@ function createFolderAtPath(path) {
 
 function createFoldersAtRoot(arr) {
   for (i = 0; i < arr.length; i++) {
-      DriveApp.getRootFolder().createFolder(arr[i]);
+    DriveApp.getRootFolder().createFolder(arr[i]);
   }
   return DriveApp.getRootFolder();
 }
 
+// Logger.log("createFoldersAtRoot");
+
 // --- Create Folders in a Folder
+
+function createFoldersInFolder(arr, fldr) {
+  for (i = 0; i < arr.length; i++) {
+    fldr.createFolder(arr[i]);
+  }
+  return fldr;
+} 
+
+// Logger.log("createFoldersInFolder");
   
 // --- Create Folders at Path
 
-// -- Verify Folder Path
+function createFoldersAtPath(arr, path) {
+  path       = verifyPath(path);
+  var target = targetPath(path, 1);
+  var fldr   = findFolderAtPath(target);
+  if (fldr) {
+    for (i = 0; i < arr.length; i++) {
+      fldr.createFolder(arr[i]);
+    }
+    return fldr.createFolder(target);
+  } else {
+    return false;
+  }
+} 
+
+// Logger.log("createFoldersAtPath");
+
+// - Verify Folder
+
+// --- Verify Folder at Root
+
+function verifyFolderAtRoot() {
+  
+} 
+
+// --- Verify Folder in Folder
+ 
+// --- Verify Folder Path
 
 /**
 
@@ -1133,129 +1291,57 @@ function createFoldersAtRoot(arr) {
  * @returns {Folder}
  */
 
-// -- FLAG -- Can this verify a path of "/testing"?
-// -- FLAG -- was verifyPath
-
 function verifyFolderPath(path) {
-  path = verifyPath(path);
-    var split = path.split("/");
-    var fldr;
-    for (i = 0; i < split.length; i++) {
-      var fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
-      if (i === 0) {
-        if (!(fi.hasNext())) {
-          DriveApp.createFolder(split[i]);
-          fi = DriveApp.getFoldersByName(split[i]);
-        } 
-        fldr = fi.next();
-      } else if (i >= 1) {
-        fi = fldr.getFoldersByName(split[i]);
-        if (!(fi.hasNext())) {
-          fldr.createFolder(split[i]);
-          fi = DriveApp.getFoldersByName(split[i]);
-        } 
-        fldr = fi.next();
-      }
-    } 
-    return fldr;
+  path      = verifyPath(path);
+  var split = path.split("/");
+  var fldr;
+  for (i = 0; i < split.length; i++) {
+    var fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+    if (i === 0) {
+      if (!(fi.hasNext())) {
+        DriveApp.createFolder(split[i]);
+        fi = DriveApp.getFoldersByName(split[i]);
+      } 
+      fldr = fi.next();
+    } else if (i >= 1) {
+      fi = fldr.getFoldersByName(split[i]);
+      if (!(fi.hasNext())) {
+        fldr.createFolder(split[i]);
+        fi = DriveApp.getFoldersByName(split[i]);
+      } 
+      fldr = fi.next();
+    }
+  } 
+  return fldr;
 }
 
 // Logger.log("verifyFolderPath");
 // Logger.log(verifyFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
-// Logger.log(verifyFolderPath("not-a-valid-path-but-it-will-get-created-anyways"));
 
-// -- Array of Folders 
+// -- Verify Folders
 
-// --- Array of Folders in a Folder 
+// --- Verify Folders at Root
 
 /**
- * Returns an array of all folders in a folder.
+ * Returns the root folder.
+ * Creates folders at root if they don't exist already.
  *
- * @param {Folder} fldr
- * @returns {Folder[]}
+ * @param {string[]} names
+ * @returns {Folder}
  */
 
-function arrayOfFoldersInFolder(fldr) {
-  var result = [];
-  var fi     = fldr.getFolders();
-  while (fi.hasNext()) {
-    var _fldr = fi.next();
-    result.push(_fldr);
+function verifyFoldersAtRoot(arr) {
+  var rfs   = arrayOfFoldersAtRoot();
+  var names = arrayOfFolderNames(rfs);
+  for (i = 0; i < arr.length; i++) {
+    if (!(checkArrayForValue(names, arr[i]))) {
+      DriveApp.createFolder(arr[i]);
+    }
   } 
-  return result;
+  return DriveApp.getRootFolder();
 }
 
-// Logger.log("arrayOfFoldersInFolder");
-// Logger.log(arrayOfFoldersInFolder(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/"))); // [A]
-
-// --- Array of Folders at Root
-
-/**
- * Returns an array of all folders in the root of the user's Drive.
- *
- * @returns {Folder[]}
- */
-
-function arrayOfFoldersAtRoot() {
-  var result = [];
-  var fi     = DriveApp.getRootFolder().getFolders();
-  while (fi.hasNext()) {
-    var fldr = fi.next();
-    result.push(fldr);
-  } 
-  return result;
-}
-
-// Logger.log("arrayOfFoldersAtRoot");
-// Logger.log(arrayOfFoldersAtRoot());
-
-// --- Array of All Folders in Drive
-
-/**
- * Returns an array of all folders in the user's Drive.
- *
- * @returns {Folder[]}
- */
-
-function arrayOfFoldersInDrive() {
-  var fi  = DriveApp.getFolders();
-  var arr = [];
-  while (fi.hasNext()) {
-    var fldr = fi.next();
-    arr.push(fldr);
-  } 
-  return arr;
-}
-
-// Logger.log("arrayOfFoldersInDrive");
-// Logger.log(arrayOfFoldersInDrive());
-
-// -- Array of Folder Names
-
-/**
- * Returns an array of folder names.
- *
- * @param {Folders[]}
- * @returns {string[]}
- */
-
-function arrayOfFolderNames(arr) {
-  var result = [];
-  for (var i = 0; i < arr.length; i++) {
-    var name = arr[i].getName();
-    result.push(name);
-  }
-  return result;
-}
-
-// Logger.log("arrayOfFolderNames");
-// var arr_aofldrn  = arrayOfFoldersInFolder(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B"));
-// Logger.log(arrayOfFolderNames(arr_aofldrn)); // [C]
-
-// -- Create or Verify Folders
-
-// --- Create or Verify Folders in a Folder
-// -- FLAG -- argument order (!)
+// --- Verify Folders in a Folder
 
 /**
  * Returns a folder. 
@@ -1284,28 +1370,10 @@ function verifyFoldersInFolder(arr, fldr) {
 // var fldr_covfif = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
 // Logger.log(verifyFoldersInFolder(fldr_covfif, ["X", "Y", "Z"])); // folders
 // Logger.log(arrayOfFoldersInFolder(fldr_covfif)); // [A, X, Y, Z]
+
+function verifyFoldersAtPath() {
   
-// --- Create or Verify Folders at Root
-// -- FLAG -- retest
-
-/**
- * Returns the root folder.
- * Creates folders at root if they don't exist already.
- *
- * @param {string[]} names
- * @returns {Folder}
- */
-
-function verifyFoldersAtRoot(arr) {
-  var rfs   = arrayOfFoldersAtRoot();
-  var names = arrayOfFolderNames(rfs);
-  for (i = 0; i < arr.length; i++) {
-    if (!(checkArrayForValue(names, arr[i]))) {
-      DriveApp.createFolder(arr[i]);
-    }
-  } 
-  return DriveApp.getRootFolder();
-}
+} 
 
 // - Files
 
