@@ -45,10 +45,10 @@ Logger.log("Start");
 // | | --- Find Folder in Folder
 // | | --- Find Folder at Path
 // | | --- Find Folder in Drive
-// |+| -- Check for a Folder
-// |+| --- Check for Folder at Root
-// |+| --- Check for Folder in Folder
-// |+| --- Check for Folder at Path
+// | | -- Check for a Folder
+// | | --- Check for Folder at Root
+// | | --- Check for Folder in Folder
+// | | --- Check for Folder at Path
 // | | -- Create a Folder
 // | | --- Create Folder at Root
 // | | --- Create Folder in Folder
@@ -895,7 +895,7 @@ function arrayOfFoldersAtRoot() {
 // Logger.log("arrayOfFoldersAtRoot");
 // Logger.log(arrayOfFoldersAtRoot());
  
-// --- Array of Folders in a Folder 
+// --- Array of Folders in Folder 
 
 /**
  * Returns an array of all folders in a folder.
@@ -917,6 +917,13 @@ function arrayOfFoldersInFolder(fldr) {
 // Logger.log("arrayOfFoldersInFolder");
 // var fldr_aofif = findFolderAtPath("google-apps-script-cheat-sheet-demo"); 
 // Logger.log(arrayOfFoldersInFolder(fldr_aofif));
+
+/**
+ * arrayOfFoldersAtPath
+ *
+ * @param {string} path
+ * @returns {Folder[]}
+ */
 
 function arrayOfFoldersAtPath(path) {
   path       = verifyPath(path);
