@@ -35,11 +35,11 @@ Logger.log("Start");
 // | | -- Verify Path
 // | | -- Target Path
 // | | - Folders
-// | | -- Array Of Folders
-// | | --- Array of Folders at Root
-// | | --- Array of Folders in Folder
-// | | --- Array of Folders at Path
-// | | --- Array of Folders in Drive
+// |*| -- Array Of Folders
+// |*| --- Array of Folders at Root
+// |*| --- Array of Folders in Folder
+// |*| --- Array of Folders at Path
+// |*| --- Array of Folders in Drive
 // | | -- Find a Folder
 // | | --- Find Folder at Root
 // | | --- Find Folder in Folder
@@ -877,7 +877,8 @@ createExampleFolders();
 // --- Array of Folders at Root
 
 /**
- * Returns an array containing all folders at root.
+ * Returns an array containing all of the folders found at root.
+ * The array contains folder objects, not just the names of the folders.
  *
  * @returns {Folder[]}
  */
@@ -898,7 +899,8 @@ function arrayOfFoldersAtRoot() {
 // --- Array of Folders in Folder 
 
 /**
- * Returns an array of all folders in a folder.
+ * Returns an array containing all of the folders inside the target folder.
+ * The array contains folder objects, not just the names of the folders.
  *
  * @param {Folder} fldr
  * @returns {Folder[]}
@@ -918,10 +920,16 @@ function arrayOfFoldersInFolder(fldr) {
 // var fldr_aofif = findFolderAtPath("google-apps-script-cheat-sheet-demo"); 
 // Logger.log(arrayOfFoldersInFolder(fldr_aofif));
 
+// --- Array of Folders at Path
+
 /**
- * arrayOfFoldersAtPath
+ * Returns an array containing all of the folders inside the folder at the specified path.
+ * The array contains folder objects, not just the names of the folders.
  *
  * @param {string} path
+ * @requires verifyPath() 
+ * @requires findFolderAtPath() 
+ * @requires arrayOfFoldersInFolder() 
  * @returns {Folder[]}
  */
 
@@ -937,12 +945,12 @@ function arrayOfFoldersAtPath(path) {
 } 
 
 // Logger.log("arrayOfFoldersAtPath");
-// Logger.log(arrayOfFoldersAtPath("google-apps-script-cheat-sheet-demo")); //
+// Logger.log(arrayOfFoldersAtPath("google-apps-script-cheat-sheet-demo"));
 
 // --- Array of All Folders in Drive
 
 /**
- * Returns an array of all folders in the user's Drive.
+ * Returns an array of all folders in Drive.
  *
  * @returns {Folder[]}
  */
@@ -979,15 +987,15 @@ function arrayOfFolderNames(arr) {
 }
 
 // Logger.log("arrayOfFolderNames");
-// var arr_aofldrn  = arrayOfFoldersInFolder(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B"));
-// Logger.log(arrayOfFolderNames(arr_aofldrn)); // [C]
+// var arr_aofn  = arrayOfFoldersInFolder(findFolderAtPath("google-apps-script-cheat-sheet-demo/"));
+// Logger.log(arrayOfFolderNames(arr_aofn));
 
 // -- Find a Folder
 
 // --- Find a Folder at Root
 
 /**
- * Returns a folder at the root of the user's Drive.
+ * Returns a folder found at root or false if the folder doesn't exist.
  *
  * @requires arrayOfFoldersAtRoot()
  * @requires arrayOfFolderNames()
@@ -1012,7 +1020,7 @@ function findFolderAtRoot(name) {
 // --- Find a Folder in a Folder
 
 /**
- * Returns a folder.
+ * Returns a folder from inside another folder or false if either folder doesn't exist.
  *
  * @requires arrayOfFoldersInFolder() 
  * @requires arrayOfFolderNames() 
@@ -1039,7 +1047,7 @@ function findFolderInFolder(name, fldr) {
 // -- Find Folder at Path
 
 /**
- * Returns the requested folder or false if the folder isn't found. 
+ * Returns the folder found at the given path or false if that folder doesn't exist.
  *
  * @param path
  * @returns {Folder}
