@@ -835,7 +835,7 @@ function verifyPath(path) {
 // Logger.log(verifyPath("valid/path")); // "valid/path"
 // Logger.log(verifyPath("/valid/path/")); // "valid/path"
 
-// -- Get Path Target
+// -- Target Path
 
 /**
  * Returns: 
