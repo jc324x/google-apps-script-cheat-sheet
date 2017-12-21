@@ -3,7 +3,7 @@
 function test() {}
 Logger.log("Start");
 
-// | | General
+// |*| General
 // |*| - Array
 // |*| -- Check Array for a Value
 // |*| -- Remove Duplicates from Array
@@ -686,6 +686,18 @@ var objB_mo = {
 
 // -- Formatted Date Time
 
+/**
+ * Returns a formatted date time string.
+ * Options:
+ *    hms     -> hour:minute:second (24)
+ *    mdy     -> month-day-year
+ *    ymd     -> year-month-day
+ *    mdyampm -> month-day-year hour:minute:second am|pm
+ *    default -> year-month-day hour:minute:second (24)
+ * @param opt
+ * @returns {undefined}
+ */
+
 function dateTime(opt) {
   var now = new Date();
   var date, time;
@@ -729,11 +741,11 @@ function dateTime(opt) {
 } 
 
 // Logger.log("dateTime");
-// Logger.log(dateTime("hms"));
-// Logger.log(dateTime("mdy"));
-// Logger.log(dateTime("ymd"));
-// Logger.log(dateTime("mdyampm"));
-// Logger.log(dateTime());
+// Logger.log(dateTime("hms")); // 9:13:23
+// Logger.log(dateTime("mdy")); // 12-21-2017
+// Logger.log(dateTime("ymd")); // 2017-12-21
+// Logger.log(dateTime("mdyampm")); // 12-21-2017 9:13:23 AM
+// Logger.log(dateTime()); // 2017-12-21 9:13:23
 
 // -- Date Object from String
 
@@ -794,20 +806,33 @@ var quarterDates = [
 ];
 
 // Logger.log("matchDateToRangeOfDates");
-// Logger.log(matchDateToRangeOfDates(quarterDates)); // "summer vacation" (pretend that today is 06/25/2018)
+// Logger.log(matchDateToRangeOfDates(quarterDates)); // 2 (12/21/2017)
 // Logger.log(matchDateToRangeOfDates(quarterDates, "08/02/2017")); // 1 
 
 // - String
  
 // -- Check String for Substring
 
-function checkStringForSubstring(text, sub) {
-  if (text.indexOf(sub) > -1 ) {
+/**
+ * Returns true if the string contains the substring.
+ *
+ * @param {string} val
+ * @param {string} str
+ * @returns {boolean}
+ */
+
+function checkStringForSubstring(val, str) {
+  if (str.indexOf(val) > -1 ) {
     return true;
   } else {
     return false;
   }
 } 
+
+// Logger.log("checkStringForSubstring");
+// var str_csfs = "google-apps-script-cheat-sheet-demo";
+// var val_csfs = "google-apps-script"; 
+// Logger.log(checkStringForSubstring(val_csfs, str_csfs)); // true
 
 // Drive
 
