@@ -4,32 +4,32 @@ function test() {}
 Logger.log("Start");
 
 // | | General
-// | | - Array
-// | | -- Check Array for a Value
-// | | -- Remove Duplicates from Array
-// | | -- Remove Empty Elements from Array
-// | | -- Get Count of Values in Array
-// | | -- Intersect of Two Arrays
-// | | -- Compare Two Arrays
-// | | -- Array as Delimited String
-// | | -- Array as Modified Delimited String
-// | | - Two-Dimensional Array
-// | | -- Flatten Two-Dimensional Array
-// | | - Array of Objects
-// | | -- Sort Array of Objects by Property or Properties
-// | | -- Find Object in Array of Objects
-// | | -- Find First or Last Object in Array of Objects by Timestamp
-// | | -- Filter Array of Objects by Value or Values
-// | | -- Add Property to Objects in Array of Objects
-// | | - Object
-// | | -- Array of Object Values
-// | | -- Merge Objects
-// | | - Dates and Times
-// | | -- Formatted Date Time
-// | | -- Date Object from String
-// | | -- Match a Date to a Date Range
-// | | - String
-// | | -- Check String for Substring
+// |*| - Array
+// |*| -- Check Array for a Value
+// |*| -- Remove Duplicates from Array
+// |*| -- Remove Empty Elements from Array
+// |*| -- Get Count of Values in Array
+// |*| -- Intersect of Two Arrays
+// |*| -- Compare Two Arrays
+// |*| -- Array as Delimited String
+// |*| -- Array as Modified Delimited String
+// |*| - Two-Dimensional Array
+// |*| -- Flatten Two-Dimensional Array
+// |*| - Array of Objects
+// |*| -- Sort Array of Objects by Property or Properties
+// |*| -- Find Object in Array of Objects
+// |*| -- Find First or Last Object in Array of Objects by Timestamp
+// |*| -- Filter Array of Objects by Value or Values
+// |*| -- Add Property to Objects in Array of Objects
+// |*| - Object
+// |*| -- Array of Object Values
+// |*| -- Merge Objects
+// |*| - Dates and Times
+// |*| -- Formatted Date Time
+// |*| -- Date Object from String
+// |*| -- Match a Date to a Date Range
+// |*| - String
+// |*| -- Check String for Substring
 // | | Drive
 // | | - Utility Functions for Drive
 // | | -- Verify Path
@@ -238,7 +238,8 @@ function removeEmptyElementsFromArray(x) {
 // -- Get Count of Values in Array
 
 /**
- * Returns an array of objects. Objects have two properties, count and value.
+ * Returns an array of objects. 
+ * Objects have two properties, count and value.
  *
  * @param {Array} arr
  * @property {value} a value found in the array
@@ -274,7 +275,7 @@ function countOfValuesInArray(arr) {
 // -- Intersect of Two Arrays
 
 /**
- * Returns an array containing the elements in both arrays.
+ * Returns an array of the elements found in both arrays.
  *
  * @param {Array} arrA
  * @param {Array} arrB
@@ -305,7 +306,7 @@ function intersectOfTwoArrays(arrA, arrB) {
 // -- Compare Two Arrays 
 
 /**
- * Returns true if both arrays have the same elements in the same order.
+ * Returns true if both arrays contain the same elements in the same order.
  *
  * @param {Array} arrA
  * @param {Array} arrB
@@ -313,10 +314,10 @@ function intersectOfTwoArrays(arrA, arrB) {
  */
 
 function compareTwoArrays(arrA, arrB) {
-  if(arrA.length !== arrB.length) return false;
-  for(var i = arrA.length; i--;) {
-    if(arrA[i] !== arrB[i]) return false;
-  }
+  if (arrA.length !== arrB.length) return false;
+    for (var i = arrA.length; i--;) {
+      if (arrA[i] !== arrB[i]) return false;
+    }
   return true;
 }
 
@@ -400,16 +401,19 @@ function flattenTwoDimensionalArray(arr) {
 // Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
-// TODO: rename to arrObj_ex
 
-var ex_arrObj = [
+/**
+ * Example array of objects
+ */
+
+var arrObj_ex = [
   {a: 1000, b: 1, c: 5}, 
   {a: 10000, b: 2, c: 5000}, 
   {a: 10, b: 2, c: 500},
   {a: 1, b: 1, c: 50}
 ];
 
-// Logger.log("ex_arrObj");
+// Logger.log("arrObj_ex");
 
 // -- Sort Array of Objects by Property or Properties
 
@@ -426,19 +430,20 @@ function sortArrayOfObjects(prop) {
     sortOrder = -1;
     prop = prop.substr(1);
   }
-  return function (a,b) {
+  return function (a, b) {
     var result = (a[prop] < b[prop]) ? -1 : (a[prop] > b[prop]) ? 1 : 0;
     return result * sortOrder;
   };
 }
 
 // Logger.log("sortArrayOfObjects");
-// Logger.log(ex_arrObj.sort(sortArrayOfObjects("a"))); 
+// Logger.log(arrObj_ex.sort(sortArrayOfObjects("a"))); 
 // [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 /**
  * Returns an array of objects sorted by multiple property values.
  * @param {...string}
+ * @requires sortArrayOfObjects() 
  * @returns {Object[]}
  */
 
@@ -455,7 +460,7 @@ function sortArrayOfObjectsMulti() {
 }
 
 // Logger.log("sortArrayOfObjectsMulti");
-// Logger.log(ex_arrObj.sort(sortArrayOfObjectsMulti("b", "c"))); 
+// Logger.log(arrObj_ex.sort(sortArrayOfObjectsMulti("b", "c"))); 
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 // -- Find Object in Array of Objects
@@ -464,19 +469,19 @@ function sortArrayOfObjectsMulti() {
  * Returns the first object in an array of objects with the key value pair.
  *
  * @param {Object[]} arrObj
- * @param {string} pQuery
+ * @param {string} prop
  * @param {string} val
- * @param {string} [pReturn]
+ * @param {string} [ret]
  * @returns {Object}
  */
 
-function findObjectInArrayOfObjects(arrObj, pQuery, val, pReturn) {
+function findObjectInArrayOfObjects(arrObj, prop, val, ret) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(pQuery) && prop == pQuery && obj[prop] == val) {
-        if (pReturn !== undefined) {
-          return obj[pReturn];
+    for (var p in obj) {
+      if (obj.hasOwnProperty(prop) && p == prop && obj[p] == val) {
+        if (ret !== undefined) {
+          return obj[ret];
         } else {
           return obj;
         }
@@ -486,8 +491,8 @@ function findObjectInArrayOfObjects(arrObj, pQuery, val, pReturn) {
 }
 
 // Logger.log("findObjectInArrayOfObjects");
-// Logger.log(findObjectInArrayOfObjects(ex_arrObj, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
-// Logger.log(findObjectInArrayOfObjects(ex_arrObj, "c", 500, "a")); // 10
+// Logger.log(findObjectInArrayOfObjects(arrObj_ex, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
+// Logger.log(findObjectInArrayOfObjects(arrObj_ex, "c", 500, "a")); // 10
 
 // Find First or Last Object in Array of Objects by Timestamp
 
@@ -498,9 +503,9 @@ function findObjectInArrayOfObjects(arrObj, pQuery, val, pReturn) {
  * @returns {Object}
  */
 
-function findFirstObjectByTimestampInArrayOfObjects(arrObj){
+function findFirstObjectInArrayOfObjects(arrObj){
   if (arrObj.length >= 2) {
-    var sorted = arrObj.sort(function(a,b){
+    var sorted = arrObj.sort(function(a, b){
       return new Date(a.Timestamp) - new Date(b.Timestamp);
     });
     return sorted[0];
@@ -509,21 +514,21 @@ function findFirstObjectByTimestampInArrayOfObjects(arrObj){
   }
 }
 
-// Logger.log("findFirstObjectByTimestampInArrayOfObjects");
+// Logger.log("findFirstObjectInArrayOfObjects");
 // var sheet_fe  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var arrObj_fe = arrObjFromRange(sheet_fe, "J1:K4");
-// Logger.log(findFirstObjectByTimestampInArrayOfObjects(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
+// Logger.log(findFirstObjectInArrayOfObjects(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 /**
- * Returns the object with the latest Timestamp value.
+ * Returns the object with the most recent Timestamp value.
  *
  * @param {Object[]} arrObj
  * @returns {Object}
  */
 
-function findLastObjectByTimestampInArrayOfObjects(arrObj) {
+function findLastObjectInArrayOfObjects(arrObj) {
   if (arrObj.length >= 2) {
-    var sorted = arrObj.sort(function(a,b){
+    var sorted = arrObj.sort(function(a, b){
       return new Date(b.Timestamp) - new Date(a.Timestamp);
     });
     return sorted[0];
@@ -535,7 +540,7 @@ function findLastObjectByTimestampInArrayOfObjects(arrObj) {
 // Logger.log("findLastObjectByTimestampInArrayOfObjects");
 // var sheet_le  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
-// Logger.log(findLastObjectByTimestampInArrayOfObjects(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
+// Logger.log(findLastObjectInArrayOfObjects(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
 // -- Filter Array of Objects by Value or Values
 
@@ -543,31 +548,31 @@ function findLastObjectByTimestampInArrayOfObjects(arrObj) {
  * Returns an array of objects containing matching objects.
  *
  * @param {Object} arrObj
- * @param {string} pQuery
+ * @param {string} prop
  * @param {string || string[]} val
  * @returns {Object[]}
  */
 
-function filterArrayOfObjectsByValueOrValues(arrObj, pQuery, valOrValues) {
+function filterArrayOfObjectsByValueOrValues(arrObj, prop, vals) {
   var result = [];
-  if (Array.isArray(valOrValues)) {
-    for (var i = 0; i < valOrValues.length; i++) {
-      var val = valOrValues[i]; 
+  if (Array.isArray(vals)) {
+    for (var i = 0; i < vals.length; i++) {
+      var val = vals[i]; 
       for (var j = 0; j < arrObj.length; j++) {
-        if (arrObj[j][pQuery] == val) result.push(arrObj[j]);
+        if (arrObj[j][prop] == val) result.push(arrObj[j]);
       }
     } 
   } else {
     for (var k = 0; k < arrObj.length; k++) {
-      if (arrObj[k][pQuery] == valOrValues) result.push(arrObj[k]);
+      if (arrObj[k][prop] == vals) result.push(arrObj[k]);
     }
   }
   return result;
 }
 
 // Logger.log("filterArrayOfObjectsByValueOrValues");
-// Logger.log(filterArrayOfObjectsByValueOrValues(ex_arrObj, "a", 10)); // [{a=10.0, b=2.0, c=500.0}]
-// Logger.log(filterArrayOfObjectsByValueOrValues(ex_arrObj, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
+// Logger.log(filterArrayOfObjectsByValueOrValues(arrObj_ex, "a", 10)); // [{a=10.0, b=2.0, c=500.0}]
+// Logger.log(filterArrayOfObjectsByValueOrValues(arrObj_ex, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 
 // -- Add Property to Objects in Array of Objects
 
@@ -575,18 +580,18 @@ function filterArrayOfObjectsByValueOrValues(arrObj, pQuery, valOrValues) {
  * Returns an array of objects, with an additional property value added to each matching object.
  *
  * @param {Object[]} arrObj
- * @param {string[]} arrProp
- * @param {string} newProp 
+ * @param {string[]} arr
+ * @param {string} prop 
  * @returns {Object[]}
  */
 
-function addPropertyToObjectsInArrayOfObjects(arrObj, arrProp, newProp){
+function addPropertyToObjectsInArrayOfObjects(arrObj, arr, prop){
   for (var i = 0; i < arrObj.length; i++){
     var obj = arrObj[i];
-    for (var h = 0; h < arrProp.length; h++) {
-      for (var prop in obj) {
-        if (obj.hasOwnProperty(prop) && prop == arrProp[h] && obj[prop] !== ""){
-              obj[newProp] = obj[prop];
+    for (var h = 0; h < arr.length; h++) {
+      for (var p in obj) {
+        if (obj.hasOwnProperty(p) && p == arr[h] && obj[p] !== ""){
+              obj[prop] = obj[p];
         }
       }
     }
@@ -611,15 +616,15 @@ var arrObj_upfao  = [
 /**
  * Returns an array of matching properties. 
  *
- * @requires intersectOfTwoArrays() 
  * @param {Object} obj
  * @param {string[]} props
+ * @requires intersectOfTwoArrays() 
  * @returns {Array}
  */
 
-function arrayOfObjectValues(obj, arrProp) {
+function arrayOfObjectValues(obj, arr) {
   var result = [];
-  var keys   = intersectOfTwoArrays(Object.keys(obj), arrProp);
+  var keys   = intersectOfTwoArrays(Object.keys(obj), arr);
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i];
     for (var prop in obj) {
@@ -642,12 +647,10 @@ var obj_aoov = {
 // var arr_aoov = ["a", "b", "d"];
 // Logger.log(arrayOfObjectValues(obj_aoov, arr_aoov)); // [1, 2]
 
-// TODO
 // Merge Objects
 
 /**
- * Returns an object with the values of the argument objects.
- * If multiple objects have the same property value, the last value set is retained. 
+ * Returns a single object with the values of multiple objects.
  * @param {...Object}
  * @returns {Object}
  */
@@ -663,18 +666,18 @@ function mergeObjs() {
   return result;
 } 
 
-// var objA_mo = {
-//  a: 1, 
-//  b: 2, 
-//  c: 3
-// }; 
+var objA_mo = {
+ a: 1, 
+ b: 2, 
+ c: 3
+}; 
 
-// var objB_mo = {
-//  c: 4,
-//  d: 5, 
-//  e: 6, 
-//  f: 7
-// }; 
+var objB_mo = {
+ c: 4,
+ d: 5, 
+ e: 6, 
+ f: 7
+}; 
 
 // Logger.log("mergeObjs");
 // Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
@@ -813,7 +816,8 @@ function checkStringForSubstring(text, sub) {
 // -- Verify Path
 
 /**
- * Removes leading and trailing '/' from a path string.
+ * Returns a path string. 
+ * Preceding and trailing '/' are removed.
  *
  * @param {string} path
  * @returns {string}
