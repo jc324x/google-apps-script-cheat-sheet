@@ -45,10 +45,10 @@ Logger.log("Start");
 // |*| --- Find Folder in Folder
 // |*| --- Find Folder at Path
 // |*| --- Find Folder in Drive
-// |*| -- Check for a Folder
-// |*| --- Check for Folder at Root
-// |*| --- Check for Folder in Folder
-// |*| --- Check for Folder at Path
+// | | -- Check for a Folder
+// | | --- Check for Folder at Root
+// | | --- Check for Folder in Folder
+// | | --- Check for Folder at Path
 // |*| -- Create a Folder
 // |*| --- Create Folder at Root
 // |*| --- Create Folder in Folder
@@ -64,11 +64,6 @@ Logger.log("Start");
 // | | -- Verify Folders
 // | | --- Verify Folders in a Folder
 // | | --- Verify Folders at Root
-// | | -- Array of Folders
-// | | --- Array of Folders in a Folder
-// | | --- Array of Folders at Root
-// | | --- Array of All Folders in Drive
-// | | -- Array of Folder Names
 // | | - Files
 // | | -- Check for a File
 // | | --- Check for a File in a Folder
@@ -1169,11 +1164,12 @@ function checkForFolderAtRoot(name) {
  *
  * @param name
  * @param fldr
+ * @requires findFolderInDrive() 
  * @returns {undefined}
  */
 
 function checkForFolderInFolder(name, fldr) {
-  if (findFolderInDrive(name, fldr)) {
+  if (findFolderInFolder(name, fldr)) {
     return true;
   } else {
     return false;
@@ -1352,11 +1348,51 @@ function createFoldersAtPath(arr, path) {
 
 // --- Verify Folder at Root
 
-function verifyFolderAtRoot() {
-  
+/**
+ * Returns the folder found at root.
+ * The folder is created if it doesn't already exist.
+ *
+ * @param {string} name
+ * @requires checkForFolderAtRoot() 
+ * @requires createFolderAtRoot() 
+ * @requires findFolderAtRoot() 
+ * @requires arrayOfFoldersAtRoot()
+ * @requires arrayOfFolderNames()
+ * @requires checkArrayForValue()
+ * @returns {Folder}
+ */
+
+function verifyFolderAtRoot(name) {
+  if (!(checkForFolderAtRoot(name))) {
+    return createFolderAtRoot(name);
+  } else {
+    return findFolderAtRoot(name);
+  }
 } 
 
+// Logger.log("verifyFolderAtRoot");
+// Logger.log(verifyFolderAtRoot("google-apps-script-cheat-sheet-demo")); // google-apps-script-cheat-sheet-demo
+
 // --- Verify Folder in Folder
+
+/**
+ * Returns a folder from its parent folder.
+ *
+ * @param {string} name
+ * @param {Folder} fldr
+ * @requires checkForFolderInFolder() 
+ * @requires createFolderInFolder() 
+ * @requires findFolderInFolder() 
+ * @returns {Folder}
+ */
+
+function verifyFolderInFolder(name, fldr) {
+  if (!(checkForFolderInFolder(name, fldr))) {
+    return createFolderInFolder(name, fldr);
+  } else {
+    return findFolderInFolder(name, fldr);
+  }
+}
  
 // --- Verify Folder Path
 
