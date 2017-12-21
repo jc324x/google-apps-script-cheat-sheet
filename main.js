@@ -30,21 +30,21 @@ Logger.log("Start");
 // |*| -- Match a Date to a Date Range
 // |*| - String
 // |*| -- Check String for Substring
-// | | Drive
-// | | - Utility Functions for Drive
-// | | -- Verify Path
-// | | -- Target Path
+// |*| Drive
+// |*| - Utility Functions for Drive
+// |*| -- Verify Path
+// |*| -- Target Path
 // | | - Folders
 // |*| -- Array Of Folders
 // |*| --- Array of Folders at Root
 // |*| --- Array of Folders in Folder
 // |*| --- Array of Folders at Path
 // |*| --- Array of Folders in Drive
-// | | -- Find a Folder
-// | | --- Find Folder at Root
-// | | --- Find Folder in Folder
-// | | --- Find Folder at Path
-// | | --- Find Folder in Drive
+// |*| -- Find a Folder
+// |*| --- Find Folder at Root
+// |*| --- Find Folder in Folder
+// |*| --- Find Folder at Path
+// |*| --- Find Folder in Drive
 // | | -- Check for a Folder
 // | | --- Check for Folder at Root
 // | | --- Check for Folder in Folder
@@ -841,8 +841,7 @@ function checkStringForSubstring(val, str) {
 // -- Verify Path
 
 /**
- * Returns a path string. 
- * Preceding and trailing '/' are removed.
+ * Returns a string with leading and trailing '/' removed.
  *
  * @param {string} path
  * @returns {string}
@@ -867,31 +866,29 @@ function verifyPath(path) {
 // -- Target Path
 
 /**
- * Returns: 
- * (1) The path to the penultimate folder or file in a path.
- * (0) The name of the last file or folder in a path.
+ * Returns a path or the last object in a path.
+ * (0) The last file or folder in a path.
+ * (1) The path to the penultimate folder.
  *
  * @param {String} path
  * @returns {String}
  */
 
-function targetPath(path, index) {
+function targetPath(path, opt) {
   path      = verifyPath(path);
   var split = path.split("/");
 
-  if (index === 0 || index === undefined) {
+  if (opt === 0 || opt === undefined) {
     return split.pop();
-  } else if (index === 1) {
+  } else if (opt === 1) {
     split.pop();
     return split.join("/");
   } 
 } 
 
 // Logger.log("targetPath");
-// Logger.log(targetPath("example-path/a/b/c")); // c
-// Logger.log(targetPath("example-path/a/b/c", 0)); // c
-// Logger.log(targetPath("example-path/a/b/c", 1)); // example-path/a/b
-// Logger.log(targetPath("not-a-valid-path")); // false
+// Logger.log(targetPath("a/b/c", 0)); // c
+// Logger.log(targetPath("a/b/c", 1)); // a/b
 
 // - Folders
 
@@ -907,7 +904,7 @@ createExampleFolders();
 
 /**
  * Returns an array containing all of the folders found at root.
- * The array contains folder objects, not just the names of the folders.
+ * The array contains folder objects, not folder names.
  *
  * @returns {Folder[]}
  */
@@ -980,18 +977,19 @@ function arrayOfFoldersAtPath(path) {
 
 /**
  * Returns an array of all folders in Drive.
+ * The array contains folder objects, not just the names of the folders.
  *
  * @returns {Folder[]}
  */
 
 function arrayOfFoldersInDrive() {
-  var fi  = DriveApp.getFolders();
-  var arr = [];
+  var result = [];
+  var fi     = DriveApp.getFolders();
   while (fi.hasNext()) {
     var fldr = fi.next();
-    arr.push(fldr);
+    result.push(fldr);
   } 
-  return arr;
+  return result;
 }
 
 // Logger.log("arrayOfFoldersInDrive");
@@ -1026,10 +1024,10 @@ function arrayOfFolderNames(arr) {
 /**
  * Returns a folder found at root or false if the folder doesn't exist.
  *
+ * @param {string} name
  * @requires arrayOfFoldersAtRoot()
  * @requires arrayOfFolderNames()
  * @requires checkArrayForValue()
- * @param {string} name
  * @returns {Folder}
  */
 
@@ -1070,8 +1068,8 @@ function findFolderInFolder(name, fldr) {
 }
 
 // Logger.log("findFolderInFolder");
-// var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
-// Logger.log(findFolderInFolder("A", fldr_ffi)); // A
+// var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo");
+// Logger.log(findFolderInFolder("folders", fldr_ffi)); // folders
 
 // -- Find Folder at Path
 
@@ -1114,7 +1112,7 @@ function findFolderAtPath(path) {
 }
 
 // Logger.log("findFolderAtPath");
-// Logger.log(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
+// Logger.log(findFolderAtPath("google-apps-script-cheat-sheet-demo/folders")); // folders
 
 // --- Find a Folder in Drive
 
@@ -1142,9 +1140,9 @@ function findFolderInDrive(name) {
 
 /**
  *
- * @param name
+ * @param {string} name
  * @requires findFolderAtRoot() 
- * @returns {undefined}
+ * @returns {boolean}
  */
 
 function checkForFolderAtRoot(name) {
