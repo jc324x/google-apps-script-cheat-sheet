@@ -45,18 +45,18 @@ Logger.log("Start");
 // |*| --- Find Folder in Folder
 // |*| --- Find Folder at Path
 // |*| --- Find Folder in Drive
-// | | -- Check for a Folder
-// | | --- Check for Folder at Root
-// | | --- Check for Folder in Folder
-// | | --- Check for Folder at Path
-// | | -- Create a Folder
-// | | --- Create Folder at Root
-// | | --- Create Folder in Folder
-// | | --- Create Folder at Path
-// | | -- Create Folders
-// | | --- Create Folders at Root
-// | | --- Create Folders in Folder
-// | | --- Create Folders at Path
+// |*| -- Check for a Folder
+// |*| --- Check for Folder at Root
+// |*| --- Check for Folder in Folder
+// |*| --- Check for Folder at Path
+// |*| -- Create a Folder
+// |*| --- Create Folder at Root
+// |*| --- Create Folder in Folder
+// |*| --- Create Folder at Path
+// |*| -- Create Folders
+// |*| --- Create Folders at Root
+// |*| --- Create Folders in Folder
+// |*| --- Create Folders at Path
 // | | -- Verify Folder
 // | | --- Verify Folder at Root
 // | | --- Verify Folder in a Folder
@@ -1215,23 +1215,27 @@ function checkForFolderAtPath(path) {
 // --- Create Folder at Root
 
 /**
- * This can create duplicate folders if used without caution.
+ * Return a newly created folder.
+ * This will create duplicates if used without caution. 
  *
  * @param name
- * @returns {undefined}
+ * @returns {Folder}
  */
 
 function createFolderAtRoot(name) {
   return DriveApp.getRootFolder().createFolder(name);
 } 
 
+// Logger.log("createFolderAtRoot");
+
 // --- Create Folder in a Folder
 
 /**
- * createFolderInFolder
+ * Return a newly created folder.
+ * This will create duplicates if used without caution. 
  *
- * @param name
- * @param fldr
+ * @param {string} name
+ * @param {Folder} fldr
  * @returns {undefined}
  */
 
@@ -1247,11 +1251,16 @@ function createFolderInFolder(name, fldr) {
 // --- Create Folder at Path
 
 /**
- * Creates the folder at the given path. Returns false if the supporting directories in the path are missing.
+ * Creates the folder at the given path. 
+ * Returns false if the supporting directories in the path are missing.
  * To verify a complete folder path, use verifyFolderPath instead.
+ * This will create duplicates if used without caution. 
  *
- * @param path
- * @returns {undefined}
+ * @param {string} path
+ * @requires verifyPath() 
+ * @requires targetPath() 
+ * @requires findFolderAtPath() 
+ * @returns {Folder || boolean}
  */
 
 function createFolderAtPath(path) {
@@ -1276,11 +1285,11 @@ function createFolderAtPath(path) {
 // --- Create Folders at Root
   
 /**
- * Creates a multitude of folders at Root.
- * There are no checks in this function; this can create duplicate folders
+ * Returns the root folder. 
+ * This will create duplicates if used without caution. 
  *
- * @param arr
- * @returns {undefined}
+ * @param {Array} arr
+ * @returns {Folder}
  */
 
 function createFoldersAtRoot(arr) {
@@ -1294,6 +1303,15 @@ function createFoldersAtRoot(arr) {
 
 // --- Create Folders in a Folder
 
+/**
+ * Returns the target folder.
+ * This will create duplicates if used without caution. 
+ *
+ * @param {Array} arr
+ * @param {Folder} fldr
+ * @returns {Folder}
+ */
+
 function createFoldersInFolder(arr, fldr) {
   for (i = 0; i < arr.length; i++) {
     fldr.createFolder(arr[i]);
@@ -1301,9 +1319,18 @@ function createFoldersInFolder(arr, fldr) {
   return fldr;
 } 
 
-// Logger.log("createFoldersInFolder");
+Logger.log("createFoldersInFolder");
   
 // --- Create Folders at Path
+
+/**
+ * Returns the target folder.
+ * This will create duplicates if used without caution. 
+ *
+ * @param {Array} arr
+ * @param {string} path
+ * @returns {Folder || boolean}
+ */
 
 function createFoldersAtPath(arr, path) {
   path       = verifyPath(path);
