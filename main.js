@@ -1077,38 +1077,40 @@ function findFolderInFolder(name, fldr) {
  * Returns the folder found at the given path or false if that folder doesn't exist.
  *
  * @param path
+ * @requires verifyPath() 
+ * @requires targetPath() 
  * @returns {Folder}
  */
 
 function findFolderAtPath(path) {
   path = verifyPath(path);
-    var fi, fldr;
-    var split = path.split("/");
+  var fi, fldr;
+  var split = path.split("/");
 
-    for (i = 0; i < split.length; i++) {
-      if (i === 0) {
-        fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+  for (i = 0; i < split.length; i++) {
+    if (i === 0) {
+      fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+      if (fi.hasNext()) {
+        fldr = fi.next();
+      } else {
+        return false;
+      }
+    } else if (i >= 1) {
+        fi = fldr.getFoldersByName(split[i]);
         if (fi.hasNext()) {
           fldr = fi.next();
         } else {
           return false;
         }
-      } else if (i >= 1) {
-          fi = fldr.getFoldersByName(split[i]);
-          if (fi.hasNext()) {
-            fldr = fi.next();
-          } else {
-            return false;
-          }
-      }
-    } 
-
-    var target = targetPath(path);
-    if (fldr.getName() === target) {
-      return fldr;
-    } else {
-      return false;
     }
+  } 
+
+  var target = targetPath(path);
+  if (fldr.getName() === target) {
+    return fldr;
+  } else {
+    return false;
+  }
 }
 
 // Logger.log("findFolderAtPath");
@@ -1139,9 +1141,13 @@ function findFolderInDrive(name) {
 // --- Check for a Folder at Root
 
 /**
+ * Returns true if the folder is found. 
  *
  * @param {string} name
  * @requires findFolderAtRoot() 
+ * @requires arrayOfFoldersAtRoot()
+ * @requires arrayOfFolderNames()
+ * @requires checkArrayForValue()
  * @returns {boolean}
  */
 
@@ -1159,7 +1165,7 @@ function checkForFolderAtRoot(name) {
 // --- Check for a Folder in Folder
 
 /**
- * -- // TODO: write up
+ * Returns true if the folder is found.
  *
  * @param name
  * @param fldr
@@ -1181,10 +1187,13 @@ function checkForFolderInFolder(name, fldr) {
 // --- Check for a Folder at Path
 
 /**
- * -- // TODO: write up
+ * Returns true if the folder is found.
  *
  * @param path
- * @returns {undefined}
+ * @requires verifyPath() 
+ * @requires targetPath() 
+ * @requires findFolderAtPath() 
+ * @returns {boolean}
  */
 
 function checkForFolderAtPath(path) {
