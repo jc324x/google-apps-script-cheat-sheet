@@ -1550,15 +1550,13 @@ function arrayOfFilesInFolder(fldr) {
 
 /**
  * Returns an array of all files at the root of a user's Drive.
- * Note: Please *don't* actually use this in production. 
  *
  * @returns {File[]}
  */
 
 function arrayOfFilesAtRoot() {
   var result = [];
-  var rf     = DriveApp.getRootFolder();
-  var fi     = rf.getFiles();
+  var fi     = DriveApp.getRootFolder().getFiles();
   while (fi.hasNext()) {
     var file = fi.next();
     result.push(file);
@@ -1629,13 +1627,23 @@ function arrayOfFileNames(arr) {
  * @returns {File}
  */
 
-function findFileInFolder(name, fldr) {
-  var files = arrayOfFilesInFolder(fldr);
-  var names = arrayOfFileNames(files);
-  if (checkArrayForValue(name, names)) {
-    var file = fldr.getFilesByName(name).next();
-    return file;
+// TODO: false catch all?
+function findFileInFolder(name, fldr, mime) {
+  mime   = expandMIMEType(mime);
+  var fi = fldr.getFilesByName(name);
+  while (fi.hasNext()) {
+    var file = fi.next();
+    if (mime) {
+      if (mime === file.getMimeType()) {
+        return file;
+      } else {
+        return false;
+      }
+    } else {
+      return file;
+    } 
   }
+  return false;
 }
 
 // Logger.log("findFileInFolder");
