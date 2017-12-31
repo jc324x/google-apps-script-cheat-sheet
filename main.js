@@ -1628,27 +1628,37 @@ function arrayOfFileNames(arr) {
  */
 
 // TODO: false catch all?
+// TODO: supporting function that validates mime type from file iterator?
+// TODO: or use array, check it and then validate MIME?
+
 function findFileInFolder(name, fldr, mime) {
-  mime   = expandMIMEType(mime);
+  var file;
   var fi = fldr.getFilesByName(name);
-  while (fi.hasNext()) {
-    var file = fi.next();
-    if (mime) {
+
+  if (mime) {
+    mime = expandMIMEType(mime);
+    while (fi.hasNext()) {
+      file = fi.next();
       if (mime === file.getMimeType()) {
         return file;
       } else {
         return false;
       }
-    } else {
+    }
+  } else {
+    while (fi.hasNext()) {
+      file = fi.next();
       return file;
-    } 
+    }
   }
   return false;
-}
+} 
 
-// Logger.log("findFileInFolder");
-// var fldr_ffif = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
-// Logger.log(findFileInFolder("example-file", fldr_ffif)); // example-file
+Logger.log("findFileInFolder");
+var fldr_ffif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
+Logger.log(findFileInFolder("example-sheet", fldr_ffif)); // example-file
+Logger.log(findFileInFolder("example-sheet", fldr_ffif, "spreadsheet")); // example-file
+Logger.log(findFileInFolder("example-doc", fldr_ffif, "document")); // false
 
 // --- Find a File at Root
 
