@@ -1630,35 +1630,60 @@ function arrayOfFileNames(arr) {
 // TODO: false catch all?
 // TODO: supporting function that validates mime type from file iterator?
 // TODO: or use array, check it and then validate MIME?
+// nope...gotta check MIME first
 
 function findFileInFolder(name, fldr, mime) {
   var file;
-  var fi = fldr.getFilesByName(name);
+  var files = arrayOfFilesInFolder(fldr);
+  // Logger.log(files);
+  var names = arrayOfFileNames(files);
+  // Logger.log(names);
 
-  if (mime) {
-    mime = expandMIMEType(mime);
-    while (fi.hasNext()) {
-      file = fi.next();
-      if (mime === file.getMimeType()) {
-        return file;
-      } else {
-        return false;
-      }
-    }
+  if (checkArrayForValue(name, names)) {
+    Logger.log("OK");
+    file = fldr.getFilesByName(name).next();
   } else {
-    while (fi.hasNext()) {
-      file = fi.next();
-      return file;
-    }
+    Logger.log("FALSE");
+    return false;
   }
-  return false;
-} 
+  Logger.log(mime);
+  Logger.log(file.getMimeType());
+
+  if ((mime) && (mime === file.getMimeType())) {
+    return file; 
+  } else {
+    return false;
+  }
+}
+
+// function findFileInFolder(name, fldr, mime) {
+//   var file;
+//   var fi = fldr.getFilesByName(name);
+
+//   if (mime) {
+//     mime = expandMIMEType(mime);
+//     while (fi.hasNext()) {
+//       file = fi.next();
+//       if (mime === file.getMimeType()) {
+//         return file;
+//       } else {
+//         return false;
+//       }
+//     }
+//   } else {
+//     while (fi.hasNext()) {
+//       file = fi.next();
+//       return file;
+//     }
+//   }
+//   return false;
+// } 
 
 Logger.log("findFileInFolder");
 var fldr_ffif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
 Logger.log(findFileInFolder("example-sheet", fldr_ffif)); // example-file
-Logger.log(findFileInFolder("example-sheet", fldr_ffif, "spreadsheet")); // example-file
-Logger.log(findFileInFolder("example-doc", fldr_ffif, "document")); // false
+// Logger.log(findFileInFolder("example-sheet", fldr_ffif, "not-valide-mime")); // example-file
+// Logger.log(findFileInFolder("example-doc", fldr_ffif, "document")); // false
 
 // --- Find a File at Root
 
