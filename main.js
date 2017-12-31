@@ -34,21 +34,23 @@ Logger.log("Start");
 // |*| - Utility Functions for Drive
 // |*| -- Verify Path
 // |*| -- Target Path
-// | | - Folders
+// | | -- MIME Types
+// |*| - Folders
 // |*| -- Array Of Folders
 // |*| --- Array of Folders at Root
 // |*| --- Array of Folders in Folder
 // |*| --- Array of Folders at Path
 // |*| --- Array of Folders in Drive
+// | | -- Array of Folder Names
 // |*| -- Find a Folder
 // |*| --- Find Folder at Root
 // |*| --- Find Folder in Folder
 // |*| --- Find Folder at Path
 // |*| --- Find Folder in Drive
-// | | -- Check for a Folder
-// | | --- Check for Folder at Root
-// | | --- Check for Folder in Folder
-// | | --- Check for Folder at Path
+// |*| -- Check for a Folder
+// |*| --- Check for Folder at Root
+// |*| --- Check for Folder in Folder
+// |*| --- Check for Folder at Path
 // |*| -- Create a Folder
 // |*| --- Create Folder at Root
 // |*| --- Create Folder in Folder
@@ -57,38 +59,35 @@ Logger.log("Start");
 // |*| --- Create Folders at Root
 // |*| --- Create Folders in Folder
 // |*| --- Create Folders at Path
-// | | -- Verify Folder
-// | | --- Verify Folder at Root
-// | | --- Verify Folder in a Folder
-// | | --- Verify Folder Path
-// | | -- Verify Folders
-// | | --- Verify Folders in a Folder
-// | | --- Verify Folders at Root
+// |*| -- Verify Folder
+// |*| --- Verify Folder at Root
+// |*| --- Verify Folder in a Folder
+// |*| --- Verify Folder Path
+// |*| -- Verify Folders
+// |*| --- Verify Folders in a Folder
+// |*| --- Verify Folders at Root
 // | | - Files
-// | | -- Check for a File
-// | | --- Check for a File in a Folder
-// | | --- Check for a File at Root
-// | | --- Check for a File at Path
+// | | -- Array of Files
+// | | --- Array of Files at Root
+// | | --- Array of Files in Folder
+// | | --- Array of Files at Path
+// | | --- Array of All Files in Drive
+// | | -- Array of File Names
 // | | -- Find a File
 // | | --- Find a File in a Folder
 // | | --- Find a File at Root
 // | | --- Find a File in Drive
 // | | --- Find File at Path
+// | | -- Check for a File
+// | | --- Check for a File in a Folder
+// | | --- Check for a File at Root
+// | | --- Check for a File at Path
 // | | -- Create a File
 // | | --- Create File in a Folder
 // | | --- Create File at Root
 // | | --- Create File at Path
-// | | -- Verify Google Drive File
-// | | --- Verify Google Drive File in a Folder
-// | | --- Verify Google Drive File at Root
-// | | --- Verify Google Drive File at Path
-// | | -- Array of Files
-// | | --- Array of Files in a Folder
-// | | --- Array of Files at Root
-// | | --- Array of All Files in Drive
-// | | -- Array of File Names
 // | | -- Id of Active File
-// | | -- Open File as Type
+// | | -- Open File as MIME Type
 // | | -- Copy a File to a Folder
 // | | -- Move a File to a Folder
 // | | - Files and Folders
@@ -885,6 +884,15 @@ function targetPath(path, opt) {
 // Logger.log(targetPath("a/b/c", 0)); // c
 // Logger.log(targetPath("a/b/c", 1)); // a/b
 
+// Validate MIME Type
+
+function expandMIMEType(val) {
+  return "application/vnd.google-apps." + val.toLowerCase();
+}
+
+// Logger.log("expandMIMEType");
+// Logger.log(expandMIMEType("audio"));
+
 // - Folders
 
 function createExampleFolders() {
@@ -1315,7 +1323,7 @@ function createFoldersInFolder(arr, fldr) {
   return fldr;
 } 
 
-Logger.log("createFoldersInFolder");
+// Logger.log("createFoldersInFolder");
   
 // --- Create Folders at Path
 
@@ -1393,6 +1401,10 @@ function verifyFolderInFolder(name, fldr) {
     return findFolderInFolder(name, fldr);
   }
 }
+
+// Logger.log("verifyFolderInFolder");
+// var fldr_vfif = findFolderAtRoot("google-apps-script-cheat-sheet-demo"); 
+// Logger.log(verifyFolderInFolder("folders", fldr_vfif)); // google-apps-script-cheat-sheet-demo/folders
  
 // --- Verify Folder Path
 
@@ -1406,7 +1418,7 @@ function verifyFolderInFolder(name, fldr) {
  */
 
 function verifyFolderPath(path) {
-  path      = verifyPath(path);
+  path = verifyPath(path);
   var split = path.split("/");
   var fldr;
   for (i = 0; i < split.length; i++) {
@@ -1455,6 +1467,8 @@ function verifyFoldersAtRoot(arr) {
   return DriveApp.getRootFolder();
 }
 
+// Logger.log("verifyFoldersAtRoot");
+
 // --- Verify Folders in a Folder
 
 /**
@@ -1481,71 +1495,32 @@ function verifyFoldersInFolder(arr, fldr) {
 }
 
 // Logger.log("verifyFoldersInFolder");
-// var fldr_covfif = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
-// Logger.log(verifyFoldersInFolder(fldr_covfif, ["X", "Y", "Z"])); // folders
-// Logger.log(arrayOfFoldersInFolder(fldr_covfif)); // [A, X, Y, Z]
+// var fldr_vfsif = findFolderAtPath("google-apps-script-cheat-sheet-demo/folders");
+// Logger.log(verifyFoldersInFolder(["X", "Y", "Z"], fldr_vfsif)); // folders
+// Logger.log(arrayOfFoldersInFolder(fldr_vfsif)); 
 
-function verifyFoldersAtPath() {
-  
+// --- Verify Folders at Path
+
+/**
+ * Returns a folder.
+ * Creates folders within a folder if they don't already exist.
+ *
+ * @requires verifyPath() 
+ * @requires findFolderAtPath() 
+ * @requires arrayOfFoldersInFolder() 
+ * @requires arrayOfFolderNames() 
+ * @requires checkArrayForValue() 
+ * @returns {Folder}
+ */
+
+function verifyFoldersAtPath(arr, path) {
+  path     = verifyPath(path);
+  var fldr = findFolderAtPath(path);
+  verifyFoldersInFolder(arr, fldr);
 } 
 
 // - Files
-
-// -- Check for a File
-
-// --- Check for File in a Folder
-
-// function checkForFileInFolder(file, fldr) {
-//   var files = arrayOfFilesInFolder(fldr); 
-//   var names = arrayOfFileNames(files);
-//   if (checkArrayForValue(names, file)) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
  
-// --- Check for a File at Root
-
-function checkForFileAtRoot(file) {
-  var files = arrayOfFilesAtRoot(); 
-  var names = arrayOfFileNames(files);
-  if (checkArrayForValue(names, file)) {
-    return true;
-  } else {
-    return false;
-  }
-} 
-
-// Logger.log(checkForFileAtRoot("OK"));
-
-//  --- Check for File at Path
-
-function checkForFileAtPath(path) {
-  path = verifyPath(path);
-  var split = path.split("/");
-  var file  = split.pop();
-  path      = split.join("/");
-  var fldr  = findFolderAtPath(path);
-  return checkForFileInFolder(file, fldr);
-}
- 
-// TODO: Update with example file and all that
-// TODO: Why is this weirdly compressed?
-// Logger.log("checkForFileAtPath"); 
-// Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
-// TODO: createExampleFiles
-
-function checkForExFile() {
-  var fldr = verifyPath("google-apps-script-cheat-sheet-demo/files");
-  var file = findFileInFolder("example-file", fldr);
-  if (!(file)){fldr.createFile("example-file", "example");}
-  return findFileInFolder("example-file", fldr);
-}
-
-// Logger.log("checkForExFile");
-// checkForExFile();
-
 // -- Array of Files 
 
 // --- Array of Files in a Folder
@@ -1748,6 +1723,71 @@ function findFileAtPath(path) {
 
 // Logger.log("findFileAtPath");
 // Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file")); // example-file
+
+// -- Check for a File
+
+// --- Check for File in a Folder
+
+/**
+ * checkForFileInFolder
+ *
+ * @param {string} file
+ * @param {Folder} fldr
+ * @param {string} mime
+ * @returns {undefined}
+ */
+ 
+// function checkForFileInFolder(file, fldr, mime) {
+//   mime = expandMIMEType(mime);
+//   var files = arrayOfFilesInFolder(fldr); 
+//   var names = arrayOfFileNames(files);
+//     if (checkArrayForValue(names, file)) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+// }
+ 
+// --- Check for a File at Root
+
+function checkForFileAtRoot(file) {
+  var files = arrayOfFilesAtRoot(); 
+  var names = arrayOfFileNames(files);
+  if (checkArrayForValue(names, file)) {
+    return true;
+  } else {
+    return false;
+  }
+} 
+
+// Logger.log(checkForFileAtRoot("OK"));
+
+//  --- Check for File at Path
+
+function checkForFileAtPath(path) {
+  path = verifyPath(path);
+  var split = path.split("/");
+  var file  = split.pop();
+  path      = split.join("/");
+  var fldr  = findFolderAtPath(path);
+  return checkForFileInFolder(file, fldr);
+}
+ 
+// TODO: Update with example file and all that
+// TODO: Why is this weirdly compressed?
+// Logger.log("checkForFileAtPath"); 
+// Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
+// TODO: createExampleFiles
+
+function checkForExFile() {
+  var fldr = verifyPath("google-apps-script-cheat-sheet-demo/files");
+  var file = findFileInFolder("example-file", fldr);
+  if (!(file)){fldr.createFile("example-file", "example");}
+  return findFileInFolder("example-file", fldr);
+}
+
+// Logger.log("checkForExFile");
+// checkForExFile();
 
 // -- Copy a File to a Folder
 
