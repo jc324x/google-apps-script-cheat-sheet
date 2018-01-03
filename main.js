@@ -3,7 +3,7 @@
 function test() {}
 Logger.log("Start");
 
-// |*| General
+// | | General
 // |*| - Array
 // |*| -- Check Array for a Value
 // |*| -- Remove Duplicates from Array
