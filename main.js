@@ -67,12 +67,12 @@ Logger.log("Start");
 // |*| --- Verify Folders in a Folder
 // |*| --- Verify Folders at Root
 // | | - Files
-// | | -- Array of Files
-// | | --- Array of Files at Root
-// | | --- Array of Files in Folder
-// | | --- Array of Files at Path
-// | | --- Array of All Files in Drive
-// | | -- Array of File Names
+// |*| -- Array of Files
+// |*| --- Array of Files at Root
+// |*| --- Array of Files in Folder
+// |*| --- Array of Files at Path
+// |*| --- Array of All Files in Drive
+// |*| -- Array of File Names
 // | | -- Find a File
 // | | --- Find a File in a Folder
 // | | --- Find a File at Root
@@ -1615,97 +1615,86 @@ function arrayOfFileNames(arr) {
 // -- Find a File
 
 // --- Find a File in a Folder
+// TODO: Documentation
 
-/**
- * Returns a file found at the top level of a folder. 
- *
- * @requires arrayOfFilesInFolder()
- * @requires arrayOfFileNames()
- * @requires checkArrayForValue()
- * @param {Folder} fldr
- * @param {string} name
- * @returns {File}
- */
-
-// TODO: false catch all?
-// TODO: supporting function that validates mime type from file iterator?
-// TODO: or use array, check it and then validate MIME?
-// nope...gotta check MIME first
-
-function findFileInFolder(name, fldr, mime) {
-  var file;
+function findFileInFolderAny(name, fldr) {
   var files = arrayOfFilesInFolder(fldr);
-  // Logger.log(files);
-  var names = arrayOfFileNames(files);
-  // Logger.log(names);
-
+  var names = arrayOfFileNames(files); 
   if (checkArrayForValue(name, names)) {
-    Logger.log("OK");
-    file = fldr.getFilesByName(name).next();
+    return fldr.getFilesByName(name).next();
   } else {
-    Logger.log("FALSE");
     return false;
   }
-  Logger.log(mime);
-  Logger.log(file.getMimeType());
+} 
 
-  if ((mime) && (mime === file.getMimeType())) {
-    return file; 
+function findFileInFolderType(name, fldr, mime) {
+  mime = expandMIMEType(mime);
+  var files = arrayOfFilesInFolder(fldr);
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    if ((file.getName() === name) && file.getMimeType() === mime) {
+      return file;
+    }
+  } 
+  return false;
+} 
+
+function findFileInFolder(name, fldr, mime) {
+  if (mime !== undefined) {
+    return findFileInFolderType(name, fldr, mime);
   } else {
-    return false;
+    return findFileInFolderAny(name, fldr);
   }
 }
 
-// function findFileInFolder(name, fldr, mime) {
-//   var file;
-//   var fi = fldr.getFilesByName(name);
-
-//   if (mime) {
-//     mime = expandMIMEType(mime);
-//     while (fi.hasNext()) {
-//       file = fi.next();
-//       if (mime === file.getMimeType()) {
-//         return file;
-//       } else {
-//         return false;
-//       }
-//     }
-//   } else {
-//     while (fi.hasNext()) {
-//       file = fi.next();
-//       return file;
-//     }
-//   }
-//   return false;
-// } 
-
-Logger.log("findFileInFolder");
-var fldr_ffif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
-Logger.log(findFileInFolder("example-sheet", fldr_ffif)); // example-file
-// Logger.log(findFileInFolder("example-sheet", fldr_ffif, "not-valide-mime")); // example-file
-// Logger.log(findFileInFolder("example-doc", fldr_ffif, "document")); // false
+// Logger.log("findFileInFolder");
+// var fldr_ffif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
+// Logger.log(findFileInFolder("example-sheet", fldr_ffif)); // example-sheet
+// Logger.log(findFileInFolder("example-sheet", fldr_ffif, "document")); // false
+// Logger.log(findFileInFolder("example-sheet", fldr_ffif, "spreadsheet")); // example-sheet
 
 // --- Find a File at Root
+// TODO: Documentation
 
-/**
- * Returns a file found at the root of a user's Drive.
- *
- * @requires arrayOfFilesAtRoot()
- * @requires arrayOfFileNames()
- * @requires checkArrayForValue()
- * @param {string} name
- * @returns {File}
- */
-
-function findFileAtRoot(name) {
-  var rf    = DriveApp.getRootFolder();
+function findFileAtRootAny(name) {
   var files = arrayOfFilesAtRoot();
   var names = arrayOfFileNames(files);
   if (checkArrayForValue(name, names)) {
-    var file = rf.getFilesByName(name).next();
-    return file;
+    return DriveApp.getRootFolder().getFilesByName(name).next();
+  } else {
+    return false;
   }
-}
+} 
+
+// Logger.log("findFileAtRootAny");
+// Logger.log(findFileAtRootAny("Testing"));
+
+function findFileAtRootType(name, mime) {
+  mime      = expandMIMEType(mime);
+  var files = arrayOfFilesAtRoot();
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i]; 
+    if ((file.getName() === name) && file.getMimeType() === mime) {
+      return file;
+    }
+  } 
+  return false;
+} 
+
+// Logger.log("findFileAtRootType");
+// Logger.log(findFileAtRootType("Testing", "document"));
+
+function findFileAtRoot(name, mime) {
+  if (mime !== undefined) {
+    return findFileAtRootType(name, mime);
+  } else {
+    return findFileAtRootAny(name);
+  }
+} 
+
+// Logger.log("findFileAtRoot");
+// Logger.log(findFileAtRoot("Testing"));
+// Logger.log(findFileAtRoot("Testing", "document"));
 
 // --- Find a File in Drive
 
