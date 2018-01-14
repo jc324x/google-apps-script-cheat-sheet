@@ -74,17 +74,17 @@ Logger.log("Start");
 // |*| --- Array of All Files in Drive
 // |*| -- Array of File Names
 // |*| -- Find a File
-// |*| --- Find a File in a Folder
 // |*| --- Find a File at Root
+// |*| --- Find a File in a Folder
 // |*| --- Find a File in Drive
 // | | --- Find File at Path
 // | | -- Check for a File
-// | | --- Check for a File in a Folder
 // | | --- Check for a File at Root
+// | | --- Check for a File in a Folder
 // | | --- Check for a File at Path
 // | | -- Create a File
-// | | --- Create File in a Folder
 // | | --- Create File at Root
+// | | --- Create File in a Folder
 // | | --- Create File at Path
 // | | -- Verify File
 // | | --- Verify File at Root
@@ -1775,8 +1775,8 @@ function findFileAtPathType(path, mime) {
   }
 } 
 
-Logger.log("findFileAtPathType");
-Logger.log(findFileAtPathType("google-apps-script-cheat-sheet-demo/files/example-file", "document")); // false
+// Logger.log("findFileAtPathType");
+// Logger.log(findFileAtPathType("google-apps-script-cheat-sheet-demo/files/example-file", "document")); // false
 
 function findFileAtPath(path, mime) {
   if (mime !== undefined) {
@@ -1788,71 +1788,92 @@ function findFileAtPath(path, mime) {
 
 // -- Check for a File
 
-// --- Check for File in a Folder
-
-/**
- * checkForFileInFolder
- *
- * @param {string} file
- * @param {Folder} fldr
- * @param {string} mime
- * @returns {undefined}
- */
- 
-// function checkForFileInFolder(file, fldr, mime) {
-//   mime = expandMIMEType(mime);
-//   var files = arrayOfFilesInFolder(fldr); 
-//   var names = arrayOfFileNames(files);
-//     if (checkArrayForValue(names, file)) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-// }
- 
 // --- Check for a File at Root
 
 function checkForFileAtRoot(file, mime) {
-  file = findFileAtRoot(file, mime);
-  if (file) {
+  var result;
+
+  if (mime !== undefined) {
+    result = findFileAtRootType(file, mime);
+  } else {
+    result = findFileAtRootAny(file);
+  }
+
+  if (result) {
     return true;
   } else {
     return false;
   }
 } 
 
-Logger.log("checkForFileAtRoot");
-Logger.log(checkForFileAtRoot("Testing")); //
+// Logger.log("checkForFileAtRoot");
+
+// --- Check for File in a Folder
+
+function checkForFileInFolder(file, fldr, mime) {
+  var result;
+  if (mime !== undefined) {
+    result = findFileInFolderType(file, fldr, mime);
+  } else {
+    result = findFileInFolderAny(file, fldr);
+  }
+
+  if (result) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Logger.log("checkForFileInFolder");
+var fldr_cffif = findFolderAtPath("google-apps-script-cheat-sheet-demo/sheets"); 
+Logger.log(checkForFileInFolder("example-sheet", fldr_cffif, "spreadsheet")); // true
+Logger.log(checkForFileInFolder("example-sheet", fldr_cffif)); // true
 
 //  --- Check for File at Path
 
-function checkForFileAtPath(path) {
-  path = verifyPath(path);
-  var split = path.split("/");
-  var file  = split.pop();
-  path      = split.join("/");
-  var fldr  = findFolderAtPath(path);
-  return checkForFileInFolder(file, fldr);
-}
- 
-// TODO: Update with example file and all that
-// TODO: Why is this weirdly compressed?
-// Logger.log("checkForFileAtPath"); 
-// Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet"));
-// TODO: createExampleFiles
+function checkForFileAtPath(path, mime) {
+  var result;
 
-function checkForExFile() {
-  var fldr = verifyPath("google-apps-script-cheat-sheet-demo/files");
-  var file = findFileInFolder("example-file", fldr);
-  if (!(file)){fldr.createFile("example-file", "example");}
-  return findFileInFolder("example-file", fldr);
+  if (mime !== undefined) {
+    result = findFileAtPathType(path, mime);
+  } else {
+    result = findFileAtPathAny(path);
+  }
+
+  if (result) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-// Logger.log("checkForExFile");
-// checkForExFile();
+Logger.log("checkForFileAtPath");
+Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet")); // true
+Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet")); // true
+
+// Create File
+
+// --- Create File at Root
+
+function createFileAtRoot(name, mime) {
+  
+} 
+
+
+// --- Create File in Folder
+
+// --- Create File at Path
 
 // Verify File 
+ 
+// --- Verify File at Root
 
+// --- Verify File in Folder
+ 
+// --- Verify File at Path
+
+// -- Id of Active File
  
 // -- Copy a File to a Folder
 
@@ -1992,93 +2013,6 @@ function zipFilesInFolder(fldr, name, dest) {
 
 // Google Drive Files
 
-// -- Check for a Google Drive File
-
-// --- Check for a Google Drive File in a Folder
-
-/**
- * checkForGDriveFileInFolder
- *
- * @param name
- * @param fldr
- * @param type
- * @returns {undefined}
- */
-
-function checkForFileInFolder(name, fldr, type) {
-  var files = arrayOfFilesInFolder(fldr);
-  var names = arrayOfFileNames(files);
-  if (checkArrayForValue(name, names)) {
-    var mime = findFileInFolder(name, fldr).getMimeType();
-    if (type === undefined) {
-      return true;
-    } else if (type === mime) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
-
-// Logger.log("checkForFileInFolder");
-// var fldr_cfgdfif = verifyPath("google-apps-script-cheat-sheet-demo/files");
-// Logger.log(checkForFileInFolder("testing", fldr_cfgdfif)); 
-// Logger.log(checkForFileInFolder("testing", fldr_cfgdfif, "application/vnd.google-apps.document"));
-// Logger.log(checkForFileInFolder("another", fldr_cfgdfif, "application/vnd.google-apps.document"));
-
-// --- Check for a Google Drive File in a Folder
-// --- Check for a Google Drive File at Root
-// --- Check for a Google Drive File at Path
-// -- Create Google Drive File
-// --- Create Google Drive File in a Folder
-// --- Create Google Drive File at Root
-// --- Create Google Drive File at Path
-// -- Verify Google Drive File
-// --- Verify Google Drive File in a Folder
-// --- Verify Google Drive File at Root
-// --- Verify Google Drive File at Path
-// -- Id of Active Google Drive File
-// -- Open File as Google Drive File
-
-
-// --- Check for a Spreadsheet at Root
-
-function checkForSpreadsheetAtRoot(ss) {
-  var files = arrayOfFilesAtRoot(); 
-  var names = arrayOfFileNames(files);
-  if (checkArrayForValue(names, ss)) {
-    var type = findFileAtRoot(ss).getMimeType();
-    if (type === "application/vnd.google-apps.spreadsheet") {
-      return true;
-    }
-  } else {
-    return false;
-  }
-} 
-
-// --- Check for a Spreadsheet at Path
-
-/**
- * TODO: checkForSpreadsheetAtPath
- *
- * @param path
- * @returns {undefined}
- */
-
-function checkForSpreadsheetAtPath(path) {
-  path = verifyPath(path);
-  var split = path.split("/");
-  var ss    = split.pop();
-  path      = split.join("/");
-  var fldr  = findFolderAtPath(path);
-  return checkForSpreadsheetInFolder(ss, fldr);
-} 
-
-// Logger.log("checkForSpreadsheetAtPath");
-// Logger.log(checkForSpreadsheetAtPath("not-a-valid-path")); // false
-// Logger.log(checkForSpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet")); // true
-// Logger.log(checkForSpreadsheetAtPath("google-apps-script-cheat-sheet-demo/sheets/no-sheet-here")); // false
- 
 // -- Create Spreadsheet
 
 // --- Create Spreadsheet in a Folder
