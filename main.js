@@ -73,10 +73,10 @@ Logger.log("Start");
 // |*| --- Array of Files at Path
 // |*| --- Array of All Files in Drive
 // |*| -- Array of File Names
-// | | -- Find a File
-// | | --- Find a File in a Folder
-// | | --- Find a File at Root
-// | | --- Find a File in Drive
+// |*| -- Find a File
+// |*| --- Find a File in a Folder
+// |*| --- Find a File at Root
+// |*| --- Find a File in Drive
 // | | --- Find File at Path
 // | | -- Check for a File
 // | | --- Check for a File in a Folder
@@ -1697,6 +1697,27 @@ function findFileAtRoot(name, mime) {
 // Logger.log(findFileAtRoot("Testing", "document"));
 
 // --- Find a File in Drive
+// TODO: Documentation
+
+function findFileInDriveAny(name) {
+  var fi = DriveApp.getFilesByName(name);
+  while (fi.hasNext()){
+    var file = fi.next();
+    return file;
+  }
+} 
+
+function findFileInDriveType(name, mime) {
+  mime = expandMIMEType(mime);
+  var fi = DriveApp.getFilesByName(name);
+  while (fi.hasNext()) {
+    var file = fi.next();
+    if ((file.getName() === name) && file.getMimeType() === mime) {
+      return file;
+    }
+  }
+  return false;
+}
 
 /**
  * Returns the first matching file found in the user's Drive.
@@ -1705,11 +1726,11 @@ function findFileAtRoot(name, mime) {
  * @returns {File}
  */
 
-function findFileInDrive(name) {
-  var fi = DriveApp.getFilesByName(name);
-  while (fi.hasNext()){
-    var file = fi.next();
-    return file;
+function findFileInDrive(name, mime) {
+  if (mime !== undefined) {
+    return findFileInDriveType(name, mime);
+  } else {
+    return findFileInDrive(name);
   }
 }
 
@@ -1726,35 +1747,34 @@ function findFileInDrive(name) {
  */
 
 function findFileAtPath(path) {
-  if (path.charAt(0) === "/") {
-    path = path.substr(1);
-  }
-
+  path     = verifyPath(path);
+  var file = targetPath(path, 0);
+  path     = targetPath(path, 1);
   var arr  = path.split("/");
-  var file = arr[arr.length -1];
   var fldr, fi;
-  for (i = 0; i < arr.length - 1; i++) {
+
+  for (i = 0; i < arr.length; i++) {
     if (i === 0) {
       fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
       if (fi.hasNext()) {
         fldr = fi.next();
       } else { 
-        return null;
+        return false;
       }
     } else if (i >= 1) {
         fi = fldr.getFoldersByName(arr[i]);
         if (fi.hasNext()) {
           fldr = fi.next();
         } else { 
-          return null;
+          return false;
         }
     }
   } 
   return findFileInFolder(file, fldr);
 } 
 
-// Logger.log("findFileAtPath");
-// Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file")); // example-file
+Logger.log("findFileAtPath");
+Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file")); // example-file
 
 // -- Check for a File
 
