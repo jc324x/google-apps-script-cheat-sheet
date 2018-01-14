@@ -86,6 +86,10 @@ Logger.log("Start");
 // | | --- Create File in a Folder
 // | | --- Create File at Root
 // | | --- Create File at Path
+// | | -- Verify File
+// | | --- Verify File at Root
+// | | --- Verify File in Folder
+// | | --- Verify File at Path
 // | | -- Id of Active File
 // | | -- Open File as MIME Type
 // | | -- Copy a File to a Folder
@@ -1746,35 +1750,41 @@ function findFileInDrive(name, mime) {
  * @returns {File}
  */
 
-function findFileAtPath(path) {
+function findFileAtPathAny(path) {
   path     = verifyPath(path);
   var file = targetPath(path, 0);
   path     = targetPath(path, 1);
-  var arr  = path.split("/");
-  var fldr, fi;
-
-  for (i = 0; i < arr.length; i++) {
-    if (i === 0) {
-      fi = DriveApp.getRootFolder().getFoldersByName(arr[i]);
-      if (fi.hasNext()) {
-        fldr = fi.next();
-      } else { 
-        return false;
-      }
-    } else if (i >= 1) {
-        fi = fldr.getFoldersByName(arr[i]);
-        if (fi.hasNext()) {
-          fldr = fi.next();
-        } else { 
-          return false;
-        }
-    }
-  } 
+  var fldr = findFolderAtPath(path);
   return findFileInFolder(file, fldr);
 } 
 
-Logger.log("findFileAtPath");
-Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file")); // example-file
+// Logger.log("findFileAtPathAny");
+// Logger.log(findFileAtPathAny("google-apps-script-cheat-sheet-demo/files/example-file")); // example-file
+
+function findFileAtPathType(path, mime) {
+  path     = verifyPath(path);
+  mime     = expandMIMEType(mime);
+  var file = targetPath(path, 0);
+  path     = targetPath(path, 1);
+  var fldr = findFolderAtPath(path);
+  file     = findFileInFolder(file, fldr);
+  if (file.getMimeType() === mime) {
+    return file;
+  } else {
+    return false;
+  }
+} 
+
+Logger.log("findFileAtPathType");
+Logger.log(findFileAtPathType("google-apps-script-cheat-sheet-demo/files/example-file", "document")); // false
+
+function findFileAtPath(path, mime) {
+  if (mime !== undefined) {
+    return findFileAtPathType(name, mime);
+  } else {
+    return findFileAtPathAny(name);
+  }
+} 
 
 // -- Check for a File
 
@@ -1802,17 +1812,17 @@ Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-fil
  
 // --- Check for a File at Root
 
-function checkForFileAtRoot(file) {
-  var files = arrayOfFilesAtRoot(); 
-  var names = arrayOfFileNames(files);
-  if (checkArrayForValue(names, file)) {
+function checkForFileAtRoot(file, mime) {
+  file = findFileAtRoot(file, mime);
+  if (file) {
     return true;
   } else {
     return false;
   }
 } 
 
-// Logger.log(checkForFileAtRoot("OK"));
+Logger.log("checkForFileAtRoot");
+Logger.log(checkForFileAtRoot("Testing")); //
 
 //  --- Check for File at Path
 
@@ -1841,6 +1851,9 @@ function checkForExFile() {
 // Logger.log("checkForExFile");
 // checkForExFile();
 
+// Verify File 
+
+ 
 // -- Copy a File to a Folder
 
 /**
