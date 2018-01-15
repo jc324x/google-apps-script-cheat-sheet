@@ -1790,13 +1790,13 @@ function findFileAtPath(path, mime) {
 
 // --- Check for a File at Root
 
-function checkForFileAtRoot(file, mime) {
+function checkForFileAtRoot(name, mime) {
   var result;
 
   if (mime !== undefined) {
-    result = findFileAtRootType(file, mime);
+    result = findFileAtRootType(name, mime);
   } else {
-    result = findFileAtRootAny(file);
+    result = findFileAtRootAny(name);
   }
 
   if (result) {
@@ -1810,12 +1810,12 @@ function checkForFileAtRoot(file, mime) {
 
 // --- Check for File in a Folder
 
-function checkForFileInFolder(file, fldr, mime) {
+function checkForFileInFolder(name, fldr, mime) {
   var result;
   if (mime !== undefined) {
-    result = findFileInFolderType(file, fldr, mime);
+    result = findFileInFolderType(name, fldr, mime);
   } else {
-    result = findFileInFolderAny(file, fldr);
+    result = findFileInFolderAny(name, fldr);
   }
 
   if (result) {
@@ -1825,10 +1825,10 @@ function checkForFileInFolder(file, fldr, mime) {
   }
 }
 
-Logger.log("checkForFileInFolder");
-var fldr_cffif = findFolderAtPath("google-apps-script-cheat-sheet-demo/sheets"); 
-Logger.log(checkForFileInFolder("example-sheet", fldr_cffif, "spreadsheet")); // true
-Logger.log(checkForFileInFolder("example-sheet", fldr_cffif)); // true
+// Logger.log("checkForFileInFolder");
+// var fldr_cffif = findFolderAtPath("google-apps-script-cheat-sheet-demo/sheets"); 
+// Logger.log(checkForFileInFolder("example-sheet", fldr_cffif, "spreadsheet")); // true
+// Logger.log(checkForFileInFolder("example-sheet", fldr_cffif)); // true
 
 //  --- Check for File at Path
 
@@ -1848,33 +1848,128 @@ function checkForFileAtPath(path, mime) {
   }
 }
 
-Logger.log("checkForFileAtPath");
-Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet")); // true
-Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet")); // true
+// Logger.log("checkForFileAtPath");
+// Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet")); // true
+// Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet")); // true
 
 // Create File
 
 // --- Create File at Root
 
 function createFileAtRoot(name, mime) {
-  
+  switch (mime) {
+    case "document": 
+      var document = DocumentApp.create(name).getId();
+      return DriveApp.getFileById(document);
+    case "form":
+      var form = FormApp.create(name).getId();
+      return DriveApp.getFileById(form);
+    case "presentation": 
+      var presentation = SlidesApp.create(name).getId();
+      return DriveApp.getFileById(presentation);
+    case "spreadsheet": 
+      var spreadsheet = SpreadsheetApp.create(name).getId();
+      return DriveApp.getFileById(spreadsheet);
+    default: DriveApp.getRootFolder().createFile(name, "");
+  }
+}
+
+// Logger.log("createFileAtRoot");
+// Logger.log(createFileAtRoot("testing", "document"));
+// Logger.log(createFileAtRoot("testing", "form"));
+// Logger.log(createFileAtRoot("testing", "presentation"));
+// Logger.log(createFileAtRoot("testing", "spreadsheet"));
+
+function openFileAsType(file, mime) {
+  var id = file.getId();
+  switch (mime) {
+    case "document": return DocumentApp.openById(id);
+    case "form": return FormApp.create(name);
+    case "presentation": return PresentationApp.create(name);
+    case "spreadsheet": return SpreadsheetApp.openById(id);
+    default: return false;
+  }
 } 
 
+// Logger.log("openFileAsType");
+// var file_ofat = findFileAtRoot("testing", "document");
+// Logger.log(openFileAsType(file_ofat, "document"));
 
 // --- Create File in Folder
 
+function createFileInFolder(name, fldr, mime) {
+  var file = createFileAtRoot(name, mime);
+  return moveFileToFolder(file, fldr);
+}  
+
+Logger.log("createFileInFolder");
+var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
+Logger.log(createFileInFolder("amazing-spreadsheet", fldr_cfif, "spreadsheet")); // amazing-spreadsheet
+
 // --- Create File at Path
+
+function createFileAtPath(path, mime) {
+  var name = targetPath(path, 0);
+  path     = targetPath(path, 1);
+  var fldr = findFolderAtPath(path);
+  return createFileInFolder(name, fldr, mime);
+} 
+
+Logger.log("createFileAtPath");
+Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/sheets/cool-sheet", "spreadsheet"));
 
 // Verify File 
  
 // --- Verify File at Root
 
+function verifyFileAtRoot(name, mime) {
+  if (checkForFileAtRoot(name, mime)) {
+    return findFileAtRoot(name, mime);
+  } else {
+    return createFileAtRoot(name, mime);
+  }
+} 
+
+// Logger.log("verifyFileAtRoot");
+// Logger.log(verifyFileAtRoot("test_document", "document"));
+
 // --- Verify File in Folder
+
+function verifyFileInFolder(name, fldr, mime) {
+  if (checkForFileInFolder(name, fldr, mime)) {
+    return findFileInFolder(name, fldr, mime);
+  } else {
+    return createFileInFolder(name, fldr, mime);
+  }
+} 
+
+// Logger.log("verifyFileInFolder");
  
 // --- Verify File at Path
 
+function verifyFileAtPath() {
+  if (checkForFileAtPath(path, mime)) {
+    return findFileAtPath(path, mime);
+  } else {
+    return createFileAtPath(path, mime);
+  }
+} 
+
+// Logger.log("verifyFileAtPath");
+
 // -- Id of Active File
- 
+
+function idOfActiveFile(mime) {
+  switch(mime) {
+    case "document": return DocumentApp.getActiveDocument().getId();
+    case "form": return FormApp.getActiveForm().getId();
+    case "presentation": return SlidesApp.getActivePresentation().getId();
+    case "spreadsheet": return DocumentApp.getActiveSpreadsheet().getId();
+  }
+} 
+
+Logger.log("idOfActiveFile");
+
 // -- Copy a File to a Folder
 
 /**
@@ -1889,7 +1984,7 @@ function createFileAtRoot(name, mime) {
 function copyFileToFolder(file, fldr) {
   var name = file.getName();
   var dest = findFileInFolder(name, fldr);
-  if (dest === undefined) file.makeCopy(name, fldr);
+  if (dest === false) file.makeCopy(name, fldr);
   return findFileInFolder(name, fldr);
 }
 
@@ -1912,9 +2007,9 @@ function copyFileToFolder(file, fldr) {
 function moveFileToFolder(file, fldr) {
   var name = file.getName();
   var dest = findFileInFolder(name, fldr);
-  if (dest === undefined) file.makeCopy(name, fldr);
+  if (dest === false) file.makeCopy(name, fldr);
   var result = findFileInFolder(name, fldr);
-  if (result !== undefined) file.setTrashed(true);
+  if (result !== false) file.setTrashed(true);
   return result;
 }
 
