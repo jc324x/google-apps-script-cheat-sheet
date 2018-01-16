@@ -2161,6 +2161,7 @@ function objectFromFile(file) {
 // Logger.log(JSON.stringify(obj_off));
 
 // -- Object From URL or File
+// TODO: stuff
 
 /**
  * Returns an object from a URL or from a file in Drive.
@@ -2169,7 +2170,7 @@ function objectFromFile(file) {
  * @returns {Object}
  */
 
-function objectFromUrlOrFileAtPath(input) {
+function objectFromSource(input) {
   var regExp = new RegExp("^(http|https)://");
   var test   = regExp.test(input);
   if (regExp.test(input)) {
@@ -2254,6 +2255,8 @@ function clearConfiguration() {
   ui.alert("All settings cleared.");
 }
 
+// Sheets
+
 // - Utility Functions for Sheets
 
 // -- Convert Column Number to a Letter 
@@ -2287,15 +2290,16 @@ function convertIndexToColumn(number) {
   }
 }
 
-function ex_cnal() {
+function logAllValuesIndexToColumn() {
  for (var i = 1; i <= 104; i++) {
    var j = convertIndexToColumn(i);
    Logger.log(i + " - " + j);
  }
 }
 
-// Logger.log("convertIndexToColumn");
-// ex_cnal(); // 1 - A ... CZ - 104
+Logger.log("convertIndexToColumn");
+Logger.log(convertIndexToColumn(26)); // Z
+// logAllValuesIndexToColumn(); // 1 - A ... CZ - 104
 
 // -- Convert Column Letter to a Number
 
@@ -2319,7 +2323,7 @@ function convertColumnToIndex(column) {
   }
 }
 
-function ex_clan() {
+function logAllValuesColumnToIndex() {
   var abc;
  for (var i = 0; i <= 25; i++) {
    abc = String.fromCharCode(97 + i).toUpperCase();
@@ -2332,7 +2336,7 @@ function ex_clan() {
 }
 
 // Logger.log("convertColumnToIndex");
-// ex_clan();
+// logAllValuesColumnToIndex(); // TODO
 
 // -- Replicating Import Range 
 
