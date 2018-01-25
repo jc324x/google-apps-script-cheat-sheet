@@ -2484,7 +2484,7 @@ function validateHeaderRow(number) {
 
 // - A1 Object
 
-function A1Coordinates(a1Notation) {
+function A1Object(a1Notation) {
   var split         = a1Notation.split(":");
   this.start_column = convertColumnToIndex(String(split[0].match(/\D/g,'')));
   this.start_row    = Number(split[0].match(/\d+/g));
@@ -2492,26 +2492,26 @@ function A1Coordinates(a1Notation) {
   this.end_row      = Number(split[1].match(/\d+/g));
 }
 
-A1Coordinates.prototype.getA1Notation = function () {
+A1Object.prototype.getA1Notation = function () {
   return convertIndexToColumn(this.start_column) + String(this.start_row) + ":" + convertIndexToColumn(this.end_column) + String(this.end_row);
 };
 
-A1Coordinates.prototype.getHeaderA1Notation = function () {
+A1Object.prototype.getHeaderA1Notation = function () {
   return convertIndexToColumn(this.start_column) + String(this.start_row) + ":" + convertIndexToColumn(this.end_column) + String(this.start_row);
 };
 
-A1Coordinates.prototype.getValueA1Notation = function () {
-  return convertIndexToColumn(this.start_column) + String(this.start_row + 1) + ":" + convertIndexToColumn(this.end_column) + String(this.start_row);
+A1Object.prototype.getValueA1Notation = function () {
+  return convertIndexToColumn(this.start_column) + String(this.start_row + 1) + ":" + convertIndexToColumn(this.end_column) + String(this.end_row);
 };
 
-Logger.log("A1Coordinates");
-var obj_a1c = new A1Coordinates("A1:J10");
-Logger.log(obj_a1c.getA1Notation());
+// Logger.log("A1Object");
+// var obj_a1c = new A1Object("A1:J10");
+// Logger.log(obj_a1c.getA1Notation());
 
 function validateA1(a1Notation, sheet) {
-  var check   = new A1Coordinates(a1Notation);
+  var check   = new A1Object(a1Notation);
   var sheetA1 = sheet.getDataRange().getA1Notation();
-  var limit   = new A1Coordinates(sheetA1);
+  var limit   = new A1Object(sheetA1);
   if ((check.start_column <= limit.end_column) && (check.end_column <= limit.end_column)) {
     if ((check.start_row <= limit.end_row) && (check.end_row <= limit.end_row)) {
       return true;
@@ -2635,7 +2635,7 @@ function arrayOfObjectsByRow(rangeObj, headers){
 
 function headerRange(a1Notation, sheet) {
   if (validateA1(a1Notation, sheet)) {
-    var coordinates = new A1Coordinates(a1Notation);
+    var coordinates = new A1Object(a1Notation);
     return sheet.getRange(coordinates.getHeaderA1Notation());
   }
 }
@@ -2657,14 +2657,14 @@ function headerRange(a1Notation, sheet) {
 
 function valueRange(a1Notation, sheet) {
   if (validateA1(a1Notation, sheet)) {
-    var coordinates = new A1Coordinates(a1Notation);
+    var coordinates = new A1Object(a1Notation);
     return sheet.getRange(coordinates.getValueA1Notation());
   }
 }
 
-Logger.log("valueRange");
-var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
+// Logger.log("valueRange");
+// var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
 
 // -- Array of Objects from Sheet 
 
@@ -2679,33 +2679,19 @@ Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
  * TODO:  @returns {undefined}
  */
 
-function arrayOfObjectsForSheet(sheet, hRow){
-
-  if (hRow === undefined) {
-    hRow = 1;
-  }
-
-  var lColNum = sheet.getLastColumn();
-  var lColABC = convertIndexToColumn(lColNum);
-  var lRow    = sheet.getLastRow();
-
-  var hRange  = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
-  var headers = arrayOfHeaderValues(hRange);
-  var vRange  = sheet.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
-  return arrayOfObjectsByRow(vRange, headers);
+function arrayOfObjectsSheet(sheet) {
+  var a1Notation  = sheet.getDataRange().getA1Notation();
+  var a1Object    = new A1Object(a1Notation);
+  var headerRange = sheet.getRange(a1Object.getHeaderA1Notation());
+  var valueRange  = sheet.getRange(a1Object.getValueA1Notation());
+  var headers     = arrayOfHeaderValues(headerRange);
+  return arrayOfObjectsByRow(valueRange, headers);
 }
 
+// Logger.log("arrayOfObjectsSheet");
 // var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrayOfObjectsForSheet(sheet_aofs, 2)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
+// Logger.log(arrayOfObjectsSheet(sheet_aofs)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 
-function aof_dev(sheet) {
-  Logger.log(sheet.getDataRange().getA1Notation());
-} 
-
-var sheet_dev = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log("DEV");
-aof_dev(sheet_dev);
- 
 // -- Array of Objects from Range 
 
 /**
@@ -2720,16 +2706,21 @@ aof_dev(sheet_dev);
  * @returns {undefined}
  */
 
-function arrayOfObjectsForRange(sheet, a1Notation) {
-  var hRange  = headerRange(a1Notation, sheet);
-  var vRange  = valueRange(a1Notation, sheet);
-  var headers = arrayOfHeaderValues(hRange);
-  return arrayOfObjectsByRow(vRange, headers);
+function arrayOfObjectsA1(a1Notation, sheet) {
+  if (validateA1(a1Notation, sheet)) {
+    var a1Object    = new A1Object(a1Notation);
+    var headerRange = sheet.getRange(a1Object.getHeaderA1Notation());
+    var valueRange  = sheet.getRange(a1Object.getValueA1Notation());
+    var headers     = arrayOfHeaderValues(headerRange);
+    return arrayOfObjectsByRow(valueRange, headers);
+  } else {
+    return false;
+  }
 }
 
-// Logger.log("arrayOfObjectsForRange");
-// var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrayOfObjectsForRange(sheet_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
+Logger.log("arrayOfObjectsA1");
+var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(arrayOfObjectsA1("A1:E7", sheet_aofr)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 
 // - Array 
 
