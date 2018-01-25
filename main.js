@@ -1,4 +1,4 @@
-// v0.3-beta
+// v0.1.1-beta - Standardization & Organization
 
 function test() {}
 Logger.log("Start");
@@ -888,7 +888,17 @@ function targetPath(path, opt) {
 // Logger.log(targetPath("a/b/c", 0)); // c
 // Logger.log(targetPath("a/b/c", 1)); // a/b
 
+// TODO: move to validate
 // Validate MIME Type
+
+// vs. expand
+
+function validateMIME(val) {
+  // lower case
+  // if matches case statment
+  // return + "application/vnd.google-apps.
+} 
+
 
 function expandMIMEType(val) {
   return "application/vnd.google-apps." + val.toLowerCase();
@@ -1537,6 +1547,7 @@ function verifyFoldersAtPath(arr, path) {
  */
 
 function arrayOfFilesInFolder(fldr) {
+  // Logger.log(fldr);
   var result = [];
   var fi     = fldr.getFiles();
   while (fi.hasNext()) {
@@ -1761,14 +1772,57 @@ function findFileAtPathAny(path) {
 // Logger.log("findFileAtPathAny");
 // Logger.log(findFileAtPathAny("google-apps-script-cheat-sheet-demo/files/example-file")); // example-file
 
+// function findFileAtPathType(path, mime) {
+//   path     = verifyPath(path);
+//   mime     = expandMIMEType(mime);
+//   var file = targetPath(path, 0);
+//   path     = targetPath(path, 1);
+//   var fldr = findFolderAtPath(path);
+//   if (fldr) {
+//     file = findFileInFolder(file, fldr);
+
+//     if (file.getMimeType() === mime) {
+//       return file;
+//     } else {
+//       return false;
+//     }
+//   } else {
+//     return false;
+//   }
+// } 
+
+function matchMIMEType(file, mime) {
+  var type;
+
+  if (file) {
+    type = file.getMimeType(); 
+  } else {
+    return false;
+  }
+
+  if (type === mime) {
+    return true;
+  } else {
+    return false;
+  }
+} 
+
+// TODO: Bring into other functions 
+
 function findFileAtPathType(path, mime) {
   path     = verifyPath(path);
   mime     = expandMIMEType(mime);
   var file = targetPath(path, 0);
   path     = targetPath(path, 1);
   var fldr = findFolderAtPath(path);
-  file     = findFileInFolder(file, fldr);
-  if (file.getMimeType() === mime) {
+
+  if (fldr) {
+    file = findFileInFolder(file, fldr);
+  } else {
+    return false;
+  }
+
+  if (file && matchMIMEType(file, mime)) {
     return file;
   } else {
     return false;
@@ -1780,7 +1834,7 @@ function findFileAtPathType(path, mime) {
 
 function findFileAtPath(path, mime) {
   if (mime !== undefined) {
-    return findFileAtPathType(name, mime);
+    return findFileAtPathType(path, mime);
   } else {
     return findFileAtPathAny(name);
   }
@@ -1902,9 +1956,9 @@ function createFileInFolder(name, fldr, mime) {
   return moveFileToFolder(file, fldr);
 }  
 
-Logger.log("createFileInFolder");
-var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
-Logger.log(createFileInFolder("amazing-spreadsheet", fldr_cfif, "spreadsheet")); // amazing-spreadsheet
+// Logger.log("createFileInFolder");
+// var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
+// Logger.log(createFileInFolder("amazing-spreadsheet", fldr_cfif, "spreadsheet")); // amazing-spreadsheet
 
 // --- Create File at Path
 
@@ -1915,8 +1969,8 @@ function createFileAtPath(path, mime) {
   return createFileInFolder(name, fldr, mime);
 } 
 
-Logger.log("createFileAtPath");
-Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/sheets/cool-sheet", "spreadsheet"));
+// Logger.log("createFileAtPath");
+// Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/sheets/cool-sheet", "spreadsheet"));
 
 // Verify File 
  
@@ -1947,7 +2001,7 @@ function verifyFileInFolder(name, fldr, mime) {
  
 // --- Verify File at Path
 
-function verifyFileAtPath() {
+function verifyFileAtPath(path, mime) {
   if (checkForFileAtPath(path, mime)) {
     return findFileAtPath(path, mime);
   } else {
@@ -1968,27 +2022,23 @@ function idOfActiveFile(mime) {
   }
 } 
 
-Logger.log("idOfActiveFile");
+// Logger.log("idOfActiveFile");
 
 // -- Copy a File to a Folder
 
-/**
- * Returns the copied file.
- *
- * @requires findFileInFolder()
- * @param {File} file
- * @param {Folder} fldr
- * @returns {File}
- */
-
 function copyFileToFolder(file, fldr) {
   var name = file.getName();
-  var dest = findFileInFolder(name, fldr);
-  if (dest === false) file.makeCopy(name, fldr);
-  return findFileInFolder(name, fldr);
-}
+  var dest = findFileInFolderAny(name, fldr);
+  if (dest === false) {
+    file.makeCopy(name, fldr);
+    return findFileInFolderAny(name, fldr);
+  } else {
+    return false;
+  }
+} 
 
 // Logger.log("copyFileToFolder");
+// TODO: VERIFY
 // var fldr_cftf = verifyPath("google-apps-script-cheat-sheet-demo/files/copied");
 // var file_cftf = findFileInDrive("example-file");
 // Logger.log(copyFileToFolder(file_cftf, fldr_cftf)); // example-file
@@ -2005,15 +2055,24 @@ function copyFileToFolder(file, fldr) {
  */
 
 function moveFileToFolder(file, fldr) {
+  var result;
   var name = file.getName();
-  var dest = findFileInFolder(name, fldr);
-  if (dest === false) file.makeCopy(name, fldr);
-  var result = findFileInFolder(name, fldr);
-  if (result !== false) file.setTrashed(true);
-  return result;
-}
+  var dest = findFileInFolderAny(name, fldr);
+
+  if (dest === false) {
+    file.makeCopy(name, fldr);
+    result = findFileInFolderAny(name, fldr);
+  }
+
+  if (result) {
+    return result;
+  } else {
+    return false;
+  }
+} 
 
 // Logger.log("moveFileToFolder");
+// TODO: VERIFY
 // var fldr_mftf1 = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/copied");
 // var file_mftf  = findFileInFolder("example-file", fldr_mftf1);
 // var fldr_mftf2 = verifyPath("google-apps-script-cheat-sheet-demo/files/moved");
@@ -2037,6 +2096,7 @@ function renameFileOrFolder(file_fldr, name) {
 } 
 
 // Logger.log("renameFileOrFolder");
+// TODO: VERIFY
 // var fldr_rfof = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/moved");
 // var file_rfof = findFileInFolder("example-file", fldr_rfof);
 // Logger.log(renameFileOrFolder(file_rfof, "modified-example-file")); // modified-example-file
@@ -2056,6 +2116,7 @@ function parentFolderOfFileOrFolder(file_fldr) {
 }
 
 // Logger.log("parentFolderOfFileOrFolder");
+// TODO: VERIFY
 // var file_pfofof = findFileInDrive("example-file");
 // Logger.log(parentFolderOfFileOrFolder(file_pfofof)); // files
 
@@ -2063,16 +2124,12 @@ function parentFolderOfFileOrFolder(file_fldr) {
 
 // TODO: Update with new checking functions
 
-function filesForZipExample() {
-  Logger.log("zipExFiles");
-
-  if (!(checkForFolderAtPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip"))) {
-    var fldr = verifyPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip");
-    fldr.createFile("A","hello, world!");
-    fldr.createFile("B", "hello again, world!");
-    fldr.createFile("C", "world! hi!");
-  }
-}
+function verifyFilesForZipEx() {
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip");
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip/A", "document");
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip/B", "document");
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip/C", "document");
+} 
 
 /**
  * Returns a zipped file. 
@@ -2090,8 +2147,6 @@ function zipFilesInFolder(fldr, name, dest) {
 
   for (var i = 0; i < files.length; i++) {
     blobs.push(files[i].getBlob());
-    Logger.log(blobs);
-    Logger.log(blobs.length);
   } 
 
   var zips = Utilities.zip(blobs, name);
@@ -2099,19 +2154,24 @@ function zipFilesInFolder(fldr, name, dest) {
   if (dest !== null) {
     dest.createFile(zips);
     return findFileInFolder(name, dest);
+  } else {
+    return false;
   }
 }
 
 // Logger.log("zipFilesInFolder");
-// filesForZipExample();
-// var fldr_zfif = verifyPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip");
-// var dest_zfif = verifyPath("google-apps-script-cheat-sheet-demo/zip/destination");
+// verifyFilesForZipEx();
+// var fldr_zfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip");
+// var dest_zfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/zip/destination");
 // zipFilesInFolder(fldr_zfif, "Archive", dest_zfif);
 
 // JSON
 
-function fileForJSONExample() {
-  var fldr = verifyPath("google-apps-script-cheat-sheet-demo/json");
+// TODO: match style for other example only functions 
+// not just a blank example file, specific format required
+
+function verifyFileForJSONEx() {
+  var fldr = verifyFolderPath("google-apps-script-cheat-sheet-demo/json");
   var file = findFileInFolder("example-json", fldr);
   if (!(file)) {
     var json = objectFromUrlJSON("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
@@ -2155,12 +2215,12 @@ function objectFromFile(file) {
 } 
 
 // Logger.log("objectFromFile");
-// fileForJSONExample();
+// verifyFileForJSONEx();
 // var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
 // var obj_off  = objectFromFile(file_off);
 // Logger.log(JSON.stringify(obj_off));
 
-// -- Object From URL or File
+// -- Object From Source
 // TODO: stuff
 
 /**
@@ -2297,8 +2357,8 @@ function logAllValuesIndexToColumn() {
  }
 }
 
-Logger.log("convertIndexToColumn");
-Logger.log(convertIndexToColumn(26)); // Z
+// Logger.log("convertIndexToColumn");
+// Logger.log(convertIndexToColumn(26)); // Z
 // logAllValuesIndexToColumn(); // 1 - A ... CZ - 104
 
 // -- Convert Column Letter to a Number
@@ -2336,14 +2396,15 @@ function logAllValuesColumnToIndex() {
 }
 
 // Logger.log("convertColumnToIndex");
-// logAllValuesColumnToIndex(); // TODO
+// Logger.log(convertColumnToIndex("BB")); // 54
+// logAllValuesColumnToIndex();
 
 // -- Replicating Import Range 
 
 /**
  * Replicating import range in Google Apps Script.
  * Requires a trigger to function.
- * importRange : From spreadsheet : On edit
+ * testingImportRange : From spreadsheet : On edit
  *
  */
 
@@ -2410,61 +2471,57 @@ function arrayOfSheetNames(ss) {
 // var ss_aosn = SpreadsheetApp.getActiveSpreadsheet();
 // Logger.log(arrayOfSheetNames(ss_aosn)); // ["Sheet1", "Sheet2", "Sheet3"]
 
+// -- Validate Header Range
+ 
+function validateHeaderRow(number) {
+  if (number !== undefined && number === 0) {
+    number = 1;
+  }
+  return number;
+} 
+
 // - A1 Notation
 
-// -- Convert A1 Notation to Array
+// - A1 Object
 
-function convertA1ToArray(a1Notation) {
-  var result = [];
-  var split  = a1Notation.split(":");
-  if (split.length === 2) {
-    var tmp = split[0].match(/\D/g,'');
-    tmp = convertColumnToIndex(String(tmp));
-    result.push(tmp);
-    tmp = Number(split[0].match(/\d+/g));
-    result.push(tmp);
-    tmp = split[1].match(/\D/g,'');
-    tmp = convertColumnToIndex(String(tmp));
-    result.push(tmp);
-    tmp = Number(split[1].match(/\d+/g));
-    result.push(tmp);
-    return result;
-  } else {
-    return false;
-  }
+function A1Coordinates(a1Notation) {
+  var split         = a1Notation.split(":");
+  this.start_column = convertColumnToIndex(String(split[0].match(/\D/g,'')));
+  this.start_row    = Number(split[0].match(/\d+/g));
+  this.end_column   = convertColumnToIndex(String(split[1].match(/\D/g,'')));
+  this.end_row      = Number(split[1].match(/\d+/g));
 }
 
-// Logger.log("convertA1ToArray");
-// Logger.log(convertA1ToArray("A1:J10")); // [1, 1, 10, 10]
+A1Coordinates.prototype.getA1Notation = function () {
+  return convertIndexToColumn(this.start_column) + String(this.start_row) + ":" + convertIndexToColumn(this.end_column) + String(this.end_row);
+};
 
-// -- Validate A1 Notation
+A1Coordinates.prototype.getHeaderA1Notation = function () {
+  return convertIndexToColumn(this.start_column) + String(this.start_row) + ":" + convertIndexToColumn(this.end_column) + String(this.start_row);
+};
+
+A1Coordinates.prototype.getValueA1Notation = function () {
+  return convertIndexToColumn(this.start_column) + String(this.start_row + 1) + ":" + convertIndexToColumn(this.end_column) + String(this.start_row);
+};
+
+Logger.log("A1Coordinates");
+var obj_a1c = new A1Coordinates("A1:J10");
+Logger.log(obj_a1c.getA1Notation());
 
 function validateA1(a1Notation, sheet) {
-  var col, row;
-  var inputArray     = convertA1ToArray(a1Notation);
-  var dataRangeA1    = sheet.getDataRange().getA1Notation();
-  var dataRangeArray = convertA1ToArray(dataRangeA1);
-
-  if ((inputArray[0] <= dataRangeArray[2]) && (inputArray[2]) <= dataRangeArray[2]) {
-    col = true;
-  } else {
-    col = false;
-  }
-
-  if ((inputArray[1] <= dataRangeArray[3]) && (inputArray[3]) <= dataRangeArray[3]) {
-    row = true;
-  } else {
-    row = false;
-  }
-
-  if (row && col) {
-    return a1Notation;
+  var check   = new A1Coordinates(a1Notation);
+  var sheetA1 = sheet.getDataRange().getA1Notation();
+  var limit   = new A1Coordinates(sheetA1);
+  if ((check.start_column <= limit.end_column) && (check.end_column <= limit.end_column)) {
+    if ((check.start_row <= limit.end_row) && (check.end_row <= limit.end_row)) {
+      return true;
+    } 
   } else {
     return false;
   }
-}
+} 
 
-// Logger.log("validateA1Notation");
+// Logger.log("validateA1");
 // var sheet_van = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // Logger.log(validateA1("A1:B2", sheet_van)); // "A1:B2"
 // Logger.log(validateA1("A10000, ZZZ:50000", sheet_van)); // false
@@ -2493,6 +2550,8 @@ function objectFromRange(a1Notation, sheet) {
       result[values[i][0]] = values[i][1];
     } 
     return result;
+  } else {
+    return false;
   }
 }
 
@@ -2538,7 +2597,7 @@ function arrayOfHeaderValues(rangeObj){
  * @returns {Object[]}
  */
 
-function arrayOfValuesByRow(rangeObj, headers){
+function arrayOfObjectsByRow(rangeObj, headers){
   var height = rangeObj.getHeight();
   var width  = rangeObj.getWidth();
   var values = rangeObj.getValues();
@@ -2557,11 +2616,11 @@ function arrayOfValuesByRow(rangeObj, headers){
   return result;
 }
 
-// Logger.log("arrayOfValuesByRow");
+// Logger.log("arrayOfObjectsByRow");
 // var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var range_vbr   = sheet_vbr.getRange("A2:E19");
 // var headers_vbr = arrayOfHeaderValues(range_vbr);
-// Logger.log(arrayOfValuesByRow(range_vbr, headers_vbr)); 
+// Logger.log(arrayOfObjectsByRow(range_vbr, headers_vbr)); 
 // [{Last=Last, Email=Email, Homeroom=Homeroom, Grade=Grade, First=First}, {Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}...]
 
 // --- Header Range 
@@ -2575,14 +2634,9 @@ function arrayOfValuesByRow(rangeObj, headers){
  */
 
 function headerRange(a1Notation, sheet) {
-  a1Notation = validateA1(a1Notation, sheet);
-  if (a1Notation) {
-    var split = a1Notation.split(":");
-    var col0  = split[0].match(/\D/g,'');
-    var col1  = split[1].match(/\D/g,'');
-    var row   = split[0].match(/\d+/g);
-    var a1    = col0 + row + ":" + col1 + row;
-    return sheet.getRange(a1);
+  if (validateA1(a1Notation, sheet)) {
+    var coordinates = new A1Coordinates(a1Notation);
+    return sheet.getRange(coordinates.getHeaderA1Notation());
   }
 }
 
@@ -2602,18 +2656,15 @@ function headerRange(a1Notation, sheet) {
  */
 
 function valueRange(a1Notation, sheet) {
-  var split = a1Notation.split(":");
-  var col0  = split[0].match(/\D/g,'');
-  var row0  = split[0].match(/\d+/g);
-  var col1  = split[1].match(/\D/g,'');
-  var row1  = split[1].match(/\d+/g);
-  var a1    = col0 + (Number(row0) + 1) + ":" + col1 + row1;
-  return sheet.getRange(a1);
+  if (validateA1(a1Notation, sheet)) {
+    var coordinates = new A1Coordinates(a1Notation);
+    return sheet.getRange(coordinates.getValueA1Notation());
+  }
 }
 
-// Logger.log("valueRange");
-// var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
+Logger.log("valueRange");
+var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
 
 // -- Array of Objects from Sheet 
 
@@ -2622,13 +2673,14 @@ function valueRange(a1Notation, sheet) {
  *
  * @requires convertIndexToColumn() 
  * @requires arrayOfHeaderValues() 
- * @requires arrayOfValuesByRow() 
+ * @requires arrayOfObjectsByRow() 
  * @param sheet
  * @param hRow
  * TODO:  @returns {undefined}
  */
 
-function arrObjFromSheet(sheet, hRow){
+function arrayOfObjectsForSheet(sheet, hRow){
+
   if (hRow === undefined) {
     hRow = 1;
   }
@@ -2636,15 +2688,24 @@ function arrObjFromSheet(sheet, hRow){
   var lColNum = sheet.getLastColumn();
   var lColABC = convertIndexToColumn(lColNum);
   var lRow    = sheet.getLastRow();
+
   var hRange  = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
   var headers = arrayOfHeaderValues(hRange);
   var vRange  = sheet.getRange("A" + (hRow +1) + ":" + lColABC + lRow);
-  return arrayOfValuesByRow(vRange, headers);
+  return arrayOfObjectsByRow(vRange, headers);
 }
 
 // var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrObjFromSheet(sheet_aofs, 2)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
+// Logger.log(arrayOfObjectsForSheet(sheet_aofs, 2)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 
+function aof_dev(sheet) {
+  Logger.log(sheet.getDataRange().getA1Notation());
+} 
+
+var sheet_dev = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log("DEV");
+aof_dev(sheet_dev);
+ 
 // -- Array of Objects from Range 
 
 /**
@@ -2653,24 +2714,22 @@ function arrObjFromSheet(sheet, hRow){
  * @requires headerRange() 
  * @requires valueRange() 
  * @requires arrayOfHeaderValues() 
- * @requires arrayOfValuesByRow() 
+ * @requires arrayOfObjectsByRow() 
  * @param sheet
  * @param a1Notation
  * @returns {undefined}
  */
 
-function arrObjFromRange(sheet, a1Notation) {
+function arrayOfObjectsForRange(sheet, a1Notation) {
   var hRange  = headerRange(a1Notation, sheet);
   var vRange  = valueRange(a1Notation, sheet);
-  Logger.log("vRange");
-  Logger.log(vRange);
   var headers = arrayOfHeaderValues(hRange);
-  return arrayOfValuesByRow(vRange, headers);
+  return arrayOfObjectsByRow(vRange, headers);
 }
 
-// Logger.log("arrObjFromRange");
+// Logger.log("arrayOfObjectsForRange");
 // var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrObjFromRange(sheet_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
+// Logger.log(arrayOfObjectsForRange(sheet_aofr, "A2:E7")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 
 // - Array 
 
@@ -2773,101 +2832,6 @@ function arrayForColumnRange(rangeObj){
 // var sheet_vafro = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 // var range_vafro = sheet_vafro.getRange("A2:F5");
 // Logger.log(arrayForColumnRange(range_vafro)); // ["A", "B", "C", "D"]
-
-// Docs
-
-// - Managing Document Files
-// -- Check for a Document
-// --- Check for a Document in a Folder
-// --- Check for a Document at Root
-// --- Check for a Document at Path
-// -- Create Document
-// --- Create Document in a Folder
-// --- Create Document at Root
-// --- Create Document at Path
-// -- Verify Document
-// --- Verify Document in a Folder
-// --- Verify Document at Root
-// --- Verify Document at Path
-
-// -- Create or Verify Document
-
-// --- Create or Verify Document in a Folder
-// * requires checkArrayForValue
-
-/**
- * Returns a document.
- * This creates the document if it does not already exist.
- *
- * @param {Folder} fldr
- * @param {string} name
- * @returns {Document}
- */
-
-function verifyDocumentInFolder(fldr, name) {
-  var files = arrayOfFilesInFolder(fldr);
-  var names = arrayOfFileNames(files);
-  if (!(checkArrayForValue(name, names))) {
-    var doc  = DocumentApp.create(name).getId();
-    var file = DriveApp.getFileById(doc);
-    moveFileToFolder(file, fldr);
-  }
-  return openFileAsDocument(findFileInFolder(name, fldr));
-}
-
-// var fldr_cvdi = verifyPath("google-apps-script-cheat-sheet-demo/docs");
-// Logger.log(verifyDocumentInFolder(fldr_cvdi, "example-doc")); // example-doc
-
-// --- Create or Verify Document at Root
-
-/**
- * Returns a document.
- * This creates the document if it does not already exist.
- *
- * @param {string} name
- * @returns {Document}
- */
-
-function createVerifyDocAtRoot(name) {
-  var files = arrayOfFilesAtRoot();
-  var names = arrayOfFileNames(files);
-  if (!(checkArrayForValue(name, names))) {
-    var ss = DocumentApp.create(name);
-  }
-  return findFileAtRoot(name);
-}
-
-// -- Id of Active Document
- 
-/**
- * Returns the Id of the active document.
- *
- * @returns {string}
- */
-
-function docId() {
-  var _id = DocumentApp.getActiveDocument().getId();
-  return _id;
-}
-  
-// -- Open File as Document
-
-/**
- * Returns a file as a document.
- *
- * @param {File} file
- * @returns {Document}
- */
-
-function openFileAsDocument(file) {
-  var _id = file.getId();
-  var _doc = DocumentApp.openById(_id);
-  return _doc;
-} 
-
-// var fldr_ofad = findFolderAtPath("google-apps-script-cheat-sheet-demo/docs");
-// var file_ofad = findFileInFolder(fldr_ofad, "example-doc");
-// Logger.log(openFileAsDocument(file_ofad));
 
 // - Utility Functions for Docs
 
