@@ -2504,6 +2504,13 @@ A1Object.prototype.getValueA1Notation = function () {
   return convertIndexToColumn(this.start_column) + String(this.start_row + 1) + ":" + convertIndexToColumn(this.end_column) + String(this.end_row);
 };
 
+// remove convertIndexToColumn for start_column value
+A1Object.prototype.getTargetA1Notation = function (targetColumn) {
+  return convertIndexToColumn(targetColumn) + String(this.start_row + 1) + ":" + convertIndexToColumn(targetColumn) + String(this.end_row);
+};
+
+// var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
+
 // Logger.log("A1Object");
 // var obj_a1c = new A1Object("A1:J10");
 // Logger.log(obj_a1c.getA1Notation());
@@ -2718,9 +2725,9 @@ function arrayOfObjectsA1(a1Notation, sheet) {
   }
 }
 
-Logger.log("arrayOfObjectsA1");
-var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(arrayOfObjectsA1("A1:E7", sheet_aofr)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
+// Logger.log("arrayOfObjectsA1");
+// var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(arrayOfObjectsA1("A1:E7", sheet_aofr)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 
 // - Array 
 
@@ -2731,37 +2738,32 @@ Logger.log(arrayOfObjectsA1("A1:E7", sheet_aofr)); // [{Last=Garret, Email=agarr
 /**
  * Returns an array containing all values in a column.
  *
- * @param {Sheet} sheet
- * @param {number} 
  * @param {string} name
+ * @param {Sheet} sheet
  * @returns {Array}
  */
 
-function arrayForColumnName(sheet, name, hRow){
-  if (hRow === undefined) {
-    hRow = 1;
-  }
+function arrayForColumnName(name, sheet) {
+  var result       = [];
+  var a1Notation   = sheet.getDataRange().getA1Notation();
+  var a1Object     = new A1Object(a1Notation);
+  var headerRange  = sheet.getRange(a1Object.getHeaderA1Notation());
+  var headers      = arrayOfHeaderValues(headerRange);
+  var targetColumn = headers.indexOf(name) + 1;
+  var targetRange  = sheet.getRange(a1Object.getTargetA1Notation(targetColumn));
+  var height       = targetRange.getHeight();
+  var values       = targetRange.getValues();
 
-  var lColNum  = sheet.getLastColumn();
-  var lColABC  = convertIndexToColumn(lColNum);
-  var lRow     = sheet.getLastRow();
-  var hRange   = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
-  var headers  = arrayOfHeaderValues(hRange);
-  var tColABC  = convertIndexToColumn(headers.indexOf(name) + 1);
-  var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
-  var height   = rangeObj.getHeight();
-  var values   = rangeObj.getValues();
-  var arr      = [];
-  for (var i = 0; i < height; i++) {
-      var val  = values[i][0];
-      arr.push(String(val));
-  }  
-  return arr;
-}
+  for (var i = 0; i < targetRange.getHeight(); i++) {
+    result.push(values[i][0]);
+  } 
+
+  return result;
+} 
 
 // Logger.log("arrayForColumnName");
 // var sheet_afcna = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrayForColumnName(sheet_afcna, "First", 2)); // [Arienne, Elissa, Nerses, Gülistan, Syed, Isaiah, Stanley, Sára, Kaja, Józef, Radoslava, Sarah, ...]
+// Logger.log(arrayForColumnName("First", sheet_afcna)); // [Arienne, Elissa, Nerses, Gülistan, Syed, Isaiah, Stanley, Sára, Kaja, Józef, Radoslava, Sarah, ...]
 
 // --- For Column Number
 
@@ -2774,30 +2776,28 @@ function arrayForColumnName(sheet, name, hRow){
  * @returns {Array}
  */
 
-function arrayForColumnIndex(sheet, colIndex, hRow){
-  if (hRow === undefined) {
-    hRow = 1;
-  }
+function arrayForColumnIndex(number, sheet) {
+  var result       = [];
+  var a1Notation   = sheet.getDataRange().getA1Notation();
+  var a1Object     = new A1Object(a1Notation);
+  var headerRange  = sheet.getRange(a1Object.getHeaderA1Notation());
+  var headers      = arrayOfHeaderValues(headerRange);
+  // var targetColumn = convertIndexToColumn(number);
+  // Logger.log(targetColumn);
+  var targetRange  = sheet.getRange(a1Object.getTargetA1Notation(number));
+  var height       = targetRange.getHeight();
+  var values       = targetRange.getValues();
 
-  var lColNum  = sheet.getLastColumn();
-  var lColABC  = convertIndexToColumn(lColNum);
-  var lRow     = sheet.getLastRow();
-  var hRange   = sheet.getRange("A" + hRow + ":" + lColABC + hRow);
-  var tColABC  = convertIndexToColumn(colIndex);
-  var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
-  var height   = rangeObj.getHeight();
-  var values   = rangeObj.getValues();
-  var arr      = [];
-  for (var i = 0; i < height; i++) {
-      var val  = values[i][0];
-      arr.push(String(val));
-  }  
-  return arr;
+  for (var i = 0; i < targetRange.getHeight(); i++) {
+    result.push(values[i][0]);
+  } 
+
+  return result;
 }
 
 // Logger.log("arrayForColumnIndex");
 // var sheet_afcno = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2"); 
-// Logger.log(arrayForColumnIndex(sheet_afcno, 2, 2)); // [Garret, Jules, Juda, Armen, Yeong-Suk, Coy, Stevie, Emin, Tiriaq, Dilay, Kirabo, Ariadna, Devrim, Adjoa, Suk, Lyle, Edita]
+// Logger.log(arrayForColumnIndex(2, sheet_afcno)); // [Garret, Jules, Juda, Armen, Yeong-Suk, Coy, Stevie, Emin, Tiriaq, Dilay, Kirabo, Ariadna, Devrim, Adjoa, Suk, Lyle, Edita]
 
 // --- For Range Object
 
