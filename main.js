@@ -2885,27 +2885,63 @@ var obj_ex = {
 // Logger.log("stringFromObjectProperties");
 // Logger.log(stringFromObjectProperties(obj_ex, "name: %name% - state: %state% - job: %job%", "%")); // "name: Jon - state: MN - job: IT Administrator"
 
-// function stringFromObjectProperties(obj, string) {
-//   var result = [];
-//   var split = string.split(" ");
-//   for (var i = 0; i < split.length; i++) {
-//     var word  = split[i];
-//     var count = word.split("%").length - 1;
-//     if (count === 2) {
-//       word     = word.replace(/%/g, "");
-//       var last = word.substr(-1);
-//       result.push(obj[word]);
-//     } else {
-//       result.push(word);
-//     }
-//   } 
-//   return result.join(" ");
-// } 
+function stringFromObjectProperties(obj, string) {
+  var result = [];
+  var split = string.split(" ");
+  for (var i = 0; i < split.length; i++) {
+    var sub  = split[i];
+    var count = sub.split("%").length - 1;
+    if (count === 2) {
+      sub = sub.replace(/%/g, "");
+      if (checkLastCharacterOfString(sub)) {
+        result.push(obj[sub]);
+      } else {
+        var delim  = sub.slice().substr(-1);
+        sub = sub.substring(0, sub.length - 1);
 
-// var string_sfop = "name: %name% ";
-// Logger.log(stringFromObjectProperties(obj_ex, string_sfop));
+      if (checkLastCharacterOfString(sub)) {}
+      }
+    } else {
+      result.push(sub);
+    }
+  } 
+  return result.join(" ");
+} 
 
-// TODO: handle trailing ',' and '.'
+function findReplaceInString(str, obj) {
+  var count = str.split("%").length - 1;
+
+  if (count !== 2) {
+    return str;
+  }
+
+  str = str.replace(/%/g, "");
+  var last = str.slice(-1);
+
+  if (last.match(/[a-z]/i)) { 
+    return obj[str];
+  } else {
+    str = str.substring(0, str.length - 1);
+    return obj[str] + last;
+  }
+}
+
+// Logger.log("findReplaceInString");
+// var string_fris = "%name%,";
+// Logger.log(findReplaceInString(string_fris, obj_ex));
+
+function stringFromObjectProperties(str, obj) {
+  var result = [];
+  var split  = str.split(" ");
+  for (var i = 0; i < split.length; i++) {
+    result.push(findReplaceInString(split[i], obj));
+  }
+  return result.join(" ");
+} 
+
+Logger.log("stringFromObjectProperties");
+var string_sfop = "name: %name%, occupation: %occupation%";
+Logger.log(stringFromObjectProperties(string_sfop, obj_ex));
 
 // -- Replace Object Properties 
 
