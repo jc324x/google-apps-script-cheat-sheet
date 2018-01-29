@@ -2847,7 +2847,7 @@ function arrayForColumnRange(targetRange){
 var obj_ex = { 
   name:  "Jon",
   state: "MN",
-  job:   "IT Administrator"
+  occupation:   "IT Administrator"
 };
 
 /**
@@ -2885,27 +2885,27 @@ var obj_ex = {
 // Logger.log("stringFromObjectProperties");
 // Logger.log(stringFromObjectProperties(obj_ex, "name: %name% - state: %state% - job: %job%", "%")); // "name: Jon - state: MN - job: IT Administrator"
 
-function stringFromObjectProperties(obj, string) {
-  var result = [];
-  var split = string.split(" ");
-  for (var i = 0; i < split.length; i++) {
-    var word  = split[i];
-    var count = word.split("%").length - 1;
-    if (count === 2) {
-      word = word.replace(/%/g, "");
-      result.push(obj[word]);
-      // if ((obj.hasOwnProperty(word))) {
-      //   result.push(obj[word]);
-      // }
-    } else {
-      result.push(word);
-    }
-  } 
-  return result.join(" ");
-} 
+// function stringFromObjectProperties(obj, string) {
+//   var result = [];
+//   var split = string.split(" ");
+//   for (var i = 0; i < split.length; i++) {
+//     var word  = split[i];
+//     var count = word.split("%").length - 1;
+//     if (count === 2) {
+//       word     = word.replace(/%/g, "");
+//       var last = word.substr(-1);
+//       result.push(obj[word]);
+//     } else {
+//       result.push(word);
+//     }
+//   } 
+//   return result.join(" ");
+// } 
 
-var string_sfop = "name: %name%";
-Logger.log(stringFromObjectProperties(obj_ex, string_sfop));
+// var string_sfop = "name: %name% ";
+// Logger.log(stringFromObjectProperties(obj_ex, string_sfop));
+
+// TODO: handle trailing ',' and '.'
 
 // -- Replace Object Properties 
 
