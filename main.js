@@ -2002,12 +2002,16 @@ function verifyFileInFolder(name, fldr, mime) {
 // --- Verify File at Path
 
 function verifyFileAtPath(path, mime) {
+  var folderPath = targetPath(path, 1);
+  verifyFolderPath(folderPath);
+
   if (checkForFileAtPath(path, mime)) {
     return findFileAtPath(path, mime);
   } else {
     return createFileAtPath(path, mime);
   }
-} 
+}
+
 
 // Logger.log("verifyFileAtPath");
 
@@ -2504,7 +2508,6 @@ A1Object.prototype.getValueA1Notation = function () {
   return convertIndexToColumn(this.start_column) + String(this.start_row + 1) + ":" + convertIndexToColumn(this.end_column) + String(this.end_row);
 };
 
-// remove convertIndexToColumn for start_column value
 A1Object.prototype.getTargetA1Notation = function (targetColumn) {
   return convertIndexToColumn(targetColumn) + String(this.start_row + 1) + ":" + convertIndexToColumn(targetColumn) + String(this.end_row);
 };
@@ -2737,10 +2740,6 @@ function arrayOfObjectsA1(a1Notation, sheet) {
 
 /**
  * Returns an array containing all values in a column.
- *
- * @param {string} name
- * @param {Sheet} sheet
- * @returns {Array}
  */
 
 function arrayForColumnName(name, sheet) {
@@ -2782,8 +2781,6 @@ function arrayForColumnIndex(number, sheet) {
   var a1Object     = new A1Object(a1Notation);
   var headerRange  = sheet.getRange(a1Object.getHeaderA1Notation());
   var headers      = arrayOfHeaderValues(headerRange);
-  // var targetColumn = convertIndexToColumn(number);
-  // Logger.log(targetColumn);
   var targetRange  = sheet.getRange(a1Object.getTargetA1Notation(number));
   var height       = targetRange.getHeight();
   var values       = targetRange.getValues();
@@ -2808,15 +2805,14 @@ function arrayForColumnIndex(number, sheet) {
  * @returns {Array}
  */
 
-function arrayForColumnRange(rangeObj){
+function arrayForColumnRange(targetRange){
   var result = [];
-  var height = rangeObj.getHeight();
-  var values = rangeObj.getValues();
-  var arr    = [];
+  var height = targetRange.getHeight();
+  var values = targetRange.getValues();
   for (var i = 0; i < height; i++) {
-    arr.push(values[i][0]);
+    result.push(values[i][0]);
   }
-  return arr;
+  return result;
 }
 
 // Logger.log("arrayForColumnRange");
@@ -2824,20 +2820,21 @@ function arrayForColumnRange(rangeObj){
 // var range_vafro = sheet_vafro.getRange("A2:F5");
 // Logger.log(arrayForColumnRange(range_vafro)); // ["A", "B", "C", "D"]
 
+// - Docs
+ 
 // - Utility Functions for Docs
 
-// -- Access Document Body
+// -- Append Paragraph to Document
 
-// var fldr_adb = findFolderAtPath("google-apps-script-cheat-sheet-demo/docs");
-// var file_adb = findFileInFolder(fldr_adb, "example-doc");
-// var doc_adb  = openFileAsDocument(file_adb);
-// doc_adb.appendParagraph("Hello, world!");
+// var file_adb = verifyFileAtPath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
+// var doc_adb  = openFileAsType(file_adb, "document");
+// var body_adb = doc_adb.getBody();
+// body_adb.appendParagraph("Hello, world!");
 
 // -- Clear Document Body
 
-// var fldr_cdb = findFolderAtPath("google-apps-script-cheat-sheet-demo/docs");
-// var file_cdb = findFileInFolder(fldr_cdb, "example-doc");
-// var doc_cdb  = openFileAsDocument(file_cdb);
+// var file_cdb = verifyFileAtPath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
+// var doc_cdb  = openFileAsType(file_cdb, "document");
 // var body_cdb = doc_cdb.getBody();
 // body_cdb.clear();
 
@@ -2847,7 +2844,7 @@ function arrayForColumnRange(rangeObj){
 
 // -- String From Object Properties 
 
-var ex_obj = { 
+var obj_ex = { 
   name:  "Jon",
   state: "MN",
   job:   "IT Administrator"
@@ -2863,27 +2860,33 @@ var ex_obj = {
  * @returns {string}
  */
 
-function strFromProp(obj, str, delim) {
-  var split  = str.split(" ");
-  var result = [];
-  for (var i = 0; i < split.length; i++) {
-    var _str = split[i]; 
-    for (var prop in obj){
-      var first = _str.slice().charAt(0);
-      var last  = _str.slice().substr(-1);
-      var mod   = _str.substr(0, _str.length-1).substr(1);
-      if ((obj.hasOwnProperty(mod)) && (first === delim) && (last === delim)) {
-        result.push(obj[mod]);
-      } else {
-        result.push(_str);
-      }
-      break;
-    }
-  } 
-  return result.join(" ");
-}
+// TODO: needs to handle "name: %name%,"
 
-// Logger.log(strFromProp(ex_obj, "name: %name% - state: %state% - job: %job%", "%")); // "name: Jon - state: MN - job: IT Administrator"
+// function stringFromObjectProperties(obj, string, delim) {
+//   var result = [];
+//   var split  = string.split(" ");
+//   for (var i = 0; i < split.length; i++) {
+//     var str = split[i]; 
+//     for (var prop in obj){
+//       var first = str.slice().charAt(0);
+//       var last  = str.slice().substr(-1);
+//       var mod   = str.substr(0, str.length-1).substr(1);
+//       if ((obj.hasOwnProperty(mod)) && (first === delim) && (last === delim)) {
+//         result.push(obj[mod]);
+//       } else {
+//         result.push(str);
+//       }
+//       break;
+//     }
+//   } 
+//   return result.join(" ");
+// }
+
+// Logger.log("stringFromObjectProperties");
+// Logger.log(stringFromObjectProperties(obj_ex, "name: %name% - state: %state% - job: %job%", "%")); // "name: Jon - state: MN - job: IT Administrator"
+
+
+
 
 // -- Replace Object Properties 
 
