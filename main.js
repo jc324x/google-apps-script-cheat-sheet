@@ -3,18 +3,18 @@
 function test() {}
 Logger.log("Start");
 
-// | | General
-// | | - Array
-// | | -- Check Array for a Value
-// | | -- Remove Duplicates from Array
-// | | -- Remove Empty Elements from Array
-// | | -- Get Count of Values in Array
-// | | -- Intersect of Two Arrays
-// | | -- Compare Two Arrays
-// | | -- Array as Delimited String
-// | | -- Array as Modified Delimited String
-// | | - Two-Dimensional Array
-// | | -- Flatten Two-Dimensional Array
+// |+| General
+// |+| - Array
+// |+| -- Check Array for a Value
+// |+| -- Remove Duplicates from Array
+// |+| -- Remove Empty Elements from Array
+// |+| -- Count of Values in Array
+// |+| -- Intersect of Two Arrays
+// |+| -- Compare Two Arrays
+// |+| -- Array as Delimited String
+// |+| -- Array as Modified Delimited String
+// |+| - Two-Dimensional Array
+// |+| -- Flatten Two-Dimensional Array
 // | | - Array of Objects
 // | | -- Sort Array of Objects by Property or Properties
 // | | -- Find Object in Array of Objects
@@ -186,9 +186,9 @@ function checkArrayForValue(arr, val) {
   return arr.indexOf(val) > -1; 
 }
 
-Logger.log("checkArrayForValue");
-var arr_cafv = [1, 2, 3, 4];
-Logger.log(checkArrayForValue(arr_cafv, 5)); // false
+// Logger.log("checkArrayForValue");
+// var arr_cafv = [1, 2, 3, 4];
+// Logger.log(checkArrayForValue(arr_cafv, 5)); // false
 
 // -- Remove Duplicates from Array
 
@@ -212,9 +212,9 @@ function removeDuplicatesFromArray(arr) {
   return result;
 }
 
-Logger.log("removeDuplicatesFromArray");
-var arr_rdfa = [1, 2, 3, 1, 2, 3, 4,];
-Logger.log(removeDuplicatesFromArray(arr_rdfa)); // [1, 2, 3, 4]
+// Logger.log("removeDuplicatesFromArray");
+// var arr_rdfa = [1, 2, 3, 1, 2, 3, 4,];
+// Logger.log(removeDuplicatesFromArray(arr_rdfa)); // [1, 2, 3, 4]
 
 // -- Remove Empty Elements from Array
 
@@ -239,7 +239,7 @@ function removeEmptyElementsFromArray(arr) {
 // var arr_reefa = ["a",,"b",,,"c"];
 // Logger.log(removeEmptyElementsFromArray(arr_reefa)); // ["a", "b", "c"]
  
-// -- Get Count of Values in Array
+// -- Count of Values in Array
 
 /**
  * Returns an array of objects. 
@@ -272,9 +272,9 @@ function countOfValuesInArray(arr) {
   return result;
 }
 
-Logger.log("countOfValuesInArray");
-var arr_covia  = ["a", "b", "c", "a", "b", "c", "a"];
-Logger.log(countOfValuesInArray(arr_covia)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
+// Logger.log("countOfValuesInArray");
+// var arr_covia = ["a", "b", "c", "a", "b", "c", "a"];
+// Logger.log(countOfValuesInArray(arr_covia)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
 
 // -- Intersect of Two Arrays
 
@@ -291,9 +291,11 @@ function intersectOfTwoArrays(arrA, arrB) {
   var a      = 0;
   var b      = 0;
   while( a < arrA.length && b < arrB.length ) {
-    if (arrA[a] < arrB[b]) a++;
-    else if (arrA[a] > arrB[b]) b++;
-    else {
+    if (arrA[a] < arrB[b]) {
+      a++;
+    } else if (arrA[a] > arrB[b]) {
+      b++; 
+    } else {
       result.push(arrA[a]);
       a++;
       b++;
@@ -302,10 +304,10 @@ function intersectOfTwoArrays(arrA, arrB) {
   return result;
 }
 
-Logger.log("intersectOfTwoArrays");
-var arrA_iota = [1, 2, 3];
-var arrB_iota = [3, 4, 5];
-Logger.log(intersectOfTwoArrays(arrA_iota, arrB_iota)); // [3]
+// Logger.log("intersectOfTwoArrays");
+// var arrA_iota = [1, 2, 3];
+// var arrB_iota = [3, 4, 5];
+// Logger.log(intersectOfTwoArrays(arrA_iota, arrB_iota)); // [3]
 
 // -- Compare Two Arrays 
 
@@ -325,12 +327,12 @@ function compareTwoArrays(arrA, arrB) {
   return true;
 }
 
-Logger.log("compareTwoArrays");
-var arrA_cta = [1, 2, 3, 4, 5];
-var arrB_cta = [1, 2, 3, 4, 5];
-var arrC_cta = [5, 4, 3, 2, 1];
-Logger.log(compareTwoArrays(arrA_cta, arrB_cta)); // true
-Logger.log(compareTwoArrays(arrA_cta, arrC_cta)); // false
+// Logger.log("compareTwoArrays");
+// var arrA_cta = [1, 2, 3, 4, 5];
+// var arrB_cta = [1, 2, 3, 4, 5];
+// var arrC_cta = [5, 4, 3, 2, 1];
+// Logger.log(compareTwoArrays(arrA_cta, arrB_cta)); // true
+// Logger.log(compareTwoArrays(arrA_cta, arrC_cta)); // false
 
 // -- Array as Delimited String
 
@@ -347,15 +349,18 @@ function arrayAsDelimitedString(arr, delim) {
   var result = "";
   var temp   = removeDuplicatesFromArray(arr);
   for (var i = 0; i < temp.length; i++) {
-    if (i < temp.length) result += temp[i] + delim + " ";
-    else if (i === temp.length) result += temp[i];
+    if (i < temp.length) {
+      result += temp[i] + delim + " "; 
+    } else if (i === temp.length) {
+      result += temp[i];
+    }
   }
   return result;
 }
 
-Logger.log("arrayAsDelimitedString");
-var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
-Logger.log(arrayAsDelimitedString(arr_da, ",", true)); // "c@example.com, b@example.com, a@example.com"
+// Logger.log("arrayAsDelimitedString");
+// var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
+// Logger.log(arrayAsDelimitedString(arr_da, ",")); // "c@example.com, b@example.com, a@example.com"
 
 // -- Array as Modified Delimited String
 
@@ -373,15 +378,18 @@ function arrayAsModifiedDelimitedString(arr, delim, mod) {
   var result = "";
   var temp   = removeDuplicatesFromArray(arr);
   for (var i = 0; i < temp.length; i++) {
-    if (i < temp.length) result += temp[i] + mod + delim + " "; 
-    else if (i === temp.length) result += temp[i] + mod + delim;
+    if (i < temp.length) {
+      result += temp[i] + mod + delim + " "; 
+    } else if (i === temp.length) { 
+      result += temp[i] + mod + delim;
+    }
   }
   return result;
 }
 
-Logger.log("arrayAsModifiedDelimitedString");
-var arr_aamds = ["x", "z", "y"];
-Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
+// Logger.log("arrayAsModifiedDelimitedString");
+// var arr_aamds = ["x", "z", "y"];
+// Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
 
 // - Two-Dimensional Array
 
@@ -399,10 +407,10 @@ function flattenTwoDimensionalArray(arr) {
   return result;
 }
 
-Logger.log("flattenTwoDimensionalArray");
-var sheet_ftma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var val_fma    = sheet_fma.getRange("G2:H5").getValues();
-Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
+// Logger.log("flattenTwoDimensionalArray");
+// var sheet_ftda = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var val_ftda   = sheet_ftda.getRange("G2:H5").getValues();
+// Logger.log(flattenTwoDimensionalArray(val_ftda).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
 
@@ -430,7 +438,7 @@ var arrObj_ex = [
 
 function sortArrayOfObjects(prop) {
   var sortOrder = 1;
-  if(prop[0] === "-") {
+  if (prop[0] === "-") {
     sortOrder = -1;
     prop = prop.substr(1);
   }
@@ -1064,7 +1072,7 @@ function arrayOfFolderNames(arr) {
 function findFolderAtRoot(name) {
   var fldrs = arrayOfFoldersAtRoot();
   var names = arrayOfFolderNames(fldrs);
-  if (checkArrayForValue(name, names)) {
+  if (checkArrayForValue(names, name)) {
     return DriveApp.getRootFolder().getFoldersByName(name).next();
   } else {
     return false;
@@ -1090,7 +1098,7 @@ function findFolderAtRoot(name) {
 function findFolderInFolder(name, fldr) {
   var fldrs = arrayOfFoldersInFolder(fldr);
   var names = arrayOfFolderNames(fldrs);
-  if (checkArrayForValue(name, names)) {
+  if (checkArrayForValue(names, name)) {
     return fldr.getFoldersByName(name).next();
   } else {
     return false;
@@ -1514,7 +1522,7 @@ function verifyFoldersInFolder(arr, fldr) {
   var fldrs = arrayOfFoldersInFolder(fldr);
   var names = arrayOfFolderNames(fldrs);
   for (i = 0; i < arr.length; i++) {
-    if (!(checkArrayForValue(names, arr[i]))) {
+    if (!(checkArrayForValue(arr[i], names))) {
       fldr.createFolder(arr[i]);
     }
   }
@@ -1648,7 +1656,7 @@ function arrayOfFileNames(arr) {
 function findFileInFolderAny(name, fldr) {
   var files = arrayOfFilesInFolder(fldr);
   var names = arrayOfFileNames(files); 
-  if (checkArrayForValue(name, names)) {
+  if (checkArrayForValue(names, name)) {
     return fldr.getFilesByName(name).next();
   } else {
     return false;
@@ -1687,7 +1695,7 @@ function findFileInFolder(name, fldr, mime) {
 function findFileAtRootAny(name) {
   var files = arrayOfFilesAtRoot();
   var names = arrayOfFileNames(files);
-  if (checkArrayForValue(name, names)) {
+  if (checkArrayForValue(names, name)) {
     return DriveApp.getRootFolder().getFilesByName(name).next();
   } else {
     return false;
@@ -2856,6 +2864,10 @@ function arrayForColumnRange(targetRange){
 // - Sheets and Docs
 
 // -- String From Object Properties 
+
+/**
+ * Example object
+ */
 
 var obj_ex = { 
   name:  "Jon",
