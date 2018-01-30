@@ -1,82 +1,82 @@
-// v0.1.1-beta - Standardization & Organization
+// v0.1.2-beta - Review
 
 function test() {}
 Logger.log("Start");
 
 // | | General
-// |*| - Array
-// |*| -- Check Array for a Value
-// |*| -- Remove Duplicates from Array
-// |*| -- Remove Empty Elements from Array
-// |*| -- Get Count of Values in Array
-// |*| -- Intersect of Two Arrays
-// |*| -- Compare Two Arrays
-// |*| -- Array as Delimited String
-// |*| -- Array as Modified Delimited String
-// |*| - Two-Dimensional Array
-// |*| -- Flatten Two-Dimensional Array
-// |*| - Array of Objects
-// |*| -- Sort Array of Objects by Property or Properties
-// |*| -- Find Object in Array of Objects
-// |*| -- Find First or Last Object in Array of Objects by Timestamp
-// |*| -- Filter Array of Objects by Value or Values
-// |*| -- Add Property to Objects in Array of Objects
-// |*| - Object
-// |*| -- Array of Object Values
-// |*| -- Merge Objects
-// |*| - Dates and Times
-// |*| -- Formatted Date Time
-// |*| -- Date Object from String
-// |*| -- Match a Date to a Date Range
-// |*| - String
-// |*| -- Check String for Substring
-// |*| Drive
-// |*| - Utility Functions for Drive
-// |*| -- Verify Path
-// |*| -- Target Path
+// | | - Array
+// | | -- Check Array for a Value
+// | | -- Remove Duplicates from Array
+// | | -- Remove Empty Elements from Array
+// | | -- Get Count of Values in Array
+// | | -- Intersect of Two Arrays
+// | | -- Compare Two Arrays
+// | | -- Array as Delimited String
+// | | -- Array as Modified Delimited String
+// | | - Two-Dimensional Array
+// | | -- Flatten Two-Dimensional Array
+// | | - Array of Objects
+// | | -- Sort Array of Objects by Property or Properties
+// | | -- Find Object in Array of Objects
+// | | -- Find First or Last Object in Array of Objects by Timestamp
+// | | -- Filter Array of Objects by Value or Values
+// | | -- Add Property to Objects in Array of Objects
+// | | - Object
+// | | -- Array of Object Values
+// | | -- Merge Objects
+// | | - Dates and Times
+// | | -- Formatted Date Time
+// | | -- Date Object from String
+// | | -- Match a Date to a Date Range
+// | | - String
+// | | -- Check String for Substring
+// | | Drive
+// | | - Utility Functions for Drive
+// | | -- Verify Path
+// | | -- Target Path
 // | | -- MIME Types
-// |*| - Folders
-// |*| -- Array Of Folders
-// |*| --- Array of Folders at Root
-// |*| --- Array of Folders in Folder
-// |*| --- Array of Folders at Path
-// |*| --- Array of Folders in Drive
+// | | - Folders
+// | | -- Array Of Folders
+// | | --- Array of Folders at Root
+// | | --- Array of Folders in Folder
+// | | --- Array of Folders at Path
+// | | --- Array of Folders in Drive
 // | | -- Array of Folder Names
-// |*| -- Find a Folder
-// |*| --- Find Folder at Root
-// |*| --- Find Folder in Folder
-// |*| --- Find Folder at Path
-// |*| --- Find Folder in Drive
-// |*| -- Check for a Folder
-// |*| --- Check for Folder at Root
-// |*| --- Check for Folder in Folder
-// |*| --- Check for Folder at Path
-// |*| -- Create a Folder
-// |*| --- Create Folder at Root
-// |*| --- Create Folder in Folder
-// |*| --- Create Folder at Path
-// |*| -- Create Folders
-// |*| --- Create Folders at Root
-// |*| --- Create Folders in Folder
-// |*| --- Create Folders at Path
-// |*| -- Verify Folder
-// |*| --- Verify Folder at Root
-// |*| --- Verify Folder in a Folder
-// |*| --- Verify Folder Path
-// |*| -- Verify Folders
-// |*| --- Verify Folders in a Folder
-// |*| --- Verify Folders at Root
+// | | -- Find a Folder
+// | | --- Find Folder at Root
+// | | --- Find Folder in Folder
+// | | --- Find Folder at Path
+// | | --- Find Folder in Drive
+// | | -- Check for a Folder
+// | | --- Check for Folder at Root
+// | | --- Check for Folder in Folder
+// | | --- Check for Folder at Path
+// | | -- Create a Folder
+// | | --- Create Folder at Root
+// | | --- Create Folder in Folder
+// | | --- Create Folder at Path
+// | | -- Create Folders
+// | | --- Create Folders at Root
+// | | --- Create Folders in Folder
+// | | --- Create Folders at Path
+// | | -- Verify Folder
+// | | --- Verify Folder at Root
+// | | --- Verify Folder in a Folder
+// | | --- Verify Folder Path
+// | | -- Verify Folders
+// | | --- Verify Folders in a Folder
+// | | --- Verify Folders at Root
 // | | - Files
-// |*| -- Array of Files
-// |*| --- Array of Files at Root
-// |*| --- Array of Files in Folder
-// |*| --- Array of Files at Path
-// |*| --- Array of All Files in Drive
-// |*| -- Array of File Names
-// |*| -- Find a File
-// |*| --- Find a File at Root
-// |*| --- Find a File in a Folder
-// |*| --- Find a File in Drive
+// | | -- Array of Files
+// | | --- Array of Files at Root
+// | | --- Array of Files in Folder
+// | | --- Array of Files at Path
+// | | --- Array of All Files in Drive
+// | | -- Array of File Names
+// | | -- Find a File
+// | | --- Find a File at Root
+// | | --- Find a File in a Folder
+// | | --- Find a File in Drive
 // | | --- Find File at Path
 // | | -- Check for a File
 // | | --- Check for a File at Root
