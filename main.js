@@ -177,18 +177,18 @@ Logger.log("Start");
 /**
  * Returns true if the value is in the array.
  *
- * @param {Array} arr
  * @param {*} val
+ * @param {Array} arr
  * @returns {boolean}
  */
 
-function checkArrayForValue(val, arr) { 
+function checkArrayForValue(arr, val) { 
   return arr.indexOf(val) > -1; 
 }
 
-// Logger.log("checkArrayForValue");
-// var arr_cafv = [1, 2, 3, 4];
-// Logger.log(checkArrayForValue(5, arr_cafv)); // false
+Logger.log("checkArrayForValue");
+var arr_cafv = [1, 2, 3, 4];
+Logger.log(checkArrayForValue(arr_cafv, 5)); // false
 
 // -- Remove Duplicates from Array
 
@@ -212,9 +212,9 @@ function removeDuplicatesFromArray(arr) {
   return result;
 }
 
-// Logger.log("removeDuplicatesFromArray");
-// var arr_rdfa = [1, 2, 3, 1, 2, 3, 4,];
-// Logger.log(removeDuplicatesFromArray(arr_rdfa)); // [1, 2, 3, 4]
+Logger.log("removeDuplicatesFromArray");
+var arr_rdfa = [1, 2, 3, 1, 2, 3, 4,];
+Logger.log(removeDuplicatesFromArray(arr_rdfa)); // [1, 2, 3, 4]
 
 // -- Remove Empty Elements from Array
 
@@ -225,23 +225,29 @@ function removeDuplicatesFromArray(arr) {
  * @returns {Array}
  */
 
-function removeEmptyElementsFromArray(x) {
-  return (x !== (undefined || ''));
-}
+function removeEmptyElementsFromArray(arr) {
+  var result = [];
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] !== undefined || '') {
+      result.push(arr[i]);
+    }
+  } 
+  return result;
+} 
 
 // Logger.log("removeEmptyElementsFromArray");
 // var arr_reefa = ["a",,"b",,,"c"];
-// Logger.log(arr_reefa.filter(removeEmptyElementsFromArray)); // ["a", "b", "c"]
-
+// Logger.log(removeEmptyElementsFromArray(arr_reefa)); // ["a", "b", "c"]
+ 
 // -- Get Count of Values in Array
 
 /**
  * Returns an array of objects. 
- * Objects have two properties, count and value.
+ * Objects in the array have two properties: count and value.
  *
  * @param {Array} arr
- * @property {value} a value found in the array
- * @property {count} count of the value in the array
+ * @property {string} value 
+ * @property {string} count 
  * @returns {Object[]}
  */
 
@@ -266,14 +272,14 @@ function countOfValuesInArray(arr) {
   return result;
 }
 
-// Logger.log("countOfValuesInArray");
-// var arr_covia  = ["a", "b", "c", "a", "b", "c", "a"];
-// Logger.log(countOfValuesInArray(arr_covia)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
+Logger.log("countOfValuesInArray");
+var arr_covia  = ["a", "b", "c", "a", "b", "c", "a"];
+Logger.log(countOfValuesInArray(arr_covia)); // [{count=3.0, value=a}, {count=2.0, value=b}, {count=2.0, value=c}]
 
 // -- Intersect of Two Arrays
 
 /**
- * Returns an array of the elements found in both arrays.
+ * Returns an array containing the elements found in both arrays.
  *
  * @param {Array} arrA
  * @param {Array} arrB
@@ -296,10 +302,10 @@ function intersectOfTwoArrays(arrA, arrB) {
   return result;
 }
 
-// Logger.log("intersectOfTwoArrays");
-// var arrA_iota = [1, 2, 3];
-// var arrB_iota = [3, 4, 5];
-// Logger.log(intersectOfTwoArrays(arrA_iota, arrB_iota)); // [3]
+Logger.log("intersectOfTwoArrays");
+var arrA_iota = [1, 2, 3];
+var arrB_iota = [3, 4, 5];
+Logger.log(intersectOfTwoArrays(arrA_iota, arrB_iota)); // [3]
 
 // -- Compare Two Arrays 
 
@@ -319,12 +325,12 @@ function compareTwoArrays(arrA, arrB) {
   return true;
 }
 
-// Logger.log("compareTwoArrays");
-// var arrA_cta = [1, 2, 3, 4, 5];
-// var arrB_cta = [1, 2, 3, 4, 5];
-// var arrC_cta = ["a", "b", "c", "d", "e"];
-// Logger.log(compareTwoArrays(arrA_cta, arrB_cta)); // true
-// Logger.log(compareTwoArrays(arrA_cta, arrC_cta)); // false
+Logger.log("compareTwoArrays");
+var arrA_cta = [1, 2, 3, 4, 5];
+var arrB_cta = [1, 2, 3, 4, 5];
+var arrC_cta = [5, 4, 3, 2, 1];
+Logger.log(compareTwoArrays(arrA_cta, arrB_cta)); // true
+Logger.log(compareTwoArrays(arrA_cta, arrC_cta)); // false
 
 // -- Array as Delimited String
 
@@ -347,9 +353,9 @@ function arrayAsDelimitedString(arr, delim) {
   return result;
 }
 
-// Logger.log("arrayAsDelimitedString");
-// var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
-// Logger.log(arrayAsDelimitedString(arr_da, ",", true)); // "c@example.com, b@example.com, a@example.com"
+Logger.log("arrayAsDelimitedString");
+var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
+Logger.log(arrayAsDelimitedString(arr_da, ",", true)); // "c@example.com, b@example.com, a@example.com"
 
 // -- Array as Modified Delimited String
 
@@ -373,9 +379,9 @@ function arrayAsModifiedDelimitedString(arr, delim, mod) {
   return result;
 }
 
-// Logger.log("arrayAsModifiedDelimitedString");
-// var arr_aamds = ["x", "z", "y"];
-// Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
+Logger.log("arrayAsModifiedDelimitedString");
+var arr_aamds = ["x", "z", "y"];
+Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
 
 // - Two-Dimensional Array
 
@@ -393,10 +399,10 @@ function flattenTwoDimensionalArray(arr) {
   return result;
 }
 
-// Logger.log("flattenTwoDimensionalArray");
-// var sheet_ftma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var val_fma    = sheet_fma.getRange("G2:H5").getValues();
-// Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
+Logger.log("flattenTwoDimensionalArray");
+var sheet_ftma = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+var val_fma    = sheet_fma.getRange("G2:H5").getValues();
+Logger.log(flattenTwoDArr(val_fma).sort()); // [1, 2, 3, 4, 5, 6, 7, 8]
 
 // - Array of Objects
 
@@ -3002,15 +3008,15 @@ function findReplaceInSpreadsheet(ss, obj) {
   } 
 }
 
-var file_fris  = verifyFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet");
-var ss_fris    = openFileAsType(file_fris, "spreadsheet");
-var sheet_fris = ss_fris.getSheets()[0];
-sheet_fris.clear();
+// var file_fris  = verifyFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet");
+// var ss_fris    = openFileAsType(file_fris, "spreadsheet");
+// var sheet_fris = ss_fris.getSheets()[0];
+// sheet_fris.clear();
 
-var val_fris = [
-  [ "name", "state", "occupation" ],
-  [ "%name%", "%state%", "%occupation%"]
-];
+// var val_fris = [
+//   [ "name", "state", "occupation" ],
+//   [ "%name%", "%state%", "%occupation%"]
+// ];
 
 // Logger.log("findReplaceInSpreadsheet");
 // var range_fris = sheet_fris.getRange("A1:C2");
@@ -3224,12 +3230,12 @@ function appendSubjectBodyArrayOfObjects(subj, body, arrObj) {
   return arrObj;
 } 
 
-Logger.log("appendSubjectBodyArrayOfObjects");
-var sheet_asbaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var arrObj_asbaoo = arrayOfObjectsSheet(sheet_asbaoo);
-var subj_asbaoo   = "Classroom update for %First% %Last%";
-var body_asbaoo   = "<p>%First% %Last% is in %Homeroom%'s homeroom this fall!</p>";
-Logger.log(appendSubjectBodyArrayOfObjects(subj_asbaoo, body_asbaoo, arrObj_asbaoo)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, Body=<p>Arienne Garret is in Muhsina's this fall!</p>, Subject=Classroom update for Arienne Garret}...]
+// Logger.log("appendSubjectBodyArrayOfObjects");
+// var sheet_asbaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_asbaoo = arrayOfObjectsSheet(sheet_asbaoo);
+// var subj_asbaoo   = "Classroom update for %First% %Last%";
+// var body_asbaoo   = "<p>%First% %Last% is in %Homeroom%'s homeroom this fall!</p>";
+// Logger.log(appendSubjectBodyArrayOfObjects(subj_asbaoo, body_asbaoo, arrObj_asbaoo)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, Body=<p>Arienne Garret is in Muhsina's this fall!</p>, Subject=Classroom update for Arienne Garret}...]
 
 // -- Run Mail Merge for Array of Objects
 
