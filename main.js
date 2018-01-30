@@ -745,6 +745,13 @@ function dateTime(opt) {
 // Logger.log(dateTime("mdyampm")); // 12-21-2017 9:13:23 AM
 // Logger.log(dateTime()); // 2017-12-21 9:13:23
 
+function appendDateTime(str, opt) {
+  if (opt !== undefined) {
+    str += " - " + dateTime(opt);
+  }
+ return str; 
+} 
+
 // -- Date Object from String
 
 /**
@@ -2029,16 +2036,14 @@ function idOfActiveFile(mime) {
 // Logger.log("idOfActiveFile");
 
 // -- Copy a File to a Folder
-
+// TODO: Changed else return -> file either way
 function copyFileToFolder(file, fldr) {
   var name = file.getName();
   var dest = findFileInFolderAny(name, fldr);
   if (dest === false) {
     file.makeCopy(name, fldr);
-    return findFileInFolderAny(name, fldr);
-  } else {
-    return false;
   }
+  return findFileInFolderAny(name, fldr);
 } 
 
 // Logger.log("copyFileToFolder");
@@ -2689,6 +2694,8 @@ function valueRange(a1Notation, sheet) {
  * TODO:  @returns {undefined}
  */
 
+// arrayOfObjectsFromSheet 
+
 function arrayOfObjectsSheet(sheet) {
   var a1Notation  = sheet.getDataRange().getA1Notation();
   var a1Object    = new A1Object(a1Notation);
@@ -2861,34 +2868,43 @@ var obj_ex = {
  * @returns {string}
  */
 
-function findReplaceInSubstring(str, obj) {
-  var count = str.split("%").length - 1;
-
-  if (count !== 2) {
-    return str;
+// function findReplaceInValue(val, obj) {
+function findReplace(val, obj) {
+  if (typeof val !== 'string') {
+    return val;
   }
 
-  str = str.replace(/%/g, "");
-  var last = str.slice(-1);
+
+  // val = val.toString();
+  // Logger.log(val);
+
+  var count = val.split("%").length - 1;
+
+  if (count !== 2) {
+    return val;
+  }
+
+  val      = val.replace(/%/g, "");
+  var last = val.slice(-1);
 
   if (last.match(/[a-z]/i)) { 
-    return obj[str];
+    return obj[val];
   } else {
-    str = str.substring(0, str.length - 1);
-    return obj[str] + last;
+    val = val.substring(0, val.length - 1);
+    return obj[val] + last;
   }
 }
 
-// Logger.log("findReplaceInString");
+// Logger.log("findReplace");
 // var string_fris = "%name%,";
-// Logger.log(findReplaceInString(string_fris, obj_ex));
+// Logger.log(findReplace(string_fris, obj_ex));
 
 function findReplaceInString(str, obj) {
   var result = [];
   var split  = str.split(" ");
 
   for (var i = 0; i < split.length; i++) {
-    result.push(findReplaceInSubstring(split[i], obj));
+    result.push(findReplace(split[i], obj));
   }
 
   return result.join(" ");
@@ -2930,6 +2946,49 @@ function findReplaceInDoc(doc, obj) {
 // doc_frid.appendParagraph("occupation: %occupation%");
 // findReplaceInDoc(doc_frid, obj_ex);
 
+// --
+
+/**
+ * findReplaceInArray
+ *
+ * @param arr
+ * @param obj
+ * @returns {undefined}
+ */
+
+function findReplaceInArray(arr, obj) {
+  var result = [];
+  for (var i = 0; i < arr.length; i++) {
+    result.push(findReplace(arr[i], obj));
+  } 
+  return result;
+} 
+
+// --- Replace Object Properties in Sheet
+
+function findReplaceInSheet(sheet, obj) {
+  var values = sheet.getDataRange().getValues();
+  for (var i = 0; i < values.length; i++) {
+    values[i] = findReplaceInArray(values[i], obj);
+  } 
+  sheet.getDataRange().setValues(values);
+}
+
+// var file_fris  = verifyFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet");
+// var ss_fris    = openFileAsType(file_fris, "spreadsheet");
+// var sheet_fris = ss_fris.getSheets()[0];
+// sheet_fris.clear();
+
+// var val_fris = [
+//   [ "name", "state", "job" ],
+//   [ "%name%", "%state%", "%occupation%"]
+// ];
+
+// Logger.log("findReplaceInSheet);
+// var range_fris = sheet_fris.getRange("A1:C2");
+// range_fris.setValues(val_fris);
+// Logger.log(findReplaceInSheet(sheet_fris, obj_ex)); // Range
+
 // --- Replace Object Properties in Spreadsheet
 
 /**
@@ -2940,84 +2999,27 @@ function findReplaceInDoc(doc, obj) {
  * @param {string} delim
  */
 
-function findReplaceInSpreadsheet(obj, ss, delim) {
-  var numSheets = ss.getNumSheets();
-  var sheets    = ss.getSheets();
-  for (var i = 0; i < numSheets; i++) {
-    var sheet = sheets[i];
-    var values = sheet.getDataRange().getValues();
-    for (var row in values){
-      var update = values[row].map(function(original) {
-        var text = original.toString();
-        for (var prop in obj) {
-          var query = delim + prop+ delim;
-          if (text.indexOf(query) !== -1) {
-            text = text.replace(query, obj[prop]);
-          }
-        } 
-        return text;
-      });
-    values[row] = update;
-    }
-    sheet.getDataRange().setValues(values);
+function findReplaceInSpreadsheet(ss, obj) {
+  var sheets = ss.getSheets();
+  for (var i = 0; i < sheets.length; i++) {
+    findReplaceInSheet(sheets[i], obj);
   } 
 }
 
-// var fldr_fris  = verifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var ss_frid    = verifySpreadsheetInFolder(fldr_fris, "find-replace-sheet");
-// var sheet_frid = ss_frid.getSheets()[0];
-// sheet_frid.clear();
+var file_fris  = verifyFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet");
+var ss_fris    = openFileAsType(file_fris, "spreadsheet");
+var sheet_fris = ss_fris.getSheets()[0];
+sheet_fris.clear();
 
-// var val_frid = [
-//   [ "name", "state", "job" ],
-//   [ "%name%", "%state%", "%job%"]
-// ];
+var val_fris = [
+  [ "name", "state", "occupation" ],
+  [ "%name%", "%state%", "%occupation%"]
+];
 
-// var range_frid = sheet_frid.getRange("A1:C2");
-// range_frid.setValues(val_frid);
-// findReplaceInSpreadsheet(ex_obj, ss_frid, "%");
-
-// --- Replace Object Properties in Sheet
-
-/**
- * Words wrapped by the delimiter are replaced with the matching property value.
- *
- * @param {Object} obj
- * @param {Sheet} sheet
- * @param {string} delim
- */
-
-function findReplaceinSheet(obj, sheet, delim) {
-  var values = sheet.getDataRange().getValues();
-  for(var row in values){
-    var update = values[row].map(function(original) {
-      var text = original.toString();
-      for (var prop in obj) {
-        var query = delim + prop + delim;
-          if (text.indexOf(query) !== -1) {
-            text = text.replace(query, obj[prop]);
-          }
-      } 
-      return text;
-    });
-    values[row] = update;
-  }
-  sheet.getDataRange().setValues(values);
-}
-
-// var fldr_fris  = verifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var ss_fris    = verifySpreadsheetInFolder(fldr_fris, "find-replace-sheet");
-// var sheet_fris = ss_fris.getSheets()[0];
-// sheet_fris.clear();
-
-// var val_fris = [
-//   [ "name", "state", "job" ],
-//   [ "<<name>>", "<<state>>", "<<job>>"]
-// ];
-
+// Logger.log("findReplaceInSpreadsheet");
 // var range_fris = sheet_fris.getRange("A1:C2");
 // range_fris.setValues(val_fris);
-// findReplaceinSheet(ex_obj, sheet_fris, "%");
+// findReplaceInSpreadsheet(ss_fris, obj_ex);
 
 // -- Copy Template for Item in Array of Objects and Replace Object Properties
 
@@ -3037,33 +3039,61 @@ function findReplaceinSheet(obj, sheet, delim) {
  * @param {string} delim
  */
 
-function createDocsFromTemplateArrObj(arrObj, templateDoc, naming, fldr, ts, delim) {
-  for (var i = 0; i < arrObj.length; i++) {
-    var obj  = arrObj[i];
-    var name = strFromProp(obj, naming, delim);
-    if (ts === true) name += " - " + fmat12DT();
-    var file  = DriveApp.getFileById(templateDoc.getId());
-    var docId = copyFile(file, fldr).setName(name).getId();
-    var doc   = DocumentApp.openById(docId);
-    findReplaceInDoc(obj, doc, delim);
-    }
+// function runDocumentMerge(template, name, fldr, ts)
+
+// function createDocsFromTemplateArrObj(arrObj, templateDoc, naming, fldr, ts, delim) {
+//   for (var i = 0; i < arrObj.length; i++) {
+//     var obj  = arrObj[i];
+//     var name = strFromProp(obj, naming, delim);
+//     if (ts === true) name += " - " + fmat12DT();
+//     var file  = DriveApp.getFileById(templateDoc.getId());
+//     var docId = copyFile(file, fldr).setName(name).getId();
+//     var doc   = DocumentApp.openById(docId);
+//     findReplaceInDoc(obj, doc, delim);
+//     }
+// } 
+
+function documentMergeObject(naming, template, fldr, obj, opt) {
+  var name = findReplaceInString(naming, obj);
+  name     = appendDateTime(name, opt);
+  var file = copyFileToFolder(template, fldr).setName(name);
+  var doc  = openFileAsType(file, "document");
+  findReplaceInDoc(doc, obj);
 } 
 
-// var sheet_cdftao  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_cdftao = arrObjFromSheet(sheet_cdftao, 2);
-// var fldr1_cdftao  = verifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var fldr2_cdftao  = verifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-docs");
-// var doc_cdftao    = createVerifyDocIn(fldr1_cdftao, "template-doc");
-// var body_cdftao   = doc_cdftao.getBody();
-// body_cdftao.clear();
-// doc_cdftao.appendParagraph("First: %First%");
-// doc_cdftao.appendParagraph("Last: %Last%");
-// doc_cdftao.appendParagraph("Grade: %Grade%");
-// doc_cdftao.appendParagraph("Homeroom: %Homeroom%");
-// doc_cdftao.appendParagraph("Email: %Email%");
-// createDocsFromTemplateArrObj(arrObj_cdftao, doc_cdftao, "Name: %Last% %First%", fldr2_cdftao, true, "%");
+function documentMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
+  for (var i = 0; i < arrObj.length; i++) {
+    var obj = arrObj[i];
+    documentMergeObject(naming, template, fldr, obj, opt);
+  } 
+  return fldr;
+} 
 
+// Logger.log("runDocumentMerge");
+// var sheet_rdm  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_rdm = arrayOfObjectsSheet(sheet_rdm);
+// var fldr_rdm   = verifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
+// var file_rdm   = verifyFileAtPath("google-apps-script-cheat-sheet-demo/merges/template-doc", "document");
+// var doc_rdm    = openFileAsType(file_rdm, "document");
+// var body_rdm   = doc_rdm.getBody();
+// body_rdm.clear();
+// body_rdm.appendParagraph("First: %First%");
+// body_rdm.appendParagraph("Last: %Last%");
+// body_rdm.appendParagraph("Grade: %Grade%");
+// body_rdm.appendParagraph("Homeroom: %Homeroom%");
+// body_rdm.appendParagraph("Email: %Email%");
+// var naming_rdm = "Name: %Last%, %First%";
+// documentMergeArrayOfObjects(naming_rdm, file_rdm, fldr_rdm, arrObj_rdm);
+ 
 // --- Copy Spreadsheet Template and Replace Object Properties
+
+function spreadsheetMergeObject(naming, template, fldr, obj, opt) {
+  var name = findReplaceInString(naming, obj);
+  name     = appendDateTime(name, opt);
+  var file = copyFileToFolder(template, fldr).setName(name);
+  var ss   = openFileAsType(file, "spreadsheet");
+  findReplaceInSpreadsheet(ss, obj);
+} 
 
 /**
  * For each object, create a new template spreadsheet and merge in object values.
@@ -3079,35 +3109,32 @@ function createDocsFromTemplateArrObj(arrObj, templateDoc, naming, fldr, ts, del
  * @param {string} delim
  */
 
-function createSpreadsheetsFromTemplateArrObj(arrObj, templateSS, naming, fldr, ts, delim) {
+function spreadsheetMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
   for (var i = 0; i < arrObj.length; i++) {
-    var obj  = arrObj[i];
-    var name = strFromProp(obj, naming, delim);
-    if (ts === true) name += " - " + fmat12DT();
-    var file = DriveApp.getFileById(templateSS.getId());
-    var ssId = copyFile(file, fldr).setName(name).getId();
-    var ss   = SpreadsheetApp.openById(ssId);
-    findReplaceInSpreadsheet(obj, ss, delim);
-    }
+    var obj = arrObj[i];
+    spreadsheetMergeObject(naming, template, fldr, obj, opt);
+  } 
+  return fldr;
 } 
 
-// var ss1_csftao    = SpreadsheetApp.getActiveSpreadsheet();
-// var sheet1_csftao = ss1_csftao.getSheetByName("Sheet2");
-// var arrObj_csftao = arrObjFromSheet(sheet1_csftao, 2);
-// var fldr1_csftao  = verifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var fldr2_csftao  = verifyPath("google-apps-script-cheat-sheet-demo/merges/arrObj-sheets");
-// var file_csftao   = verifySpreadsheetInFolder(fldr1_csftao, "template-sheet");
-// var ss2_csftao    = openFileAsSpreadsheet(file_csftao);
-// var sheet2_csftao = ss2_csftao.getSheets()[0];
+// Logger.log("spreadsheetMergeArrayOfObjects");
+// var sheet_smaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var arrObj_smaoo = arrayOfObjectsSheet(sheet_smaoo);
+// var fldr_smaoo   = verifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
+// var file_smaoo   = verifyFileAtPath("google-apps-script-cheat-sheet-demo/merges/template-ss", "spreadsheet");
+// var ss_smaoo     = openFileAsType(file_smaoo, "spreadsheet");
+// var sheet_smaoo  = ss_smaoo.getSheets()[0];
 
-// var val_csftao = [
+// var val_smaoo = [
 //   [ "First", "Last", "Grade", "Homeroom", "Email" ],
 //   [ "%First%", "%Last%", "%Grade%", "%Homeroom%", "%Email%"]
 // ];
 
-// var range_csftao = sheet2_csftao.getRange("A1:E2");
-// range_csftao.setValues(val_csftao);
-// createSpreadsheetsFromTemplateArrObj(arrObj_csftao, file_csftao, "Name: %Last% %First%", fldr2_csftao, true, "%");
+// var range_csftao = sheet_smaoo.getRange("A1:E2");
+// range_csftao.setValues(val_smaoo);
+// var naming_csftao = "Name: %Last%, %First%";
+
+// spreadsheetMergeArrayOfObjects(naming_csftao, file_smaoo, fldr_smaoo, arrObj_smaoo);
 
 // -- Create Bulleted List in Document for Array of Objects
 
@@ -3228,11 +3255,3 @@ function runMailMergeForArrObj(arrObj) {
 // runMailMergeForArrObj(arrObj_rmmfao);
 
 Logger.log("End");
-
-// dev
-
-function sheetFromFileAtPath(path, name) {
-  var file = findFileAtPath(path);
-  var ss   = openFileAsSpreadsheet(file);
-  return ss.getSheetByName(name);
-} 
