@@ -1836,7 +1836,7 @@ function findFileAtPath(path, mime) {
   if (mime !== undefined) {
     return findFileAtPathType(path, mime);
   } else {
-    return findFileAtPathAny(name);
+    return findFileAtPathAny(path);
   }
 } 
 
@@ -2852,7 +2852,8 @@ var obj_ex = {
 
 /**
  * Returns a string. 
- * Words wrapped by the delimiter are replaced with the matching property value.
+ * Words %wrapped% in '%' are replaced with the matching property value.
+ * Trailing punctuation marks are allowed. 
  *
  * @param {Object} obj
  * @param {string} str
@@ -2860,55 +2861,7 @@ var obj_ex = {
  * @returns {string}
  */
 
-// TODO: needs to handle "name: %name%,"
-
-// function stringFromObjectProperties(obj, string, delim) {
-//   var result = [];
-//   var split  = string.split(" ");
-//   for (var i = 0; i < split.length; i++) {
-//     var str = split[i]; 
-//     for (var prop in obj){
-//       var first = str.slice().charAt(0);
-//       var last  = str.slice().substr(-1);
-//       var mod   = str.substr(0, str.length-1).substr(1);
-//       if ((obj.hasOwnProperty(mod)) && (first === delim) && (last === delim)) {
-//         result.push(obj[mod]);
-//       } else {
-//         result.push(str);
-//       }
-//       break;
-//     }
-//   } 
-//   return result.join(" ");
-// }
-
-// Logger.log("stringFromObjectProperties");
-// Logger.log(stringFromObjectProperties(obj_ex, "name: %name% - state: %state% - job: %job%", "%")); // "name: Jon - state: MN - job: IT Administrator"
-
-function stringFromObjectProperties(obj, string) {
-  var result = [];
-  var split = string.split(" ");
-  for (var i = 0; i < split.length; i++) {
-    var sub  = split[i];
-    var count = sub.split("%").length - 1;
-    if (count === 2) {
-      sub = sub.replace(/%/g, "");
-      if (checkLastCharacterOfString(sub)) {
-        result.push(obj[sub]);
-      } else {
-        var delim  = sub.slice().substr(-1);
-        sub = sub.substring(0, sub.length - 1);
-
-      if (checkLastCharacterOfString(sub)) {}
-      }
-    } else {
-      result.push(sub);
-    }
-  } 
-  return result.join(" ");
-} 
-
-function findReplaceInString(str, obj) {
+function findReplaceInSubstring(str, obj) {
   var count = str.split("%").length - 1;
 
   if (count !== 2) {
@@ -2930,18 +2883,23 @@ function findReplaceInString(str, obj) {
 // var string_fris = "%name%,";
 // Logger.log(findReplaceInString(string_fris, obj_ex));
 
-function stringFromObjectProperties(str, obj) {
+function findReplaceInString(str, obj) {
   var result = [];
   var split  = str.split(" ");
+
   for (var i = 0; i < split.length; i++) {
-    result.push(findReplaceInString(split[i], obj));
+    result.push(findReplaceInSubstring(split[i], obj));
   }
+
   return result.join(" ");
 } 
 
-Logger.log("stringFromObjectProperties");
-var string_sfop = "name: %name%, occupation: %occupation%";
-Logger.log(stringFromObjectProperties(string_sfop, obj_ex));
+// Logger.log("stringFromObjectProperties");
+// Logger.log(stringFromObjectProperties(obj_ex, "name: %name% - state: %state% - job: %job%", "%")); // "name: Jon - state: MN - job: IT Administrator"
+
+// Logger.log("stringFromObjectProperties");
+// var string_sfop = "name: %name%, occupation: %occupation%";
+// Logger.log(stringFromObjectProperties(string_sfop, obj_ex));
 
 // -- Replace Object Properties 
 
@@ -2955,23 +2913,22 @@ Logger.log(stringFromObjectProperties(string_sfop, obj_ex));
  * @param {string} delim
  */
 
-function findReplaceInDoc(obj, doc, delim) {
+function findReplaceInDoc(doc, obj) {
   var body = doc.getBody(); 
   for (var prop in obj) {
-    var query = delim + prop + delim;
-    var val   = obj[prop];
-    body.replaceText(query, val);
+    body.replaceText(("%" + prop + "%"), obj[prop]);
   } 
 } 
 
-// var fldr_frid = verifyPath("google-apps-script-cheat-sheet-demo/merges");
-// var doc_frid  = verifyDocumentInFolder(fldr_frid, "find-replace-doc");
+// Logger.log("findReplaceInDoc");
+// var file_frid = verifyFileAtPath("google-apps-script-cheat-sheet-demo/docs/example-doc");
+// var doc_frid = openFileAsType(file_frid, "document");
 // var body_frid = doc_frid.getBody();
 // body_frid.clear();
 // doc_frid.appendParagraph("name: %name%");
 // doc_frid.appendParagraph("state: %state%");
-// doc_frid.appendParagraph("job: %job%");
-// findReplaceInDoc(ex_obj, doc_frid, "%");
+// doc_frid.appendParagraph("occupation: %occupation%");
+// findReplaceInDoc(doc_frid, obj_ex);
 
 // --- Replace Object Properties in Spreadsheet
 
