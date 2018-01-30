@@ -2874,10 +2874,6 @@ function findReplace(val, obj) {
     return val;
   }
 
-
-  // val = val.toString();
-  // Logger.log(val);
-
   var count = val.split("%").length - 1;
 
   if (count !== 2) {
@@ -3141,45 +3137,44 @@ function spreadsheetMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
 // -- Single Division List
 
 // var sheet_sdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_sdl = arrObjFromSheet(sheet_sdl, 2);
-// var fldr_sdl   = verifyPath("google-apps-script-cheat-sheet-demo/docs");
-// var file_sdl   = createVerifyDocIn(fldr_sdl, "example-doc");
-// var doc_sdl    = openFileAsDocument(file_sdl);
+// var arrObj_sdl = arrayOfObjectsSheet(sheet_sdl);
+// var file_sdl   = verifyFileAtPath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
+// var doc_sdl    = openFileAsType(file_sdl, "document");
 // var body_sdl   = doc_sdl.getBody();
 
+// Logger.log("Single Division List");
 // (function(){
-//   arrObj_sdl.sort(dynSortM("Last", "First"));
+//   arrObj_sdl.sort(sortArrayOfObjectsMulti("Last", "First"));
 //   var sectionHeader = body_sdl.appendParagraph("Students");
 //   sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
 //   for (var i in arrObj_sdl) {
-//     body_sdl.appendListItem(arrObj_sdl[i]["Last"] + ", " + arrObj_sdl[i]["First"]);
+//     body_sdl.appendListItem(arrObj_sdl[i].Last + ", " + arrObj_sdl[i].First);
 //   }
 // })();
 
 // -- Multi Division List
 
 // var sheet_mdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_mdl = arrObjFromSheet(sheet_mdl, 2);
-// var fldr_mdl   = verifyPath("google-apps-script-cheat-sheet-demo/docs");
-// var file_mdl   = createVerifyDocIn(fldr_mdl, "example-doc");
-// var doc_mdl    = openFileAsDocument(file_mdl);
+// var arrObj_mdl = arrayOfObjectsSheet(sheet_mdl);
+// var file_mdl   = verifyFileAtPath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
+// var doc_mdl    = openFileAsType(file_mdl, "document");
 // var body_mdl   = doc_mdl.getBody();
 
 // (function(){
-//   arrObj_mdl.sort(dynSortM("Homeroom", "Last", "First"));
+//   arrObj_mdl.sort(sortArrayOfObjectsMulti("Homeroom", "Last", "First"));
 //   var sectionHeader = body_mdl.appendParagraph("Homerooms and Students");
 //   sectionHeader.setHeading(DocumentApp.ParagraphHeading.HEADING1);
-//   var homeroom = arrObj_mdl[0]["Homeroom"];
+//   var homeroom = arrObj_mdl[0].Homeroom;
 //   body_mdl.appendListItem(homeroom);
 //   for (var i in arrObj_mdl) {
-//     if (arrObj_mdl[i]["Homeroom"] === homeroom) {
-//       body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
+//     if (arrObj_mdl[i].Homeroom === homeroom) {
+//       body_mdl.appendListItem(arrObj_mdl[i].First + " " + arrObj_mdl[i].Last)
 //       .setNestingLevel(1).setIndentStart(10)
 //       .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
 //     } else {
-//       homeroom = arrObj_mdl[i]["Homeroom"];
+//       homeroom = arrObj_mdl[i].Homeroom;
 //       body_mdl.appendListItem(homeroom);
-//       body_mdl.appendListItem(arrObj_mdl[i]["First"] + " " + arrObj_mdl[i]["Last"])
+//       body_mdl.appendListItem(arrObj_mdl[i].First + " " + arrObj_mdl[i].Last)
 //       .setNestingLevel(1).setIndentStart(10)
 //       .setGlyphType(DocumentApp.GlyphType.HOLLOW_BULLET);
 //     }
@@ -3202,29 +3197,39 @@ function spreadsheetMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
  * @returns {Object[]}
  */
 
-function appendSubjBodyForArrObj(arrObj, subj, body, delim) {
+// function appendSubjBodyForArrObj(arrObj, subj, body, delim) {
+//   for (var i = 0; i < arrObj.length; i++) {
+//     var obj = arrObj[i];
+//     for (var prop in obj) {
+//       var search = delim + prop + delim;
+//       if (body.indexOf(search) !== -1) {
+//         body = body.replace(search, obj[prop]);
+//         }
+//       if (subj.indexOf(search) !== -1) {
+//         subj = subj.replace(search, obj[prop]);
+//         }
+//       }
+//     obj.Subject = subj;
+//     obj.Body    = body;
+//     }
+//   return arrObj;
+// } 
+
+function appendSubjectBodyArrayOfObjects(subj, body, arrObj) {
   for (var i = 0; i < arrObj.length; i++) {
-    var obj = arrObj[i];
-    for (var prop in obj) {
-      var search = delim + prop + delim;
-      if (body.indexOf(search) !== -1) {
-        body = body.replace(search, obj[prop]);
-        }
-      if (subj.indexOf(search) !== -1) {
-        subj = subj.replace(search, obj[prop]);
-        }
-      }
-    obj.Subject = subj;
-    obj.Body    = body;
-    }
+    var obj     = arrObj[i];
+    obj.Subject = findReplaceInString(subj, obj);
+    obj.Body    = findReplaceInString(body, obj);
+  } 
   return arrObj;
 } 
 
-// var sheet_aasbfao = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_asbfao = arrObjFromSheet(sheet_aasbfao, 2);
-// var subj_asbfao   = "Classroom update for %First% %Last%";
-// var body_asbfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
-// Logger.log(appendSubjBodyForArrObj(arrObj_asbfao, subj_asbfao, body_asbfao, "%")); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, Body=<p>Arienne Garret is in Muhsina's this fall!</p>, Subject=Classroom update for Arienne Garret}...]
+Logger.log("appendSubjectBodyArrayOfObjects");
+var sheet_asbaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var arrObj_asbaoo = arrayOfObjectsSheet(sheet_asbaoo);
+var subj_asbaoo   = "Classroom update for %First% %Last%";
+var body_asbaoo   = "<p>%First% %Last% is in %Homeroom%'s homeroom this fall!</p>";
+Logger.log(appendSubjectBodyArrayOfObjects(subj_asbaoo, body_asbaoo, arrObj_asbaoo)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, Body=<p>Arienne Garret is in Muhsina's this fall!</p>, Subject=Classroom update for Arienne Garret}...]
 
 // -- Run Mail Merge for Array of Objects
 
