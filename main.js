@@ -3073,7 +3073,7 @@ function documentMergeObject(naming, template, fldr, obj, opt) {
   var file = copyFileToFolder(template, fldr).setName(name);
   var doc  = openFileAsType(file, "document");
   findReplaceInDoc(doc, obj);
-  // this should return a file
+  return file;
 } 
 
 function documentMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {

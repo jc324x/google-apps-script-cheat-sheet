@@ -93,7 +93,7 @@ function documentMergeObject(naming, template, fldr, obj, opt) {
   var file = copyFileToFolder(template, fldr).setName(name);
   var doc  = openFileAsType(file, "document");
   findReplaceInDoc(doc, obj);
-  // updated version that returns a file;
+  return file;
 } 
 
 function singleDayCalendarEventWithAttachment(cal, date, start, end, file, rsp) {
@@ -112,6 +112,36 @@ function singleDayCalendarEventWithAttachment(cal, date, start, end, file, rsp) 
   };
   var create = Calendar.Events.insert(event, id, {"supportsAttachments" : true});
 }
+
+// lastFormResponseAsObject (form, prop)
+// lastFormResponseAsObjectExpanded (form)
+// formResponsesAsArrayOfObjects (form)
+// formResponsesAsArrayOfObjectsExpanded (form, prop)
+
+function lastFormResponseAsObject(form) {
+  var result        = [];
+  var template      = {};
+  var formResponses = form.getResponses();
+  var lastResponse  = formResponses[formResponses.length - 1];
+  var itemResponses = lastResponse.getItemResponses();
+  for (var i = 0; i < itemResponses.length; i++) {
+    var itemTitle    = itemResponses[i].getItem().getTitle();
+    var itemResponse = itemResponses[i].getResponse();
+    if (itemTitle !== prop) {
+      template[itemTitle] = itemResponse;
+    }
+    template["Email Address"] = lastResponse.getRespondentEmail();
+    template.Timestamp        = lastResponse.getTimestamp();
+  } 
+  var expand = itemResponses[x].getResponse();
+  for (var j = 0; j < expand.length; j++) {
+    var expanded = JSON.parse(JSON.stringify(template));
+    expanded[prop] = expand[j];
+    result.push(expanded);
+  } 
+  return result;
+} 
+
 
 // Staging
 
