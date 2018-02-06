@@ -7,7 +7,6 @@
  
 // Creates an event for the moon landing and logs the ID.
 
-
 // Google Documentation
 
  var event = CalendarApp.getDefaultCalendar().createEvent('Apollo 11 Landing',
@@ -51,21 +50,17 @@ function getCalendarByName(name) {
 } 
 
 var cal = CalendarApp.getCalendarsByName("Development")[0];
-var obj = {
-  Date:  "2/6/2018",
-  Start: "8:30:00 PM",
-  End:   "10:30:00 PM"
-};
+
 
 // no need to reinvent the wheel with dates in js
 
 function dateObjectFromDateAndTime(date, time) {
-  var startObj = new Date (obj.Start + "," + obj.Date);
+  // var startObj = new Date (obj.Start + "," + obj.Date);
   return new Date (date + "," + time);
 } 
 
-Logger.log("testing");
-testing(obj);
+// Logger.log("testing");
+// testing(obj);
 
 function createNewEvent() {
   var calendarId = ''; //Calendar Id String
@@ -96,24 +91,23 @@ function documentMergeObject(naming, template, fldr, obj, opt) {
   return file;
 } 
 
-function singleDayCalendarEventWithAttachment(cal, date, start, end, file, rsp) {
-  var id    = cal.getId();
-  start     = dateObjectFromDateAndTime(date, start);
-  end       = dateObjectFromDateAndTime(date, end);
-  var event = {
-    summary : rsp.Summary,
-    location : rsp.Location,
-    description : rsp.Description,
-    attachments: [{
-      "fileUrl" : file.getUrl(),
-      "title" : file.getName()
-    }]
+// function singleDayCalendarEventWithAttachment(cal, date, start, end, file, rsp) {
+//   var id    = cal.getId();
+//   start     = dateObjectFromDateAndTime(date, start);
+//   end       = dateObjectFromDateAndTime(date, end);
+//   var event = {
+//     summary : rsp.Summary,
+//     location : rsp.Location,
+//     description : rsp.Description,
+//     attachments: [{
+//       "fileUrl" : file.getUrl(),
+//       "title" : file.getName()
+//     }]
 
-  };
-  var create = Calendar.Events.insert(event, id, {"supportsAttachments" : true});
-}
+//   };
+//   var create = Calendar.Events.insert(event, id, {"supportsAttachments" : true});
+// }
 
-// lastFormResponseAsObject (form, prop)
 // lastFormResponseAsObjectExpanded (form)
 // formResponsesAsArrayOfObjects (form)
 // formResponsesAsArrayOfObjectsExpanded (form, prop)
@@ -142,24 +136,79 @@ function lastFormResponseAsObject(form) {
   return result;
 } 
 
+// lastFormResponseAsObject (form, prop)
+
+function lastFormResponseAsObject(form) {
+  
+} 
 
 // Staging
 
-var form        = thisThing();
-var cal         = CalendarApp.getCalendarsByName("Development")[0];
-var rsp         = getLastRsp();
-var template    = verifyFileAtPath("path/to/template/document");
-var destination = verifyFolderAtPath("path/to/response/folder");
-
 function getCalendarByName(name) {
-  return CalendarApp.getCalendarByName(name)[0];
+  return CalendarApp.getCalendarsByName(name)[0];
 } 
 
-// pull from other project
+// var rsp         = getLastRsp();
+// var template    = verifyFileAtPath("path/to/template/document");
+// var destination = verifyFolderAtPath("path/to/response/folder");
 
-function getLastRsp() {
-} 
+
+// pull from other project(s)
+
+
+// [18-02-06 17:20:44:188 CST] {summary=null, attachments=[{fileUrl=https://docs.google.com/document/d/1Kl3uXKHNLW5SuFhN3v2TpnE7rDbkWhx96mlynVPV42A/edit?usp=drivesdk, title=Attach This}], description=null, location=null}
+
+// *maybe* move to lower case object properties?
+
+function singleDayCalendarEventWithAttachment(rsp, cal, file) {
+  var id = cal.getId();
+  start  = dateObjectFromDateAndTime(rsp.Date, rsp.Start);
+  end    = dateObjectFromDateAndTime(rsp.Date, rsp.End);
+
+  // var event = {
+  //   start: dateObjectFromDateAndTime(rsp.Date, rsp.Start).toISOString(),
+  //   end: dateObjectFromDateAndTime(rsp.Date, rsp.End).toISOString(),
+  //   summary : rsp.Summary,
+  //   location : rsp.Location,
+  //   description : rsp.Description,
+  //   attachments: [{
+  //     "fileUrl" : file.getUrl(),
+  //     "title" : file.getName()
+  //   }]
+  // };
+
+ var eventObj = {
+    summary: 'Apollo 11 Landing',
+    location: 'The Moon',
+    description: 'Sample description',
+    start: {dateTime: start.toISOString()},
+    end: {dateTime: end.toISOString()},
+    attachments: [{
+        'fileUrl': "https://docs.google.com/spreadsheets/d/1028f3pT2n5gufDY8WuIY7pGzKk5jjMfMtOsK-UjBGpo/edit#gid=497468184",
+        'title': 'Event Planning Form (Responses)'
+    }]
+  };
+
+  var create = Calendar.Events.insert(eventObj, id, {"supportsAttachments" : true});
+}
 
 function onResponseCreateEventWithAttachment() {
-  
+
+  // in production, this will actually come from the form
+  // ...but for now, let's just test 
+
+  var obj = {
+    Date:  "2/6/2018",
+    Start: "8:30:00 PM",
+    End:   "10:30:00 PM",
+    Summary: "First event",
+    Location: "All the places", 
+    Description: "Neat!"
+  };
+
+  var form = FormApp.getActiveForm();
+  var cal  = getCalendarByName("Development");
+  var file = DriveApp.getFileById("1Kl3uXKHNLW5SuFhN3v2TpnE7rDbkWhx96mlynVPV42A");
+  singleDayCalendarEventWithAttachment(obj, cal, file);
 } 
+
