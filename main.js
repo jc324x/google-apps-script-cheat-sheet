@@ -2696,6 +2696,8 @@ function valueRange(a1Notation, sheet) {
 // Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
 
 // -- Array of Objects from Sheet 
+// TODO: BIG CHANGE: ALL PROPERTIES WILL START LOWER CASE
+// ...as they really should be.
 
 /**
  * Returns an array of objects representing the values in a sheet.

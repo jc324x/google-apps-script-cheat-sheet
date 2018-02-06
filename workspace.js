@@ -160,35 +160,32 @@ function getCalendarByName(name) {
 
 // *maybe* move to lower case object properties?
 
+
+var eventObj = {
+  summary: 'Apollo 11 Landing',
+  location: 'The Moon',
+  description: 'Sample description',
+  start: {dateTime: start.toISOString()},
+  end: {dateTime: end.toISOString()},
+  attachments: [{
+      'fileUrl': "https://docs.google.com/spreadsheets/d/1028f3pT2n5gufDY8WuIY7pGzKk5jjMfMtOsK-UjBGpo/edit#gid=497468184",
+      'title': 'Event Planning Form (Responses)'
+  }]
+};
+
+function EventObject(obj, file) {
+
+
+
+  var split         = a1Notation.split(":");
+  this.start_column = convertColumnToIndex(String(split[0].match(/\D/g,'')));
+  this.start_row    = Number(split[0].match(/\d+/g));
+  this.end_column   = convertColumnToIndex(String(split[1].match(/\D/g,'')));
+  this.end_row      = Number(split[1].match(/\d+/g));
+}
+
 function singleDayCalendarEventWithAttachment(rsp, cal, file) {
-  var id = cal.getId();
-  start  = dateObjectFromDateAndTime(rsp.Date, rsp.Start);
-  end    = dateObjectFromDateAndTime(rsp.Date, rsp.End);
-
-  // var event = {
-  //   start: dateObjectFromDateAndTime(rsp.Date, rsp.Start).toISOString(),
-  //   end: dateObjectFromDateAndTime(rsp.Date, rsp.End).toISOString(),
-  //   summary : rsp.Summary,
-  //   location : rsp.Location,
-  //   description : rsp.Description,
-  //   attachments: [{
-  //     "fileUrl" : file.getUrl(),
-  //     "title" : file.getName()
-  //   }]
-  // };
-
- var eventObj = {
-    summary: 'Apollo 11 Landing',
-    location: 'The Moon',
-    description: 'Sample description',
-    start: {dateTime: start.toISOString()},
-    end: {dateTime: end.toISOString()},
-    attachments: [{
-        'fileUrl': "https://docs.google.com/spreadsheets/d/1028f3pT2n5gufDY8WuIY7pGzKk5jjMfMtOsK-UjBGpo/edit#gid=497468184",
-        'title': 'Event Planning Form (Responses)'
-    }]
-  };
-
+  var id     = cal.getId();
   var create = Calendar.Events.insert(eventObj, id, {"supportsAttachments" : true});
 }
 
