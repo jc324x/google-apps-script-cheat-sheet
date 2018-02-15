@@ -178,15 +178,17 @@ function singleDayCalendarEventWithAttachment(rsp, cal, file) {
   // };
 
  var eventObj = {
-    summary: 'Apollo 11 Landing',
-    location: 'The Moon',
-    description: 'Sample description',
+    summary: 'Space X Launch',
+    location: 'SPACE',
+    description: 'They put a car in space?!',
     start: {dateTime: start.toISOString()},
     end: {dateTime: end.toISOString()},
     attachments: [{
         'fileUrl': "https://docs.google.com/document/d/1Kl3uXKHNLW5SuFhN3v2TpnE7rDbkWhx96mlynVPV42A/edit",
-        'title': 'Attached Document'
-    }]
+        'title': 'Attached Document'}, 
+      {'fileUrl': "https://drive.google.com/open?id=15boI1XDEkBfwf2BHQOMrbWH66PxfC0ey",
+        'title': 'Star Man'}
+    ]
   };
 
   var create = Calendar.Events.insert(eventObj, id, {"supportsAttachments" : true});
@@ -199,10 +201,8 @@ function onResponseCreateEventWithAttachment() {
 
   var obj = {
     Date:  "2/6/2018",
-    Start: "8:30:00 PM",
-    End:   "10:30:00 PM",
-    Summary: "First event",
-    Location: "All the places", 
+    Start: "8:30:00 AM",
+    End:   "05:00:00 PM",
     Description: "Neat!"
   };
 
@@ -211,4 +211,3 @@ function onResponseCreateEventWithAttachment() {
   var file = DriveApp.getFileById("1Kl3uXKHNLW5SuFhN3v2TpnE7rDbkWhx96mlynVPV42A");
   singleDayCalendarEventWithAttachment(obj, cal, file);
 } 
-
