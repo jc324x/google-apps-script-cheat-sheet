@@ -18,25 +18,25 @@
 
 // Stack Overflow
  
-function createNewEvent() {
-  var calendarId = ''; //Calendar Id String
-  var fileId = ''; // File Id String
-  var start = new Date('January 20, 2016 20:00:00 UTC');
-  var end = new Date('January 20, 2016 21:00:00 UTC');
-  var eventObj = {
-    summary: 'Apollo 11 Landing',
-    location: 'The Moon',
-    description: 'Sample description',
-    start: {dateTime: start.toISOString()},
-    end: {dateTime: end.toISOString()},
-    attachments: [{
-        'fileUrl': 'https://drive.google.com/open?id=' + fileId,
-        'title': 'Moon Docs'
-    }]
-  };
-  var resp = Calendar.Events.insert(eventObj, calendarId, {'supportsAttachments': true});
-  Logger.log(resp); // Check out the response in the logs!
-}
+// function createNewEvent() {
+//   var calendarId = ''; //Calendar Id String
+//   var fileId = ''; // File Id String
+//   var start = new Date('January 20, 2016 20:00:00 UTC');
+//   var end = new Date('January 20, 2016 21:00:00 UTC');
+//   var eventObj = {
+//     summary: 'Apollo 11 Landing',
+//     location: 'The Moon',
+//     description: 'Sample description',
+//     start: {dateTime: start.toISOString()},
+//     end: {dateTime: end.toISOString()},
+//     attachments: [{
+//         'fileUrl': 'https://drive.google.com/open?id=' + fileId,
+//         'title': 'Moon Docs'
+//     }]
+//   };
+//   var resp = Calendar.Events.insert(eventObj, calendarId, {'supportsAttachments': true});
+//   Logger.log(resp); // Check out the response in the logs!
+// }
 
 // var d = new Date(99,5,24,11,33,30,0);
 // Thu Jun 24 1999 11:33:30 GMT-0500 (CDT)
@@ -62,34 +62,34 @@ function dateObjectFromDateAndTime(date, time) {
 // Logger.log("testing");
 // testing(obj);
 
-function createNewEvent() {
-  var calendarId = ''; //Calendar Id String
-  var fileId = ''; // File Id String
-  var start = new Date('January 20, 2016 20:00:00 UTC');
-  var end = new Date('January 20, 2016 21:00:00 UTC');
-  var eventObj = {
-    summary: 'Apollo 11 Landing',
-    location: 'The Moon',
-    description: 'Sample description',
-    start: {dateTime: start.toISOString()},
-    end: {dateTime: end.toISOString()},
-    attachments: [{
-        'fileUrl': 'https://drive.google.com/open?id=' + fileId,
-        'title': 'Moon Docs'
-    }]
-  };
-  var resp = Calendar.Events.insert(eventObj, calendarId, {'supportsAttachments': true});
-  Logger.log(resp); // Check out the response in the logs!
-}
+// function createNewEvent() {
+//   var calendarId = ''; //Calendar Id String
+//   var fileId = ''; // File Id String
+//   var start = new Date('January 20, 2016 20:00:00 UTC');
+//   var end = new Date('January 20, 2016 21:00:00 UTC');
+//   var eventObj = {
+//     summary: 'Apollo 11 Landing',
+//     location: 'The Moon',
+//     description: 'Sample description',
+//     start: {dateTime: start.toISOString()},
+//     end: {dateTime: end.toISOString()},
+//     attachments: [{
+//         'fileUrl': 'https://drive.google.com/open?id=' + fileId,
+//         'title': 'Moon Docs'
+//     }]
+//   };
+//   var resp = Calendar.Events.insert(eventObj, calendarId, {'supportsAttachments': true});
+//   Logger.log(resp); // Check out the response in the logs!
+// }
 
-function documentMergeObject(naming, template, fldr, obj, opt) {
-  var name = findReplaceInString(naming, obj);
-  name     = appendDateTime(name, opt);
-  var file = copyFileToFolder(template, fldr).setName(name);
-  var doc  = openFileAsType(file, "document");
-  findReplaceInDoc(doc, obj);
-  return file;
-} 
+// function documentMergeObject(naming, template, fldr, obj, opt) {
+//   var name = findReplaceInString(naming, obj);
+//   name     = appendDateTime(name, opt);
+//   var file = copyFileToFolder(template, fldr).setName(name);
+//   var doc  = openFileAsType(file, "document");
+//   findReplaceInDoc(doc, obj);
+//   return file;
+// } 
 
 // function singleDayCalendarEventWithAttachment(cal, date, start, end, file, rsp) {
 //   var id    = cal.getId();
@@ -112,35 +112,35 @@ function documentMergeObject(naming, template, fldr, obj, opt) {
 // formResponsesAsArrayOfObjects (form)
 // formResponsesAsArrayOfObjectsExpanded (form, prop)
 
-function lastFormResponseAsObject(form) {
-  var result        = [];
-  var template      = {};
-  var formResponses = form.getResponses();
-  var lastResponse  = formResponses[formResponses.length - 1];
-  var itemResponses = lastResponse.getItemResponses();
-  for (var i = 0; i < itemResponses.length; i++) {
-    var itemTitle    = itemResponses[i].getItem().getTitle();
-    var itemResponse = itemResponses[i].getResponse();
-    if (itemTitle !== prop) {
-      template[itemTitle] = itemResponse;
-    }
-    template["Email Address"] = lastResponse.getRespondentEmail();
-    template.Timestamp        = lastResponse.getTimestamp();
-  } 
-  var expand = itemResponses[x].getResponse();
-  for (var j = 0; j < expand.length; j++) {
-    var expanded = JSON.parse(JSON.stringify(template));
-    expanded[prop] = expand[j];
-    result.push(expanded);
-  } 
-  return result;
-} 
+// function lastFormResponseAsObject(form) {
+//   var result        = [];
+//   var template      = {};
+//   var formResponses = form.getResponses();
+//   var lastResponse  = formResponses[formResponses.length - 1];
+//   var itemResponses = lastResponse.getItemResponses();
+//   for (var i = 0; i < itemResponses.length; i++) {
+//     var itemTitle    = itemResponses[i].getItem().getTitle();
+//     var itemResponse = itemResponses[i].getResponse();
+//     if (itemTitle !== prop) {
+//       template[itemTitle] = itemResponse;
+//     }
+//     template["Email Address"] = lastResponse.getRespondentEmail();
+//     template.Timestamp        = lastResponse.getTimestamp();
+//   } 
+//   var expand = itemResponses[x].getResponse();
+//   for (var j = 0; j < expand.length; j++) {
+//     var expanded = JSON.parse(JSON.stringify(template));
+//     expanded[prop] = expand[j];
+//     result.push(expanded);
+//   } 
+//   return result;
+// } 
 
 // lastFormResponseAsObject (form, prop)
 
-function lastFormResponseAsObject(form) {
+// function lastFormResponseAsObject(form) {
   
-} 
+// } 
 
 // Staging
 
@@ -161,28 +161,13 @@ function getCalendarByName(name) {
 // *maybe* move to lower case object properties?
 
 
-var eventObj = {
-  summary: 'Apollo 11 Landing',
-  location: 'The Moon',
-  description: 'Sample description',
-  start: {dateTime: start.toISOString()},
-  end: {dateTime: end.toISOString()},
-  attachments: [{
-      'fileUrl': "https://docs.google.com/spreadsheets/d/1028f3pT2n5gufDY8WuIY7pGzKk5jjMfMtOsK-UjBGpo/edit#gid=497468184",
-      'title': 'Event Planning Form (Responses)'
-  }]
-};
-
-function EventObject(obj, file) {
-
-
-
-  var split         = a1Notation.split(":");
-  this.start_column = convertColumnToIndex(String(split[0].match(/\D/g,'')));
-  this.start_row    = Number(split[0].match(/\d+/g));
-  this.end_column   = convertColumnToIndex(String(split[1].match(/\D/g,'')));
-  this.end_row      = Number(split[1].match(/\d+/g));
-}
+// function EventObject(obj, file) {
+//   var split         = a1Notation.split(":");
+//   this.start_column = convertColumnToIndex(String(split[0].match(/\D/g,'')));
+//   this.start_row    = Number(split[0].match(/\d+/g));
+//   this.end_column   = convertColumnToIndex(String(split[1].match(/\D/g,'')));
+//   this.end_row      = Number(split[1].match(/\d+/g));
+// }
 
 function singleDayCalendarEventWithAttachment(rsp, cal, file) {
   var id     = cal.getId();
@@ -190,10 +175,6 @@ function singleDayCalendarEventWithAttachment(rsp, cal, file) {
 }
 
 function onResponseCreateEventWithAttachment() {
-
-  // in production, this will actually come from the form
-  // ...but for now, let's just test 
-
   var obj = {
     Date:  "2/6/2018",
     Start: "8:30:00 PM",
@@ -201,6 +182,18 @@ function onResponseCreateEventWithAttachment() {
     Summary: "First event",
     Location: "All the places", 
     Description: "Neat!"
+  };
+
+  var eventObj = {
+    summary: 'Apollo 11 Landing',
+    location: 'The Moon',
+    description: 'Sample description',
+    start: {dateTime: start.toISOString()},
+    end: {dateTime: end.toISOString()},
+    attachments: [{
+        'fileUrl': "https://docs.google.com/spreadsheets/d/1028f3pT2n5gufDY8WuIY7pGzKk5jjMfMtOsK-UjBGpo/edit#gid=497468184",
+        'title': 'Event Planning Form (Responses)'
+    }]
   };
 
   var form = FormApp.getActiveForm();
