@@ -694,6 +694,16 @@ var objB_mo = {
 // Logger.log("mergeObjs");
 // Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
 
+// Check if Object Is Empty
+
+function checkForValidObject(obj) {
+    return Object.keys(obj).length !== 0;
+}
+
+Logger.log("checkForValidObject");
+var obj_vohv = {};
+Logger.log(checkForValidObject(obj_vohv)); // false
+
 // - Dates and Times
 
 // -- Formatted Date Time
@@ -2634,23 +2644,27 @@ function arrayOfObjectsByRow(rangeObj, headers){
   for (var i = 0; i < height; i++) {
     var row = {};
     for (var j = 0; j < width; j++) {
-      var prop = headers[j];
+      var prop = String(headers[j]).toLowerCase();
       var val  = values[i][j];
       if (val !== "") {
         row[prop] = val;
       } 
     }
-    result.push(row);
+    if (checkForValidObject(row)) {
+      result.push(row);
+    }
   }  
   return result;
 }
 
-// Logger.log("arrayOfObjectsByRow");
-// var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var range_vbr   = sheet_vbr.getRange("A2:E19");
-// var headers_vbr = arrayOfHeaderValues(range_vbr);
-// Logger.log(arrayOfObjectsByRow(range_vbr, headers_vbr)); 
-// [{Last=Last, Email=Email, Homeroom=Homeroom, Grade=Grade, First=First}, {Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}...]
+Logger.log("arrayOfObjectsByRow");
+// TODO: rename
+var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var range_vbr   = sheet_vbr.getRange("A1:E19");
+var headers_vbr = arrayOfHeaderValues(range_vbr);
+range_vbr       = sheet_vbr.getRange("A2:E19");
+Logger.log(arrayOfObjectsByRow(range_vbr, headers_vbr)); 
+ // [{last=Garret, grade=6.0, homeroom=Muhsina, first=Arienne, email=agarret@example.com},...]
 
 // --- Header Range 
 
@@ -2696,8 +2710,6 @@ function valueRange(a1Notation, sheet) {
 // Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
 
 // -- Array of Objects from Sheet 
-// TODO: BIG CHANGE: ALL PROPERTIES WILL START LOWER CASE
-// ...as they really should be.
 
 /**
  * Returns an array of objects representing the values in a sheet.
