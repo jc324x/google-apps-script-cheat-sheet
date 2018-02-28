@@ -24,6 +24,7 @@ Logger.log("Start");
 // | | - Object
 // | | -- Array of Object Values
 // | | -- Merge Objects
+// | | -- Check if Object is Empty
 // | | - Dates and Times
 // | | -- Formatted Date Time
 // | | -- Date Object from String
@@ -476,27 +477,25 @@ function sortArrayOfObjectsMulti() {
 // [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}]
 
 // -- Find Object in Array of Objects
+ 
+// findObjectInArray
 
 /**
  * Returns the first object in an array of objects with the key value pair.
+ * This can return an object or a value from an object if `ret` is set.
  *
  * @param {Object[]} arrObj
  * @param {string} prop
  * @param {string} val
- * @param {string} [ret]
  * @returns {Object}
  */
 
-function findObjectInArrayOfObjects(arrObj, prop, val, ret) {
+function findObjectInArrayOfObjects(arrObj, prop, val) {
   for (var i = 0; i < arrObj.length; i++) {
     var obj = arrObj[i];
     for (var p in obj) {
       if (obj.hasOwnProperty(prop) && p == prop && obj[p] == val) {
-        if (ret !== undefined) {
-          return obj[ret];
-        } else {
           return obj;
-        }
       }
     }
   }
@@ -504,9 +503,11 @@ function findObjectInArrayOfObjects(arrObj, prop, val, ret) {
 
 // Logger.log("findObjectInArrayOfObjects");
 // Logger.log(findObjectInArrayOfObjects(arrObj_ex, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
-// Logger.log(findObjectInArrayOfObjects(arrObj_ex, "c", 500, "a")); // 10
 
 // Find First or Last Object in Array of Objects by Timestamp
+// TODO: Timestamp -> timestamp
+
+// firstObjectInArray
 
 /**
  * Returns the object with the oldest Timestamp value.
@@ -538,6 +539,8 @@ function findFirstObjectInArrayOfObjects(arrObj){
  * @returns {Object}
  */
 
+// lastObjectInArray
+
 function findLastObjectInArrayOfObjects(arrObj) {
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a, b){
@@ -564,6 +567,8 @@ function findLastObjectInArrayOfObjects(arrObj) {
  * @param {string || string[]} val
  * @returns {Object[]}
  */
+
+// filterArrayOfObjects
 
 function filterArrayOfObjectsByValueOrValues(arrObj, prop, vals) {
   var result = [];
@@ -596,6 +601,8 @@ function filterArrayOfObjectsByValueOrValues(arrObj, prop, vals) {
  * @param {string} prop 
  * @returns {Object[]}
  */
+
+// blendPropertyForObjectInArray()
 
 function addPropertyToObjectsInArrayOfObjects(arrObj, arr, prop){
   for (var i = 0; i < arrObj.length; i++){
@@ -695,16 +702,20 @@ var objB_mo = {
 // Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
 
 // Check if Object Is Empty
+// Check if Object Is Valid
+
+// valid just means that it's not empty
 
 function checkForValidObject(obj) {
     return Object.keys(obj).length !== 0;
 }
 
-Logger.log("checkForValidObject");
-var obj_vohv = {};
-Logger.log(checkForValidObject(obj_vohv)); // false
+// Logger.log("checkForValidObject");
+// var obj_vohv = {};
+// Logger.log(checkForValidObject(obj_vohv)); // false
 
 // - Dates and Times
+// TODO: why is this such an ugly cluster? there's gotta be a better way to do this...
 
 // -- Formatted Date Time
 
@@ -868,6 +879,7 @@ function checkStringForSubstring(val, str) {
 // - Utility Functions for Drive
 
 // -- Verify Path
+// TODO: verifyPathString()
 
 /**
  * Returns a string with leading and trailing '/' removed.
@@ -2657,13 +2669,13 @@ function arrayOfObjectsByRow(rangeObj, headers){
   return result;
 }
 
-Logger.log("arrayOfObjectsByRow");
+// Logger.log("arrayOfObjectsByRow");
 // TODO: rename
-var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var range_vbr   = sheet_vbr.getRange("A1:E19");
-var headers_vbr = arrayOfHeaderValues(range_vbr);
-range_vbr       = sheet_vbr.getRange("A2:E19");
-Logger.log(arrayOfObjectsByRow(range_vbr, headers_vbr)); 
+// var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var range_vbr   = sheet_vbr.getRange("A1:E19");
+// var headers_vbr = arrayOfHeaderValues(range_vbr);
+// range_vbr       = sheet_vbr.getRange("A2:E19");
+// Logger.log(arrayOfObjectsByRow(range_vbr, headers_vbr)); 
  // [{last=Garret, grade=6.0, homeroom=Muhsina, first=Arienne, email=agarret@example.com},...]
 
 // --- Header Range 
@@ -2877,6 +2889,7 @@ function arrayForColumnRange(targetRange){
 
 // - Sheets and Docs
 
+// TODO: Right section?
 // -- String From Object Properties 
 
 /**
@@ -2900,50 +2913,46 @@ var obj_ex = {
  * @returns {string}
  */
 
-// function findReplaceInValue(val, obj) {
-function findReplace(val, obj) {
-  if (typeof val !== 'string') {
-    return val;
+function findReplaceInSubstring(substr, obj) {
+  if (typeof substr !== 'string') {
+    return substr;
   }
 
-  var count = val.split("%").length - 1;
+  var count = substr.split("%").length - 1;
 
   if (count !== 2) {
-    return val;
+    return substr;
   }
 
-  val      = val.replace(/%/g, "");
-  var last = val.slice(-1);
+  substr      = substr.replace(/%/g, "");
+  var last = substr.slice(-1);
 
   if (last.match(/[a-z]/i)) { 
-    return obj[val];
+    return obj[substr];
   } else {
-    val = val.substring(0, val.length - 1);
-    return obj[val] + last;
+    substr = substr.substring(0, substr.length - 1);
+    return obj[substr] + last;
   }
 }
 
-// Logger.log("findReplace");
-// var string_fris = "%name%,";
-// Logger.log(findReplace(string_fris, obj_ex));
+// Logger.log("findReplaceInSubstring");
+// var string_friss = "%name%,";
+// Logger.log(findReplaceInSubstring(string_friss, obj_ex));
 
 function findReplaceInString(str, obj) {
   var result = [];
   var split  = str.split(" ");
 
   for (var i = 0; i < split.length; i++) {
-    result.push(findReplace(split[i], obj));
+    result.push(findReplaceInSubstring(split[i], obj));
   }
 
   return result.join(" ");
 } 
 
-// Logger.log("stringFromObjectProperties");
-// Logger.log(stringFromObjectProperties(obj_ex, "name: %name% - state: %state% - job: %job%", "%")); // "name: Jon - state: MN - job: IT Administrator"
-
-// Logger.log("stringFromObjectProperties");
-// var string_sfop = "name: %name%, occupation: %occupation%";
-// Logger.log(stringFromObjectProperties(string_sfop, obj_ex));
+// Logger.log("findReplaceInString");
+// var string_fris = "name: %name%, occupation: %occupation%";
+// Logger.log(findReplaceInString(string_fris, obj_ex));
 
 // -- Replace Object Properties 
 
@@ -3081,9 +3090,10 @@ function findReplaceInSpreadsheet(ss, obj) {
 //     }
 // } 
 
-function documentMergeObject(naming, template, fldr, obj, opt) {
+// createMergedDocumentForObject
+
+function documentMergeObject(naming, template, fldr, obj) {
   var name = findReplaceInString(naming, obj);
-  name     = appendDateTime(name, opt);
   var file = copyFileToFolder(template, fldr).setName(name);
   var doc  = openFileAsType(file, "document");
   findReplaceInDoc(doc, obj);
