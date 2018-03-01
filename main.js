@@ -455,8 +455,8 @@ function sortArrayOfObjects(prop) {
 
 /**
  * Returns an array of objects sorted by multiple property values.
- * @param {...string}
  * @requires sortArrayOfObjects() 
+ * @param {...string}
  * @returns {Object[]}
  */
 
@@ -478,8 +478,6 @@ function sortArrayOfObjectsMulti() {
 
 // -- Find Object in Array of Objects
  
-// findObjectInArray
-
 /**
  * Returns the first object in an array of objects with the key value pair.
  * This can return an object or a value from an object if `ret` is set.
@@ -501,50 +499,45 @@ function findObjectInArrayOfObjects(arrObj, prop, val) {
   }
 }
 
-// Logger.log("findObjectInArrayOfObjects");
-// Logger.log(findObjectInArrayOfObjects(arrObj_ex, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
+// Logger.log("findObjectInArray");
+// Logger.log(findObjectInArray(arrObj_ex, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
 
-// Find First or Last Object in Array of Objects by Timestamp
-// TODO: Timestamp -> timestamp
-
-// firstObjectInArray
+// Find Oldest or Latest Object by Timestamp value
 
 /**
- * Returns the object with the oldest Timestamp value.
+ * Returns the object with the oldest timestamp value.
  *
- * @param {Object[]} arrObj
+ * @param {Object[]} arr
  * @returns {Object}
  */
 
-function findFirstObjectInArrayOfObjects(arrObj){
-  if (arrObj.length >= 2) {
-    var sorted = arrObj.sort(function(a, b){
-      return new Date(a.Timestamp) - new Date(b.Timestamp);
+function oldestObjectInArrayOfObjects(arr){
+  if (arr.length >= 2) {
+    var sorted = arr.sort(function(a, b){
+      return new Date(a.timestamp) - new Date(b.timestamp);
     });
     return sorted[0];
   } else {
-    return arrObj[0];
+    return arr[0];
   }
 }
 
-// Logger.log("findFirstObjectInArrayOfObjects");
-// var sheet_fe  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var arrObj_fe = arrObjFromRange(sheet_fe, "J1:K4");
-// Logger.log(findFirstObjectInArrayOfObjects(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
+// Logger.log("oldestObjectInArray");
+// var sheet_ooia  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var arrObj_fe = arrayOfObjectsA1("J1:K4", sheet_ooia);
+// Logger.log(oldestObjectInArray(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 /**
- * Returns the object with the most recent Timestamp value.
+ * Returns the object with the most recent timestamp value.
  *
- * @param {Object[]} arrObj
+ * @param {Object[]} arr
  * @returns {Object}
  */
 
-// lastObjectInArray
-
-function findLastObjectInArrayOfObjects(arrObj) {
+function latestObjectInArrayOfObjects(arrObj) {
   if (arrObj.length >= 2) {
     var sorted = arrObj.sort(function(a, b){
-      return new Date(b.Timestamp) - new Date(a.Timestamp);
+      return new Date(b.timestamp) - new Date(a.timestamp);
     });
     return sorted[0];
   } else {
@@ -552,10 +545,10 @@ function findLastObjectInArrayOfObjects(arrObj) {
   }
 } 
 
-// Logger.log("findLastObjectByTimestampInArrayOfObjects");
-// var sheet_le  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var arrObj_le = arrObjFromRange(sheet_le, "J1:K4");
-// Logger.log(findLastObjectInArrayOfObjects(arrObj_le)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
+// Logger.log("latestObjectInArray");
+// var sheet_loia  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var arrObj_loia = arrayOfObjectsA1("J1:K4", sheet_loia);
+// Logger.log(latestObjectInArray(arrObj_loia)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
 // -- Filter Array of Objects by Value or Values
 
@@ -570,7 +563,7 @@ function findLastObjectInArrayOfObjects(arrObj) {
 
 // filterArrayOfObjects
 
-function filterArrayOfObjectsByValueOrValues(arrObj, prop, vals) {
+function filterArrayOfObjects(arrObj, prop, vals) {
   var result = [];
   if (Array.isArray(vals)) {
     for (var i = 0; i < vals.length; i++) {
@@ -2535,29 +2528,30 @@ function A1Object(a1Notation) {
   this.start_row    = Number(split[0].match(/\d+/g));
   this.end_column   = convertColumnToIndex(String(split[1].match(/\D/g,'')));
   this.end_row      = Number(split[1].match(/\d+/g));
+
+  this.getA1Notation = function () {
+    return convertIndexToColumn(this.start_column) + String(this.start_row) + ":" + convertIndexToColumn(this.end_column) + String(this.end_row);
+  };
+
+  this.getHeaderA1Notation = function () {
+    return convertIndexToColumn(this.start_column) + String(this.start_row) + ":" + convertIndexToColumn(this.end_column) + String(this.start_row);
+  };
+
+  this.getValueA1Notation = function () {
+    return convertIndexToColumn(this.start_column) + String(this.start_row + 1) + ":" + convertIndexToColumn(this.end_column) + String(this.end_row);
+  };
+
+  this.getTargetA1Notation = function (targetColumn) {
+    return convertIndexToColumn(targetColumn) + String(this.start_row + 1) + ":" + convertIndexToColumn(targetColumn) + String(this.end_row);
+  };
 }
 
-A1Object.prototype.getA1Notation = function () {
-  return convertIndexToColumn(this.start_column) + String(this.start_row) + ":" + convertIndexToColumn(this.end_column) + String(this.end_row);
-};
-
-A1Object.prototype.getHeaderA1Notation = function () {
-  return convertIndexToColumn(this.start_column) + String(this.start_row) + ":" + convertIndexToColumn(this.end_column) + String(this.start_row);
-};
-
-A1Object.prototype.getValueA1Notation = function () {
-  return convertIndexToColumn(this.start_column) + String(this.start_row + 1) + ":" + convertIndexToColumn(this.end_column) + String(this.end_row);
-};
-
-A1Object.prototype.getTargetA1Notation = function (targetColumn) {
-  return convertIndexToColumn(targetColumn) + String(this.start_row + 1) + ":" + convertIndexToColumn(targetColumn) + String(this.end_row);
-};
-
-// var rangeObj = sheet.getRange(tColABC + (hRow +1) + ":" + tColABC + lRow);
-
 // Logger.log("A1Object");
-// var obj_a1c = new A1Object("A1:J10");
-// Logger.log(obj_a1c.getA1Notation());
+// var obj_a1o = new A1Object("A1:J10");
+// Logger.log(obj_a1o.getA1Notation()); // "A1:J10"
+// Logger.log(obj_a1o.getHeaderA1Notation()); // "A1:J1"
+// Logger.log(obj_a1o.getValueA1Notation()); // "A2:J10"
+// Logger.log(obj_a1o.getTargetA1Notation(1)); // "A2:A10"
 
 function validateA1(a1Notation, sheet) {
   var check   = new A1Object(a1Notation);
