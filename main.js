@@ -15,16 +15,16 @@ Logger.log("Start");
 // |+| -- Array as Modified Delimited String
 // |+| - Two-Dimensional Array
 // |+| -- Flatten Two-Dimensional Array
-// | | - Array of Objects
-// | | -- Sort Array of Objects by Property or Properties
-// | | -- Find Object in Array of Objects
-// | | -- Find First or Last Object in Array of Objects by Timestamp
-// | | -- Filter Array of Objects by Value or Values
-// | | -- Add Property to Objects in Array of Objects
-// | | - Object
-// | | -- Array of Object Values
-// | | -- Merge Objects
-// | | -- Check if Object is Empty
+// |+| - Array of Objects
+// |+| -- Sort Array of Objects by Property or Properties
+// |+| -- Find Object in Array of Objects
+// |+| -- Find First or Last Object in Array of Objects by Timestamp
+// |+| -- Filter Array of Objects by Value or Values
+// |+| -- Unify Properties for Objects in Array of Objects
+// |+| - Object
+// |+| -- Array of Object Values
+// |+| -- Merge Objects
+// |+| -- Check for Valid Object
 // | | - Dates and Times
 // | | -- Formatted Date Time
 // | | -- Date Object from String
@@ -499,8 +499,8 @@ function findObjectInArrayOfObjects(arrObj, prop, val) {
   }
 }
 
-// Logger.log("findObjectInArray");
-// Logger.log(findObjectInArray(arrObj_ex, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
+// Logger.log("findObjectInArrayOfObjects");
+// Logger.log(findObjectInArrayOfObjects(arrObj_ex, "a", 1000)); // {a=1000.0, b=1.0, c=5.0}
 
 // Find Oldest or Latest Object by Timestamp value
 
@@ -522,10 +522,10 @@ function oldestObjectInArrayOfObjects(arr){
   }
 }
 
-// Logger.log("oldestObjectInArray");
-// var sheet_ooia  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var arrObj_fe = arrayOfObjectsA1("J1:K4", sheet_ooia);
-// Logger.log(oldestObjectInArray(arrObj_fe)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
+// Logger.log("oldestObjectInArrayOfObjects");
+// var sheet_ooiaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var arrObj_ooiaoo = arrayOfObjectsA1("J1:K4", sheet_ooiaoo);
+// Logger.log(oldestObjectInArrayOfObjects(arrObj_ooiaoo)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 /**
  * Returns the object with the most recent timestamp value.
@@ -545,10 +545,10 @@ function latestObjectInArrayOfObjects(arrObj) {
   }
 } 
 
-// Logger.log("latestObjectInArray");
-// var sheet_loia  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var arrObj_loia = arrayOfObjectsA1("J1:K4", sheet_loia);
-// Logger.log(latestObjectInArray(arrObj_loia)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
+// Logger.log("latestObjectInArrayOfObjects");
+// var sheet_loiaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var arrObj_loiaoo = arrayOfObjectsA1("J1:K4", sheet_loiaoo);
+// Logger.log(latestObjectInArrayOfObjects(arrObj_loiaoo)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
 // -- Filter Array of Objects by Value or Values
 
@@ -557,11 +557,9 @@ function latestObjectInArrayOfObjects(arrObj) {
  *
  * @param {Object} arrObj
  * @param {string} prop
- * @param {string || string[]} val
+ * @param {string || string[]} vals
  * @returns {Object[]}
  */
-
-// filterArrayOfObjects
 
 function filterArrayOfObjects(arrObj, prop, vals) {
   var result = [];
@@ -584,7 +582,7 @@ function filterArrayOfObjects(arrObj, prop, vals) {
 // Logger.log(filterArrayOfObjectsByValueOrValues(arrObj_ex, "a", 10)); // [{a=10.0, b=2.0, c=500.0}]
 // Logger.log(filterArrayOfObjectsByValueOrValues(arrObj_ex, "c", [5, 500])); // [{a=1000.0, b=1.0, c=5.0}, {a=10.0, b=2.0, c=500.0}]
 
-// -- Add Property to Objects in Array of Objects
+// -- Unify Properties for Objects in Array of Objects
 
 /**
  * Returns an array of objects, with an additional property value added to each matching object.
@@ -595,9 +593,7 @@ function filterArrayOfObjects(arrObj, prop, vals) {
  * @returns {Object[]}
  */
 
-// blendPropertyForObjectInArray()
-
-function addPropertyToObjectsInArrayOfObjects(arrObj, arr, prop){
+function unifyPropertiesForObjectsInArrayOfObjects(arrObj, arr, prop){
   for (var i = 0; i < arrObj.length; i++){
     var obj = arrObj[i];
     for (var h = 0; h < arr.length; h++) {
@@ -611,15 +607,15 @@ function addPropertyToObjectsInArrayOfObjects(arrObj, arr, prop){
   return arrObj;
 }
 
-var arrObj_upfao  = [
-  {x: 123},
-  {y: 234},
-  {z: 345},
+var arrObj_upfoiaoo  = [
+  {x: 123, a: 1},
+  {y: 234, b: 2},
+  {z: 345, c: 3},
 ];
 
-// Logger.log("addPropertyToObjectsInArrayOfObjects");
-// Logger.log(addPropertyToObjectsInArrayOfObjects(arrObj_upfao, ["x","y","z"], "new"));
-// [{new=123.0, x=123.0}, {new=234.0, y=234.0}, {new=345.0, z=345.0}]
+// Logger.log("unifyPropertiesForObjectsInArrayOfObjects");
+// Logger.log(unifyPropertiesForObjectsInArrayOfObjects(arrObj_upfoiaoo, ["x","y","z"], "new"));
+// [{a=1.0, new=123.0, x=123.0}, {new=234.0, b=2.0, y=234.0}, {new=345.0, c=3.0, z=345.0}]
 
 // - Object
 
@@ -629,7 +625,7 @@ var arrObj_upfao  = [
  * Returns an array of matching properties. 
  *
  * @param {Object} obj
- * @param {string[]} props
+ * @param {string[]} arr
  * @requires intersectOfTwoArrays() 
  * @returns {Array}
  */
@@ -679,36 +675,42 @@ function mergeObjs() {
 } 
 
 var objA_mo = {
- a: 1, 
- b: 2, 
- c: 3
+  a: 1, 
+  b: 2, 
+  c: 3,
+  d: 4
 }; 
 
 var objB_mo = {
- c: 4,
- d: 5, 
- e: 6, 
- f: 7
+  c: 4,
+  d: 5, 
+  e: 6, 
+  f: 7
 }; 
 
 // Logger.log("mergeObjs");
 // Logger.log(mergeObjs(objA_mo, objB_mo)); // {a=1.0, b=2.0, c=4.0, d=5.0, e=6.0, f=7.0}
 
-// Check if Object Is Empty
-// Check if Object Is Valid
+// -- Check for Valid Object
 
-// valid just means that it's not empty
+/**
+ * Returns true if the object has at least one property value set.
+ *
+ * @param obj
+ * @returns {boolean}
+ */
 
 function checkForValidObject(obj) {
     return Object.keys(obj).length !== 0;
 }
 
 // Logger.log("checkForValidObject");
-// var obj_vohv = {};
-// Logger.log(checkForValidObject(obj_vohv)); // false
+// var obj_cfvo = {};
+// Logger.log(checkForValidObject(obj_cfvo)); // false
+// obj_cfvo = {a: 100};
+// Logger.log(checkForValidObject(obj_cfvo)); // true
 
 // - Dates and Times
-// TODO: why is this such an ugly cluster? there's gotta be a better way to do this...
 
 // -- Formatted Date Time
 
