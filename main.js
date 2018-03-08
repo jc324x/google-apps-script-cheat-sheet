@@ -25,17 +25,18 @@ Logger.log("Start");
 // |+| -- Array of Object Values
 // |+| -- Merge Objects
 // |+| -- Check for Valid Object
-// | | - Dates and Times
-// | | -- Formatted Date Time
-// | | -- Date Object from String
-// | | -- Match a Date to a Date Range
-// | | - String
-// | | -- Check String for Substring
+// |+| - Dates and Times
+// |+| -- Formatted Date Time
+// |+| -- Append Date Time
+// |+| -- Date Object from String
+// |+| -- Match a Date to a Date Range
+// |+| - String
+// |+| -- Check String for Substring
 // | | Drive
-// | | - Utility Functions for Drive
-// | | -- Verify Path
-// | | -- Target Path
-// | | -- MIME Types
+// |+| - Utility Functions for Drive
+// |+| -- Verify Path String
+// |+| -- Target Path
+// |+| -- MIME Types
 // | | - Folders
 // | | -- Array Of Folders
 // | | --- Array of Folders at Root
@@ -716,71 +717,42 @@ function checkForValidObject(obj) {
 
 /**
  * Returns a formatted date time string.
- * Options:
- *    hms     -> hour:minute:second (24)
- *    mdy     -> month-day-year
- *    ymd     -> year-month-day
- *    mdyampm -> month-day-year hour:minute:second am|pm
- *    default -> year-month-day hour:minute:second (24)
- * @param opt
- * @returns {undefined}
+ * @returns {string}
  */
 
 function dateTime(opt) {
-  var now = new Date();
-  var date, time;
-
-  switch(opt) {
-    case "hms":
-      time = [now.getHours(), now.getMinutes(), now.getSeconds()];
-      for ( var i = 1; i < 3; i++ ) {
-        if ( time[i] < 10 ) {
-          time[i] = "0" + time[i];
-        }
-      }
-      return time.join(":");
-    case "mdy":
-      date = [now.getMonth() + 1, now.getDate(), now.getYear()];
-      return date.join("-");
-    case "ymd":
-      date = [now.getYear(), now.getMonth() + 1, now.getDate()];
-      return date.join("-");
-    case "mdyampm":
-      date = [ now.getMonth() + 1, now.getDate(), now.getYear() ];
-      time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
-      var ampm = ( time[0] < 12 ) ? "AM" : "PM";
-      time[0]  = ( time[0] <= 12 ) ? time[0] : time[0] - 12;
-      for ( var j = 1; j < 3; j++ ) {
-        if ( time[j] < 10 ) {
-          time[j] = "0" + time[j];
-        }
-      }
-      return date.join("-") + " " + time.join(":") + " " + ampm;
-    default:
-      date = [now.getYear(), now.getMonth() + 1, now.getDate()];
-      time = [now.getHours(), now.getMinutes(), now.getSeconds()];
-      for ( var k = 1; k < 3; k++ ) {
-        if ( time[k] < 10 ) {
-          time[k] = "0" + time[k];
-        }
-      }
-      return date.join("-") + " " + time.join(":");
-  } 
+  var now  = new Date();
+  var date = [now.getYear(), now.getMonth() + 1, now.getDate()];
+  var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
+  var ampm = ( time[0] < 12 ) ? "AM" : "PM";
+  time[0]  = ( time[0] <= 12 ) ? time[0] : time[0] - 12;
+  for ( var j = 1; j < 3; j++ ) {
+    if ( time[j] < 10 ) {
+      time[j] = "0" + time[j];
+    }
+  }
+  return date.join("-") + " " + time.join(":") + " " + ampm;
 } 
 
 // Logger.log("dateTime");
-// Logger.log(dateTime("hms")); // 9:13:23
-// Logger.log(dateTime("mdy")); // 12-21-2017
-// Logger.log(dateTime("ymd")); // 2017-12-21
-// Logger.log(dateTime("mdyampm")); // 12-21-2017 9:13:23 AM
-// Logger.log(dateTime()); // 2017-12-21 9:13:23
+// Logger.log(dateTime()); // 2018-3-7 7:05:07 PM
 
-function appendDateTime(str, opt) {
-  if (opt !== undefined) {
-    str += " - " + dateTime(opt);
-  }
- return str; 
+// Append Date Time
+
+/**
+ * appendDateTime
+ *
+ * @requires dateTime() 
+ * @param {string} str
+ * @returns {undefined}
+ */
+
+function appendDateTime(str) {
+  return str += " - " + dateTime();
 } 
+
+// Logger.log("appendDateTime");
+// Logger.log(appendDateTime("file-name"));
 
 // -- Date Object from String
 
@@ -809,7 +781,6 @@ function dateObjectFromString(str) {
  *
  * @param {Object[]} arrObj
  * @param {string=new Date()} optDate - Date to match.
- * @namespace
  * @property {string} start           - Starting date.
  * @property {string} end             - Ending date.
  * @property {*} value                - The value to return for a matching date.
@@ -873,8 +844,7 @@ function checkStringForSubstring(val, str) {
 
 // - Utility Functions for Drive
 
-// -- Verify Path
-// TODO: verifyPathString()
+// -- Verify Path String
 
 /**
  * Returns a string with leading and trailing '/' removed.
@@ -883,7 +853,7 @@ function checkStringForSubstring(val, str) {
  * @returns {string}
  */
 
-function verifyPath(path) {
+function verifyPathString(path) {
   if ((path.charAt(0)) === "/") {
     path = path.substr(1);
   }
@@ -895,9 +865,9 @@ function verifyPath(path) {
   return path;
 }
 
-// Logger.log("verifyPath");
-// Logger.log(verifyPath("valid/path")); // "valid/path"
-// Logger.log(verifyPath("/valid/path/")); // "valid/path"
+// Logger.log("verifyPathString");
+// Logger.log(verifyPathString("valid/path")); // "valid/path"
+// Logger.log(verifyPathString("/valid/path/")); // "valid/path"
 
 // -- Target Path
 
@@ -911,7 +881,7 @@ function verifyPath(path) {
  */
 
 function targetPath(path, opt) {
-  path      = verifyPath(path);
+  path      = verifyPathString(path);
   var split = path.split("/");
 
   if (opt === 0 || opt === undefined) {
@@ -926,24 +896,36 @@ function targetPath(path, opt) {
 // Logger.log(targetPath("a/b/c", 0)); // c
 // Logger.log(targetPath("a/b/c", 1)); // a/b
 
-// TODO: move to validate
 // Validate MIME Type
 
-// vs. expand
+/**
+ * Returns the full MIME description if given a valid short description.
+ * Returns false if passed an invalid short description.
+ *
+ * @param {string} val
+ * @returns {string}
+ */
 
 function validateMIME(val) {
-  // lower case
-  // if matches case statment
-  // return + "application/vnd.google-apps.
+  val = val.toLowerCase();
+
+  var mimes = [
+    "audio", "document", "drawing", 
+    "drive-sdk", "file", "folder", 
+    "form", "fusiontable", "map",
+    "photo", "presentation", "script",
+    "site", "spreadsheet", "unknown", "video"
+  ];
+
+  if (checkArrayForValue(mimes, val)) {
+    return "application/vnd.google-apps." + val;
+  } else {
+    return false;
+  }
 } 
 
-
-function expandMIMEType(val) {
-  return "application/vnd.google-apps." + val.toLowerCase();
-}
-
-// Logger.log("expandMIMEType");
-// Logger.log(expandMIMEType("audio"));
+// Logger.log("validateMIME");
+// Logger.log(validateMIME("audio"));
 
 // - Folders
 
@@ -1008,14 +990,14 @@ function arrayOfFoldersInFolder(fldr) {
  * The array contains folder objects, not just the names of the folders.
  *
  * @param {string} path
- * @requires verifyPath() 
+ * @requires verifyPathString() 
  * @requires findFolderAtPath() 
  * @requires arrayOfFoldersInFolder() 
  * @returns {Folder[]}
  */
 
 function arrayOfFoldersAtPath(path) {
-  path       = verifyPath(path);
+  path       = verifyPathString(path);
   var result = [];
   var fldr   = findFolderAtPath(path);
   if (fldr) {
@@ -1132,13 +1114,13 @@ function findFolderInFolder(name, fldr) {
  * Returns the folder found at the given path or false if that folder doesn't exist.
  *
  * @param path
- * @requires verifyPath() 
+ * @requires verifyPathString() 
  * @requires targetPath() 
  * @returns {Folder}
  */
 
 function findFolderAtPath(path) {
-  path = verifyPath(path);
+  path = verifyPathString(path);
   var fi, fldr;
   var split = path.split("/");
 
@@ -1246,14 +1228,14 @@ function checkForFolderInFolder(name, fldr) {
  * Returns true if the folder is found.
  *
  * @param path
- * @requires verifyPath() 
+ * @requires verifyPathString() 
  * @requires targetPath() 
  * @requires findFolderAtPath() 
  * @returns {boolean}
  */
 
 function checkForFolderAtPath(path) {
-  path = verifyPath(path);
+  path = verifyPathString(path);
   var fldr = findFolderAtPath(path);
   if (fldr) {
     return true;
@@ -1313,14 +1295,14 @@ function createFolderInFolder(name, fldr) {
  * This will create duplicates if used without caution. 
  *
  * @param {string} path
- * @requires verifyPath() 
+ * @requires verifyPathString() 
  * @requires targetPath() 
  * @requires findFolderAtPath() 
  * @returns {Folder || boolean}
  */
 
 function createFolderAtPath(path) {
-  path       = verifyPath(path);
+  path       = verifyPathString(path);
   var target = targetPath(path, 1);
   var fldr   = findFolderAtPath(target);
   if (fldr) {
@@ -1389,7 +1371,7 @@ function createFoldersInFolder(arr, fldr) {
  */
 
 function createFoldersAtPath(arr, path) {
-  path       = verifyPath(path);
+  path       = verifyPathString(path);
   var target = targetPath(path, 1);
   var fldr   = findFolderAtPath(target);
   if (fldr) {
@@ -1470,7 +1452,7 @@ function verifyFolderInFolder(name, fldr) {
  */
 
 function verifyFolderPath(path) {
-  path = verifyPath(path);
+  path = verifyPathString(path);
   var split = path.split("/");
   var fldr;
   for (i = 0; i < split.length; i++) {
@@ -1557,7 +1539,7 @@ function verifyFoldersInFolder(arr, fldr) {
  * Returns a folder.
  * Creates folders within a folder if they don't already exist.
  *
- * @requires verifyPath() 
+ * @requires verifyPathString() 
  * @requires findFolderAtPath() 
  * @requires arrayOfFoldersInFolder() 
  * @requires arrayOfFolderNames() 
@@ -1566,7 +1548,7 @@ function verifyFoldersInFolder(arr, fldr) {
  */
 
 function verifyFoldersAtPath(arr, path) {
-  path     = verifyPath(path);
+  path     = verifyPathString(path);
   var fldr = findFolderAtPath(path);
   verifyFoldersInFolder(arr, fldr);
 } 
