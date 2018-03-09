@@ -38,17 +38,17 @@ Logger.log("Start");
 // |+| -- Target Path
 // |+| -- MIME Types
 // | | - Folders
-// | | -- Array Of Folders
-// | | --- Array of Folders at Root
-// | | --- Array of Folders in Folder
-// | | --- Array of Folders at Path
-// | | --- Array of Folders in Drive
-// | | -- Array of Folder Names
-// | | -- Find a Folder
-// | | --- Find Folder at Root
-// | | --- Find Folder in Folder
-// | | --- Find Folder at Path
-// | | --- Find Folder in Drive
+// |+| -- Array Of Folders
+// |+| --- Array of Folders at Root
+// |+| --- Array of Folders in Folder
+// |+| --- Array of Folders at Path
+// |+| --- Array of Folders in Drive
+// |+| -- Array of Folder Names
+// |+| -- Find a Folder
+// |+| --- Find Folder at Root
+// |+| --- Find Folder in Folder
+// |+| --- Find Folder at Path
+// |+| --- Find Folder in Drive
 // | | -- Check for a Folder
 // | | --- Check for Folder at Root
 // | | --- Check for Folder in Folder
@@ -789,11 +789,9 @@ function dateObjectFromString(str) {
 
 function matchDateToRangeOfDates(arrObj, optDate) {
   var date = new Date();
-
   if (optDate !== undefined) {
     date = new Date(optDate);
   }
-
   for (i = 0; i < arrObj.length; i++) {
     var start = new Date(arrObj[i].start);
     var end   = new Date(arrObj[i].end);
@@ -857,11 +855,9 @@ function verifyPathString(path) {
   if ((path.charAt(0)) === "/") {
     path = path.substr(1);
   }
-  
   if ((path.charAt(path.length - 1) === "/")) {
     path = path.slice(0, -1);
   }
-
   return path;
 }
 
@@ -883,7 +879,6 @@ function verifyPathString(path) {
 function targetPath(path, opt) {
   path      = verifyPathString(path);
   var split = path.split("/");
-
   if (opt === 0 || opt === undefined) {
     return split.pop();
   } else if (opt === 1) {
@@ -902,13 +897,13 @@ function targetPath(path, opt) {
  * Returns the full MIME description if given a valid short description.
  * Returns false if passed an invalid short description.
  *
+ * @requires checkArrayForValue() 
  * @param {string} val
  * @returns {string}
  */
 
 function validateMIME(val) {
   val = val.toLowerCase();
-
   var mimes = [
     "audio", "document", "drawing", 
     "drive-sdk", "file", "folder", 
@@ -916,7 +911,6 @@ function validateMIME(val) {
     "photo", "presentation", "script",
     "site", "spreadsheet", "unknown", "video"
   ];
-
   if (checkArrayForValue(mimes, val)) {
     return "application/vnd.google-apps." + val;
   } else {
@@ -925,7 +919,7 @@ function validateMIME(val) {
 } 
 
 // Logger.log("validateMIME");
-// Logger.log(validateMIME("audio"));
+// Logger.log(validateMIME("audio")); // application/vnd.google-apps.audio
 
 // - Folders
 
@@ -962,8 +956,8 @@ function arrayOfFoldersAtRoot() {
 // --- Array of Folders in Folder 
 
 /**
- * Returns an array containing all of the folders inside the target folder.
- * The array contains folder objects, not just the names of the folders.
+ * Returns an array containing all of the folders inside the top level of the target folder.
+ * The array contains folder objects, not folder names.
  *
  * @param {Folder} fldr
  * @returns {Folder[]}
@@ -992,6 +986,7 @@ function arrayOfFoldersInFolder(fldr) {
  * @param {string} path
  * @requires verifyPathString() 
  * @requires findFolderAtPath() 
+ * @requires targetPath()
  * @requires arrayOfFoldersInFolder() 
  * @returns {Folder[]}
  */
@@ -1105,8 +1100,8 @@ function findFolderInFolder(name, fldr) {
 }
 
 // Logger.log("findFolderInFolder");
-// var fldr_ffi = findFolderAtPath("google-apps-script-cheat-sheet-demo");
-// Logger.log(findFolderInFolder("folders", fldr_ffi)); // folders
+// var fldr_ffif = findFolderAtPath("google-apps-script-cheat-sheet-demo");
+// Logger.log(findFolderInFolder("folders", fldr_ffif)); // folders
 
 // -- Find Folder at Path
 
@@ -1156,7 +1151,7 @@ function findFolderAtPath(path) {
 // --- Find a Folder in Drive
 
 /**
- * Returns the first matching folder in Drive.
+ * Returns the first matching folder in Drive or false if no folder is found.
  *
  * @param {string} name
  * @returns {Folder}
@@ -1204,9 +1199,12 @@ function checkForFolderAtRoot(name) {
 /**
  * Returns true if the folder is found.
  *
+ * @requires findFolderInFolder() 
+ * @requires arrayOfFoldersInFolder() 
+ * @requires arrayOfFolderNames() 
+ * @requires checkArrayForValue()
  * @param name
  * @param fldr
- * @requires findFolderInDrive() 
  * @returns {undefined}
  */
 
