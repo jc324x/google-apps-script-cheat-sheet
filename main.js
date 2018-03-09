@@ -49,18 +49,18 @@ Logger.log("Start");
 // |+| --- Find Folder in Folder
 // |+| --- Find Folder at Path
 // |+| --- Find Folder in Drive
-// | | -- Check for a Folder
-// | | --- Check for Folder at Root
-// | | --- Check for Folder in Folder
-// | | --- Check for Folder at Path
-// | | -- Create a Folder
-// | | --- Create Folder at Root
-// | | --- Create Folder in Folder
-// | | --- Create Folder at Path
-// | | -- Create Folders
-// | | --- Create Folders at Root
-// | | --- Create Folders in Folder
-// | | --- Create Folders at Path
+// |+| -- Check for a Folder
+// |+| --- Check for Folder at Root
+// |+| --- Check for Folder in Folder
+// |+| --- Check for Folder at Path
+// |+| -- Create a Folder
+// |+| --- Create Folder at Root
+// |+| --- Create Folder in Folder
+// |+| --- Create Folder at Path
+// |+| -- Create Folders
+// |+| --- Create Folders at Root
+// |+| --- Create Folders in Folder
+// |+| --- Create Folders at Path
 // | | -- Verify Folder
 // | | --- Verify Folder at Root
 // | | --- Verify Folder in a Folder
@@ -744,7 +744,7 @@ function dateTime(opt) {
  *
  * @requires dateTime() 
  * @param {string} str
- * @returns {undefined}
+ * @returns {string}
  */
 
 function appendDateTime(str) {
@@ -1205,7 +1205,7 @@ function checkForFolderAtRoot(name) {
  * @requires checkArrayForValue()
  * @param name
  * @param fldr
- * @returns {undefined}
+ * @returns {boolean}
  */
 
 function checkForFolderInFolder(name, fldr) {
@@ -1225,10 +1225,10 @@ function checkForFolderInFolder(name, fldr) {
 /**
  * Returns true if the folder is found.
  *
- * @param path
+ * @param {string} path
+ * @requires findFolderAtPath() 
  * @requires verifyPathString() 
  * @requires targetPath() 
- * @requires findFolderAtPath() 
  * @returns {boolean}
  */
 
@@ -1252,7 +1252,7 @@ function checkForFolderAtPath(path) {
 
 /**
  * Return a newly created folder.
- * This will create duplicates if used without caution. 
+ * This will create duplicate folders if used without caution.
  *
  * @param name
  * @returns {Folder}
@@ -1268,11 +1268,11 @@ function createFolderAtRoot(name) {
 
 /**
  * Return a newly created folder.
- * This will create duplicates if used without caution. 
+ * This will create duplicate folders if used without caution.
  *
  * @param {string} name
  * @param {Folder} fldr
- * @returns {undefined}
+ * @returns {Folder}
  */
 
 function createFolderInFolder(name, fldr) {
@@ -1290,12 +1290,12 @@ function createFolderInFolder(name, fldr) {
  * Creates the folder at the given path. 
  * Returns false if the supporting directories in the path are missing.
  * To verify a complete folder path, use verifyFolderPath instead.
- * This will create duplicates if used without caution. 
+ * This will create duplicate folders if used without caution.
  *
- * @param {string} path
  * @requires verifyPathString() 
  * @requires targetPath() 
  * @requires findFolderAtPath() 
+ * @param {string} path
  * @returns {Folder || boolean}
  */
 
@@ -1322,7 +1322,7 @@ function createFolderAtPath(path) {
   
 /**
  * Returns the root folder. 
- * This will create duplicates if used without caution. 
+ * This will create duplicate folders if used without caution.
  *
  * @param {Array} arr
  * @returns {Folder}
@@ -1340,8 +1340,8 @@ function createFoldersAtRoot(arr) {
 // --- Create Folders in a Folder
 
 /**
- * Returns the target folder.
- * This will create duplicates if used without caution. 
+ * Returns the targeted folder.
+ * This will create duplicate folders if used without caution.
  *
  * @param {Array} arr
  * @param {Folder} fldr
@@ -1363,6 +1363,9 @@ function createFoldersInFolder(arr, fldr) {
  * Returns the target folder.
  * This will create duplicates if used without caution. 
  *
+ * @requires verifyPathString() 
+ * @requires targetPath() 
+ * @requires findFolderAtPath()
  * @param {Array} arr
  * @param {string} path
  * @returns {Folder || boolean}
@@ -1389,16 +1392,16 @@ function createFoldersAtPath(arr, path) {
 // --- Verify Folder at Root
 
 /**
- * Returns the folder found at root.
- * The folder is created if it doesn't already exist.
+ * Returns the targeted folder.
+ * A new folder is created only if necessary; this will not create duplicate folders.
  *
- * @param {string} name
  * @requires checkForFolderAtRoot() 
  * @requires createFolderAtRoot() 
  * @requires findFolderAtRoot() 
  * @requires arrayOfFoldersAtRoot()
  * @requires arrayOfFolderNames()
  * @requires checkArrayForValue()
+ * @param {string} name
  * @returns {Folder}
  */
 
