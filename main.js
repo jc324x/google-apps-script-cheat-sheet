@@ -61,20 +61,20 @@ Logger.log("Start");
 // |+| --- Create Folders at Root
 // |+| --- Create Folders in Folder
 // |+| --- Create Folders at Path
-// | | -- Verify Folder
-// | | --- Verify Folder at Root
-// | | --- Verify Folder in a Folder
-// | | --- Verify Folder Path
-// | | -- Verify Folders
-// | | --- Verify Folders in a Folder
-// | | --- Verify Folders at Root
+// |+| -- Verify Folder
+// |+| --- Verify Folder at Root
+// |+| --- Verify Folder in a Folder
+// |+| --- Verify Folder Path
+// |+| -- Verify Folders
+// |+| --- Verify Folders in a Folder
+// |+| --- Verify Folders at Root
 // | | - Files
-// | | -- Array of Files
-// | | --- Array of Files at Root
-// | | --- Array of Files in Folder
-// | | --- Array of Files at Path
-// | | --- Array of All Files in Drive
-// | | -- Array of File Names
+// |+| -- Array of Files
+// |+| --- Array of Files at Root
+// |+| --- Array of Files in Folder
+// |+| --- Array of Files at Path
+// |+| --- Array of All Files in Drive
+// |+| -- Array of File Names
 // | | -- Find a File
 // | | --- Find a File at Root
 // | | --- Find a File in a Folder
@@ -1396,11 +1396,12 @@ function createFoldersAtPath(arr, path) {
  * A new folder is created only if necessary; this will not create duplicate folders.
  *
  * @requires checkForFolderAtRoot() 
- * @requires createFolderAtRoot() 
  * @requires findFolderAtRoot() 
  * @requires arrayOfFoldersAtRoot()
  * @requires arrayOfFolderNames()
  * @requires checkArrayForValue()
+ * @requires createFolderAtRoot() 
+ * @requires findFolderAtRoot() 
  * @param {string} name
  * @returns {Folder}
  */
@@ -1419,13 +1420,18 @@ function verifyFolderAtRoot(name) {
 // --- Verify Folder in Folder
 
 /**
- * Returns a folder from its parent folder.
+ * Returns the targeted folder.
+ * A new folder is created only if necessary; this will not create duplicate folders.
  *
- * @param {string} name
- * @param {Folder} fldr
  * @requires checkForFolderInFolder() 
+ * @requires findFolderInFolder() 
+ * @requires arrayOfFoldersInFolder() 
+ * @requires arrayOfFolderNames() 
+ * @requires checkArrayForValue()
  * @requires createFolderInFolder() 
  * @requires findFolderInFolder() 
+ * @param {string} name
+ * @param {Folder} fldr
  * @returns {Folder}
  */
 
@@ -1448,6 +1454,7 @@ function verifyFolderInFolder(name, fldr) {
  * Returns a folder at the end of a folder path.
  * Folders in the path are created if they don't already exist.
  *
+ * @requires verifyPathString() 
  * @param {string} path
  * @returns {Folder}
  */
@@ -1487,6 +1494,10 @@ function verifyFolderPath(path) {
  * Returns the root folder.
  * Creates folders at root if they don't exist already.
  *
+ * @requires arrayOfFoldersAtRoot() 
+ * @requires arrayOfFolderNames() 
+ * @requires checkArrayForValue() 
+ *
  * @param {string[]} names
  * @returns {Folder}
  */
@@ -1507,7 +1518,7 @@ function verifyFoldersAtRoot(arr) {
 // --- Verify Folders in a Folder
 
 /**
- * Returns a folder. 
+ * Returns the targeted folder. 
  * Creates folders within a folder if they don't already exist.
  *
  * @requires arrayOfFoldersInFolder()
@@ -1537,14 +1548,16 @@ function verifyFoldersInFolder(arr, fldr) {
 // --- Verify Folders at Path
 
 /**
- * Returns a folder.
+ * Returns the folder at the end of the target path or false if the given path is invalid.
  * Creates folders within a folder if they don't already exist.
  *
  * @requires verifyPathString() 
  * @requires findFolderAtPath() 
- * @requires arrayOfFoldersInFolder() 
- * @requires arrayOfFolderNames() 
- * @requires checkArrayForValue() 
+ * @requires targetPath() 
+ * @requires verifyFoldersInFolder() 
+ * @requires arrayOfFoldersInFolder()
+ * @requires arrayOfFolderNames()
+ * @requires checkArrayForValue()
  * @returns {Folder}
  */
 
@@ -1568,7 +1581,6 @@ function verifyFoldersAtPath(arr, path) {
  */
 
 function arrayOfFilesInFolder(fldr) {
-  // Logger.log(fldr);
   var result = [];
   var fi     = fldr.getFiles();
   while (fi.hasNext()) {
@@ -1607,7 +1619,7 @@ function arrayOfFilesAtRoot() {
 
 /**
  * Returns an array of all files in the user's Drive.
- * Note: Please don't actually use this in production. 
+ * Please don't actually use this in production. 
  *
  * @returns {File[]}
  */
@@ -1651,7 +1663,6 @@ function arrayOfFileNames(arr) {
 // -- Find a File
 
 // --- Find a File in a Folder
-// TODO: Documentation
 
 function findFileInFolderAny(name, fldr) {
   var files = arrayOfFilesInFolder(fldr);
