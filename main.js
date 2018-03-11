@@ -1664,29 +1664,48 @@ function arrayOfFileNames(arr) {
 
 // --- Find a File in a Folder
 
-function findFileInFolderAny(name, fldr) {
-  var files = arrayOfFilesInFolder(fldr);
-  var names = arrayOfFileNames(files); 
-  if (checkArrayForValue(names, name)) {
-    return fldr.getFilesByName(name).next();
-  } else {
-    return false;
-  }
-} 
-
-function findFileInFolderType(name, fldr, mime) {
-  mime = expandMIMEType(mime);
-  var files = arrayOfFilesInFolder(fldr);
-  for (var i = 0; i < files.length; i++) {
-    var file = files[i];
-    if ((file.getName() === name) && file.getMimeType() === mime) {
-      return file;
-    }
-  } 
-  return false;
-} 
+/**
+ * Returns the first matching file from a target folder.
+ * TODO: more "false" documentation
+ *
+ * @requires arrayOfFilesInFolder() 
+ * @requires arrayOfFileNames() 
+ * @requires checkArrayForValue() 
+ * @requires expandMIMEType() 
+ * @param {string} name
+ * @param {Folder} fldr
+ * @param {string} [mime]
+ * @returns {File || boolean}
+ */
 
 function findFileInFolder(name, fldr, mime) {
+
+  function findFileInFolderAny(name, fldr) {
+    var files = arrayOfFilesInFolder(fldr);
+    var names = arrayOfFileNames(files); 
+    if (checkArrayForValue(names, name)) {
+      return fldr.getFilesByName(name).next();
+    } else {
+      return false;
+    }
+  } 
+
+  function findFileInFolderType(name, fldr, mime) {
+    mime = validateMIME(mime);
+    if (mime) {
+      var files = arrayOfFilesInFolder(fldr);
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+          if ((file.getName() === name) && file.getMimeType() === mime) {
+            return file;
+          }
+        } 
+    } else {
+      return false;
+    }
+    return false;
+  } 
+
   if (mime !== undefined) {
     return findFileInFolderType(name, fldr, mime);
   } else {
@@ -1694,11 +1713,11 @@ function findFileInFolder(name, fldr, mime) {
   }
 }
 
-// Logger.log("findFileInFolder");
-// var fldr_ffif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
-// Logger.log(findFileInFolder("example-sheet", fldr_ffif)); // example-sheet
-// Logger.log(findFileInFolder("example-sheet", fldr_ffif, "document")); // false
-// Logger.log(findFileInFolder("example-sheet", fldr_ffif, "spreadsheet")); // example-sheet
+Logger.log("findFileInFolder");
+var fldr_ffif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
+Logger.log(findFileInFolder("example-sheet", fldr_ffif)); // example-sheet
+Logger.log(findFileInFolder("example-sheet", fldr_ffif, "document")); // false
+Logger.log(findFileInFolder("example-sheet", fldr_ffif, "spreadsheet")); // example-sheet
 
 // --- Find a File at Root
 // TODO: Documentation
