@@ -36,7 +36,8 @@ Logger.log("Start");
 // |+| - Utility Functions for Drive
 // |+| -- Verify Path String
 // |+| -- Target Path
-// |+| -- MIME Types
+// | | -- Validate MIME Type
+// | | -- Match MIME Type 
 // | | - Folders
 // |+| -- Array Of Folders
 // |+| --- Array of Folders at Root
@@ -76,9 +77,9 @@ Logger.log("Start");
 // |+| --- Array of All Files in Drive
 // |+| -- Array of File Names
 // | | -- Find a File
-// | | --- Find a File at Root
-// | | --- Find a File in a Folder
-// | | --- Find a File in Drive
+// |+| --- Find a File at Root
+// |+| --- Find a File in a Folder
+// |+| --- Find a File in Drive
 // | | --- Find File at Path
 // | | -- Check for a File
 // | | --- Check for a File at Root
@@ -891,7 +892,7 @@ function targetPath(path, opt) {
 // Logger.log(targetPath("a/b/c", 0)); // c
 // Logger.log(targetPath("a/b/c", 1)); // a/b
 
-// Validate MIME Type
+// -- Validate MIME Type
 
 /**
  * Returns the full MIME description if given a valid short description.
@@ -920,6 +921,33 @@ function validateMIME(val) {
 
 // Logger.log("validateMIME");
 // Logger.log(validateMIME("audio")); // application/vnd.google-apps.audio
+
+// -- Match MIME Type
+// TODO: fix this...
+
+/**
+ * Returns true if the file's MIME type matches the given value.
+ *
+ * @param {File} file
+ * @param {string} mime - short form mime notation (ex. "doc" or "spreadsheet")
+ * @returns {undefined}
+ */
+
+function matchMIMEType(file, mime) {
+  mime = validateMIME(mime);
+  var type;
+  if (file) {
+    type = file.getMimeType(); 
+  } else {
+    return false;
+  }
+  if (type === mime) {
+    return true;
+  } else {
+    return false;
+  }
+} 
+
 
 // - Folders
 
@@ -1666,7 +1694,6 @@ function arrayOfFileNames(arr) {
 
 /**
  * Returns a matching file from a target folder.
- * A type can be specified with the mime parameter (ex. "doc" or "spreadsheet")
  *
  * @requires arrayOfFilesInFolder() 
  * @requires arrayOfFileNames() 
@@ -1723,7 +1750,6 @@ function findFileInFolder(name, fldr, mime) {
 
 /**
  * Returns a matching file from root.
- * A type can be specified with the mime parameter (ex. "doc" or "spreadsheet")
  *
  * @requires arrayOfFilesAtRoot() 
  * @requires arrayOfFileNames() 
@@ -1814,78 +1840,38 @@ function findFileInDrive(name, mime) {
  * @returns {File}
  */
 
-function findFileAtPathAny(path) {
-  path     = verifyPath(path);
-  var file = targetPath(path, 0);
-  path     = targetPath(path, 1);
-  var fldr = findFolderAtPath(path);
-  return findFileInFolder(file, fldr);
-} 
-
-// Logger.log("findFileAtPathAny");
-// Logger.log(findFileAtPathAny("google-apps-script-cheat-sheet-demo/files/example-file")); // example-file
-
-// function findFileAtPathType(path, mime) {
-//   path     = verifyPath(path);
-//   mime     = validateMIME(mime);
-//   var file = targetPath(path, 0);
-//   path     = targetPath(path, 1);
-//   var fldr = findFolderAtPath(path);
-//   if (fldr) {
-//     file = findFileInFolder(file, fldr);
-
-//     if (file.getMimeType() === mime) {
-//       return file;
-//     } else {
-//       return false;
-//     }
-//   } else {
-//     return false;
-//   }
-// } 
-
-function matchMIMEType(file, mime) {
-  var type;
-
-  if (file) {
-    type = file.getMimeType(); 
-  } else {
-    return false;
-  }
-
-  if (type === mime) {
-    return true;
-  } else {
-    return false;
-  }
-} 
-
-// TODO: Bring into other functions 
-
-function findFileAtPathType(path, mime) {
-  path     = verifyPath(path);
-  mime     = validateMIME(mime);
-  var file = targetPath(path, 0);
-  path     = targetPath(path, 1);
-  var fldr = findFolderAtPath(path);
-
-  if (fldr) {
-    file = findFileInFolder(file, fldr);
-  } else {
-    return false;
-  }
-
-  if (file && matchMIMEType(file, mime)) {
-    return file;
-  } else {
-    return false;
-  }
-} 
-
-// Logger.log("findFileAtPathType");
-// Logger.log(findFileAtPathType("google-apps-script-cheat-sheet-demo/files/example-file", "document")); // false
-
 function findFileAtPath(path, mime) {
+
+  function findFileAtPathAny(path) {
+    path     = verifyPathString(path);
+    var file = targetPath(path, 0);
+    path     = targetPath(path, 1);
+    var fldr = findFolderAtPath(path);
+    if (fldr) {
+      return findFileInFolder(file, fldr);
+    } else {
+      return false;
+    }
+  } 
+
+  function findFileAtPathType(path, mime) {
+    path     = verifyPath(path);
+    mime     = validateMIME(mime);
+    var file = targetPath(path, 0);
+    path     = targetPath(path, 1);
+    var fldr = findFolderAtPath(path);
+    if (fldr) {
+      file = findFileInFolder(file, fldr);
+    } else {
+      return false;
+    }
+    if (file && matchMIMEType(file, mime)) {
+      return file;
+    } else {
+      return false;
+    }
+  } 
+
   if (mime !== undefined) {
     return findFileAtPathType(path, mime);
   } else {
