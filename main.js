@@ -1665,13 +1665,13 @@ function arrayOfFileNames(arr) {
 // --- Find a File in a Folder
 
 /**
- * Returns the first matching file from a target folder.
- * TODO: more "false" documentation
+ * Returns a matching file from a target folder.
+ * A type can be specified with the mime parameter (ex. "doc" or "spreadsheet")
  *
  * @requires arrayOfFilesInFolder() 
  * @requires arrayOfFileNames() 
  * @requires checkArrayForValue() 
- * @requires expandMIMEType() 
+ * @requires validateMIME() 
  * @param {string} name
  * @param {Folder} fldr
  * @param {string} [mime]
@@ -1713,44 +1713,50 @@ function findFileInFolder(name, fldr, mime) {
   }
 }
 
-Logger.log("findFileInFolder");
-var fldr_ffif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
-Logger.log(findFileInFolder("example-sheet", fldr_ffif)); // example-sheet
-Logger.log(findFileInFolder("example-sheet", fldr_ffif, "document")); // false
-Logger.log(findFileInFolder("example-sheet", fldr_ffif, "spreadsheet")); // example-sheet
+// Logger.log("findFileInFolder");
+// var fldr_ffif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
+// Logger.log(findFileInFolder("example-sheet", fldr_ffif)); // example-sheet
+// Logger.log(findFileInFolder("example-sheet", fldr_ffif, "document")); // false
+// Logger.log(findFileInFolder("example-sheet", fldr_ffif, "spreadsheet")); // example-sheet
 
 // --- Find a File at Root
-// TODO: Documentation
 
-function findFileAtRootAny(name) {
-  var files = arrayOfFilesAtRoot();
-  var names = arrayOfFileNames(files);
-  if (checkArrayForValue(names, name)) {
-    return DriveApp.getRootFolder().getFilesByName(name).next();
-  } else {
-    return false;
-  }
-} 
-
-// Logger.log("findFileAtRootAny");
-// Logger.log(findFileAtRootAny("Testing"));
-
-function findFileAtRootType(name, mime) {
-  mime      = expandMIMEType(mime);
-  var files = arrayOfFilesAtRoot();
-  for (var i = 0; i < files.length; i++) {
-    var file = files[i]; 
-    if ((file.getName() === name) && file.getMimeType() === mime) {
-      return file;
-    }
-  } 
-  return false;
-} 
-
-// Logger.log("findFileAtRootType");
-// Logger.log(findFileAtRootType("Testing", "document"));
+/**
+ * Returns a matching file from root.
+ * A type can be specified with the mime parameter (ex. "doc" or "spreadsheet")
+ *
+ * @requires arrayOfFilesAtRoot() 
+ * @requires arrayOfFileNames() 
+ * @requires checkArrayForValue() 
+ * @requires validateMIME() 
+ * @param {string} name
+ * @returns {File || false}
+ */
 
 function findFileAtRoot(name, mime) {
+
+  function findFileAtRootAny(name) {
+    var files = arrayOfFilesAtRoot();
+    var names = arrayOfFileNames(files);
+    if (checkArrayForValue(names, name)) {
+      return DriveApp.getRootFolder().getFilesByName(name).next();
+    } else {
+      return false;
+    }
+  } 
+
+  function findFileAtRootType(name, mime) {
+    mime      = validateMIME(mime);
+    var files = arrayOfFilesAtRoot();
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i]; 
+      if ((file.getName() === name) && file.getMimeType() === mime) {
+        return file;
+      }
+    } 
+    return false;
+  } 
+
   if (mime !== undefined) {
     return findFileAtRootType(name, mime);
   } else {
@@ -1758,32 +1764,7 @@ function findFileAtRoot(name, mime) {
   }
 } 
 
-// Logger.log("findFileAtRoot");
-// Logger.log(findFileAtRoot("Testing"));
-// Logger.log(findFileAtRoot("Testing", "document"));
-
 // --- Find a File in Drive
-// TODO: Documentation
-
-function findFileInDriveAny(name) {
-  var fi = DriveApp.getFilesByName(name);
-  while (fi.hasNext()){
-    var file = fi.next();
-    return file;
-  }
-} 
-
-function findFileInDriveType(name, mime) {
-  mime = expandMIMEType(mime);
-  var fi = DriveApp.getFilesByName(name);
-  while (fi.hasNext()) {
-    var file = fi.next();
-    if ((file.getName() === name) && file.getMimeType() === mime) {
-      return file;
-    }
-  }
-  return false;
-}
 
 /**
  * Returns the first matching file found in the user's Drive.
@@ -1793,10 +1774,31 @@ function findFileInDriveType(name, mime) {
  */
 
 function findFileInDrive(name, mime) {
+
+  function findFileInDriveAny(name) {
+    var fi = DriveApp.getFilesByName(name);
+    while (fi.hasNext()){
+      var file = fi.next();
+      return file;
+    }
+  } 
+
+  function findFileInDriveType(name, mime) {
+    mime = validateMIME(mime);
+    var fi = DriveApp.getFilesByName(name);
+    while (fi.hasNext()) {
+      var file = fi.next();
+      if ((file.getName() === name) && file.getMimeType() === mime) {
+        return file;
+      }
+    }
+    return false;
+  }
+
   if (mime !== undefined) {
     return findFileInDriveType(name, mime);
   } else {
-    return findFileInDrive(name);
+    return findFileInDriveAny(name);
   }
 }
 
@@ -1825,7 +1827,7 @@ function findFileAtPathAny(path) {
 
 // function findFileAtPathType(path, mime) {
 //   path     = verifyPath(path);
-//   mime     = expandMIMEType(mime);
+//   mime     = validateMIME(mime);
 //   var file = targetPath(path, 0);
 //   path     = targetPath(path, 1);
 //   var fldr = findFolderAtPath(path);
@@ -1862,7 +1864,7 @@ function matchMIMEType(file, mime) {
 
 function findFileAtPathType(path, mime) {
   path     = verifyPath(path);
-  mime     = expandMIMEType(mime);
+  mime     = validateMIME(mime);
   var file = targetPath(path, 0);
   path     = targetPath(path, 1);
   var fldr = findFolderAtPath(path);
