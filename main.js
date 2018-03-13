@@ -1693,7 +1693,7 @@ function arrayOfFileNames(arr) {
 // --- Find a File in a Folder
 
 /**
- * Returns a matching file from a target folder.
+ * Returns a file from a target folder.
  *
  * @requires arrayOfFilesInFolder() 
  * @requires arrayOfFileNames() 
@@ -1749,7 +1749,7 @@ function findFileInFolder(name, fldr, mime) {
 // --- Find a File at Root
 
 /**
- * Returns a matching file from root.
+ * Returns a file from the root folder. 
  *
  * @requires arrayOfFilesAtRoot() 
  * @requires arrayOfFileNames() 
@@ -1793,7 +1793,7 @@ function findFileAtRoot(name, mime) {
 // --- Find a File in Drive
 
 /**
- * Returns the first matching file found in the user's Drive.
+ * Returns a file from the user's Drive.
  *
  * @param {string} name
  * @returns {File}
@@ -1834,8 +1834,7 @@ function findFileInDrive(name, mime) {
 // --- Find File at Path
 
 /**
- * Returns the file at the end of a path.
- *
+ * Returns a file from a given path.
  * @param {string} path
  * @returns {File}
  */
@@ -1884,15 +1883,8 @@ function findFileAtPath(path, mime) {
 // --- Check for a File at Root
 
 function checkForFileAtRoot(name, mime) {
-  var result;
-
-  if (mime !== undefined) {
-    result = findFileAtRootType(name, mime);
-  } else {
-    result = findFileAtRootAny(name);
-  }
-
-  if (result) {
+  var check = findFileAtRoot(name, mime);
+  if (check) {
     return true;
   } else {
     return false;
@@ -1901,17 +1893,11 @@ function checkForFileAtRoot(name, mime) {
 
 // Logger.log("checkForFileAtRoot");
 
-// --- Check for File in a Folder
+// --- Check for File in Folder
 
 function checkForFileInFolder(name, fldr, mime) {
-  var result;
-  if (mime !== undefined) {
-    result = findFileInFolderType(name, fldr, mime);
-  } else {
-    result = findFileInFolderAny(name, fldr);
-  }
-
-  if (result) {
+  var check = findFileInFolder(name, fldr, mime);
+  if (check) {
     return true;
   } else {
     return false;
@@ -1926,15 +1912,8 @@ function checkForFileInFolder(name, fldr, mime) {
 //  --- Check for File at Path
 
 function checkForFileAtPath(path, mime) {
-  var result;
-
-  if (mime !== undefined) {
-    result = findFileAtPathType(path, mime);
-  } else {
-    result = findFileAtPathAny(path);
-  }
-
-  if (result) {
+  var check = findFileAtPath(path, mime);
+  if (check) {
     return true;
   } else {
     return false;
@@ -1948,21 +1927,22 @@ function checkForFileAtPath(path, mime) {
 // Create File
 
 // --- Create File at Root
+// TODO: This should return files, not document objects
 
 function createFileAtRoot(name, mime) {
   switch (mime) {
     case "document": 
-      var document = DocumentApp.create(name).getId();
-      return DriveApp.getFileById(document);
+      var document = DocumentApp.create(name);
+      return DriveApp.getFileById(document.getId());
     case "form":
-      var form = FormApp.create(name).getId();
-      return DriveApp.getFileById(form);
+      var form = FormApp.create(name);
+      return DriveApp.getFileById(form.getId());
     case "presentation": 
-      var presentation = SlidesApp.create(name).getId();
-      return DriveApp.getFileById(presentation);
+      var presentation = SlidesApp.create(name);
+      return DriveApp.getFileById(presentation.getId());
     case "spreadsheet": 
-      var spreadsheet = SpreadsheetApp.create(name).getId();
-      return DriveApp.getFileById(spreadsheet);
+      var spreadsheet = SpreadsheetApp.create(name);
+      return DriveApp.getFileById(spreadsheet.getId());
     default: DriveApp.getRootFolder().createFile(name, "");
   }
 }
@@ -1972,21 +1952,6 @@ function createFileAtRoot(name, mime) {
 // Logger.log(createFileAtRoot("testing", "form"));
 // Logger.log(createFileAtRoot("testing", "presentation"));
 // Logger.log(createFileAtRoot("testing", "spreadsheet"));
-
-function openFileAsType(file, mime) {
-  var id = file.getId();
-  switch (mime) {
-    case "document": return DocumentApp.openById(id);
-    case "form": return FormApp.create(name);
-    case "presentation": return PresentationApp.create(name);
-    case "spreadsheet": return SpreadsheetApp.openById(id);
-    default: return false;
-  }
-} 
-
-// Logger.log("openFileAsType");
-// var file_ofat = findFileAtRoot("testing", "document");
-// Logger.log(openFileAsType(file_ofat, "document"));
 
 // --- Create File in Folder
 
@@ -2043,14 +2008,12 @@ function verifyFileInFolder(name, fldr, mime) {
 function verifyFileAtPath(path, mime) {
   var folderPath = targetPath(path, 1);
   verifyFolderPath(folderPath);
-
   if (checkForFileAtPath(path, mime)) {
     return findFileAtPath(path, mime);
   } else {
     return createFileAtPath(path, mime);
   }
 }
-
 
 // Logger.log("verifyFileAtPath");
 
@@ -2067,8 +2030,25 @@ function idOfActiveFile(mime) {
 
 // Logger.log("idOfActiveFile");
 
+// -- Open File as Type
+
+function openFileAsType(file, mime) {
+  var id = file.getId();
+  switch (mime) {
+    case "document": return DocumentApp.openById(id);
+    case "form": return FormApp.openById(id);
+    case "presentation": return PresentationApp.openById(id);
+    case "spreadsheet": return SpreadsheetApp.openById(id);
+    default: return false;
+  }
+} 
+
+// Logger.log("openFileAsType");
+// var file_ofat = findFileAtRoot("testing", "document");
+// Logger.log(openFileAsType(file_ofat, "document"));
+
 // -- Copy a File to a Folder
-// TODO: Changed else return -> file either way
+
 function copyFileToFolder(file, fldr) {
   var name = file.getName();
   var dest = findFileInFolderAny(name, fldr);
@@ -2079,7 +2059,6 @@ function copyFileToFolder(file, fldr) {
 } 
 
 // Logger.log("copyFileToFolder");
-// TODO: VERIFY
 // var fldr_cftf = verifyPath("google-apps-script-cheat-sheet-demo/files/copied");
 // var file_cftf = findFileInDrive("example-file");
 // Logger.log(copyFileToFolder(file_cftf, fldr_cftf)); // example-file
