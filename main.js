@@ -889,14 +889,15 @@ function targetPath(path, opt) {
 } 
 
 // Logger.log("targetPath");
+// Logger.log(targetPath("a/b/c");     // c
 // Logger.log(targetPath("a/b/c", 0)); // c
 // Logger.log(targetPath("a/b/c", 1)); // a/b
 
 // -- Validate MIME Type
 
 /**
- * Returns the full MIME description if given a valid short description.
- * Returns false if passed an invalid short description.
+ * Returns the full MIME type for a valid short type.
+ * Returns false if passed an invalid option.
  *
  * @requires checkArrayForValue() 
  * @param {string} val
@@ -923,10 +924,9 @@ function validateMIME(val) {
 // Logger.log(validateMIME("audio")); // application/vnd.google-apps.audio
 
 // -- Match MIME Type
-// TODO: fix this...
 
 /**
- * Returns true if the file's MIME type matches the given value.
+ * Returns true if given a valid short MIME type that matches the file's MIME type.
  *
  * @param {File} file
  * @param {string} mime - short form mime notation (ex. "doc" or "spreadsheet")
@@ -948,6 +948,8 @@ function matchMIMEType(file, mime) {
   }
 } 
 
+// Logger.log("matchMIMEType");
+// TODO: examples and documentation
 
 // - Folders
 
@@ -1079,7 +1081,7 @@ function arrayOfFolderNames(arr) {
 
 // -- Find a Folder
 
-// --- Find a Folder at Root
+// --- Find Folder at Root
 
 /**
  * Returns a folder found at root or false if the folder doesn't exist.
@@ -1104,7 +1106,7 @@ function findFolderAtRoot(name) {
 // Logger.log("findFolderAtRoot");
 // Logger.log(findFolderAtRoot("google-apps-script-cheat-sheet-demo")); // google-apps-script-cheat-sheet-demo
 
-// --- Find a Folder in a Folder
+// --- Find Folder in Folder
 
 /**
  * Returns a folder from inside another folder or false if either folder doesn't exist.
@@ -1596,6 +1598,14 @@ function verifyFoldersAtPath(arr, path) {
 } 
 
 // - Files
+
+function createExampleFiles() {
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file");
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-doc", "document");
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-spreadsheet", "spreadsheet");
+} 
+
+createExampleFile(); 
  
 // -- Array of Files 
 
@@ -1689,6 +1699,8 @@ function arrayOfFileNames(arr) {
 // Logger.log(arrayOfFileNames(arr_aofilen)); // [example-file]
 
 // -- Find a File
+
+// TODO: example file to match goes here
 
 // --- Find a File in a Folder
 
@@ -1835,6 +1847,8 @@ function findFileInDrive(name, mime) {
 
 /**
  * Returns a file from a given path.
+ * Returns false if the given path is incomplete.
+ * Returns false if the file doesn't match the optional mime value.
  * @param {string} path
  * @returns {File}
  */
@@ -1877,6 +1891,9 @@ function findFileAtPath(path, mime) {
     return findFileAtPathAny(path);
   }
 } 
+
+Logger.log("findFileAtPath");
+Logger.log(findFileAtPath());
 
 // -- Check for a File
 
