@@ -76,15 +76,15 @@ Logger.log("Start");
 // |+| --- Array of Files at Path
 // |+| --- Array of All Files in Drive
 // |+| -- Array of File Names
-// | | -- Find a File
+// |+| -- Find a File
 // |+| --- Find a File at Root
 // |+| --- Find a File in a Folder
 // |+| --- Find a File in Drive
-// | | --- Find File at Path
-// | | -- Check for a File
-// | | --- Check for a File at Root
-// | | --- Check for a File in a Folder
-// | | --- Check for a File at Path
+// |+| --- Find File at Path
+// |+| -- Check for a File
+// |+| --- Check for a File at Root
+// |+| --- Check for a File in a Folder
+// |+| --- Check for a File at Path
 // | | -- Create a File
 // | | --- Create File at Root
 // | | --- Create File in a Folder
@@ -923,10 +923,35 @@ function validateMIME(val) {
   }
 } 
 
+function validateMIME(val) {
+  val = val.toLowerCase();
+  var prefix = "application/vnd.google-apps.";
+  var mimes = [
+    "audio", "document", "drawing", 
+    "drive-sdk", "file", "folder", 
+    "form", "fusiontable", "map",
+    "photo", "presentation", "script",
+    "site", "spreadsheet", "unknown", "video"
+  ];
+  for (var i = 0; i < mimes.length; i++) {
+    var mime = mimes[i];
+    if (val === prefix.concat(mime)) {
+      return val;
+    }
+  } 
+  if (checkArrayForValue(mimes, val)) {
+    return prefix.concat(val);
+  } else {
+    return false;
+  }
+} 
+
 // Logger.log("validateMIME");
 // Logger.log(validateMIME("audio")); // application/vnd.google-apps.audio
+// Logger.log(validateMIME("application/vnd.google-apps.spreadsheet")); // application/vnd.google-apps.spreadsheet
 
 // -- Match MIME Type
+// TODO: examples
 
 /**
  * Returns true if given a valid short MIME type that matches the file's MIME type.
@@ -936,13 +961,9 @@ function validateMIME(val) {
  * @returns {undefined}
  */
 
-// TODO: The problem? Short mimes and big MIMEs
-
 function matchMIMEType(file, mime) {
   mime = validateMIME(mime);
-  Logger.log("given: " + mime);
   var type = file.getMimeType();
-  Logger.log("type: " + type);
   if (type == mime) {
     return true;
   } else {
@@ -1881,11 +1902,6 @@ function findFileAtPath(path, mime) {
       return false;
     }
 
-    Logger.log("given mime: " + mime);
-    Logger.log("file: " + file);
-    Logger.log("file mime: " + file.getMimeType());
-    Logger.log("mime match: " + matchMIMEType(file, mime));
-
     if (file && matchMIMEType(file, mime)) {
       return file;
     } else {
@@ -1900,9 +1916,10 @@ function findFileAtPath(path, mime) {
   }
 } 
 
-Logger.log("findFileAtPath");
+// Logger.log("findFileAtPath");
 // Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file")); // example-file
-Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-spreadsheet", "spreadsheet")); // example-spreadsheet
+// Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-spreadsheet", "spreadsheet")); // example-spreadsheet
+// Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-document", "document")); // false
 
 // -- Check for a File
 
@@ -1975,11 +1992,6 @@ function createFileAtRoot(name, mime) {
 }
 
 // Logger.log("createFileAtRoot");
-// Logger.log(createFileAtRoot("testing", "document"));
-// Logger.log(createFileAtRoot("testing", "form"));
-// Logger.log(createFileAtRoot("testing", "presentation"));
-// Logger.log(createFileAtRoot("testing", "spreadsheet"));
-// createFileAtRoot("OK");
 
 // --- Create File in Folder
 
