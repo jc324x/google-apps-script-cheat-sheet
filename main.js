@@ -904,6 +904,9 @@ function targetPath(path, opt) {
  * @returns {string}
  */
 
+// TODO: Rewrite to handle "application/vnd.google-apps.document" or
+// "document" as an argument, returning the valid version
+
 function validateMIME(val) {
   val = val.toLowerCase();
   var mimes = [
@@ -933,15 +936,14 @@ function validateMIME(val) {
  * @returns {undefined}
  */
 
+// TODO: The problem? Short mimes and big MIMEs
+
 function matchMIMEType(file, mime) {
   mime = validateMIME(mime);
-  var type;
-  if (file) {
-    type = file.getMimeType(); 
-  } else {
-    return false;
-  }
-  if (type === mime) {
+  Logger.log("given: " + mime);
+  var type = file.getMimeType();
+  Logger.log("type: " + type);
+  if (type == mime) {
     return true;
   } else {
     return false;
@@ -949,7 +951,6 @@ function matchMIMEType(file, mime) {
 } 
 
 // Logger.log("matchMIMEType");
-// TODO: examples and documentation
 
 // - Folders
 
@@ -1599,13 +1600,13 @@ function verifyFoldersAtPath(arr, path) {
 
 // - Files
 
-function createExampleFiles() {
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file");
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-doc", "document");
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-spreadsheet", "spreadsheet");
-} 
+// function createExampleFiles() {
+//   verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file");
+//   verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-doc", "document");
+//   verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-spreadsheet", "spreadsheet");
+// } 
 
-createExampleFile(); 
+// createExampleFiles(); 
  
 // -- Array of Files 
 
@@ -1630,7 +1631,7 @@ function arrayOfFilesInFolder(fldr) {
 
 // Logger.log("arrayOfFilesInFolder");
 // var fldr_fin = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
-// Logger.log(arrayOfFilesInFolder(fldr_fin)); // [example-file]
+// Logger.log(arrayOfFilesInFolder(fldr_fin)); // [example-file, example-doc, example-spreadsheet];
 
 // --- Array of Files at Root
 
@@ -1868,16 +1869,23 @@ function findFileAtPath(path, mime) {
   } 
 
   function findFileAtPathType(path, mime) {
-    path     = verifyPath(path);
+    path     = verifyPathString(path);
     mime     = validateMIME(mime);
     var file = targetPath(path, 0);
     path     = targetPath(path, 1);
     var fldr = findFolderAtPath(path);
+
     if (fldr) {
       file = findFileInFolder(file, fldr);
     } else {
       return false;
     }
+
+    Logger.log("given mime: " + mime);
+    Logger.log("file: " + file);
+    Logger.log("file mime: " + file.getMimeType());
+    Logger.log("mime match: " + matchMIMEType(file, mime));
+
     if (file && matchMIMEType(file, mime)) {
       return file;
     } else {
@@ -1893,7 +1901,8 @@ function findFileAtPath(path, mime) {
 } 
 
 Logger.log("findFileAtPath");
-Logger.log(findFileAtPath());
+// Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file")); // example-file
+Logger.log(findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-spreadsheet", "spreadsheet")); // example-spreadsheet
 
 // -- Check for a File
 
@@ -1944,7 +1953,6 @@ function checkForFileAtPath(path, mime) {
 // Create File
 
 // --- Create File at Root
-// TODO: This should return files, not document objects
 
 function createFileAtRoot(name, mime) {
   switch (mime) {
@@ -1960,7 +1968,9 @@ function createFileAtRoot(name, mime) {
     case "spreadsheet": 
       var spreadsheet = SpreadsheetApp.create(name);
       return DriveApp.getFileById(spreadsheet.getId());
-    default: DriveApp.getRootFolder().createFile(name, "");
+    default: 
+      var file = DriveApp.getRootFolder().createFile(name, "");
+      return DriveApp.getFileById(file.getId());
   }
 }
 
@@ -1969,6 +1979,7 @@ function createFileAtRoot(name, mime) {
 // Logger.log(createFileAtRoot("testing", "form"));
 // Logger.log(createFileAtRoot("testing", "presentation"));
 // Logger.log(createFileAtRoot("testing", "spreadsheet"));
+// createFileAtRoot("OK");
 
 // --- Create File in Folder
 
@@ -2019,6 +2030,8 @@ function verifyFileInFolder(name, fldr, mime) {
 } 
 
 // Logger.log("verifyFileInFolder");
+// var fldr_vfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/files"); 
+// var file_vfif = verifyFileInFolder(fldr_vfif, "testing"); 
  
 // --- Verify File at Path
 
@@ -2068,11 +2081,11 @@ function openFileAsType(file, mime) {
 
 function copyFileToFolder(file, fldr) {
   var name = file.getName();
-  var dest = findFileInFolderAny(name, fldr);
+  var dest = findFileInFolder(name, fldr);
   if (dest === false) {
     file.makeCopy(name, fldr);
   }
-  return findFileInFolderAny(name, fldr);
+  return findFileInFolder(name, fldr);
 } 
 
 // Logger.log("copyFileToFolder");
@@ -2094,11 +2107,11 @@ function copyFileToFolder(file, fldr) {
 function moveFileToFolder(file, fldr) {
   var result;
   var name = file.getName();
-  var dest = findFileInFolderAny(name, fldr);
+  var dest = findFileInFolder(name, fldr);
 
   if (dest === false) {
     file.makeCopy(name, fldr);
-    result = findFileInFolderAny(name, fldr);
+    result = findFileInFolder(name, fldr);
   }
 
   if (result) {
@@ -2109,10 +2122,10 @@ function moveFileToFolder(file, fldr) {
 } 
 
 // Logger.log("moveFileToFolder");
-// TODO: VERIFY
-// var fldr_mftf1 = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/copied");
-// var file_mftf  = findFileInFolder("example-file", fldr_mftf1);
-// var fldr_mftf2 = verifyPath("google-apps-script-cheat-sheet-demo/files/moved");
+// var fldr_mftf1 = verifyFolderPath("google-apps-script-cheat-sheet-demo/files/copied");
+// var file_mftf  = verifyFileInFolder("example-file", fldr_mftf1);
+// Logger.log(file_mftf);
+// var fldr_mftf2 = verifyFolderPath("google-apps-script-cheat-sheet-demo/files/moved");
 // Logger.log(moveFileToFolder(file_mftf, fldr_mftf2)); // example-file
 
 // - Files and Folders
