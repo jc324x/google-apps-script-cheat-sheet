@@ -34,8 +34,8 @@ Logger.log("Start");
 // |+| -- Check String for Substring
 // | | Drive
 // |+| - Utility Functions for Drive
-// |+| -- Verify Path String
-// |+| -- Target Path
+// | | -- Validate Path String
+// | | -- Get Basename or Inverse Basename
 // | | -- Validate MIME Type
 // | | -- Match MIME Type 
 // | | - Folders
@@ -843,16 +843,16 @@ function checkStringForSubstring(val, str) {
 
 // - Utility Functions for Drive
 
-// -- Verify Path String
+// -- Validate Path String
 
 /**
- * Returns a string with leading and trailing '/' removed.
+ * Returns a string with any leading or trailing '/' removed.
  *
  * @param {string} path
  * @returns {string}
  */
 
-function verifyPathString(path) {
+function validatePathString(path) {
   if ((path.charAt(0)) === "/") {
     path = path.substr(1);
   }
@@ -862,66 +862,54 @@ function verifyPathString(path) {
   return path;
 }
 
-// Logger.log("verifyPathString");
-// Logger.log(verifyPathString("valid/path")); // "valid/path"
-// Logger.log(verifyPathString("/valid/path/")); // "valid/path"
+// Logger.log("validatePathString");
+// Logger.log(validatePathString("valid/path")); // "valid/path"
+// Logger.log(validatePathString("/valid/path/")); // "valid/path"
 
-// -- Target Path
+// -- Get Basename 
 
 /**
- * Returns a path or the last object in a path.
- * (0) The last file or folder in a path.
- * (1) The path to the penultimate folder.
+ * Returns the end of a path.
  *
- * @param {String} path
- * @returns {String}
+ * @param {string} path
+ * @returns {string}
  */
 
-function targetPath(path, opt) {
-  path      = verifyPathString(path);
+function getBasename(path) {
+  path = validatePathString(path);
   var split = path.split("/");
-  if (opt === 0 || opt === undefined) {
-    return split.pop();
-  } else if (opt === 1) {
-    split.pop();
-    return split.join("/");
-  } 
+  return split.pop();
 } 
 
-// Logger.log("targetPath");
-// Logger.log(targetPath("a/b/c");     // c
-// Logger.log(targetPath("a/b/c", 0)); // c
-// Logger.log(targetPath("a/b/c", 1)); // a/b
+// Logger.log("getBasename");
+// Logger.log(getBasename("/a/b/c")); // c
+
+// -- Get Inverse Basename
+
+/**
+ * Returns a path string, minus the end of the path.
+ *
+ * @param {string} path
+ * @returns {string}
+ */
+
+function getInverseBasename(path) {
+  path = validatePathString(path);
+  var split = path.split("/");
+  split.pop();
+  return split.join("/");
+} 
+
+// Logger.log("getInverseBasename");
+// Logger.log(getInverseBasename("/a/b/c")); // a/b
 
 // -- Validate MIME Type
 
 /**
- * Returns the full MIME type for a valid short type.
- * Returns false if passed an invalid option.
- *
- * @requires checkArrayForValue() 
+ * Returns a full MIME type given a valid short or full value.
  * @param {string} val
- * @returns {string}
+ * @returns {string || boolean}
  */
-
-// TODO: Rewrite to handle "application/vnd.google-apps.document" or
-// "document" as an argument, returning the valid version
-
-function validateMIME(val) {
-  val = val.toLowerCase();
-  var mimes = [
-    "audio", "document", "drawing", 
-    "drive-sdk", "file", "folder", 
-    "form", "fusiontable", "map",
-    "photo", "presentation", "script",
-    "site", "spreadsheet", "unknown", "video"
-  ];
-  if (checkArrayForValue(mimes, val)) {
-    return "application/vnd.google-apps." + val;
-  } else {
-    return false;
-  }
-} 
 
 function validateMIME(val) {
   val = val.toLowerCase();
@@ -949,16 +937,16 @@ function validateMIME(val) {
 // Logger.log("validateMIME");
 // Logger.log(validateMIME("audio")); // application/vnd.google-apps.audio
 // Logger.log(validateMIME("application/vnd.google-apps.spreadsheet")); // application/vnd.google-apps.spreadsheet
+// Logger.log(validateMIME("this-type-doesnt-exist); // false
 
 // -- Match MIME Type
-// TODO: examples
 
 /**
- * Returns true if given a valid short MIME type that matches the file's MIME type.
+ * Returns true if the file's type matches the given MIME value.
  *
  * @param {File} file
  * @param {string} mime - short form mime notation (ex. "doc" or "spreadsheet")
- * @returns {undefined}
+ * @returns {boolean}
  */
 
 function matchMIMEType(file, mime) {
@@ -972,11 +960,19 @@ function matchMIMEType(file, mime) {
 } 
 
 // Logger.log("matchMIMEType");
+// var file_mmt = findFileAtPath("google-apps-script-cheat-sheet-demo/files/example-document", "document");
+// Logger.log(file_mmt);
+// Logger.log(matchMIMEType(file_mmt, "document")); // true
+// Logger.log(matchMIMEType(file_mmt, "application/vnd.google-apps.document")); // true
+// Logger.log(matchMIMEType(file_mmt, "spreadsheet")); // false
 
 // - Folders
+// TODO: refine
 
 function createExampleFolders() {
   verifyFolderPath("google-apps-script-cheat-sheet-demo/folders");
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/folders/copy");
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/folders/move");
 } 
 
 createExampleFolders(); 
@@ -1036,15 +1032,15 @@ function arrayOfFoldersInFolder(fldr) {
  * The array contains folder objects, not just the names of the folders.
  *
  * @param {string} path
- * @requires verifyPathString() 
+ * @requires validatePathString() 
  * @requires findFolderAtPath() 
- * @requires targetPath()
+ * @requires getBasename()
  * @requires arrayOfFoldersInFolder() 
  * @returns {Folder[]}
  */
 
 function arrayOfFoldersAtPath(path) {
-  path       = verifyPathString(path);
+  path       = validatePathString(path);
   var result = [];
   var fldr   = findFolderAtPath(path);
   if (fldr) {
@@ -1161,13 +1157,13 @@ function findFolderInFolder(name, fldr) {
  * Returns the folder found at the given path or false if that folder doesn't exist.
  *
  * @param path
- * @requires verifyPathString() 
- * @requires targetPath() 
+ * @requires validatePathString() 
+ * @requires getBasename() 
  * @returns {Folder}
  */
 
 function findFolderAtPath(path) {
-  path = verifyPathString(path);
+  path = validatePathString(path);
   var fi, fldr;
   var split = path.split("/");
 
@@ -1189,7 +1185,7 @@ function findFolderAtPath(path) {
     }
   } 
 
-  var target = targetPath(path);
+  var target = getBasename(path);
   if (fldr.getName() === target) {
     return fldr;
   } else {
@@ -1279,13 +1275,13 @@ function checkForFolderInFolder(name, fldr) {
  *
  * @param {string} path
  * @requires findFolderAtPath() 
- * @requires verifyPathString() 
- * @requires targetPath() 
+ * @requires validatePathString() 
+ * @requires getBasename() 
  * @returns {boolean}
  */
 
 function checkForFolderAtPath(path) {
-  path = verifyPathString(path);
+  path = validatePathString(path);
   var fldr = findFolderAtPath(path);
   if (fldr) {
     return true;
@@ -1337,6 +1333,8 @@ function createFolderInFolder(name, fldr) {
 // Logger.log(createFolderInFolder(now_cfif, fldr_cfif));
 
 // --- Create Folder at Path
+// TODO: fix after reconfiguring target path stuff
+// TODO: why does this not seem to make any sense...?
 
 /**
  * Creates the folder at the given path. 
@@ -1344,19 +1342,19 @@ function createFolderInFolder(name, fldr) {
  * To verify a complete folder path, use verifyFolderPath instead.
  * This will create duplicate folders if used without caution.
  *
- * @requires verifyPathString() 
- * @requires targetPath() 
+ * @requires validatePathString() 
+ * @requires getBasename() 
  * @requires findFolderAtPath() 
  * @param {string} path
  * @returns {Folder || boolean}
  */
 
 function createFolderAtPath(path) {
-  path       = verifyPathString(path);
-  var target = targetPath(path, 1);
+  path       = validatePathString(path);
+  var target = getInverseBasename(path);
   var fldr   = findFolderAtPath(target);
   if (fldr) {
-    target = targetPath(path);
+    target = getBasename(path);
     return fldr.createFolder(target);
   } else {
     return false;
@@ -1415,8 +1413,8 @@ function createFoldersInFolder(arr, fldr) {
  * Returns the target folder.
  * This will create duplicates if used without caution. 
  *
- * @requires verifyPathString() 
- * @requires targetPath() 
+ * @requires validatePathString() 
+ * @requires getInverseBasename() 
  * @requires findFolderAtPath()
  * @param {Array} arr
  * @param {string} path
@@ -1424,8 +1422,8 @@ function createFoldersInFolder(arr, fldr) {
  */
 
 function createFoldersAtPath(arr, path) {
-  path       = verifyPathString(path);
-  var target = targetPath(path, 1);
+  path       = validatePathString(path);
+  var target = getInverseBasename(path);
   var fldr   = findFolderAtPath(target);
   if (fldr) {
     for (i = 0; i < arr.length; i++) {
@@ -1506,13 +1504,13 @@ function verifyFolderInFolder(name, fldr) {
  * Returns a folder at the end of a folder path.
  * Folders in the path are created if they don't already exist.
  *
- * @requires verifyPathString() 
+ * @requires validatePathString() 
  * @param {string} path
  * @returns {Folder}
  */
 
 function verifyFolderPath(path) {
-  path = verifyPathString(path);
+  path = validatePathString(path);
   var split = path.split("/");
   var fldr;
   for (i = 0; i < split.length; i++) {
@@ -1603,9 +1601,9 @@ function verifyFoldersInFolder(arr, fldr) {
  * Returns the folder at the end of the target path or false if the given path is invalid.
  * Creates folders within a folder if they don't already exist.
  *
- * @requires verifyPathString() 
+ * @requires validatePathString() 
  * @requires findFolderAtPath() 
- * @requires targetPath() 
+ * @requires getBasename() 
  * @requires verifyFoldersInFolder() 
  * @requires arrayOfFoldersInFolder()
  * @requires arrayOfFolderNames()
@@ -1614,20 +1612,20 @@ function verifyFoldersInFolder(arr, fldr) {
  */
 
 function verifyFoldersAtPath(arr, path) {
-  path     = verifyPathString(path);
+  path     = validatePathString(path);
   var fldr = findFolderAtPath(path);
   verifyFoldersInFolder(arr, fldr);
 } 
 
 // - Files
 
-// function createExampleFiles() {
-//   verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file");
-//   verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-doc", "document");
-//   verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-spreadsheet", "spreadsheet");
-// } 
+function createExampleFiles() {
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file");
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-document", "document");
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-spreadsheet", "spreadsheet");
+} 
 
-// createExampleFiles(); 
+createExampleFiles(); 
  
 // -- Array of Files 
 
@@ -1721,8 +1719,6 @@ function arrayOfFileNames(arr) {
 // Logger.log(arrayOfFileNames(arr_aofilen)); // [example-file]
 
 // -- Find a File
-
-// TODO: example file to match goes here
 
 // --- Find a File in a Folder
 
@@ -1868,9 +1864,9 @@ function findFileInDrive(name, mime) {
 // --- Find File at Path
 
 /**
- * Returns a file from a given path.
+ * Returns a file found at the end of a path. 
  * Returns false if the given path is incomplete.
- * Returns false if the file doesn't match the optional mime value.
+ * Returns false if passed a mime value that doesn't match the file's mime type.
  * @param {string} path
  * @returns {File}
  */
@@ -1878,9 +1874,9 @@ function findFileInDrive(name, mime) {
 function findFileAtPath(path, mime) {
 
   function findFileAtPathAny(path) {
-    path     = verifyPathString(path);
-    var file = targetPath(path, 0);
-    path     = targetPath(path, 1);
+    path     = validatePathString(path);
+    var file = getBasename(path);
+    path     = getInverseBasename(path);
     var fldr = findFolderAtPath(path);
     if (fldr) {
       return findFileInFolder(file, fldr);
@@ -1890,10 +1886,10 @@ function findFileAtPath(path, mime) {
   } 
 
   function findFileAtPathType(path, mime) {
-    path     = verifyPathString(path);
+    path     = validatePathString(path);
     mime     = validateMIME(mime);
-    var file = targetPath(path, 0);
-    path     = targetPath(path, 1);
+    var file = getBasename(path);
+    path     = getInverseBasename(path);
     var fldr = findFolderAtPath(path);
 
     if (fldr) {
@@ -1925,6 +1921,14 @@ function findFileAtPath(path, mime) {
 
 // --- Check for a File at Root
 
+/**
+ * Returns true if a matching file is found.
+ *
+ * @param {string} name
+ * @param {string} mime
+ * @returns {boolean}
+ */
+
 function checkForFileAtRoot(name, mime) {
   var check = findFileAtRoot(name, mime);
   if (check) {
@@ -1938,6 +1942,15 @@ function checkForFileAtRoot(name, mime) {
 
 // --- Check for File in Folder
 
+/**
+ * Returns true if a matching file is found.
+ *
+ * @param {string} name
+ * @param {Folder} fldr
+ * @param {string} mime
+ * @returns {boolean}
+ */
+
 function checkForFileInFolder(name, fldr, mime) {
   var check = findFileInFolder(name, fldr, mime);
   if (check) {
@@ -1948,11 +1961,19 @@ function checkForFileInFolder(name, fldr, mime) {
 }
 
 // Logger.log("checkForFileInFolder");
-// var fldr_cffif = findFolderAtPath("google-apps-script-cheat-sheet-demo/sheets"); 
+// var fldr_cffif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets"); 
 // Logger.log(checkForFileInFolder("example-sheet", fldr_cffif, "spreadsheet")); // true
 // Logger.log(checkForFileInFolder("example-sheet", fldr_cffif)); // true
 
 //  --- Check for File at Path
+
+/**
+ * Returns true if a matching file is found.
+ *
+ * @param {string} path
+ * @param {string} mime
+ * @returns {boolean}
+ */
 
 function checkForFileAtPath(path, mime) {
   var check = findFileAtPath(path, mime);
@@ -1970,6 +1991,15 @@ function checkForFileAtPath(path, mime) {
 // Create File
 
 // --- Create File at Root
+
+/**
+ * Returns a newly created file.
+ * This can create documents, forms, presentations or spreadsheets, 
+ * but it will always return a file.
+ * @param {string} name
+ * @param {string} mime
+ * @returns {File}
+ */
 
 function createFileAtRoot(name, mime) {
   switch (mime) {
@@ -1995,6 +2025,15 @@ function createFileAtRoot(name, mime) {
 
 // --- Create File in Folder
 
+/**
+ * Returns a newly created file.
+ * This can create documents, forms, presentations or spreadsheets, 
+ * but it will always return a file.
+ * @param {string} name
+ * @param {string} mime
+ * @returns {File}
+ */
+
 function createFileInFolder(name, fldr, mime) {
   var file = createFileAtRoot(name, mime);
   return moveFileToFolder(file, fldr);
@@ -2007,8 +2046,8 @@ function createFileInFolder(name, fldr, mime) {
 // --- Create File at Path
 
 function createFileAtPath(path, mime) {
-  var name = targetPath(path, 0);
-  path     = targetPath(path, 1);
+  var name = getBasename(path);
+  path     = getInverseBasename(path);
   var fldr = findFolderAtPath(path);
   return createFileInFolder(name, fldr, mime);
 } 
@@ -2048,7 +2087,7 @@ function verifyFileInFolder(name, fldr, mime) {
 // --- Verify File at Path
 
 function verifyFileAtPath(path, mime) {
-  var folderPath = targetPath(path, 1);
+  var folderPath = getInverseBasename(path);
   verifyFolderPath(folderPath);
   if (checkForFileAtPath(path, mime)) {
     return findFileAtPath(path, mime);
