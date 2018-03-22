@@ -33,58 +33,58 @@ Logger.log("Start");
 // |+| - String
 // |+| -- Check String for Substring
 // | | Drive
-// |+| - Utility Functions for Drive
+// | | - Utility Functions for Drive
 // | | -- Validate Path String
 // | | -- Get Basename or Inverse Basename
 // | | -- Validate MIME Type
 // | | -- Match MIME Type 
 // | | - Folders
-// |+| -- Array Of Folders
-// |+| --- Array of Folders at Root
-// |+| --- Array of Folders in Folder
-// |+| --- Array of Folders at Path
-// |+| --- Array of Folders in Drive
-// |+| -- Array of Folder Names
-// |+| -- Find a Folder
-// |+| --- Find Folder at Root
-// |+| --- Find Folder in Folder
-// |+| --- Find Folder at Path
-// |+| --- Find Folder in Drive
-// |+| -- Check for a Folder
-// |+| --- Check for Folder at Root
-// |+| --- Check for Folder in Folder
-// |+| --- Check for Folder at Path
-// |+| -- Create a Folder
-// |+| --- Create Folder at Root
-// |+| --- Create Folder in Folder
-// |+| --- Create Folder at Path
-// |+| -- Create Folders
-// |+| --- Create Folders at Root
-// |+| --- Create Folders in Folder
-// |+| --- Create Folders at Path
-// |+| -- Verify Folder
-// |+| --- Verify Folder at Root
-// |+| --- Verify Folder in a Folder
-// |+| --- Verify Folder Path
-// |+| -- Verify Folders
-// |+| --- Verify Folders in a Folder
-// |+| --- Verify Folders at Root
+// | | -- Array Of Folders
+// | | --- Array of Folders at Root
+// | | --- Array of Folders in Folder
+// | | --- Array of Folders at Path
+// | | --- Array of Folders in Drive
+// | | -- Array of Folder Names
+// | | -- Find a Folder
+// | | --- Find Folder at Root
+// | | --- Find Folder in Folder
+// | | --- Find Folder at Path
+// | | --- Find Folder in Drive
+// | | -- Check for a Folder
+// | | --- Check for Folder at Root
+// | | --- Check for Folder in Folder
+// | | --- Check for Folder at Path
+// | | -- Create a Folder
+// | | --- Create Folder at Root
+// | | --- Create Folder in Folder
+// | | --- Create Folder at Path
+// | | -- Create Folders
+// | | --- Create Folders at Root
+// | | --- Create Folders in Folder
+// | | --- Create Folders at Path
+// | | -- Verify Folder
+// | | --- Verify Folder at Root
+// | | --- Verify Folder in a Folder
+// | | --- Verify Folder Path
+// | | -- Verify Folders
+// | | --- Verify Folders in a Folder
+// | | --- Verify Folders at Root
 // | | - Files
-// |+| -- Array of Files
-// |+| --- Array of Files at Root
-// |+| --- Array of Files in Folder
-// |+| --- Array of Files at Path
-// |+| --- Array of All Files in Drive
-// |+| -- Array of File Names
-// |+| -- Find a File
-// |+| --- Find a File at Root
-// |+| --- Find a File in a Folder
-// |+| --- Find a File in Drive
-// |+| --- Find File at Path
-// |+| -- Check for a File
-// |+| --- Check for a File at Root
-// |+| --- Check for a File in a Folder
-// |+| --- Check for a File at Path
+// | | -- Array of Files
+// | | --- Array of Files at Root
+// | | --- Array of Files in Folder
+// | | --- Array of Files at Path
+// | | --- Array of All Files in Drive
+// | | -- Array of File Names
+// | | -- Find a File
+// | | --- Find a File at Root
+// | | --- Find a File in a Folder
+// | | --- Find a File in Drive
+// | | --- Find File at Path
+// | | -- Check for a File
+// | | --- Check for a File at Root
+// | | --- Check for a File in a Folder
+// | | --- Check for a File at Path
 // | | -- Create a File
 // | | --- Create File at Root
 // | | --- Create File in a Folder
@@ -970,9 +970,10 @@ function matchMIMEType(file, mime) {
 // TODO: refine
 
 function createExampleFolders() {
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/files/copy");
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/files/create");
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/files/move");
   verifyFolderPath("google-apps-script-cheat-sheet-demo/folders");
-  verifyFolderPath("google-apps-script-cheat-sheet-demo/folders/copy");
-  verifyFolderPath("google-apps-script-cheat-sheet-demo/folders/move");
 } 
 
 createExampleFolders(); 
@@ -2039,9 +2040,9 @@ function createFileInFolder(name, fldr, mime) {
   return moveFileToFolder(file, fldr);
 }  
 
-// Logger.log("createFileInFolder");
-// var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets");
-// Logger.log(createFileInFolder("amazing-spreadsheet", fldr_cfif, "spreadsheet")); // amazing-spreadsheet
+Logger.log("createFileInFolder");
+var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/files/create");
+Logger.log(createFileInFolder("example-spreadsheet", fldr_cfif, "spreadsheet")); // amazing-spreadsheet
 
 // --- Create File at Path
 
@@ -2052,12 +2053,20 @@ function createFileAtPath(path, mime) {
   return createFileInFolder(name, fldr, mime);
 } 
 
-// Logger.log("createFileAtPath");
-// Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/sheets/cool-sheet", "spreadsheet"));
+Logger.log("createFileAtPath");
+Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/files/create/example-spreadsheet", "spreadsheet"));
 
 // Verify File 
  
 // --- Verify File at Root
+
+/**
+ * verifyFileAtRoot
+ *
+ * @param name
+ * @param mime
+ * @returns {undefined}
+ */
 
 function verifyFileAtRoot(name, mime) {
   if (checkForFileAtRoot(name, mime)) {
@@ -2071,6 +2080,15 @@ function verifyFileAtRoot(name, mime) {
 // Logger.log(verifyFileAtRoot("test_document", "document"));
 
 // --- Verify File in Folder
+
+/**
+ * verifyFileInFolder
+ *
+ * @param name
+ * @param fldr
+ * @param mime
+ * @returns {undefined}
+ */
 
 function verifyFileInFolder(name, fldr, mime) {
   if (checkForFileInFolder(name, fldr, mime)) {
@@ -2086,6 +2104,14 @@ function verifyFileInFolder(name, fldr, mime) {
  
 // --- Verify File at Path
 
+/**
+ * verifyFileAtPath
+ *
+ * @param path
+ * @param mime
+ * @returns {undefined}
+ */
+
 function verifyFileAtPath(path, mime) {
   var folderPath = getInverseBasename(path);
   verifyFolderPath(folderPath);
@@ -2100,6 +2126,13 @@ function verifyFileAtPath(path, mime) {
 
 // -- Id of Active File
 
+/**
+ * idOfActiveFile
+ *
+ * @param mime
+ * @returns {undefined}
+ */
+
 function idOfActiveFile(mime) {
   switch(mime) {
     case "document": return DocumentApp.getActiveDocument().getId();
@@ -2112,6 +2145,14 @@ function idOfActiveFile(mime) {
 // Logger.log("idOfActiveFile");
 
 // -- Open File as Type
+
+/**
+ * openFileAsType
+ *
+ * @param file
+ * @param mime
+ * @returns {undefined}
+ */
 
 function openFileAsType(file, mime) {
   var id = file.getId();
@@ -2129,6 +2170,14 @@ function openFileAsType(file, mime) {
 // Logger.log(openFileAsType(file_ofat, "document"));
 
 // -- Copy a File to a Folder
+
+/**
+ * copyFileToFolder
+ *
+ * @param file
+ * @param fldr
+ * @returns {undefined}
+ */
 
 function copyFileToFolder(file, fldr) {
   var name = file.getName();
