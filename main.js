@@ -1078,7 +1078,7 @@ function arrayOfFoldersInDrive() {
 // -- Array of Folder Names
 
 /**
- * Returns an array of folder names.
+ * Returns an array of folder names given an array of folders.
  *
  * @param {Folders[]}
  * @returns {string[]}
@@ -1228,9 +1228,9 @@ function findFolderInDrive(name) {
  *
  * @param {string} name
  * @requires findFolderAtRoot() 
- * @requires arrayOfFoldersAtRoot()
- * @requires arrayOfFolderNames()
- * @requires checkArrayForValue()
+ * @requires arrayOfFoldersAtRoot()*
+ * @requires arrayOfFolderNames()*
+ * @requires checkArrayForValue()*
  * @returns {boolean}
  */
 
@@ -1251,9 +1251,9 @@ function checkForFolderAtRoot(name) {
  * Returns true if the folder is found.
  *
  * @requires findFolderInFolder() 
- * @requires arrayOfFoldersInFolder() 
- * @requires arrayOfFolderNames() 
- * @requires checkArrayForValue()
+ * @requires arrayOfFoldersInFolder()*
+ * @requires arrayOfFolderNames()*
+ * @requires checkArrayForValue()*
  * @param name
  * @param fldr
  * @returns {boolean}
