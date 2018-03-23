@@ -38,8 +38,8 @@ Logger.log("Start");
 // |+| -- Get Basename or Inverse Basename
 // |+| -- Validate MIME Type
 // |+| -- Match MIME Type 
-// | | - Folders
-// | | -- Array Of Folders
+// |+| - Folders
+// |+| -- Array Of Folders
 // |+| --- Array of Folders at Root
 // |+| --- Array of Folders in Folder
 // |+| --- Array of Folders at Path
@@ -57,11 +57,11 @@ Logger.log("Start");
 // |+| -- Create a Folder
 // |+| --- Create Folder at Root
 // |+| --- Create Folder in Folder
-// | | --- Create Folder at Path
-// | | -- Create Folders
-// | | --- Create Folders at Root
-// | | --- Create Folders in Folder
-// | | --- Create Folders at Path
+// |+| --- Create Folder at Path
+// |+| -- Create Folders
+// |+| --- Create Folders at Root
+// |+| --- Create Folders in Folder
+// |+| --- Create Folders at Path
 // | | -- Verify Folder
 // | | --- Verify Folder at Root
 // | | --- Verify Folder in a Folder
@@ -1303,7 +1303,7 @@ function checkForFolderAtPath(path) {
 
 /**
  * Return a newly created folder.
- * This will create duplicate folders if used without caution.
+ * This can create duplicate folders if used without caution.
  *
  * @param name
  * @returns {Folder}
@@ -1319,7 +1319,7 @@ function createFolderAtRoot(name) {
 
 /**
  * Return a newly created folder.
- * This will create duplicate folders if used without caution.
+ * This can create duplicate folders if used without caution.
  *
  * @param {string} name
  * @param {Folder} fldr
@@ -1331,21 +1331,22 @@ function createFolderInFolder(name, fldr) {
 } 
 
 // Logger.log("createFolderInFolder");
-// var now_cfif = dateTime();
-// var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/folders/create");
-// Logger.log(createFolderInFolder(now_cfif, fldr_cfif));
+// var dt_cfif = dateTime();
+// var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk");
+// Logger.log(createFolderInFolder(dt_cfif, fldr_cfif));
 
 // --- Create Folder at Path
 
 /**
  * Creates a folder at the given path. 
- * Returns false if the supporting directories in the path are missing.
+ * Returns false if the supporting folders in the path are missing.
  * To verify a complete folder path, use verifyFolderPath instead.
- * This will create duplicate folders if used without caution.
+ * This can create duplicate folders if used without caution.
  *
  * @requires validatePathString() 
- * @requires getBasename() 
+ * @requires getInverseBasename() 
  * @requires findFolderAtPath() 
+ * @requires getBasename() 
  * @param {string} path
  * @returns {Folder || boolean}
  */
@@ -1362,10 +1363,10 @@ function createFolderAtPath(path) {
   }
 } 
 
-Logger.log("createFolderAtPath");
-var dt_cfap = dateTime();
-Logger.log(createFolderAtPath("google-apps-script-cheat-sheet-demo/bulk/" + dt_cfap)); // 2017-12-16 13:34:38
-Logger.log(createFolderAtPath("no/path/here")); // false
+// Logger.log("createFolderAtPath");
+// var dt_cfap = dateTime();
+// Logger.log(createFolderAtPath("google-apps-script-cheat-sheet-demo/bulk/" + dt_cfap)); // 2017-12-16 13:34:38
+// Logger.log(createFolderAtPath("no/path/here")); // false
 
 // -- Create Folders
   
@@ -1373,7 +1374,7 @@ Logger.log(createFolderAtPath("no/path/here")); // false
   
 /**
  * Returns the root folder. 
- * This will create duplicate folders if used without caution.
+ * This can create duplicate folders if used without caution.
  *
  * @param {Array} arr
  * @returns {Folder}
@@ -1388,11 +1389,11 @@ function createFoldersAtRoot(arr) {
 
 // Logger.log("createFoldersAtRoot");
 
-// --- Create Folders in a Folder
+// --- Create Folders in Folder
 
 /**
  * Returns the targeted folder.
- * This will create duplicate folders if used without caution.
+ * This can create duplicate folders if used without caution.
  *
  * @param {Array} arr
  * @param {Folder} fldr
@@ -1407,13 +1408,16 @@ function createFoldersInFolder(arr, fldr) {
 } 
 
 Logger.log("createFoldersInFolder");
-var fldr_cfif = findFolderAtPath("google-apps-script-cheat-sheet-demo/bulk");
+var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk");
+var arr_cfif  = ["A", "B", "C"];
+Logger.log(createFoldersInFolder(arr_cfif, fldr_cfif)); // bulk
 
 // --- Create Folders at Path
+// TODO: One level short
 
 /**
  * Returns the target folder.
- * This will create duplicates if used without caution. 
+ * This can create duplicate folders if used without caution.
  *
  * @requires validatePathString() 
  * @requires getInverseBasename() 
@@ -1437,7 +1441,10 @@ function createFoldersAtPath(arr, path) {
   }
 } 
 
-// Logger.log("createFoldersAtPath");
+Logger.log("createFoldersAtPath");
+var fldr_cfap = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk");
+var arr_cfap  = ["X", "Y", "Z"];
+Logger.log(createFoldersAtPath(arr_cfap, "google-apps-script-cheat-sheet-demo/bulk")); // bulk
 
 // - Verify Folder
 
