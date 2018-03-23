@@ -32,31 +32,31 @@ Logger.log("Start");
 // |+| -- Match a Date to a Date Range
 // |+| - String
 // |+| -- Check String for Substring
-// | | Drive
-// | | - Utility Functions for Drive
-// | | -- Validate Path String
-// | | -- Get Basename or Inverse Basename
-// | | -- Validate MIME Type
-// | | -- Match MIME Type 
+// |+| Drive
+// |+| - Utility Functions for Drive
+// |+| -- Validate Path String
+// |+| -- Get Basename or Inverse Basename
+// |+| -- Validate MIME Type
+// |+| -- Match MIME Type 
 // | | - Folders
 // | | -- Array Of Folders
-// | | --- Array of Folders at Root
-// | | --- Array of Folders in Folder
-// | | --- Array of Folders at Path
-// | | --- Array of Folders in Drive
-// | | -- Array of Folder Names
-// | | -- Find a Folder
-// | | --- Find Folder at Root
-// | | --- Find Folder in Folder
-// | | --- Find Folder at Path
-// | | --- Find Folder in Drive
-// | | -- Check for a Folder
-// | | --- Check for Folder at Root
-// | | --- Check for Folder in Folder
-// | | --- Check for Folder at Path
-// | | -- Create a Folder
-// | | --- Create Folder at Root
-// | | --- Create Folder in Folder
+// |+| --- Array of Folders at Root
+// |+| --- Array of Folders in Folder
+// |+| --- Array of Folders at Path
+// |+| --- Array of Folders in Drive
+// |+| -- Array of Folder Names
+// |+| -- Find a Folder
+// |+| --- Find Folder at Root
+// |+| --- Find Folder in Folder
+// |+| --- Find Folder at Path
+// |+| --- Find Folder in Drive
+// |+| -- Check for a Folder
+// |+| --- Check for Folder at Root
+// |+| --- Check for Folder in Folder
+// |+| --- Check for Folder at Path
+// |+| -- Create a Folder
+// |+| --- Create Folder at Root
+// |+| --- Create Folder in Folder
 // | | --- Create Folder at Path
 // | | -- Create Folders
 // | | --- Create Folders at Root
@@ -846,7 +846,7 @@ function checkStringForSubstring(val, str) {
 // -- Validate Path String
 
 /**
- * Returns a string with any leading or trailing '/' removed.
+ * Returns a string with leading or trailing forward slashes '/' removed.
  *
  * @param {string} path
  * @returns {string}
@@ -869,15 +869,15 @@ function validatePathString(path) {
 // -- Get Basename 
 
 /**
- * Returns the end of a path.
+ * Returns the basename from the end of a path.
  *
  * @param {string} path
  * @returns {string}
  */
 
 function getBasename(path) {
-  path = validatePathString(path);
-  var split = path.split("/");
+  var valid = validatePathString(path);
+  var split = valid.split("/");
   return split.pop();
 } 
 
@@ -887,15 +887,15 @@ function getBasename(path) {
 // -- Get Inverse Basename
 
 /**
- * Returns a path string, minus the end of the path.
+ * Returns a path, minus the basename.
  *
  * @param {string} path
  * @returns {string}
  */
 
 function getInverseBasename(path) {
-  path = validatePathString(path);
-  var split = path.split("/");
+  var valid = validatePathString(path);
+  var split = valid.split("/");
   split.pop();
   return split.join("/");
 } 
@@ -906,7 +906,7 @@ function getInverseBasename(path) {
 // -- Validate MIME Type
 
 /**
- * Returns a full MIME type given a valid short or full value.
+ * Returns a full MIME type from a short or full MIME type..
  * @param {string} val
  * @returns {string || boolean}
  */
@@ -942,7 +942,7 @@ function validateMIME(val) {
 // -- Match MIME Type
 
 /**
- * Returns true if the file's type matches the given MIME value.
+ * Returns true if the file's MIME type matches the given MIME type.
  *
  * @param {File} file
  * @param {string} mime - short form mime notation (ex. "doc" or "spreadsheet")
@@ -967,13 +967,12 @@ function matchMIMEType(file, mime) {
 // Logger.log(matchMIMEType(file_mmt, "spreadsheet")); // false
 
 // - Folders
-// TODO: refine
 
 function createExampleFolders() {
-  verifyFolderPath("google-apps-script-cheat-sheet-demo/files/copy");
-  verifyFolderPath("google-apps-script-cheat-sheet-demo/files/create");
-  verifyFolderPath("google-apps-script-cheat-sheet-demo/files/move");
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk");
   verifyFolderPath("google-apps-script-cheat-sheet-demo/folders");
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/copy");
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/move");
 } 
 
 createExampleFolders(); 
@@ -983,7 +982,7 @@ createExampleFolders();
 // --- Array of Folders at Root
 
 /**
- * Returns an array containing all of the folders found at root.
+ * Returns an array of all folders found at root.
  * The array contains folder objects, not folder names.
  *
  * @returns {Folder[]}
@@ -1005,7 +1004,7 @@ function arrayOfFoldersAtRoot() {
 // --- Array of Folders in Folder 
 
 /**
- * Returns an array containing all of the folders inside the top level of the target folder.
+ * Returns an array of all folders found in a folder.
  * The array contains folder objects, not folder names.
  *
  * @param {Folder} fldr
@@ -1029,21 +1028,21 @@ function arrayOfFoldersInFolder(fldr) {
 // --- Array of Folders at Path
 
 /**
- * Returns an array containing all of the folders inside the folder at the specified path.
- * The array contains folder objects, not just the names of the folders.
+ * Returns an array of all folders found at the end of a folder path.
+ * The array contains folder objects, not folder names.
  *
  * @param {string} path
  * @requires validatePathString() 
  * @requires findFolderAtPath() 
- * @requires getBasename()
+ * @requires getBasename()*
  * @requires arrayOfFoldersInFolder() 
  * @returns {Folder[]}
  */
 
 function arrayOfFoldersAtPath(path) {
-  path       = validatePathString(path);
+  var valid  = validatePathString(path);
   var result = [];
-  var fldr   = findFolderAtPath(path);
+  var fldr   = findFolderAtPath(valid);
   if (fldr) {
     return arrayOfFoldersInFolder(fldr);
   } else {
@@ -1058,7 +1057,7 @@ function arrayOfFoldersAtPath(path) {
 
 /**
  * Returns an array of all folders in Drive.
- * The array contains folder objects, not just the names of the folders.
+ * The array contains folder objects, not folder names.
  *
  * @returns {Folder[]}
  */
@@ -1103,7 +1102,8 @@ function arrayOfFolderNames(arr) {
 // --- Find Folder at Root
 
 /**
- * Returns a folder found at root or false if the folder doesn't exist.
+ * Returns a folder from root.
+ * Returns false if the folder doesn't exist.
  *
  * @param {string} name
  * @requires arrayOfFoldersAtRoot()
@@ -1128,7 +1128,8 @@ function findFolderAtRoot(name) {
 // --- Find Folder in Folder
 
 /**
- * Returns a folder from inside another folder or false if either folder doesn't exist.
+ * Returns a folder from a folder.
+ * Returns false if either folder doesn't exist.
  *
  * @requires arrayOfFoldersInFolder() 
  * @requires arrayOfFolderNames() 
@@ -1155,7 +1156,8 @@ function findFolderInFolder(name, fldr) {
 // -- Find Folder at Path
 
 /**
- * Returns the folder found at the given path or false if that folder doesn't exist.
+ * Returns the folder found at the given path.
+ * Returns false if the path is invalid or if the folder doesn't exist.
  *
  * @param path
  * @requires validatePathString() 
@@ -1164,9 +1166,9 @@ function findFolderInFolder(name, fldr) {
  */
 
 function findFolderAtPath(path) {
-  path = validatePathString(path);
+  var valid = validatePathString(path);
   var fi, fldr;
-  var split = path.split("/");
+  var split = valid.split("/");
 
   for (i = 0; i < split.length; i++) {
     if (i === 0) {
@@ -1186,7 +1188,7 @@ function findFolderAtPath(path) {
     }
   } 
 
-  var target = getBasename(path);
+  var target = getBasename(valid);
   if (fldr.getName() === target) {
     return fldr;
   } else {
@@ -1275,15 +1277,15 @@ function checkForFolderInFolder(name, fldr) {
  * Returns true if the folder is found.
  *
  * @param {string} path
- * @requires findFolderAtPath() 
  * @requires validatePathString() 
- * @requires getBasename() 
+ * @requires findFolderAtPath() 
+ * @requires getBasename()*
  * @returns {boolean}
  */
 
 function checkForFolderAtPath(path) {
-  path = validatePathString(path);
-  var fldr = findFolderAtPath(path);
+  var valid = validatePathString(path);
+  var fldr = findFolderAtPath(valid);
   if (fldr) {
     return true;
   } else {
@@ -1334,11 +1336,9 @@ function createFolderInFolder(name, fldr) {
 // Logger.log(createFolderInFolder(now_cfif, fldr_cfif));
 
 // --- Create Folder at Path
-// TODO: fix after reconfiguring target path stuff
-// TODO: why does this not seem to make any sense...?
 
 /**
- * Creates the folder at the given path. 
+ * Creates a folder at the given path. 
  * Returns false if the supporting directories in the path are missing.
  * To verify a complete folder path, use verifyFolderPath instead.
  * This will create duplicate folders if used without caution.
@@ -1351,21 +1351,21 @@ function createFolderInFolder(name, fldr) {
  */
 
 function createFolderAtPath(path) {
-  path       = validatePathString(path);
-  var target = getInverseBasename(path);
-  var fldr   = findFolderAtPath(target);
+  var valid   = validatePathString(path);
+  var inverse = getInverseBasename(valid);
+  var fldr    = findFolderAtPath(inverse);
   if (fldr) {
-    target = getBasename(path);
-    return fldr.createFolder(target);
+    var basename = getBasename(valid);
+    return fldr.createFolder(basename);
   } else {
     return false;
   }
 } 
 
-// Logger.log("createFolderAtPath");
-// var dt_cfap = dateTime();
-// Logger.log(createFolderAtPath("google-apps-script-cheat-sheet-demo/folders/A/B/C/" + dt_cfap)); // 2017-12-16 13:34:38
-// Logger.log(createFolderAtPath("no/path/here")); // false
+Logger.log("createFolderAtPath");
+var dt_cfap = dateTime();
+Logger.log(createFolderAtPath("google-apps-script-cheat-sheet-demo/bulk/" + dt_cfap)); // 2017-12-16 13:34:38
+Logger.log(createFolderAtPath("no/path/here")); // false
 
 // -- Create Folders
   
@@ -1406,8 +1406,9 @@ function createFoldersInFolder(arr, fldr) {
   return fldr;
 } 
 
-// Logger.log("createFoldersInFolder");
-  
+Logger.log("createFoldersInFolder");
+var fldr_cfif = findFolderAtPath("google-apps-script-cheat-sheet-demo/bulk");
+
 // --- Create Folders at Path
 
 /**
@@ -2040,9 +2041,9 @@ function createFileInFolder(name, fldr, mime) {
   return moveFileToFolder(file, fldr);
 }  
 
-Logger.log("createFileInFolder");
-var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/files/create");
-Logger.log(createFileInFolder("example-spreadsheet", fldr_cfif, "spreadsheet")); // amazing-spreadsheet
+// Logger.log("createFileInFolder");
+// var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/files/create");
+// Logger.log(createFileInFolder("example-spreadsheet", fldr_cfif, "spreadsheet")); // amazing-spreadsheet
 
 // --- Create File at Path
 
@@ -2053,8 +2054,8 @@ function createFileAtPath(path, mime) {
   return createFileInFolder(name, fldr, mime);
 } 
 
-Logger.log("createFileAtPath");
-Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/files/create/example-spreadsheet", "spreadsheet"));
+// Logger.log("createFileAtPath");
+// Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/files/create/example-spreadsheet", "spreadsheet"));
 
 // Verify File 
  
