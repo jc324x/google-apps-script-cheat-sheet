@@ -81,16 +81,16 @@ Logger.log("Start");
 // |+| --- Find a File in a Folder
 // |+| --- Find a File in Drive
 // |+| --- Find File at Path
-// |+| -- Check for a File
-// |+| --- Check for a File at Root
-// |+| --- Check for a File in a Folder
-// |+| --- Check for a File at Path
-// | | -- Create a File
-// | | --- Create File at Root
-// | | --- Create File in a Folder
-// | | --- Create File at Path
+// | | -- Check for a File
+// | | --- Check for a File at Root
+// | | --- Check for a File in a Folder
+// | | --- Check for a File at Path
+// |+| -- Create a File
+// |+| --- Create File at Root
+// |+| --- Create File in a Folder
+// |+| --- Create File at Path
 // | | -- Verify File
-// | | --- Verify File at Root
+// |+| --- Verify File at Root
 // | | --- Verify File in Folder
 // | | --- Verify File at Path
 // | | -- Id of Active File
@@ -1980,6 +1980,7 @@ function checkForFileAtRoot(name, mime) {
 /**
  * Returns true if a matching file is found.
  *
+ * @requires findFileInFolder() 
  * @param {string} name
  * @param {Folder} fldr
  * @param {string} mime
@@ -2075,7 +2076,7 @@ function createFileAtRoot(name, mime) {
  * @param {string} name
  * @param {Folder} fldr
  * @param {string} [mime]
- * @returns {File}
+ * @returns {File || boolean}
  */
 
 function createFileInFolder(name, fldr, mime) {
@@ -2089,6 +2090,29 @@ function createFileInFolder(name, fldr, mime) {
 
 // --- Create File at Path
 
+/**
+ * Returns a newly created file.
+ * This can create documents, forms, presentations or spreadsheets, 
+ * but it will always return a file.
+ *
+ * @requires getBasename() 
+ * @requires getInverseBasename() 
+ * @requires findFolderAtPath() 
+ * @requires validatePathString()*
+ * @requires createFileInFolder() 
+ * @requires createFileAtRoot()*
+ * @requires moveFileToFolder()*
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ *
+ * @param {string} path
+ * @param {string} [mime]
+ * @returns {File || boolean}
+ */
+
 function createFileAtPath(path, mime) {
   var name = getBasename(path);
   path     = getInverseBasename(path);
@@ -2097,18 +2121,22 @@ function createFileAtPath(path, mime) {
 } 
 
 // Logger.log("createFileAtPath");
-// Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/files/create/example-spreadsheet", "spreadsheet"));
+// Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/bulk/example-spreadsheet", "spreadsheet")); // example-spreadsheet
 
 // Verify File 
  
 // --- Verify File at Root
 
 /**
- * verifyFileAtRoot
+ * Returns a file from root.
+ * A matching file is either found or created.
  *
- * @param name
- * @param mime
- * @returns {undefined}
+ * @requires checkForFileAtRoot() 
+ * @requires findFileAtRoot() 
+ * @requires createFileAtRoot() 
+ * @param {string} name
+ * @param {string} [mime]
+ * @returns {File}
  */
 
 function verifyFileAtRoot(name, mime) {
@@ -2120,17 +2148,20 @@ function verifyFileAtRoot(name, mime) {
 } 
 
 // Logger.log("verifyFileAtRoot");
-// Logger.log(verifyFileAtRoot("test_document", "document"));
 
 // --- Verify File in Folder
 
 /**
- * verifyFileInFolder
+ * Returns a file from a folder.
+ * A matching file is either found or created.
  *
- * @param name
- * @param fldr
- * @param mime
- * @returns {undefined}
+ * @requires checkForFileInFolder() 
+ * @requires findFileInFolder() 
+ * @requires createFileInFolder() 
+ * @param {string} name
+ * @param {Folder} fldr
+ * @param {string} [mime]
+ * @returns {File || boolean}
  */
 
 function verifyFileInFolder(name, fldr, mime) {
