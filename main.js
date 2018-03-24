@@ -62,29 +62,29 @@ Logger.log("Start");
 // |+| --- Create Folders at Root
 // |+| --- Create Folders in Folder
 // |+| --- Create Folders at Path
-// | | -- Verify Folder
-// | | --- Verify Folder at Root
-// | | --- Verify Folder in a Folder
-// | | --- Verify Folder Path
-// | | -- Verify Folders
-// | | --- Verify Folders in a Folder
-// | | --- Verify Folders at Root
+// |+| -- Verify Folder
+// |+| --- Verify Folder at Root
+// |+| --- Verify Folder in a Folder
+// |+| --- Verify Folder Path
+// |+| -- Verify Folders
+// |+| --- Verify Folders in a Folder
+// |+| --- Verify Folders at Root
 // | | - Files
-// | | -- Array of Files
-// | | --- Array of Files at Root
-// | | --- Array of Files in Folder
-// | | --- Array of Files at Path
-// | | --- Array of All Files in Drive
-// | | -- Array of File Names
-// | | -- Find a File
-// | | --- Find a File at Root
-// | | --- Find a File in a Folder
-// | | --- Find a File in Drive
-// | | --- Find File at Path
-// | | -- Check for a File
-// | | --- Check for a File at Root
-// | | --- Check for a File in a Folder
-// | | --- Check for a File at Path
+// |+| -- Array of Files
+// |+| --- Array of Files at Root
+// |+| --- Array of Files in Folder
+// |+| --- Array of Files at Path
+// |+| --- Array of All Files in Drive
+// |+| -- Array of File Names
+// |+| -- Find a File
+// |+| --- Find a File at Root
+// |+| --- Find a File in a Folder
+// |+| --- Find a File in Drive
+// |+| --- Find File at Path
+// |+| -- Check for a File
+// |+| --- Check for a File at Root
+// |+| --- Check for a File in a Folder
+// |+| --- Check for a File at Path
 // | | -- Create a File
 // | | --- Create File at Root
 // | | --- Create File in a Folder
@@ -1407,13 +1407,12 @@ function createFoldersInFolder(arr, fldr) {
   return fldr;
 } 
 
-Logger.log("createFoldersInFolder");
-var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk");
-var arr_cfif  = ["A", "B", "C"];
-Logger.log(createFoldersInFolder(arr_cfif, fldr_cfif)); // bulk
+// Logger.log("createFoldersInFolder");
+// var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk");
+// var arr_cfif  = ["A", "B", "C"];
+// Logger.log(createFoldersInFolder(arr_cfif, fldr_cfif)); // bulk
 
 // --- Create Folders at Path
-// TODO: One level short
 
 /**
  * Returns the target folder.
@@ -1428,23 +1427,22 @@ Logger.log(createFoldersInFolder(arr_cfif, fldr_cfif)); // bulk
  */
 
 function createFoldersAtPath(arr, path) {
-  path       = validatePathString(path);
-  var target = getInverseBasename(path);
-  var fldr   = findFolderAtPath(target);
+  var valid = validatePathString(path);
+  var fldr   = findFolderAtPath(valid);
   if (fldr) {
     for (i = 0; i < arr.length; i++) {
       fldr.createFolder(arr[i]);
     }
-    return fldr.createFolder(target);
+    return fldr;
   } else {
     return false;
   }
 } 
 
-Logger.log("createFoldersAtPath");
-var fldr_cfap = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk");
-var arr_cfap  = ["X", "Y", "Z"];
-Logger.log(createFoldersAtPath(arr_cfap, "google-apps-script-cheat-sheet-demo/bulk")); // bulk
+// Logger.log("createFoldersAtPath");
+// var fldr_cfap = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk");
+// var arr_cfap  = ["X", "Y", "Z"];
+// Logger.log(createFoldersAtPath(arr_cfap, "google-apps-script-cheat-sheet-demo/bulk")); // bulk
 
 // - Verify Folder
 
@@ -1455,10 +1453,10 @@ Logger.log(createFoldersAtPath(arr_cfap, "google-apps-script-cheat-sheet-demo/bu
  * A new folder is created only if necessary; this will not create duplicate folders.
  *
  * @requires checkForFolderAtRoot() 
- * @requires findFolderAtRoot() 
- * @requires arrayOfFoldersAtRoot()
- * @requires arrayOfFolderNames()
- * @requires checkArrayForValue()
+ * @requires findFolderAtRoot()*
+ * @requires arrayOfFoldersAtRoot()*
+ * @requires arrayOfFolderNames()*
+ * @requires checkArrayForValue()*
  * @requires createFolderAtRoot() 
  * @requires findFolderAtRoot() 
  * @param {string} name
@@ -1483,10 +1481,10 @@ function verifyFolderAtRoot(name) {
  * A new folder is created only if necessary; this will not create duplicate folders.
  *
  * @requires checkForFolderInFolder() 
- * @requires findFolderInFolder() 
- * @requires arrayOfFoldersInFolder() 
- * @requires arrayOfFolderNames() 
- * @requires checkArrayForValue()
+ * @requires findFolderInFolder()*
+ * @requires arrayOfFoldersInFolder()*
+ * @requires arrayOfFolderNames()*
+ * @requires checkArrayForValue()*
  * @requires createFolderInFolder() 
  * @requires findFolderInFolder() 
  * @param {string} name
@@ -1543,7 +1541,7 @@ function verifyFolderPath(path) {
 }
 
 // Logger.log("verifyFolderPath");
-// Logger.log(verifyFolderPath("google-apps-script-cheat-sheet-demo/folders/A/B/C")); // C
+// Logger.log(verifyFolderPath("google-apps-script-cheat-sheet-demo/folders")); // folders
 
 // -- Verify Folders
 
@@ -1583,8 +1581,8 @@ function verifyFoldersAtRoot(arr) {
  * @requires arrayOfFoldersInFolder()
  * @requires arrayOfFolderNames()
  * @requires checkArrayForValue()
+ * @param {string[]} arr
  * @param {Folder} fldr
- * @param {string[]} names
  * @returns {Folder}
  */
 
@@ -1632,16 +1630,38 @@ function createExampleFiles() {
   verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file");
   verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-document", "document");
   verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-spreadsheet", "spreadsheet");
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-presentation", "presentation");
 } 
 
 createExampleFiles(); 
  
 // -- Array of Files 
 
-// --- Array of Files in a Folder
+// --- Array of Files at Root
 
 /**
- * Returns an array of files found at the top level of a folder.
+ * Returns an array containing all files found at root.
+ *
+ * @returns {File[]}
+ */
+
+function arrayOfFilesAtRoot() {
+  var result = [];
+  var fi     = DriveApp.getRootFolder().getFiles();
+  while (fi.hasNext()) {
+    var file = fi.next();
+    result.push(file);
+  } 
+  return result;
+}
+
+// Logger.log("arrayOfFilesAtRoot");
+// Logger.log(arrayOfFilesAtRoot());
+
+// --- Array of Files in Folder
+
+/**
+ * Returns an array containing all files found at the top level of a folder.
  *
  * @param {Folder} fldr
  * @returns {File[]}
@@ -1661,31 +1681,37 @@ function arrayOfFilesInFolder(fldr) {
 // var fldr_fin = findFolderAtPath("google-apps-script-cheat-sheet-demo/files");
 // Logger.log(arrayOfFilesInFolder(fldr_fin)); // [example-file, example-doc, example-spreadsheet];
 
-// --- Array of Files at Root
+// --- Array of Files at Path
 
 /**
- * Returns an array of all files at the root of a user's Drive.
+ * Returns an array containing all files found at the top level of a folder path.
  *
- * @returns {File[]}
+ * @requires validatePathString() 
+ * @requires findFolderAtPath() 
+ * @requires getBasename()*
+ * @requires arrayOfFilesInFolder() 
+ * @param {string} path
+ * @returns {Files[] || boolean}
  */
 
-function arrayOfFilesAtRoot() {
+function arrayOfFilesAtPath(path) {
+  var valid  = validatePathString(path);
   var result = [];
-  var fi     = DriveApp.getRootFolder().getFiles();
-  while (fi.hasNext()) {
-    var file = fi.next();
-    result.push(file);
-  } 
-  return result;
-}
+  var fldr   = findFolderAtPath(valid);
+  if (fldr) {
+    return arrayOfFilesInFolder(fldr);
+  } else {
+    return false;
+  }
+} 
 
-// Logger.log("arrayOfFilesAtRoot");
-// Logger.log(arrayOfFilesAtRoot());
+// Logger.log("arrayOfFilesAtPath");
+// Logger.log(arrayOfFilesAtPath("google-apps-script-cheat-sheet-demo/files")); // example-spreadsheet...
 
 // --- Array of All Files in Drive
 
 /**
- * Returns an array of all files in the user's Drive.
+ * Returns an array of all files in Drive..
  * Please don't actually use this in production. 
  *
  * @returns {File[]}
@@ -1732,7 +1758,7 @@ function arrayOfFileNames(arr) {
 // --- Find a File in a Folder
 
 /**
- * Returns a file from a target folder.
+ * Returns a file from a folder.
  *
  * @requires arrayOfFilesInFolder() 
  * @requires arrayOfFileNames() 
@@ -1788,7 +1814,7 @@ function findFileInFolder(name, fldr, mime) {
 // --- Find a File at Root
 
 /**
- * Returns a file from the root folder. 
+ * Returns a file from root. 
  *
  * @requires arrayOfFilesAtRoot() 
  * @requires arrayOfFileNames() 
@@ -1832,7 +1858,7 @@ function findFileAtRoot(name, mime) {
 // --- Find a File in Drive
 
 /**
- * Returns a file from the user's Drive.
+ * Returns a file from Drive.
  *
  * @param {string} name
  * @returns {File}
@@ -1873,7 +1899,7 @@ function findFileInDrive(name, mime) {
 // --- Find File at Path
 
 /**
- * Returns a file found at the end of a path. 
+ * Returns a file from a path.
  * Returns false if the given path is incomplete.
  * Returns false if passed a mime value that doesn't match the file's mime type.
  * @param {string} path
@@ -2038,8 +2064,17 @@ function createFileAtRoot(name, mime) {
  * Returns a newly created file.
  * This can create documents, forms, presentations or spreadsheets, 
  * but it will always return a file.
+ *
+ * @requires createFileAtRoot() 
+ * @requires moveFileToFolder() 
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
  * @param {string} name
- * @param {string} mime
+ * @param {Folder} fldr
+ * @param {string} [mime]
  * @returns {File}
  */
 
