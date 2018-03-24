@@ -78,9 +78,9 @@ Logger.log("Start");
 // |+| -- Array of File Names
 // |+| -- Find a File
 // |+| --- Find a File at Root
-// |+| --- Find a File in a Folder
-// |+| --- Find a File in Drive
-// |+| --- Find File at Path
+// | | --- Find a File in a Folder
+// | | --- Find a File in Drive
+// | | --- Find File at Path
 // | | -- Check for a File
 // | | --- Check for a File at Root
 // | | --- Check for a File in a Folder
@@ -1959,6 +1959,11 @@ function findFileAtPath(path, mime) {
 /**
  * Returns true if a matching file is found.
  *
+ * @requires findFileAtRoot() 
+ * @requires arrayOfFilesAtRoot()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()* 
  * @param {string} name
  * @param {string} mime
  * @returns {boolean}
@@ -1981,6 +1986,10 @@ function checkForFileAtRoot(name, mime) {
  * Returns true if a matching file is found.
  *
  * @requires findFileInFolder() 
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()* 
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
  * @param {string} name
  * @param {Folder} fldr
  * @param {string} mime
@@ -2006,6 +2015,7 @@ function checkForFileInFolder(name, fldr, mime) {
 /**
  * Returns true if a matching file is found.
  *
+ * @requires findFileAtPath() 
  * @param {string} path
  * @param {string} mime
  * @returns {boolean}
