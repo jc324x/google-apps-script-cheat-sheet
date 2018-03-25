@@ -93,10 +93,10 @@ Logger.log("Start");
 // |+| --- Verify File at Root
 // |+| --- Verify File in Folder
 // |+| --- Verify File at Path
-// | | -- Id of Active File
-// | | -- Open File as MIME Type
-// | | -- Copy a File to a Folder
-// | | -- Move a File to a Folder
+// |+| -- Id of Active File
+// |+| -- Open File as MIME Type
+// |+| -- Copy a File to a Folder
+// |+| -- Move a File to a Folder
 // | | - Files and Folders
 // | | -- Rename a File or Folder
 // | | -- Parent Folder of a File or Folder
@@ -2296,67 +2296,79 @@ function openFileAsType(file, mime) {
 // Logger.log(openFileAsType(file_ofat, "document")); // Document
 
 // -- Copy a File to a Folder
-// TODO: verify type?
 
 /**
  * Returns a file from it's new location.
  * This will not copy a file to a folder if a
  * file of the same name exists in the destination folder.
  *
+ * @requires findFileInFolder() 
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
  * @param {File} file
  * @param {Folder} fldr
- * @returns {File}
+ * @param {string} [mime]
+ * @returns {File || boolean}
  */
 
-function copyFileToFolder(file, fldr) {
+function copyFileToFolder(file, fldr, mime) {
   var name = file.getName();
-  var dest = findFileInFolder(name, fldr);
+  var dest = findFileInFolder(name, fldr, mime);
   if (dest === false) {
     file.makeCopy(name, fldr);
   }
   return findFileInFolder(name, fldr);
 } 
 
-Logger.log("copyFileToFolder");
-var fldr_cftf = verifyFolderPath("google-apps-script-cheat-sheet-demo/copy");
-var file_cftf = verifyFileAtPath("google-apps-script-cheat-sheet-demo/bulk/copy-example", "document"); 
-var doc_cftf = openFileAsType(file_cftf, "document");
-Logger.log(copyFileToFolder(file_cftf, fldr_cftf)); // copy-example
+// Logger.log("copyFileToFolder");
+// var fldr_cftf = verifyFolderPath("google-apps-script-cheat-sheet-demo/copy");
+// var file_cftf = verifyFileAtPath("google-apps-script-cheat-sheet-demo/bulk/copy-example", "document"); 
+// var doc_cftf = openFileAsType(file_cftf, "document");
+// var body_cftf = doc_cftf.getBody().editAsText();
+// body_cftf.insertText(0, 'copied document!\n');
+// Logger.log(copyFileToFolder(file_cftf, fldr_cftf)); // copy-example
 
 // -- Move a File to a Folder 
 
 /**
  * Returns a file from it's new location. 
+ * The original file is not deleted until the
+ * copy to the new location is confirmed.
  *
  * @requires findFileInFolder()
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
  * @param {File} file
  * @param {Folder}  fldr
- * @returns {File}
+ * @returns {File || boolean}
  */
 
 function moveFileToFolder(file, fldr) {
-  var result;
+  var copy, result;
   var name = file.getName();
   var dest = findFileInFolder(name, fldr);
 
   if (dest === false) {
-    file.makeCopy(name, fldr);
+    copy = file.makeCopy(name, fldr);
     result = findFileInFolder(name, fldr);
   }
 
   if (result) {
+    file.setTrashed(true);
     return result;
   } else {
     return false;
   }
 } 
 
-// Logger.log("moveFileToFolder");
-// var fldr_mftf1 = verifyFolderPath("google-apps-script-cheat-sheet-demo/files/copied");
-// var file_mftf  = verifyFileInFolder("example-file", fldr_mftf1);
-// Logger.log(file_mftf);
-// var fldr_mftf2 = verifyFolderPath("google-apps-script-cheat-sheet-demo/files/moved");
-// Logger.log(moveFileToFolder(file_mftf, fldr_mftf2)); // example-file
+Logger.log("moveFileToFolder");
+var file_mftf = verifyFileAtPath("google-apps-script-cheat-sheet-demo/bulk/move-example", "spreadsheet");
+var fldr_mftf = verifyFolderPath("google-apps-script-cheat-sheet-demo/move");
+Logger.log(moveFileToFolder(file_mftf, fldr_mftf)); // move-example
 
 // - Files and Folders
 
@@ -2375,11 +2387,11 @@ function renameFileOrFolder(file_fldr, name) {
   return file_fldr;
 } 
 
-// Logger.log("renameFileOrFolder");
-// TODO: VERIFY
-// var fldr_rfof = findFolderAtPath("google-apps-script-cheat-sheet-demo/files/moved");
-// var file_rfof = findFileInFolder("example-file", fldr_rfof);
-// Logger.log(renameFileOrFolder(file_rfof, "modified-example-file")); // modified-example-file
+Logger.log("renameFileOrFolder");
+var file_rfof = verifyFileAtPath("google-apps-script-cheat-sheet-demo/bulk/spellling-eror");
+Logger.log(renameFileOrFolder(file_rfof, "spelling-error-fixed")); // modified-example-file
+var fldr_rfof = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk/spellling-eror");
+Logger.log(renameFileOrFolder(fldr_rfof, "spelling-error-fixed")); // modified-example-file
 
 // -- Parent Folder of a File or Folder 
 
