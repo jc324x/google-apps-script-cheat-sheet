@@ -171,6 +171,14 @@ Logger.log("Start");
 // * Count of Value in Array of Objects
 // * Recursive Moving / Copying Folders
 
+// Example Files Folders
+
+/**
+ * 
+ *
+ * @returns {undefined}
+ */
+
 // General
 
 // - Array 
@@ -2417,11 +2425,12 @@ function parentFolderOfFileOrFolder(file_fldr) {
 // TODO: Update with new checking functions
 
 function verifyFilesForZipEx() {
-  verifyFolderPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip");
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip/A", "document");
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip/B", "document");
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip/C", "document");
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files-to-zip/A", "document");
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files-to-zip/B", "document");
+  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files-to-zip/C", "document");
 } 
+
+verifyExampleFiles();
 
 /**
  * Returns a zipped file. 
