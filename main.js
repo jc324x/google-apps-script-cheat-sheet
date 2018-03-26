@@ -97,10 +97,20 @@ Logger.log("Start");
 // |+| -- Open File as MIME Type
 // |+| -- Copy a File to a Folder
 // |+| -- Move a File to a Folder
-// | | - Files and Folders
-// | | -- Rename a File or Folder
-// | | -- Parent Folder of a File or Folder
-// | | -- Zip All Files in a Folder
+// |+| - Files and Folders
+// |+| -- Rename a File or Folder
+// |+| -- Parent Folder of a File or Folder
+// |+| -- Zip All Files in a Folder
+// |?| JSON
+// |?| -- Object From URL
+// |?| -- Object From File
+// |?| -- Object From URL or File
+// |?| UI
+// |?| -- On Open
+// |?| -- Set Configuration
+// |?| -- Show Configuration
+// |?| -- Clear Configuration
+// |?| -- Run Script
 // | | Sheets
 // | | - Utility Functions for Sheets
 // | | -- Convert Column Number to a Letter
@@ -147,16 +157,6 @@ Logger.log("Start");
 // | | -- Mail Merge
 // | | --- Append Body Property for Object in Array of Objects 
 // | | --- Run Mail Merge for Array of Objects
-// | | JSON
-// | | -- Object From URL
-// | | -- Object From File
-// | | -- Object From URL or File
-// | | UI
-// | | -- On Open
-// | | -- Set Configuration
-// | | -- Show Configuration
-// | | -- Clear Configuration
-// | | -- Run Script
 
 // General
 
@@ -868,8 +868,8 @@ function getBasename(path) {
   return split.pop();
 } 
 
-Logger.log("getBasename");
-Logger.log(getBasename("/a/b/c")); // c
+// Logger.log("getBasename");
+// Logger.log(getBasename("/a/b/c")); // c
 
 // -- Get Inverse Basename
 
@@ -887,8 +887,8 @@ function getInverseBasename(path) {
   return split.join("/");
 } 
 
-Logger.log("getInverseBasename");
-Logger.log(getInverseBasename("/a/b/c")); // a/b
+// Logger.log("getInverseBasename");
+// Logger.log(getInverseBasename("/a/b/c")); // a/b
 
 // -- Validate MIME Type
 
@@ -955,7 +955,7 @@ function matchMIMEType(file, mime) {
 
 // - Folders
 
-// Example Files Folders
+// Example Files And Folders
 
 /**
  * @requires verifyFolderPath() 
@@ -979,7 +979,7 @@ function matchMIMEType(file, mime) {
  *
  */
 
-function createExampleFilesAndFolders() {
+function verifyExampleFilesAndFolders() {
   verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk");
   verifyFolderPath("google-apps-script-cheat-sheet-demo/copy");
   verifyFolderPath("google-apps-script-cheat-sheet-demo/folders");
@@ -994,7 +994,8 @@ function createExampleFilesAndFolders() {
   verifyFilePath("google-apps-script-cheat-sheet-demo/files/example-presentation", "presentation");
 } 
 
-createExampleFilesAndFolders();
+// Logger.log("verifyExampleFilesAndFolders");
+// verifyExampleFilesAndFolders();
 
 // -- Array of Folders 
 
@@ -2370,10 +2371,10 @@ function moveFileToFolder(file, fldr) {
   }
 } 
 
-Logger.log("moveFileToFolder");
-var file_mftf = verifyFilePath("google-apps-script-cheat-sheet-demo/bulk/move-example", "spreadsheet");
-var fldr_mftf = verifyFolderPath("google-apps-script-cheat-sheet-demo/move");
-Logger.log(moveFileToFolder(file_mftf, fldr_mftf)); // move-example
+// Logger.log("moveFileToFolder");
+// var file_mftf = verifyFilePath("google-apps-script-cheat-sheet-demo/bulk/move-example", "spreadsheet");
+// var fldr_mftf = verifyFolderPath("google-apps-script-cheat-sheet-demo/move");
+// Logger.log(moveFileToFolder(file_mftf, fldr_mftf)); // move-example
 
 // - Files and Folders
 
@@ -2392,11 +2393,11 @@ function renameFileOrFolder(file_fldr, name) {
   return file_fldr;
 } 
 
-Logger.log("renameFileOrFolder");
-var file_rfof = verifyFilePath("google-apps-script-cheat-sheet-demo/bulk/spellling-eror");
-Logger.log(renameFileOrFolder(file_rfof, "spelling-error-fixed")); // modified-example-file
-var fldr_rfof = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk/spellling-eror");
-Logger.log(renameFileOrFolder(fldr_rfof, "spelling-error-fixed")); // modified-example-file
+// Logger.log("renameFileOrFolder");
+// var file_rfof = verifyFilePath("google-apps-script-cheat-sheet-demo/bulk/spellling-eror");
+// Logger.log(renameFileOrFolder(file_rfof, "spelling-error-fixed")); // modified-example-file
+// var fldr_rfof = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk/spellling-eror");
+// Logger.log(renameFileOrFolder(fldr_rfof, "spelling-error-fixed")); // modified-example-file
 
 // -- Parent Folder of a File or Folder 
 
@@ -2412,9 +2413,9 @@ function parentFolderOfFileOrFolder(file_fldr) {
   return fi.next();
 }
 
-Logger.log("parentFolderOfFileOrFolder");
-var file_pfofof = findFileInDrive("example-file");
-Logger.log(parentFolderOfFileOrFolder(file_pfofof)); // files
+// Logger.log("parentFolderOfFileOrFolder");
+// var file_pfofof = findFileInDrive("example-file");
+// Logger.log(parentFolderOfFileOrFolder(file_pfofof)); // files
 
 // -- Zip All Files in a Folder
 
@@ -2428,42 +2429,35 @@ Logger.log(parentFolderOfFileOrFolder(file_pfofof)); // files
  * @returns {File}
  */
 
-function zipFilesInFolder(fldr, name, dest) {
+function zipFilesInFolder(target, name, fldr) {
   var blobs = [];
-  var files = arrayOfFilesInFolder(fldr);
+  var files = arrayOfFilesInFolder(target);
   for (var i = 0; i < files.length; i++) {
     blobs.push(files[i].getBlob());
   } 
   var zips = Utilities.zip(blobs, name);
-  if (dest !== null) {
-    dest.createFile(zips);
-    return findFileInFolder(name, dest);
-  } else {
-    return false;
-  }
+  fldr.createFile(zips);
+  return findFileInFolder(name, fldr);
 }
 
 // Logger.log("zipFilesInFolder");
-// verifyFilesForZipEx();
-// var fldr_zfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/zip/files-to-zip");
-// var dest_zfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/zip/destination");
-// zipFilesInFolder(fldr_zfif, "Archive", dest_zfif);
+// var fldr1_zfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/zip");
+// var fldr2_zfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/zipped");
+// zipFilesInFolder(fldr1_zfif, "Archive", fldr2_zfif);
 
 // JSON
 
-// TODO: match style for other example only functions 
-// not just a blank example file, specific format required
-
-function verifyFileForJSONEx() {
+function verifyExampleJSONFile() {
   var fldr = verifyFolderPath("google-apps-script-cheat-sheet-demo/json");
   var file = findFileInFolder("example-json", fldr);
-  if (!(file)) {
-    var json = objectFromUrlJSON("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-    var text = JSON.stringify(json);
-    var ex = fldr.createFile('example-json', text);
-  }
-  return findFileInFolder("example-json", fldr);
+  if (file) return findFileInFolder("example-json", fldr);
+  var json = objectFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+  var text = JSON.stringify(json);
+  var ex   = fldr.createFile('example-json', text);
 }
+
+Logger.log("verifyExampleJSONFile");
+verifyExampleJSONFile();
 
 // -- Object From URL
 
@@ -2480,9 +2474,9 @@ function objectFromUrl(url) {
   return JSON.parse(data);
 } 
 
-// Logger.log("objectFromUrl");
-// var obj_ofu = objectFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-// Logger.log(JSON.stringify(obj_ofu));
+Logger.log("objectFromUrl");
+var obj_ofu = objectFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+Logger.log(JSON.stringify(obj_ofu));
 
 // -- Object From File
 
@@ -2498,14 +2492,13 @@ function objectFromFile(file) {
   return JSON.parse(data);
 } 
 
-// Logger.log("objectFromFile");
-// verifyFileForJSONEx();
-// var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-// var obj_off  = objectFromFile(file_off);
-// Logger.log(JSON.stringify(obj_off));
+Logger.log("objectFromFile");
+verifyExampleJSONFile();
+var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+var obj_off  = objectFromFile(file_off);
+Logger.log(JSON.stringify(obj_off));
 
 // -- Object From Source
-// TODO: stuff
 
 /**
  * Returns an object from a URL or from a file in Drive.
