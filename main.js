@@ -39,7 +39,7 @@ Logger.log("Start");
 // |+| -- Validate MIME Type
 // |+| -- Match MIME Type 
 // |+| - Folders
-// |+| -- Array Of Folders
+// |+| -- Array of Folders
 // |+| --- Array of Folders at Root
 // |+| --- Array of Folders in Folder
 // |+| --- Array of Folders at Path
@@ -157,14 +157,6 @@ Logger.log("Start");
 // | | -- Show Configuration
 // | | -- Clear Configuration
 // | | -- Run Script
-
-// Example Files Folders
-
-/**
- * 
- *
- * @returns {undefined}
- */
 
 // General
 
@@ -871,13 +863,13 @@ function validatePathString(path) {
  */
 
 function getBasename(path) {
-  var valid = validatePathString(path);
-  var split = valid.split("/");
+  path = validatePathString(path);
+  var split = path.split("/");
   return split.pop();
 } 
 
-// Logger.log("getBasename");
-// Logger.log(getBasename("/a/b/c")); // c
+Logger.log("getBasename");
+Logger.log(getBasename("/a/b/c")); // c
 
 // -- Get Inverse Basename
 
@@ -889,14 +881,14 @@ function getBasename(path) {
  */
 
 function getInverseBasename(path) {
-  var valid = validatePathString(path);
-  var split = valid.split("/");
+  path = validatePathString(path);
+  var split = path.split("/");
   split.pop();
   return split.join("/");
 } 
 
-// Logger.log("getInverseBasename");
-// Logger.log(getInverseBasename("/a/b/c")); // a/b
+Logger.log("getInverseBasename");
+Logger.log(getInverseBasename("/a/b/c")); // a/b
 
 // -- Validate MIME Type
 
@@ -963,14 +955,46 @@ function matchMIMEType(file, mime) {
 
 // - Folders
 
-function createExampleFolders() {
+// Example Files Folders
+
+/**
+ * @requires verifyFolderPath() 
+ * @requires verifyFilePath()
+ * @requires getInverseBasename()*
+ * @requires validatePathString()*
+ * @requires checkForFileAtPath() 
+ * @requires getBasename()* 
+ * @requires findFolderAtPath()*
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @requires matchMIMEType()*
+ * @requires findFileAtPath()
+ * @requires createFileAtPath() 
+ * @requires createFileInFolder()*
+ * @requires createFileAtRoot()*
+ * @requires moveFileToFolder()*
+ *
+ */
+
+function createExampleFilesAndFolders() {
   verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk");
-  verifyFolderPath("google-apps-script-cheat-sheet-demo/folders");
   verifyFolderPath("google-apps-script-cheat-sheet-demo/copy");
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/folders");
   verifyFolderPath("google-apps-script-cheat-sheet-demo/move");
+  verifyFolderPath("google-apps-script-cheat-sheet-demo/zipped");
+  verifyFilePath("google-apps-script-cheat-sheet-demo/zip/zip-document", "document");
+  verifyFilePath("google-apps-script-cheat-sheet-demo/zip/zip-spreadsheet", "spreadsheet");
+  verifyFilePath("google-apps-script-cheat-sheet-demo/zip/zip-presentation", "presentation");
+  verifyFilePath("google-apps-script-cheat-sheet-demo/files/example-file");
+  verifyFilePath("google-apps-script-cheat-sheet-demo/files/example-document", "document");
+  verifyFilePath("google-apps-script-cheat-sheet-demo/files/example-spreadsheet", "spreadsheet");
+  verifyFilePath("google-apps-script-cheat-sheet-demo/files/example-presentation", "presentation");
 } 
 
-createExampleFolders(); 
+createExampleFilesAndFolders();
 
 // -- Array of Folders 
 
@@ -1035,9 +1059,9 @@ function arrayOfFoldersInFolder(fldr) {
  */
 
 function arrayOfFoldersAtPath(path) {
-  var valid  = validatePathString(path);
+  path = validatePathString(path);
   var result = [];
-  var fldr   = findFolderAtPath(valid);
+  var fldr   = findFolderAtPath(path);
   if (fldr) {
     return arrayOfFoldersInFolder(fldr);
   } else {
@@ -1161,9 +1185,9 @@ function findFolderInFolder(name, fldr) {
  */
 
 function findFolderAtPath(path) {
-  var valid = validatePathString(path);
+  path = validatePathString(path);
   var fi, fldr;
-  var split = valid.split("/");
+  var split = path.split("/");
 
   for (i = 0; i < split.length; i++) {
     if (i === 0) {
@@ -1183,7 +1207,7 @@ function findFolderAtPath(path) {
     }
   } 
 
-  var target = getBasename(valid);
+  var target = getBasename(path);
   if (fldr.getName() === target) {
     return fldr;
   } else {
@@ -1279,8 +1303,8 @@ function checkForFolderInFolder(name, fldr) {
  */
 
 function checkForFolderAtPath(path) {
-  var valid = validatePathString(path);
-  var fldr = findFolderAtPath(valid);
+  path = validatePathString(path);
+  var fldr = findFolderAtPath(path);
   if (fldr) {
     return true;
   } else {
@@ -1347,11 +1371,11 @@ function createFolderInFolder(name, fldr) {
  */
 
 function createFolderAtPath(path) {
-  var valid   = validatePathString(path);
-  var inverse = getInverseBasename(valid);
+  path = validatePathString(path);
+  var inverse = getInverseBasename(path);
   var fldr    = findFolderAtPath(inverse);
   if (!fldr) return false;
-  var basename = getBasename(valid);
+  var basename = getBasename(path);
   return fldr.createFolder(basename);
 } 
 
@@ -1419,8 +1443,8 @@ function createFoldersInFolder(arr, fldr) {
  */
 
 function createFoldersAtPath(arr, path) {
-  var valid = validatePathString(path);
-  var fldr   = findFolderAtPath(valid);
+  path= validatePathString(path);
+  var fldr   = findFolderAtPath(path);
   if (!fldr) return false;
   for (i = 0; i < arr.length; i++) {
     fldr.createFolder(arr[i]);
@@ -1506,8 +1530,8 @@ function verifyFolderInFolder(name, fldr) {
  */
 
 function verifyFolderPath(path) {
-  var valid = validatePathString(valid);
-  var split = valid.split("/");
+  path = validatePathString(path);
+  var split = path.split("/");
   var fldr;
   for (i = 0; i < split.length; i++) {
     var fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
@@ -1608,22 +1632,13 @@ function verifyFoldersInFolder(arr, fldr) {
  */
 
 function verifyFoldersAtPath(arr, path) {
-  var valid = validatePathString(valid);
-  var fldr  = findFolderAtPath(valid);
+  path = validatePathString(path);
+  var fldr  = findFolderAtPath(path);
   verifyFoldersInFolder(arr, fldr);
 } 
 
 // - Files
 
-function createExampleFiles() {
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-file");
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-document", "document");
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-spreadsheet", "spreadsheet");
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-presentation", "presentation");
-} 
-
-createExampleFiles(); 
- 
 // -- Array of Files 
 
 // --- Array of Files at Root
@@ -1684,9 +1699,9 @@ function arrayOfFilesInFolder(fldr) {
  */
 
 function arrayOfFilesAtPath(path) {
-  var valid  = validatePathString(path);
+  path = validatePathString(path);
   var result = [];
-  var fldr   = findFolderAtPath(valid);
+  var fldr   = findFolderAtPath(path);
   if (!fldr) {
     return arrayOfFilesInFolder(fldr);
   } else {
@@ -2227,7 +2242,7 @@ function verifyFileInFolder(name, fldr, mime) {
  * @returns {File}
  */
 
-function verifyFileAtPath(path, mime) {
+function verifyFilePath(path, mime) {
   var folderPath = getInverseBasename(path);
   verifyFolderPath(folderPath);
   if (checkForFileAtPath(path, mime)) {
@@ -2237,7 +2252,7 @@ function verifyFileAtPath(path, mime) {
   }
 }
 
-// Logger.log("verifyFileAtPath");
+// Logger.log("verifyFilePath");
 
 // -- Id of Active File
 
@@ -2282,7 +2297,7 @@ function openFileAsType(file, mime) {
 } 
 
 // Logger.log("openFileAsType");
-// var file_ofat = verifyFileAtPath("google-apps-script-cheat-sheet-demo/files/example-document", "document");
+// var file_ofat = verifyFilePath("google-apps-script-cheat-sheet-demo/files/example-document", "document");
 // Logger.log(openFileAsType(file_ofat, "document")); // Document
 
 // -- Copy a File to a Folder
@@ -2314,7 +2329,7 @@ function copyFileToFolder(file, fldr, mime) {
 
 // Logger.log("copyFileToFolder");
 // var fldr_cftf = verifyFolderPath("google-apps-script-cheat-sheet-demo/copy");
-// var file_cftf = verifyFileAtPath("google-apps-script-cheat-sheet-demo/bulk/copy-example", "document"); 
+// var file_cftf = verifyFilePath("google-apps-script-cheat-sheet-demo/bulk/copy-example", "document"); 
 // var doc_cftf = openFileAsType(file_cftf, "document");
 // var body_cftf = doc_cftf.getBody().editAsText();
 // body_cftf.insertText(0, 'copied document!\n');
@@ -2356,7 +2371,7 @@ function moveFileToFolder(file, fldr) {
 } 
 
 Logger.log("moveFileToFolder");
-var file_mftf = verifyFileAtPath("google-apps-script-cheat-sheet-demo/bulk/move-example", "spreadsheet");
+var file_mftf = verifyFilePath("google-apps-script-cheat-sheet-demo/bulk/move-example", "spreadsheet");
 var fldr_mftf = verifyFolderPath("google-apps-script-cheat-sheet-demo/move");
 Logger.log(moveFileToFolder(file_mftf, fldr_mftf)); // move-example
 
@@ -2378,7 +2393,7 @@ function renameFileOrFolder(file_fldr, name) {
 } 
 
 Logger.log("renameFileOrFolder");
-var file_rfof = verifyFileAtPath("google-apps-script-cheat-sheet-demo/bulk/spellling-eror");
+var file_rfof = verifyFilePath("google-apps-script-cheat-sheet-demo/bulk/spellling-eror");
 Logger.log(renameFileOrFolder(file_rfof, "spelling-error-fixed")); // modified-example-file
 var fldr_rfof = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk/spellling-eror");
 Logger.log(renameFileOrFolder(fldr_rfof, "spelling-error-fixed")); // modified-example-file
@@ -2397,22 +2412,11 @@ function parentFolderOfFileOrFolder(file_fldr) {
   return fi.next();
 }
 
-// Logger.log("parentFolderOfFileOrFolder");
-// TODO: VERIFY
-// var file_pfofof = findFileInDrive("example-file");
-// Logger.log(parentFolderOfFileOrFolder(file_pfofof)); // files
+Logger.log("parentFolderOfFileOrFolder");
+var file_pfofof = findFileInDrive("example-file");
+Logger.log(parentFolderOfFileOrFolder(file_pfofof)); // files
 
 // -- Zip All Files in a Folder
-
-// TODO: Update with new checking functions
-
-function verifyFilesForZipEx() {
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files-to-zip/A", "document");
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files-to-zip/B", "document");
-  verifyFileAtPath("google-apps-script-cheat-sheet-demo/files-to-zip/C", "document");
-} 
-
-verifyExampleFiles();
 
 /**
  * Returns a zipped file. 
@@ -2427,13 +2431,10 @@ verifyExampleFiles();
 function zipFilesInFolder(fldr, name, dest) {
   var blobs = [];
   var files = arrayOfFilesInFolder(fldr);
-
   for (var i = 0; i < files.length; i++) {
     blobs.push(files[i].getBlob());
   } 
-
   var zips = Utilities.zip(blobs, name);
-
   if (dest !== null) {
     dest.createFile(zips);
     return findFileInFolder(name, dest);
@@ -3112,14 +3113,14 @@ function arrayForColumnRange(targetRange){
 
 // -- Append Paragraph to Document
 
-// var file_adb = verifyFileAtPath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
+// var file_adb = verifyFilePath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
 // var doc_adb  = openFileAsType(file_adb, "document");
 // var body_adb = doc_adb.getBody();
 // body_adb.appendParagraph("Hello, world!");
 
 // -- Clear Document Body
 
-// var file_cdb = verifyFileAtPath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
+// var file_cdb = verifyFilePath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
 // var doc_cdb  = openFileAsType(file_cdb, "document");
 // var body_cdb = doc_cdb.getBody();
 // body_cdb.clear();
@@ -3213,7 +3214,7 @@ function findReplaceInDoc(doc, obj) {
 } 
 
 // Logger.log("findReplaceInDoc");
-// var file_frid = verifyFileAtPath("google-apps-script-cheat-sheet-demo/docs/example-doc");
+// var file_frid = verifyFilePath("google-apps-script-cheat-sheet-demo/docs/example-doc");
 // var doc_frid = openFileAsType(file_frid, "document");
 // var body_frid = doc_frid.getBody();
 // body_frid.clear();
@@ -3250,7 +3251,7 @@ function findReplaceInSheet(sheet, obj) {
   sheet.getDataRange().setValues(values);
 }
 
-// var file_fris  = verifyFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet");
+// var file_fris  = verifyFilePath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet");
 // var ss_fris    = openFileAsType(file_fris, "spreadsheet");
 // var sheet_fris = ss_fris.getSheets()[0];
 // sheet_fris.clear();
@@ -3282,7 +3283,7 @@ function findReplaceInSpreadsheet(ss, obj) {
   } 
 }
 
-// var file_fris  = verifyFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet");
+// var file_fris  = verifyFilePath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet");
 // var ss_fris    = openFileAsType(file_fris, "spreadsheet");
 // var sheet_fris = ss_fris.getSheets()[0];
 // sheet_fris.clear();
@@ -3351,7 +3352,7 @@ function documentMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
 // var sheet_rdm  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_rdm = arrayOfObjectsSheet(sheet_rdm);
 // var fldr_rdm   = verifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
-// var file_rdm   = verifyFileAtPath("google-apps-script-cheat-sheet-demo/merges/template-doc", "document");
+// var file_rdm   = verifyFilePath("google-apps-script-cheat-sheet-demo/merges/template-doc", "document");
 // var doc_rdm    = openFileAsType(file_rdm, "document");
 // var body_rdm   = doc_rdm.getBody();
 // body_rdm.clear();
@@ -3399,7 +3400,7 @@ function spreadsheetMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
 // var sheet_smaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_smaoo = arrayOfObjectsSheet(sheet_smaoo);
 // var fldr_smaoo   = verifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
-// var file_smaoo   = verifyFileAtPath("google-apps-script-cheat-sheet-demo/merges/template-ss", "spreadsheet");
+// var file_smaoo   = verifyFilePath("google-apps-script-cheat-sheet-demo/merges/template-ss", "spreadsheet");
 // var ss_smaoo     = openFileAsType(file_smaoo, "spreadsheet");
 // var sheet_smaoo  = ss_smaoo.getSheets()[0];
 
@@ -3420,7 +3421,7 @@ function spreadsheetMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
 
 // var sheet_sdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_sdl = arrayOfObjectsSheet(sheet_sdl);
-// var file_sdl   = verifyFileAtPath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
+// var file_sdl   = verifyFilePath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
 // var doc_sdl    = openFileAsType(file_sdl, "document");
 // var body_sdl   = doc_sdl.getBody();
 
@@ -3438,7 +3439,7 @@ function spreadsheetMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
 
 // var sheet_mdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // var arrObj_mdl = arrayOfObjectsSheet(sheet_mdl);
-// var file_mdl   = verifyFileAtPath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
+// var file_mdl   = verifyFilePath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
 // var doc_mdl    = openFileAsType(file_mdl, "document");
 // var body_mdl   = doc_mdl.getBody();
 
