@@ -111,16 +111,16 @@ Logger.log("Start");
 // |?| -- Show Configuration
 // |?| -- Clear Configuration
 // |?| -- Run Script
-// | | Sheets
-// | | - Utility Functions for Sheets
-// | | -- Convert Column Number to a Letter
-// | | -- Convert Column Letter to a Number
-// | | -- Replicating Import Range
-// | | -- Evaluating True and False
-// | | - Range
-// | | -- Validate Range
+// |?| Sheets
+// |?| - Utility Functions for Sheets
+// |?| -- Convert Column Number to a Letter
+// |?| -- Convert Column Letter to a Number
+// |?| -- Replicating Import Range
+// |?| -- Evaluating True and False
+// |?| - Range
+// |?| -- Validate Range
 // | | - Object
-// | | -- Object from Range 
+// |+| -- Object from Range 
 // | | -  Array of Objects
 // | | -- Utility Functions for Array of Objects
 // | | --- Header Range
@@ -2819,29 +2819,26 @@ function validateA1(a1Notation, sheet) {
  * The top row of the range is assumed to be the header row.
  * Values in the header row become the object properties.
  *
- * @param {Sheet} sheet
  * @param {string} a1Notation
+ * @param {Sheet} sheet
  * @returns {Object}
  */
 
 function objectFromRange(a1Notation, sheet) {
   a1Notation = validateA1(a1Notation, sheet);
-  if (a1Notation) {
-    var result = {};
-    var range  = sheet.getRange(a1Notation);
-    var values = range.getValues();
-    for (var i = 0; i < values.length; i++) {
-      result[values[i][0]] = values[i][1];
-    } 
-    return result;
-  } else {
-    return false;
-  }
+  if (! a1Notation) return false;
+  var result = {};
+  var range  = sheet.getRange(a1Notation);
+  var values = range.getValues();
+  for (var i = 0; i < values.length; i++) {
+    result[values[i][0]] = values[i][1];
+  } 
+  return result;
 }
 
-// Logger.log("objectFromRange");
-// var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// Logger.log(objectFromRange("D2:E5", sheet_ofr)); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
+Logger.log("objectFromRange");
+var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+Logger.log(objectFromRange("D2:E5", sheet_ofr)); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 
 // - Array of Objects
 
@@ -2866,10 +2863,10 @@ function arrayOfHeaderValues(rangeObj){
   return result;
 }
 
-// Logger.log("arrayOfHeaderValues");
-// var sheet_hv = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var range_hv = sheet_hv.getRange("A2:E19");
-// Logger.log(arrayOfHeaderValues(range_hv)); // ["First", "Last", "Grade", "Homeroom", "Email"]
+Logger.log("arrayOfHeaderValues");
+var sheet_aohv = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var range_aohv = sheet_aohv.getRange("A2:E19");
+Logger.log(arrayOfHeaderValues(range_aohv)); // ["First", "Last", "Grade", "Homeroom", "Email"]
 
 // --- Values by Row 
 
@@ -2902,13 +2899,12 @@ function arrayOfObjectsByRow(rangeObj, headers){
   return result;
 }
 
-// Logger.log("arrayOfObjectsByRow");
-// TODO: rename
-// var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var range_vbr   = sheet_vbr.getRange("A1:E19");
-// var headers_vbr = arrayOfHeaderValues(range_vbr);
-// range_vbr       = sheet_vbr.getRange("A2:E19");
-// Logger.log(arrayOfObjectsByRow(range_vbr, headers_vbr)); 
+Logger.log("arrayOfObjectsByRow");
+var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+var range_vbr   = sheet_vbr.getRange("A1:E19");
+var headers_vbr = arrayOfHeaderValues(range_vbr);
+range_vbr       = sheet_vbr.getRange("A2:E19");
+Logger.log(arrayOfObjectsByRow(range_vbr, headers_vbr)); 
  // [{last=Garret, grade=6.0, homeroom=Muhsina, first=Arienne, email=agarret@example.com},...]
 
 // --- Header Range 
@@ -2922,16 +2918,15 @@ function arrayOfObjectsByRow(rangeObj, headers){
  */
 
 function headerRange(a1Notation, sheet) {
-  if (validateA1(a1Notation, sheet)) {
-    var coordinates = new A1Object(a1Notation);
-    return sheet.getRange(coordinates.getHeaderA1Notation());
-  }
+  if (! validateA1(a1Notation, sheet)) return false;
+  var coordinates = new A1Object(a1Notation);
+  return sheet.getRange(coordinates.getHeaderA1Notation());
 }
 
-// Logger.log("headerRange");
-// var sheet_hr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(headerRange("A2:E19", sheet_hr).getA1Notation()); // "A2:E2"
-// Logger.log(headerRange("A2:E19", sheet_hr).getValues()); // [[First, Last, Grade, Homeroom, Email]]
+Logger.log("headerRange");
+var sheet_hr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(headerRange("A2:E19", sheet_hr).getA1Notation()); // "A2:E2"
+Logger.log(headerRange("A2:E19", sheet_hr).getValues()); // [[First, Last, Grade, Homeroom, Email]]
 
 // --- Value Range 
 
@@ -2944,17 +2939,14 @@ function headerRange(a1Notation, sheet) {
  */
 
 function valueRange(a1Notation, sheet) {
-  if (validateA1(a1Notation, sheet)) {
-    var coordinates = new A1Object(a1Notation);
-    return sheet.getRange(coordinates.getValueA1Notation());
-  }
+  if (! validateA1(a1Notation, sheet)) return false;
 }
 
-// Logger.log("valueRange");
-// var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
+Logger.log("valueRange");
+var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
 
-// -- Array of Objects from Sheet 
+// -- Array of Objects for Sheet 
 
 /**
  * Returns an array of objects representing the values in a sheet.
@@ -2967,9 +2959,9 @@ function valueRange(a1Notation, sheet) {
  * TODO:  @returns {undefined}
  */
 
-// arrayOfObjectsFromSheet 
+// formerly -> arrayOfObjectsSheet
 
-function arrayOfObjectsSheet(sheet) {
+function arrayOfObjectsForSheet(sheet) {
   var a1Notation  = sheet.getDataRange().getA1Notation();
   var a1Object    = new A1Object(a1Notation);
   var headerRange = sheet.getRange(a1Object.getHeaderA1Notation());
@@ -2982,7 +2974,7 @@ function arrayOfObjectsSheet(sheet) {
 // var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
 // Logger.log(arrayOfObjectsSheet(sheet_aofs)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 
-// -- Array of Objects from Range 
+// -- Array of Objects for Range 
 
 /**
  * Returns an array of values representing the values in a range.
@@ -2996,7 +2988,9 @@ function arrayOfObjectsSheet(sheet) {
  * @returns {undefined}
  */
 
-function arrayOfObjectsA1(a1Notation, sheet) {
+// function arrayOfObjectsA1(a1Notation, sheet) {
+
+function arrayOfObjectsForA1(a1Notation, sheet) {
   if (validateA1(a1Notation, sheet)) {
     var a1Object    = new A1Object(a1Notation);
     var headerRange = sheet.getRange(a1Object.getHeaderA1Notation());
@@ -3022,7 +3016,9 @@ function arrayOfObjectsA1(a1Notation, sheet) {
  * Returns an array containing all values in a column.
  */
 
-function arrayForColumnName(name, sheet) {
+// function arrayForColumnName(name, sheet) {
+
+function arrayForHeaderValue(name, sheet) {
   var result       = [];
   var a1Notation   = sheet.getDataRange().getA1Notation();
   var a1Object     = new A1Object(a1Notation);
@@ -3055,7 +3051,8 @@ function arrayForColumnName(name, sheet) {
  * @returns {Array}
  */
 
-function arrayForColumnIndex(number, sheet) {
+// function arrayForColumnIndex(number, sheet) {
+function arrayForColumnNumber(number, sheet) {
   var result       = [];
   var a1Notation   = sheet.getDataRange().getA1Notation();
   var a1Object     = new A1Object(a1Notation);
