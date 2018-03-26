@@ -158,19 +158,6 @@ Logger.log("Start");
 // | | -- Clear Configuration
 // | | -- Run Script
 
-// Future Additions: 
-// * Timestamp on Cell Change
-// * Copy Formulas Down
-// * Create Multidimensional Array of Values
-// * Convert JSON to Sheet
-// * 5 Minute Timer Management
-// * Shade Cells in Document Tables and Spreadsheets
-
-// Possible Additions:
-// * Multidimensional Array from Array of Objects
-// * Count of Value in Array of Objects
-// * Recursive Moving / Copying Folders
-
 // Example Files Folders
 
 /**
@@ -1363,12 +1350,9 @@ function createFolderAtPath(path) {
   var valid   = validatePathString(path);
   var inverse = getInverseBasename(valid);
   var fldr    = findFolderAtPath(inverse);
-  if (fldr) {
-    var basename = getBasename(valid);
-    return fldr.createFolder(basename);
-  } else {
-    return false;
-  }
+  if (!fldr) return false;
+  var basename = getBasename(valid);
+  return fldr.createFolder(basename);
 } 
 
 // Logger.log("createFolderAtPath");
@@ -1437,14 +1421,11 @@ function createFoldersInFolder(arr, fldr) {
 function createFoldersAtPath(arr, path) {
   var valid = validatePathString(path);
   var fldr   = findFolderAtPath(valid);
-  if (fldr) {
-    for (i = 0; i < arr.length; i++) {
-      fldr.createFolder(arr[i]);
-    }
-    return fldr;
-  } else {
-    return false;
+  if (!fldr) return false;
+  for (i = 0; i < arr.length; i++) {
+    fldr.createFolder(arr[i]);
   }
+  return fldr;
 } 
 
 // Logger.log("createFoldersAtPath");
@@ -1525,8 +1506,8 @@ function verifyFolderInFolder(name, fldr) {
  */
 
 function verifyFolderPath(path) {
-  path = validatePathString(path);
-  var split = path.split("/");
+  var valid = validatePathString(valid);
+  var split = valid.split("/");
   var fldr;
   for (i = 0; i < split.length; i++) {
     var fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
@@ -1627,8 +1608,8 @@ function verifyFoldersInFolder(arr, fldr) {
  */
 
 function verifyFoldersAtPath(arr, path) {
-  path     = validatePathString(path);
-  var fldr = findFolderAtPath(path);
+  var valid = validatePathString(valid);
+  var fldr  = findFolderAtPath(valid);
   verifyFoldersInFolder(arr, fldr);
 } 
 
@@ -1706,7 +1687,7 @@ function arrayOfFilesAtPath(path) {
   var valid  = validatePathString(path);
   var result = [];
   var fldr   = findFolderAtPath(valid);
-  if (fldr) {
+  if (!fldr) {
     return arrayOfFilesInFolder(fldr);
   } else {
     return false;
@@ -2154,6 +2135,7 @@ function createFileInFolder(name, fldr, mime) {
  */
 
 function createFileAtPath(path, mime) {
+  // validate path...
   var name = getBasename(path);
   path     = getInverseBasename(path);
   var fldr = findFolderAtPath(path);
