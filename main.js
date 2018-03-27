@@ -2836,9 +2836,9 @@ function objectFromRange(a1Notation, sheet) {
   return result;
 }
 
-Logger.log("objectFromRange");
-var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-Logger.log(objectFromRange("D2:E5", sheet_ofr)); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
+// Logger.log("objectFromRange");
+// var sheet_ofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// Logger.log(objectFromRange("D2:E5", sheet_ofr)); // {A=Alpha, B=Bravo, C=Charlie, D=Delta}
 
 // - Array of Objects
 
@@ -2863,10 +2863,10 @@ function arrayOfHeaderValues(rangeObj){
   return result;
 }
 
-Logger.log("arrayOfHeaderValues");
-var sheet_aohv = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var range_aohv = sheet_aohv.getRange("A2:E19");
-Logger.log(arrayOfHeaderValues(range_aohv)); // ["First", "Last", "Grade", "Homeroom", "Email"]
+// Logger.log("arrayOfHeaderValues");
+// var sheet_aohv = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var range_aohv = sheet_aohv.getRange("A2:E19");
+// Logger.log(arrayOfHeaderValues(range_aohv)); // ["First", "Last", "Grade", "Homeroom", "Email"]
 
 // --- Values by Row 
 
@@ -2899,12 +2899,12 @@ function arrayOfObjectsByRow(rangeObj, headers){
   return result;
 }
 
-Logger.log("arrayOfObjectsByRow");
-var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-var range_vbr   = sheet_vbr.getRange("A1:E19");
-var headers_vbr = arrayOfHeaderValues(range_vbr);
-range_vbr       = sheet_vbr.getRange("A2:E19");
-Logger.log(arrayOfObjectsByRow(range_vbr, headers_vbr)); 
+// Logger.log("arrayOfObjectsByRow");
+// var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// var range_vbr   = sheet_vbr.getRange("A1:E19");
+// var headers_vbr = arrayOfHeaderValues(range_vbr);
+// range_vbr       = sheet_vbr.getRange("A2:E19");
+// Logger.log(arrayOfObjectsByRow(range_vbr, headers_vbr)); 
  // [{last=Garret, grade=6.0, homeroom=Muhsina, first=Arienne, email=agarret@example.com},...]
 
 // --- Header Range 
@@ -2918,7 +2918,7 @@ Logger.log(arrayOfObjectsByRow(range_vbr, headers_vbr));
  */
 
 function headerRange(a1Notation, sheet) {
-  if (! validateA1(a1Notation, sheet)) return false;
+  if (!validateA1(a1Notation, sheet)) return false;
   var coordinates = new A1Object(a1Notation);
   return sheet.getRange(coordinates.getHeaderA1Notation());
 }
@@ -2939,7 +2939,7 @@ Logger.log(headerRange("A2:E19", sheet_hr).getValues()); // [[First, Last, Grade
  */
 
 function valueRange(a1Notation, sheet) {
-  if (! validateA1(a1Notation, sheet)) return false;
+  if (!validateA1(a1Notation, sheet)) return false;
 }
 
 Logger.log("valueRange");
