@@ -157,6 +157,16 @@ Logger.log("Start");
 // | | -- Mail Merge
 // | | --- Append Body Property for Object in Array of Objects 
 // | | --- Run Mail Merge for Array of Objects
+// | | Forms
+// | | - Utility Functions for Forms
+// | | -- Array of Form Items
+// | | -- Get Form Item By Name
+// | | -- Set Item Choices
+// | | -- Get Destination Sheet
+// | | - Responses
+// | | -- Last Response as Object
+// | | -- Last Response as Array of Objects
+// | | -- All Responses as Array of Objects
 
 // General
 
