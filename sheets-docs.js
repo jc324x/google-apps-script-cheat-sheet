@@ -127,8 +127,8 @@ Logger.log("Start");
 // | | --- Value Range
 // | | --- Header Values
 // | | --- Values by Row
-// | | -- Array of Objects from Sheet
-// | | -- Array of Objects from Range
+// | | -- Array of Objects for Sheet
+// | | -- Array of Objects for Range
 // | | - Array 
 // | | -- Array of Values for Column
 // | | --- For Header Value
@@ -523,7 +523,7 @@ function oldestObjectInArrayOfObjects(arr){
 
 // Logger.log("oldestObjectInArrayOfObjects");
 // var sheet_ooiaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var arrObj_ooiaoo = arrayOfObjectsA1("J1:K4", sheet_ooiaoo);
+// var arrObj_ooiaoo = arrayOfObjectsForA1("J1:K4", sheet_ooiaoo);
 // Logger.log(oldestObjectInArrayOfObjects(arrObj_ooiaoo)); // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A}
 
 /**
@@ -546,7 +546,7 @@ function latestObjectInArrayOfObjects(arrObj) {
 
 // Logger.log("latestObjectInArrayOfObjects");
 // var sheet_loiaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var arrObj_loiaoo = arrayOfObjectsA1("J1:K4", sheet_loiaoo);
+// var arrObj_loiaoo = arrayOfObjectsForA1("J1:K4", sheet_loiaoo);
 // Logger.log(latestObjectInArrayOfObjects(arrObj_loiaoo)); // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C}
 
 // -- Filter Array of Objects by Value or Values
@@ -2466,8 +2466,8 @@ function verifyExampleJSONFile() {
   var ex   = fldr.createFile('example-json', text);
 }
 
-Logger.log("verifyExampleJSONFile");
-verifyExampleJSONFile();
+// Logger.log("verifyExampleJSONFile");
+// verifyExampleJSONFile();
 
 // -- Object From URL
 
@@ -2484,9 +2484,10 @@ function objectFromUrl(url) {
   return JSON.parse(data);
 } 
 
-Logger.log("objectFromUrl");
-var obj_ofu = objectFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-Logger.log(JSON.stringify(obj_ofu));
+// Logger.log("objectFromUrl");
+// var url_ofu = "https://raw.githubusercontent.com/jychri/google-apps-script-cheat-sheet/dev/example-config.json";
+// var obj_ofu = objectFromUrl(url_ofu);
+// Logger.log(JSON.stringify(obj_ofu));
 
 // -- Object From File
 
@@ -2502,11 +2503,11 @@ function objectFromFile(file) {
   return JSON.parse(data);
 } 
 
-Logger.log("objectFromFile");
-verifyExampleJSONFile();
-var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-var obj_off  = objectFromFile(file_off);
-Logger.log(JSON.stringify(obj_off));
+// Logger.log("objectFromFile");
+// verifyExampleJSONFile();
+// var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+// var obj_off  = objectFromFile(file_off);
+// Logger.log(JSON.stringify(obj_off));
 
 // -- Object From Source
 
@@ -2803,13 +2804,15 @@ function A1Object(a1Notation) {
 // Logger.log(obj_a1o.getTargetA1Notation(1)); // "A2:A10"
 
 function validateA1(a1Notation, sheet) {
-  var check   = new A1Object(a1Notation);
+  var check = new A1Object(a1Notation);
+  var range = sheet.getDataRange();
   var sheetA1 = sheet.getDataRange().getA1Notation();
   var limit   = new A1Object(sheetA1);
   if ((check.start_column <= limit.end_column) && (check.end_column <= limit.end_column)) {
     if ((check.start_row <= limit.end_row) && (check.end_row <= limit.end_row)) {
-      return true;
+      return a1Notation;
     } 
+    return false;
   } else {
     return false;
   }
@@ -2854,10 +2857,11 @@ function objectFromRange(a1Notation, sheet) {
 
 // -- Utility Functions for Array of Objects
 
-// --- Header Values 
+// --- Array of Header Values
 
 /**
  * Returns an array of values for the top row of a range object.
+ * TODO: Converted to snake case later, just the raw values
  *
  * @param {Range} rangeObj
  * @returns {Array}
@@ -2879,14 +2883,18 @@ function arrayOfHeaderValues(rangeObj){
 // Logger.log(arrayOfHeaderValues(range_aohv)); // ["First", "Last", "Grade", "Homeroom", "Email"]
 
 // --- Values by Row 
+// --- Array of Objects for Row
 
 /**
  * Returns an array of objects representing a range.
+ * Multi-word columns = Snake case for property names
  *
  * @param {Range} rangeObj
  * @param {Array} headers
  * @returns {Object[]}
  */
+
+// TODO: rename to arrayOfObjectsForRow(range, headers)?
 
 function arrayOfObjectsByRow(rangeObj, headers){
   var height = rangeObj.getHeight();
@@ -2896,8 +2904,9 @@ function arrayOfObjectsByRow(rangeObj, headers){
   for (var i = 0; i < height; i++) {
     var row = {};
     for (var j = 0; j < width; j++) {
-      var prop = String(headers[j]).toLowerCase();
-      var val  = values[i][j];
+      var lower = String(headers[j]).toLowerCase();
+      var prop  = lower.replace(/ /g, '_');
+      var val   = values[i][j];
       if (val !== "") {
         row[prop] = val;
       } 
@@ -2911,11 +2920,11 @@ function arrayOfObjectsByRow(rangeObj, headers){
 
 // Logger.log("arrayOfObjectsByRow");
 // var sheet_vbr   = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var range_vbr   = sheet_vbr.getRange("A1:E19");
+// var range_vbr   = sheet_vbr.getRange("A1:F19");
 // var headers_vbr = arrayOfHeaderValues(range_vbr);
-// range_vbr       = sheet_vbr.getRange("A2:E19");
+// range_vbr       = sheet_vbr.getRange("A2:F19");
 // Logger.log(arrayOfObjectsByRow(range_vbr, headers_vbr)); 
- // [{last=Garret, grade=6.0, homeroom=Muhsina, first=Arienne, email=agarret@example.com},...]
+// [{last=Garret, grade=6.0, homeroom=Muhsina, first=Arienne, email=agarret@example.com, study_hall=Eun-Jung},...]
 
 // --- Header Range 
 
@@ -2928,33 +2937,36 @@ function arrayOfObjectsByRow(rangeObj, headers){
  */
 
 function headerRange(a1Notation, sheet) {
-  if (!validateA1(a1Notation, sheet)) return false;
+  if (! validateA1(a1Notation, sheet)) return false;
   var coordinates = new A1Object(a1Notation);
   return sheet.getRange(coordinates.getHeaderA1Notation());
 }
 
-Logger.log("headerRange");
-var sheet_hr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(headerRange("A2:E19", sheet_hr).getA1Notation()); // "A2:E2"
-Logger.log(headerRange("A2:E19", sheet_hr).getValues()); // [[First, Last, Grade, Homeroom, Email]]
+// Logger.log("headerRange");
+// var sheet_hr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
+// Logger.log(headerRange("A1:F18", sheet_hr).getValues()); // [[First, Last, Grade, Homeroom, Email]]
 
 // --- Value Range 
+// TODO: still needed....? 
+// TODO: match style? 
 
 /**
  * Returns the value range for a targeted range. 
  *
- * @param {Sheet} sheet
+ * @param {Spreadsheet} sheet
  * @param {string} a1Notation
  * @returns {Range}
  */
 
 function valueRange(a1Notation, sheet) {
-  if (!validateA1(a1Notation, sheet)) return false;
+  var a1 = validateA1(a1Notation, sheet);
+  if (! a1) return false;
+  return sheet.getRange(a1);
 }
 
 Logger.log("valueRange");
 var sheet_vr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
+Logger.log(valueRange("A2:F18", sheet_vr).getA1Notation()); // "A2:F19"
 
 // -- Array of Objects for Sheet 
 
@@ -2964,12 +2976,9 @@ Logger.log(valueRange("A2:E19", sheet_vr).getA1Notation()); // "A3:E19"
  * @requires convertIndexToColumn() 
  * @requires arrayOfHeaderValues() 
  * @requires arrayOfObjectsByRow() 
- * @param sheet
- * @param hRow
+ * @param {Spreadsheet} sheet
  * TODO:  @returns {undefined}
  */
-
-// formerly -> arrayOfObjectsSheet
 
 function arrayOfObjectsForSheet(sheet) {
   var a1Notation  = sheet.getDataRange().getA1Notation();
@@ -2980,9 +2989,9 @@ function arrayOfObjectsForSheet(sheet) {
   return arrayOfObjectsByRow(valueRange, headers);
 }
 
-// Logger.log("arrayOfObjectsSheet");
+// Logger.log("arrayOfObjectsForSheet");
 // var sheet_aofs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrayOfObjectsSheet(sheet_aofs)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
+// Logger.log(arrayOfObjectsForSheet(sheet_aofs)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 
 // -- Array of Objects for Range 
 
@@ -3012,9 +3021,9 @@ function arrayOfObjectsForA1(a1Notation, sheet) {
   }
 }
 
-// Logger.log("arrayOfObjectsA1");
+// Logger.log("arrayOfObjectsForA1");
 // var sheet_aofr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// Logger.log(arrayOfObjectsA1("A1:E7", sheet_aofr)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
+// Logger.log(arrayOfObjectsForA1("A1:E7", sheet_aofr)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne}, {Last=Jules, Email=ejules@example.com, Homeroom=Lale, Grade=6.0, First=Elissa}...]
 
 // - Array 
 
@@ -3350,7 +3359,7 @@ function documentMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
 
 // Logger.log("runDocumentMerge");
 // var sheet_rdm  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_rdm = arrayOfObjectsSheet(sheet_rdm);
+// var arrObj_rdm = arrayOfObjectsForSheet(sheet_rdm);
 // var fldr_rdm   = verifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
 // var file_rdm   = verifyFilePath("google-apps-script-cheat-sheet-demo/merges/template-doc", "document");
 // var doc_rdm    = openFileAsType(file_rdm, "document");
@@ -3398,7 +3407,7 @@ function spreadsheetMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
 
 // Logger.log("spreadsheetMergeArrayOfObjects");
 // var sheet_smaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_smaoo = arrayOfObjectsSheet(sheet_smaoo);
+// var arrObj_smaoo = arrayOfObjectsForSheet(sheet_smaoo);
 // var fldr_smaoo   = verifyFolderPath("google-apps-script-cheat-sheet-demo/merges");
 // var file_smaoo   = verifyFilePath("google-apps-script-cheat-sheet-demo/merges/template-ss", "spreadsheet");
 // var ss_smaoo     = openFileAsType(file_smaoo, "spreadsheet");
@@ -3420,7 +3429,7 @@ function spreadsheetMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
 // -- Single Division List
 
 // var sheet_sdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_sdl = arrayOfObjectsSheet(sheet_sdl);
+// var arrObj_sdl = arrayOfObjectsForSheet(sheet_sdl);
 // var file_sdl   = verifyFilePath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
 // var doc_sdl    = openFileAsType(file_sdl, "document");
 // var body_sdl   = doc_sdl.getBody();
@@ -3438,7 +3447,7 @@ function spreadsheetMergeArrayOfObjects(naming, template, fldr, arrObj, opt) {
 // -- Multi Division List
 
 // var sheet_mdl  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_mdl = arrayOfObjectsSheet(sheet_mdl);
+// var arrObj_mdl = arrayOfObjectsForSheet(sheet_mdl);
 // var file_mdl   = verifyFilePath("google-apps-script-cheat-sheet-demo/docs/example-doc", "document");
 // var doc_mdl    = openFileAsType(file_mdl, "document");
 // var body_mdl   = doc_mdl.getBody();
@@ -3509,7 +3518,7 @@ function appendSubjectBodyArrayOfObjects(subj, body, arrObj) {
 
 // Logger.log("appendSubjectBodyArrayOfObjects");
 // var sheet_asbaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet2");
-// var arrObj_asbaoo = arrayOfObjectsSheet(sheet_asbaoo);
+// var arrObj_asbaoo = arrayOfObjectsForSheet(sheet_asbaoo);
 // var subj_asbaoo   = "Classroom update for %First% %Last%";
 // var body_asbaoo   = "<p>%First% %Last% is in %Homeroom%'s homeroom this fall!</p>";
 // Logger.log(appendSubjectBodyArrayOfObjects(subj_asbaoo, body_asbaoo, arrObj_asbaoo)); // [{Last=Garret, Email=agarret@example.com, Homeroom=Muhsina, Grade=6.0, First=Arienne, Body=<p>Arienne Garret is in Muhsina's this fall!</p>, Subject=Classroom update for Arienne Garret}...]
