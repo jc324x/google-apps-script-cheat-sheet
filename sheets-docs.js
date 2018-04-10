@@ -32,6 +32,7 @@ Logger.log("Start");
 // |+| -- Match a Date to a Date Range
 // |+| - String
 // |+| -- Check String for Substring
+// | | -- Verify Snake Case
 // |+| Drive
 // |+| - Utility Functions for Drive
 // |+| -- Validate Path String
@@ -101,24 +102,15 @@ Logger.log("Start");
 // |+| -- Rename a File or Folder
 // |+| -- Parent Folder of a File or Folder
 // |+| -- Zip All Files in a Folder
-// | | JSON
-// | | -- Object From URL
-// | | -- Object From File
-// | | -- Object From Source
-// | | UI
-// | | -- On Open
-// | | -- Set Configuration
-// | | -- Show Configuration
-// | | -- Clear Configuration
-// | | -- Run Script
 // | | Sheets
-// | | - Utility Functions for Sheets
-// | | -- Convert Column Number to a Letter
-// | | -- Convert Column Letter to a Number
-// | | -- Replicating Import Range
-// | | -- Evaluating True and False
-// | | - Range
-// | | -- Validate Range
+// |+| - Utility Functions for Sheets
+// |+| -- Convert Column Number to a Letter
+// |+| -- Convert Column Letter to a Number
+// |+| -- Replicating Import Range
+// | | -- Array of Sheet Names
+// | | - A1 Notation
+// | | -- A1 Object
+// | | -- Validate A1
 // | | - Object
 // | | -- Object from Range 
 // | | -  Array of Objects
@@ -167,6 +159,10 @@ Logger.log("Start");
 // | | -- Last Response as Object
 // | | -- Last Response as Array of Objects
 // | | -- All Responses as Array of Objects
+// |+| JSON
+// |+| -- Object From URL
+// |+| -- Object From File
+// |+| -- Object From Source
 
 // General
 
@@ -835,6 +831,23 @@ function checkStringForSubstring(val, str) {
 // var str_csfs = "google-apps-script-cheat-sheet-demo";
 // var val_csfs = "google-apps-script"; 
 // Logger.log(checkStringForSubstring(val_csfs, str_csfs)); // true
+
+// -- Verify Snake Case
+
+/**
+ * Returns a string in snake case.
+ *
+ * @param {string} str
+ * @returns {string}
+ */
+
+function verifySnakeCase(str) {
+  return String(str).toLowerCase().replace(/ /g, '_');
+} 
+
+Logger.log("verifySnakeCase");
+var str_vsc = "Hello World"; 
+Logger.log(verifySnakeCase(str_vsc)); // hello_world
 
 // Drive
 
@@ -2455,167 +2468,6 @@ function zipFilesInFolder(target, name, fldr) {
 // var fldr2_zfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/zipped");
 // zipFilesInFolder(fldr1_zfif, "Archive", fldr2_zfif);
 
-// JSON
-
-function verifyExampleJSONFile() {
-  var fldr = verifyFolderPath("google-apps-script-cheat-sheet-demo/json");
-  var file = findFileInFolder("example-json", fldr);
-  if (file) return findFileInFolder("example-json", fldr);
-  var json = objectFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
-  var text = JSON.stringify(json);
-  var ex   = fldr.createFile('example-json', text);
-}
-
-// Logger.log("verifyExampleJSONFile");
-// verifyExampleJSONFile();
-
-// -- Object From URL
-
-/**
- * Returns an object from a URL.
- *
- * @param {string} url
- * @returns {Object}
- */
-
-function objectFromUrl(url) {
-  var rsp  = UrlFetchApp.fetch(url);
-  var data = rsp.getContentText();
-  return JSON.parse(data);
-} 
-
-// Logger.log("objectFromUrl");
-// var url_ofu = "https://raw.githubusercontent.com/jychri/google-apps-script-cheat-sheet/dev/example-config.json";
-// var obj_ofu = objectFromUrl(url_ofu);
-// Logger.log(JSON.stringify(obj_ofu));
-
-// -- Object From File
-
-/**
- * Returns an object from a file in Drive.
- *
- * @param {File} file
- * @returns {Object}
- */
-
-function objectFromFile(file) {
-  var data = file.getBlob().getDataAsString();
-  return JSON.parse(data);
-} 
-
-// Logger.log("objectFromFile");
-// verifyExampleJSONFile();
-// var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
-// var obj_off  = objectFromFile(file_off);
-// Logger.log(JSON.stringify(obj_off));
-
-// -- Object From Source
-
-/**
- * Returns an object given a path to text a file or valid URL.
- *
- * @requires objectFromUrl() 
- * @requires findFileAtPath() 
- * @requires validatePathString()*
- * @requires getBasename()*
- * @requires getInverseBasename()*
- * @requires findFolderAtPath()*
- * @requires findFileInFolder()*
- * @requires arrayOfFilesInFolder()*
- * @requires arrayOfFileNames()*
- * @requires checkArrayForValue()*
- * @requires validateMIME()*
- * @requires matchMIMEType()*
- * @requires objectFromFile() 
- * @param {string} input
- * @returns {Object}
- */
-
-function objectFromSource(input) {
-  var regExp = new RegExp("^(http|https)://");
-  var test   = regExp.test(input);
-  if (regExp.test(input)) {
-    return objectFromUrl(input);
-  } else {
-    var file = findFileAtPath(input); 
-    return objectFromFile(file);
-  }
-}
-
-// Logger.log("objectFromUrlOrFileAtPath");
-// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
-// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json")));
-
-// UI
-
-/**
- * @requires global ui / uProp vlues 
- * @requires a custom trigger -> Run: 'exampleUI', Events: 'From spreadsheet', 'On open'
- * Creates a menu with that allows the user to set the configuration options and run the script.
- * 
- */
-
-var ui    = SpreadsheetApp.getUi(); // or DocumentApp.getUi();
-var uProp = PropertiesService.getUserProperties();
-
-function exampleUI() {
-  ui.createMenu("Example UI")
-  .addItem("Run Script", "runScript")
-  .addSeparator()
-  .addSubMenu(ui.createMenu("Configuration")
-    .addItem("Set Configuration", "setConfiguration")
-    .addItem("Show Configuration", "showConfiguration")
-    .addItem("Clear Configuration", "clearConfiguration"))
-  .addToUi();
-}
-
-// -- Set Configuration
-
-/**
- * @requires global ui / uProp values
- * Parses JSON at the value given and sets config equal to the stringified result.
- */
-
-function setConfiguration() {
-  var uiPrompt = ui.prompt(
-      "Please enter a URL or a path to a file in Drive:",
-      ui.ButtonSet.OK_CANCEL);
-  var button = uiPrompt.getSelectedButton();
-  if (button == ui.Button.OK) {
-    var text   = uiPrompt.getResponseText();
-    var config = JSON.stringify(objFromUrlOrFile(text));
-    uProp.setProperty("config", config);
-  } 
-}
-
-// -- Show Configuration
-
-/**
- * @requires global ui / uProp values
- * Displays an alert of the config value or a displays a message if config is unset.
- */
-
-function showConfiguration() {
-  var config = uProp.getProperty("config");
-  if (config) {
-    ui.alert(config);
-  } else {
-    ui.alert("No configuration set.");
-  }
-}
-
-// -- Clear Configuration
-
-/**
- * @requires global ui / uProp values
- * Clears out all user properties.
- */
-
-function clearConfiguration() {
-  uProp.deleteAllProperties();
-  ui.alert("All settings cleared.");
-}
-
 // Sheets
 
 // - Utility Functions for Sheets
@@ -2716,40 +2568,6 @@ function importRange() {
   var set   = sheet.getRange("B2:B5").setValues(get);
 }
 
-// -- Evaluating True and False
-
-/**
- * Returns true or false given truthy or falsy values.
- * true: 1, t*, T*, y*, Y*
- * false: 0, !t, || !y
- *
- * @param {string} input
- * @returns {boolean}
- */
-
-// function booleanFromValue(input)
-
-function checkInput(input) {
-  if (isNaN(input)) {
-    var first_letter = input.charAt(0).toLowerCase();
-    if (first_letter === 't' || first_letter === 'y') {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    if (input === 1) {
-      return true;
-    } else { 
-      return false;
-    }
-  }
-}
-
-// Logger.log("checkInput");
-// Logger.log(checkInput("No")); // false
-// Logger.log(checkInput("Yes")); // true
-
 // -- Array of Sheet Names
 
 /**
@@ -2772,18 +2590,9 @@ function arrayOfSheetNames(ss) {
 // var ss_aosn = SpreadsheetApp.getActiveSpreadsheet();
 // Logger.log(arrayOfSheetNames(ss_aosn)); // ["Sheet1", "Sheet2", "Sheet3"]
 
-// -- Validate Header Range
- 
-function validateHeaderRow(number) {
-  if (number !== undefined && number === 0) {
-    number = 1;
-  }
-  return number;
-} 
-
 // - A1 Notation
 
-// - A1 Object
+// -- A1 Object
 
 function A1Object(a1Notation) {
   var split         = a1Notation.split(":");
@@ -2816,9 +2625,18 @@ function A1Object(a1Notation) {
 // Logger.log(obj_a1o.getValueA1Notation()); // "A2:J10"
 // Logger.log(obj_a1o.getTargetA1Notation(1)); // "A2:A10"
 
+/**
+ * Returns valid A1 Notation or false.
+ *
+ * @requires A1Object() 
+ * @param a1Notation
+ * @param sheet
+ * @returns {undefined}
+ */
+ 
 function validateA1(a1Notation, sheet) {
-  var check = new A1Object(a1Notation);
-  var range = sheet.getDataRange();
+  var check   = new A1Object(a1Notation);
+  var range   = sheet.getDataRange();
   var sheetA1 = sheet.getDataRange().getA1Notation();
   var limit   = new A1Object(sheetA1);
   if ((check.start_column <= limit.end_column) && (check.end_column <= limit.end_column)) {
@@ -3563,5 +3381,97 @@ function runMailMergeForArrObj(arrObj) {
 // var body_rmmfao   = "<p>%First% %Last% is in %Homeroom%'s this fall!</p>";
 // arrObj_rmmfao     = appendSubjBodyForArrObj(arrObj_rmmfao, subj_rmmfao, body_rmmfao);
 // runMailMergeForArrObj(arrObj_rmmfao);
+
+// JSON
+
+function verifyExampleJSONFile() {
+  var fldr = verifyFolderPath("google-apps-script-cheat-sheet-demo/json");
+  var file = findFileInFolder("example-json", fldr);
+  if (file) return findFileInFolder("example-json", fldr);
+  var json = objectFromUrl("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json");
+  var text = JSON.stringify(json);
+  var ex   = fldr.createFile('example-json', text);
+}
+
+// Logger.log("verifyExampleJSONFile");
+// verifyExampleJSONFile();
+
+// -- Object From URL
+
+/**
+ * Returns an object from a URL.
+ *
+ * @param {string} url
+ * @returns {Object}
+ */
+
+function objectFromUrl(url) {
+  var rsp  = UrlFetchApp.fetch(url);
+  var data = rsp.getContentText();
+  return JSON.parse(data);
+} 
+
+// Logger.log("objectFromUrl");
+// var url_ofu = "https://raw.githubusercontent.com/jychri/google-apps-script-cheat-sheet/dev/example-config.json";
+// var obj_ofu = objectFromUrl(url_ofu);
+// Logger.log(JSON.stringify(obj_ofu));
+
+// -- Object From File
+
+/**
+ * Returns an object from a file in Drive.
+ *
+ * @param {File} file
+ * @returns {Object}
+ */
+
+function objectFromFile(file) {
+  var data = file.getBlob().getDataAsString();
+  return JSON.parse(data);
+} 
+
+// Logger.log("objectFromFile");
+// verifyExampleJSONFile();
+// var file_off = findFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json");
+// var obj_off  = objectFromFile(file_off);
+// Logger.log(JSON.stringify(obj_off));
+
+// -- Object From Source
+
+/**
+ * Returns an object given a path to text a file or valid URL.
+ *
+ * @requires objectFromUrl() 
+ * @requires findFileAtPath() 
+ * @requires validatePathString()*
+ * @requires getBasename()*
+ * @requires getInverseBasename()*
+ * @requires findFolderAtPath()*
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @requires matchMIMEType()*
+ * @requires objectFromFile() 
+ * @param {string} input
+ * @returns {Object}
+ */
+
+function objectFromSource(input) {
+  var regExp = new RegExp("^(http|https)://");
+  var test   = regExp.test(input);
+  if (regExp.test(input)) {
+    return objectFromUrl(input);
+  } else {
+    var file = findFileAtPath(input); 
+    return objectFromFile(file);
+  }
+}
+
+// Logger.log("objectFromUrlOrFileAtPath");
+// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("https://raw.githubusercontent.com/jcodesmn/google-apps-script-cheat-sheet/dev/example.json")));
+// Logger.log(JSON.stringify(objectFromUrlOrFileAtPath("google-apps-script-cheat-sheet-demo/json/example-json")));
+
 
 Logger.log("End");
