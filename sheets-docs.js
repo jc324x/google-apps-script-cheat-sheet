@@ -2512,9 +2512,22 @@ function objectFromFile(file) {
 // -- Object From Source
 
 /**
- * Returns an object from a URL or from a file in Drive.
+ * Returns an object given a path to text a file or valid URL.
  *
- * @param {string || File} input
+ * @requires objectFromUrl() 
+ * @requires findFileAtPath() 
+ * @requires validatePathString()*
+ * @requires getBasename()*
+ * @requires getInverseBasename()*
+ * @requires findFolderAtPath()*
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @requires matchMIMEType()*
+ * @requires objectFromFile() 
+ * @param {string} input
  * @returns {Object}
  */
 
