@@ -101,26 +101,26 @@ Logger.log("Start");
 // |+| -- Rename a File or Folder
 // |+| -- Parent Folder of a File or Folder
 // |+| -- Zip All Files in a Folder
-// |?| JSON
-// |?| -- Object From URL
-// |?| -- Object From File
-// |?| -- Object From URL or File
-// |?| UI
-// |?| -- On Open
-// |?| -- Set Configuration
-// |?| -- Show Configuration
-// |?| -- Clear Configuration
-// |?| -- Run Script
-// |?| Sheets
-// |?| - Utility Functions for Sheets
-// |?| -- Convert Column Number to a Letter
-// |?| -- Convert Column Letter to a Number
-// |?| -- Replicating Import Range
-// |?| -- Evaluating True and False
-// |?| - Range
-// |?| -- Validate Range
+// | | JSON
+// | | -- Object From URL
+// | | -- Object From File
+// | | -- Object From Source
+// | | UI
+// | | -- On Open
+// | | -- Set Configuration
+// | | -- Show Configuration
+// | | -- Clear Configuration
+// | | -- Run Script
+// | | Sheets
+// | | - Utility Functions for Sheets
+// | | -- Convert Column Number to a Letter
+// | | -- Convert Column Letter to a Number
+// | | -- Replicating Import Range
+// | | -- Evaluating True and False
+// | | - Range
+// | | -- Validate Range
 // | | - Object
-// |+| -- Object from Range 
+// | | -- Object from Range 
 // | | -  Array of Objects
 // | | -- Utility Functions for Array of Objects
 // | | --- Header Range
