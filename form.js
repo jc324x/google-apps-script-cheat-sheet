@@ -40,10 +40,10 @@ function arrayOfObjectsForFormItems(form) {
   return result;
 }
 
-Logger.log("arrayOfObjectsForFormItems");
-var form_aooffi   = FormApp.getActiveForm();
-var arrObj_aooffi = arrayOfObjectsForFormItems(form);
-Logger.log(arrObj_aooffi);
+// Logger.log("arrayOfObjectsForFormItems");
+// var form_aooffi   = FormApp.getActiveForm();
+// var arrObj_aooffi = arrayOfObjectsForFormItems(form);
+// Logger.log(arrObj_aooffi);
 
 // Get Form Item by Name
 
@@ -75,9 +75,12 @@ var form_gfibn   = FormApp.getActiveForm();
 var arrObj_gfibn = arrayOfObjectsForFormItems(form_gfibn);
 var item_gfibn   = findObjectInArrayOfObjects(arrObj_gfibn, "title", "Event Title", "item");
 Logger.log(item_gfibn);
+Logger.log(item_gfibn.asTextItem());
 
 // -- Set Item Choices
 // var choices   = ["1", "2", "3", "4", "5"];
+
+// https://developers.google.com/apps-script/reference/forms/item
 
 // --- Multiple Choice
 
