@@ -6,9 +6,11 @@
   * duplicate parameter values are lettered, not numbered ie. arrA  arr1
 
 # variable naming
-  * `val` for a generic value
-  * `item` for a generic array value
-  * `copy` for a copy of an array
-  * `arr` for an array
+  * `val` a generic value
+  * `item` a generic array value
+  * `copy` a copy or a modified copy of an array
+  * `arr` an array
+  * `delim` delimiter as string value
+  * `mod` a substring to append to a string
 
 # variables

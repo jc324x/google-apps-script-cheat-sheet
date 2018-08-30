@@ -3,116 +3,116 @@
 function test() {}
 Logger.log("Start");
 
-// |+| General
-// |+| - Array
-// |+| -- Check Array for a Value
-// |+| -- Remove Duplicates from Array
-// |+| -- Remove Empty Elements from Array
-// |+| -- Count of Values in Array
-// |+| -- Intersect of Two Arrays
-// |+| -- Compare Two Arrays
-// |+| -- Array as Delimited String
-// |+| -- Array as Modified Delimited String
-// |+| - Two-Dimensional Array
-// |+| -- Flatten Two-Dimensional Array
-// |+| - Array of Objects
-// |+| -- Sort Array of Objects by Property or Properties
-// |+| -- Find Object in Array of Objects
-// |+| -- Find First or Last Object in Array of Objects by Timestamp
-// |+| -- Filter Array of Objects by Value or Values
-// |+| -- Unify Properties for Objects in Array of Objects
-// |+| - Object
-// |+| -- Array of Object Values
-// |+| -- Merge Objects
-// |+| -- Check for Valid Object
-// |+| - Dates and Times
-// |+| -- Formatted Date Time
-// |+| -- Append Date Time
-// |+| -- Date Object from String
-// |+| -- Match a Date to a Date Range
-// |+| - String
-// |+| -- Check String for Substring
-// |+| -- Convert String to Snake Case
-// |+| Drive
-// |+| - Utility Functions for Drive
-// |+| -- Validate Path String
-// |+| -- Get Basename or Inverse Basename
-// |+| -- Validate MIME Type
-// |+| -- Match MIME Type 
-// |+| - Folders
-// |+| -- Array of Folders
-// |+| --- Array of Folders at Root
-// |+| --- Array of Folders in Folder
-// |+| --- Array of Folders at Path
-// |+| --- Array of Folders in Drive
-// |+| -- Array of Folder Names
-// |+| -- Find a Folder
-// |+| --- Find Folder at Root
-// |+| --- Find Folder in Folder
-// |+| --- Find Folder at Path
-// |+| --- Find Folder in Drive
-// |+| -- Check for a Folder
-// |+| --- Check for Folder at Root
-// |+| --- Check for Folder in Folder
-// |+| --- Check for Folder at Path
-// |+| -- Create a Folder
-// |+| --- Create Folder at Root
-// |+| --- Create Folder in Folder
-// |+| --- Create Folder at Path
-// |+| -- Create Folders
-// |+| --- Create Folders at Root
-// |+| --- Create Folders in Folder
-// |+| --- Create Folders at Path
-// |+| -- Verify Folder
-// |+| --- Verify Folder at Root
-// |+| --- Verify Folder in a Folder
-// |+| --- Verify Folder Path
-// |+| -- Verify Folders
-// |+| --- Verify Folders in a Folder
-// |+| --- Verify Folders at Root
+// | | General
+// | | - Array
+// | | -- Check Array for a Value
+// | | -- Remove Duplicates from Array
+// | | -- Remove Empty Elements from Array
+// | | -- Count of Values in Array
+// | | -- Intersect of Two Arrays
+// | | -- Compare Two Arrays
+// | | -- Array as Delimited String
+// | | -- Array as Modified Delimited String
+// | | - Two-Dimensional Array
+// | | -- Flatten Two-Dimensional Array
+// | | - Array of Objects
+// | | -- Sort Array of Objects by Property or Properties
+// | | -- Find Object in Array of Objects
+// | | -- Find First or Last Object in Array of Objects by Timestamp
+// | | -- Filter Array of Objects by Value or Values
+// | | -- Unify Properties for Objects in Array of Objects
+// | | - Object
+// | | -- Array of Object Values
+// | | -- Merge Objects
+// | | -- Check for Valid Object
+// | | - Dates and Times
+// | | -- Formatted Date Time
+// | | -- Append Date Time
+// | | -- Date Object from String
+// | | -- Match a Date to a Date Range
+// | | - String
+// | | -- Check String for Substring
+// | | -- Convert String to Snake Case
+// | | Drive
+// | | - Utility Functions for Drive
+// | | -- Validate Path String
+// | | -- Get Basename or Inverse Basename
+// | | -- Validate MIME Type
+// | | -- Match MIME Type 
+// | | - Folders
+// | | -- Array of Folders
+// | | --- Array of Folders at Root
+// | | --- Array of Folders in Folder
+// | | --- Array of Folders at Path
+// | | --- Array of Folders in Drive
+// | | -- Array of Folder Names
+// | | -- Find a Folder
+// | | --- Find Folder at Root
+// | | --- Find Folder in Folder
+// | | --- Find Folder at Path
+// | | --- Find Folder in Drive
+// | | -- Check for a Folder
+// | | --- Check for Folder at Root
+// | | --- Check for Folder in Folder
+// | | --- Check for Folder at Path
+// | | -- Create a Folder
+// | | --- Create Folder at Root
+// | | --- Create Folder in Folder
+// | | --- Create Folder at Path
+// | | -- Create Folders
+// | | --- Create Folders at Root
+// | | --- Create Folders in Folder
+// | | --- Create Folders at Path
+// | | -- Verify Folder
+// | | --- Verify Folder at Root
+// | | --- Verify Folder in a Folder
+// | | --- Verify Folder Path
+// | | -- Verify Folders
+// | | --- Verify Folders in a Folder
+// | | --- Verify Folders at Root
 // | | - Files
-// |+| -- Array of Files
-// |+| --- Array of Files at Root
-// |+| --- Array of Files in Folder
-// |+| --- Array of Files at Path
-// |+| --- Array of All Files in Drive
-// |+| -- Array of File Names
-// |+| -- Find a File
-// |+| --- Find a File at Root
-// |+| --- Find a File in a Folder
-// |+| --- Find File at Path
-// |+| --- Find a File in Drive
-// |+| -- Check for a File
-// |+| --- Check for a File at Root
-// |+| --- Check for a File in a Folder
-// |+| --- Check for a File at Path
-// |+| -- Create a File
-// |+| --- Create File at Root
-// |+| --- Create File in a Folder
-// |+| --- Create File at Path
-// |+| -- Verify File
-// |+| --- Verify File at Root
-// |+| --- Verify File in Folder
-// |+| --- Verify File at Path
-// |+| -- Id of Active File
-// |+| -- Open File as MIME Type
-// |+| -- Copy a File to a Folder
-// |+| -- Move a File to a Folder
-// |+| - Files and Folders
-// |+| -- Rename a File or Folder
-// |+| -- Parent Folder of a File or Folder
-// |+| -- Zip All Files in a Folder
+// | | -- Array of Files
+// | | --- Array of Files at Root
+// | | --- Array of Files in Folder
+// | | --- Array of Files at Path
+// | | --- Array of All Files in Drive
+// | | -- Array of File Names
+// | | -- Find a File
+// | | --- Find a File at Root
+// | | --- Find a File in a Folder
+// | | --- Find File at Path
+// | | --- Find a File in Drive
+// | | -- Check for a File
+// | | --- Check for a File at Root
+// | | --- Check for a File in a Folder
+// | | --- Check for a File at Path
+// | | -- Create a File
+// | | --- Create File at Root
+// | | --- Create File in a Folder
+// | | --- Create File at Path
+// | | -- Verify File
+// | | --- Verify File at Root
+// | | --- Verify File in Folder
+// | | --- Verify File at Path
+// | | -- Id of Active File
+// | | -- Open File as MIME Type
+// | | -- Copy a File to a Folder
+// | | -- Move a File to a Folder
+// | | - Files and Folders
+// | | -- Rename a File or Folder
+// | | -- Parent Folder of a File or Folder
+// | | -- Zip All Files in a Folder
 // | | Sheets
-// |+| - Utility Functions for Sheets
-// |+| -- Convert Column Number to a Letter
-// |+| -- Convert Column Letter to a Number
-// |+| -- Replicating Import Range
-// |+| -- Array of Sheet Names
-// |+| - A1 Notation
-// |+| -- A1 Object
-// |+| -- Validate A1
-// |+| - Object
-// |+| -- Object for Range 
+// | | - Utility Functions for Sheets
+// | | -- Convert Column Number to a Letter
+// | | -- Convert Column Letter to a Number
+// | | -- Replicating Import Range
+// | | -- Array of Sheet Names
+// | | - A1 Notation
+// | | -- A1 Object
+// | | -- Validate A1
+// | | - Object
+// | | -- Object for Range 
 // | | - Array of Objects
 // | | -- Header Range
 // | | -- Value Range
@@ -158,10 +158,10 @@ Logger.log("Start");
 // | | -- Last Response as Object
 // | | -- Last Response as Array of Objects
 // | | -- All Responses as Array of Objects
-// |+| JSON
-// |+| -- Object From URL
-// |+| -- Object From File
-// |+| -- Object From Source
+// | | JSON
+// | | -- Object From URL
+// | | -- Object From File
+// | | -- Object From Source
 
 // General
 
@@ -347,20 +347,20 @@ function compareTwoArrays(arrA, arrB) {
 
 function arrayAsDelimitedString(arr, delim) {
     var result = "";
-    var temp = removeDuplicatesFromArray(arr);
-    for (var i = 0; i < temp.length; i++) {
-        if (i < temp.length) {
-            result += temp[i] + delim + " ";
-        } else if (i === temp.length) {
-            result += temp[i];
+    var copy = removeDuplicatesFromArray(arr);
+    for (var i = 0; i < copy.length; i++) {
+        if (i < copy.length) {
+            result += copy[i] + delim + " ";
+        } else if (i === copy.length) {
+            result += copy[i];
         }
     }
     return result;
 }
 
-// Logger.log("arrayAsDelimitedString");
-// var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
-// Logger.log(arrayAsDelimitedString(arr_da, ",")); // "c@example.com, b@example.com, a@example.com"
+Logger.log("arrayAsDelimitedString");
+var arr_da = ["c@example.com", "b@example.com", "a@example.com"];
+Logger.log(arrayAsDelimitedString(arr_da, ",")); // "c@example.com, b@example.com, a@example.com"
 
 // -- Array as Modified Delimited String
 
@@ -376,20 +376,20 @@ function arrayAsDelimitedString(arr, delim) {
 
 function arrayAsModifiedDelimitedString(arr, delim, mod) {
     var result = "";
-    var temp = removeDuplicatesFromArray(arr);
-    for (var i = 0; i < temp.length; i++) {
-        if (i < temp.length) {
-            result += temp[i] + mod + delim + " ";
-        } else if (i === temp.length) {
-            result += temp[i] + mod + delim;
+    var copy = removeDuplicatesFromArray(arr);
+    for (var i = 0; i < copy.length; i++) {
+        if (i < copy.length) {
+            result += copy[i] + mod + delim + " ";
+        } else if (i === copy.length) {
+            result += copy[i] + mod + delim;
         }
     }
     return result;
 }
 
-// Logger.log("arrayAsModifiedDelimitedString");
-// var arr_aamds = ["x", "z", "y"];
-// Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
+Logger.log("arrayAsModifiedDelimitedString");
+var arr_aamds = ["x", "z", "y"];
+Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); // "x@example.com, y@example.com, z@example.com"
 
 // - Two-Dimensional Array
 
