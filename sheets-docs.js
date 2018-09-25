@@ -1,9 +1,8 @@
-// v0.1.2-beta - Review
-
+// --> v0.1.2-beta - Review
 function test() {}
 Logger.log("Start");
-
-// | | General
+// <--
+// | | # General
 // | | - Array
 // | | -- Check Array for a Value
 // | | -- Remove Duplicates from Array
@@ -163,7 +162,7 @@ Logger.log("Start");
 // | | -- Object From File
 // | | -- Object From Source
 
-// General
+// # General
 
 // - Array 
 
