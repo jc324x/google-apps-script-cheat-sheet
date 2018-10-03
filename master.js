@@ -370,7 +370,7 @@ function arrayAsDelimitedString(arr, delim) {
 // Logger.log('arrayAsDelimitedString');
 // var arr_da = ['c@example.com', 'b@example.com', 'a@example.com'];
 // Logger.log(arrayAsDelimitedString(arr_da, ',')); 
-// // 'c@example.com, b@example.com, a@example.com' //!EX
+// 'c@example.com, b@example.com, a@example.com' //!EX
 
 // -- Array as Modified Delimited String
 
