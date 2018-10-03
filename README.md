@@ -152,7 +152,7 @@ function checkArrayForValue(arr, val) {
 }
 
 var arr_cafv = [1, 2, 3, 4];
-Logger.log(checkArrayForValue(arr_cafv, 5)); :arrow_left: false
+Logger.log(checkArrayForValue(arr_cafv, 5)); // false
 ```
 
 #### Remove Duplicates from Array ####
