@@ -2,24 +2,24 @@
 function test() {}
 Logger.log("Start");
 // <--
-// | | # General
-// | | - Array
-// | | -- Check Array for a Value
-// | | -- Remove Duplicates from Array
-// | | -- Remove Empty Elements from Array
-// | | -- Count of Values in Array
-// | | -- Intersect of Two Arrays
-// | | -- Compare Two Arrays
-// | | -- Array as Delimited String
-// | | -- Array as Modified Delimited String
-// | | - Two-Dimensional Array
-// | | -- Flatten Two-Dimensional Array
-// | | - Array of Objects
-// | | -- Sort Array of Objects by Property or Properties
-// | | -- Find Object in Array of Objects
-// | | -- Find First or Last Object in Array of Objects by Timestamp
-// | | -- Filter Array of Objects by Value or Values
-// | | -- Unify Properties for Objects in Array of Objects
+// |*| # General
+// |*| - Array
+// |*| -- Check Array for a Value
+// |*| -- Remove Duplicates from Array
+// |*| -- Remove Empty Elements from Array
+// |*| -- Count of Values in Array
+// |*| -- Intersect of Two Arrays
+// |*| -- Compare Two Arrays
+// |*| -- Array as Delimited String
+// |*| -- Array as Modified Delimited String
+// |*| - Two-Dimensional Array
+// |*| -- Flatten Two-Dimensional Array
+// |*| - Array of Objects
+// |*| -- Sort Array of Objects by Property or Properties
+// |*| -- Find Object in Array of Objects
+// |*| -- Find First or Last Object in Array of Objects by Timestamp
+// |*| -- Filter Array of Objects by Value or Values
+// |*| -- Unify Properties for Objects in Array of Objects
 // | | - Object
 // | | -- Array of Object Values
 // | | -- Merge Objects
