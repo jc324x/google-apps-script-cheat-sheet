@@ -1,5 +1,5 @@
-// !=== QUICK-START
-// !=== README
+// !=== DIRECT -> QUICK-START
+// !=== DIRECT -> README
 // # Google Apps Script Cheat Sheet #
 // ===!
 // !=== QUICK-START

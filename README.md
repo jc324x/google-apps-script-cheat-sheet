@@ -154,7 +154,6 @@
   * [Object From URL](#object-from-url)
   * [Object From File](#object-from-file)
   * [Object From Source](#object-from-source)
-
 ## General ##
 
 ### Array  ###
@@ -367,7 +366,7 @@ function arrayAsDelimitedString(arr, delim) {
 Logger.log('arrayAsDelimitedString');
 var arr_da = ['c@example.com', 'b@example.com', 'a@example.com'];
 Logger.log(arrayAsDelimitedString(arr_da, ',')); 
-// // 'c@example.com, b@example.com, a@example.com' 
+// 'c@example.com, b@example.com, a@example.com' 
 ```
 
 #### Array as Modified Delimited String ####
@@ -428,8 +427,6 @@ Logger.log(flattenTwoDimensionalArray(val_ftda).sort());
 
 ### Array of Objects ###
 
-/**
- * Example array of objects
  */
 
 var arrObj_ex = [{
