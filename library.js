@@ -93,6 +93,10 @@ function countOfValuesInArray(arr) {
 // -- Intersect of Two Arrays
 
 /**
+func (p *Process) lineSkipBuffer() {
+	p.LineOutput = ""
+	p.LineHeight = ""
+}
  * Returns an array containing the elements found in both arrays.
  *
  * @param {Array} arrA
@@ -256,7 +260,6 @@ function sortArrayOfObjectsMulti() {
 
 /**
  * Returns the first object in an array of objects with the key value pair.
- * This can return an object or a value from an object if `ret` is set.
  *
  * @param {Object[]} arrObj
  * @param {string} prop

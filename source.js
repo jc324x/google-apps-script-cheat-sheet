@@ -19,8 +19,8 @@
 // |*| - Two Dimensional Array
 // |*| -- Flatten Two Dimensional Array
 // |?| - Array of Objects
-// | | -- Sort Array of Objects by Property
-// |?| -- Sort Array of Objects by Properties
+// |*| -- Sort Array of Objects by Property
+// |*| -- Sort Array of Objects by Properties
 // |?| -- Find Object in Array of Objects
 // |?| -- Find First or Last Object in Array of Objects by Timestamp
 // |?| -- Filter Array of Objects by Value or Values
@@ -167,7 +167,7 @@
 // | | -- Object From File
 // | | -- Object From Source
 // ===!
-// !=== README
+// !=== DIRECT README
 // 
 // ===!
 // !=== MAIN
@@ -398,9 +398,9 @@ function arrayAsModifiedDelimitedString(arr, delim, mod) {
     return result;
 }
 
-Logger.log('arrayAsModifiedDelimitedString');
-var arr_aamds = ['x', 'z', 'y'];
-Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ',', '@example.com'));
+// Logger.log('arrayAsModifiedDelimitedString');
+// var arr_aamds = ['x', 'z', 'y'];
+// Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ',', '@example.com'));
 // 'x@example.com, y@example.com, z@example.com' //!EX
 
 // - Two Dimensional Array
@@ -421,47 +421,11 @@ function flattenTwoDimensionalArray(arr) {
 
 // Logger.log('flattenTwoDimensionalArray');
 // var sheet_ftda = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Sheet1');
-// var val_ftda   = sheet_ftda.getRange('G2:H5').getValues();
-// Logger.log(flattenTwoDimensionalArray(val_ftda).sort()); 
+// var vals_ftda   = sheet_ftda.getRange('G2:H5').getValues();
+// Logger.log(flattenTwoDimensionalArray(vals_ftda).sort()); 
 // [1, 2, 3, 4, 5, 6, 7, 8] //!EX
 
 // - Array of Objects
-
-// !=== DIRECT -> README
-// ```javascript
-// !=== DIRECT -> README, QUICK-START
-/**
- * Example array of objects
- */
-
-var arrObj_ex = [{
-        a: 1000,
-        b: 1,
-        c: 5
-    },
-    {
-        a: 10000,
-        b: 2,
-        c: 5000
-    },
-    {
-        a: 10,
-        b: 2,
-        c: 500
-    },
-    {
-        a: 1,
-        b: 1,
-        c: 50
-    }
-];
-
-// Logger.log('arrObj_ex');
-// !=== DIRECT -> README
-// ```
-
-// ===!
-// !=== MAIN
 
 // -- Sort Array of Objects by Property
 
@@ -486,6 +450,29 @@ function sortArrayOfObjects(prop) {
 
 // Logger.log('sortArrayOfObjects');
 // Logger.log(arrObj_ex.sort(sortArrayOfObjects('a')));
+
+var saoo1_ao = [{
+        a: 1000,
+        b: 1,
+        c: 5
+    },
+    {
+        a: 10000,
+        b: 2,
+        c: 5000
+    },
+    {
+        a: 10,
+        b: 2,
+        c: 500
+    },
+    {
+        a: 1,
+        b: 1,
+        c: 50
+    }
+];
+//
 // [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}] //!EX
 
 // -- Sort Array of Objects by Properties
@@ -920,6 +907,5 @@ function convertStringToSnakeCase(str) {
 // Logger.log("convertStringToSnakeCase");
 // var str_vsc = "Hello World"; 
 // Logger.log(convertStringToSnakeCase(str_vsc)); // hello_world
-
 
 // ===!
