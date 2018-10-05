@@ -178,11 +178,11 @@ function arrayAsDelimitedString(arr, delim) {
  */
 
 function arrayAsModifiedDelimitedString(arr, delim, mod) {
-    var result = "";
+    var result = '';
     var copy = removeDuplicatesFromArray(arr);
     for (var i = 0; i < copy.length; i++) {
         if (i < copy.length) {
-            result += copy[i] + mod + delim + " ";
+            result += copy[i] + mod + delim + ' ';
         } else if (i === copy.length) {
             result += copy[i] + mod + delim;
         }
@@ -208,33 +208,7 @@ function flattenTwoDimensionalArray(arr) {
 
 // - Array of Objects
 
- */
-
-var arrObj_ex = [{
-        a: 1000,
-        b: 1,
-        c: 5
-    },
-    {
-        a: 10000,
-        b: 2,
-        c: 5000
-    },
-    {
-        a: 10,
-        b: 2,
-        c: 500
-    },
-    {
-        a: 1,
-        b: 1,
-        c: 50
-    }
-];
-
-// FLAG: Separate these two?
-
-// -- Sort Array of Objects by Property or Properties
+// -- Sort Array of Objects by Property
 
 /**
  * Returns an array of objects sorted by a single property value.
@@ -245,7 +219,7 @@ var arrObj_ex = [{
 
 function sortArrayOfObjects(prop) {
     var sortOrder = 1;
-    if (prop[0] === "-") {
+    if (prop[0] === '-') {
         sortOrder = -1;
         prop = prop.substr(1);
     }
@@ -255,6 +229,13 @@ function sortArrayOfObjects(prop) {
     };
 }
 
+// -- Sort Array of Objects by Properties
+
+/**
+ * Returns an array of objects sorted by multiple property values.
+ * @requires sortArrayOfObjects() 
+ * @param {...string}
+ * @returns {Object[]}
  */
 
 function sortArrayOfObjectsMulti() {

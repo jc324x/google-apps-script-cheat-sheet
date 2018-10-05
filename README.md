@@ -14,7 +14,8 @@
 * [Two Dimensional Array](#two-dimensional-array)
   * [Flatten Two Dimensional Array](#flatten-two-dimensional-array)
 * [Array of Objects](#array-of-objects)
-  * [Sort Array of Objects by Property or Properties](#sort-array-of-objects-by-property-or-properties)
+  * [Sort Array of Objects by Property](#sort-array-of-objects-by-property)
+  * [Sort Array of Objects by Properties](#sort-array-of-objects-by-properties)
   * [Find Object in Array of Objects](#find-object-in-array-of-objects)
   * [Find First or Last Object in Array of Objects by Timestamp](#find-first-or-last-object-in-array-of-objects-by-timestamp)
   * [Filter Array of Objects by Value or Values](#filter-array-of-objects-by-value-or-values)
@@ -383,11 +384,11 @@ Logger.log(arrayAsDelimitedString(arr_da, ','));
  */
 
 function arrayAsModifiedDelimitedString(arr, delim, mod) {
-    var result = "";
+    var result = '';
     var copy = removeDuplicatesFromArray(arr);
     for (var i = 0; i < copy.length; i++) {
         if (i < copy.length) {
-            result += copy[i] + mod + delim + " ";
+            result += copy[i] + mod + delim + ' ';
         } else if (i === copy.length) {
             result += copy[i] + mod + delim;
         }
@@ -395,10 +396,10 @@ function arrayAsModifiedDelimitedString(arr, delim, mod) {
     return result;
 }
 
-Logger.log("arrayAsModifiedDelimitedString");
-var arr_aamds = ["x", "z", "y"];
-Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); 
-// "x@example.com, y@example.com, z@example.com" 
+Logger.log('arrayAsModifiedDelimitedString');
+var arr_aamds = ['x', 'z', 'y'];
+Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ',', '@example.com'));
+// 'x@example.com, y@example.com, z@example.com' 
 ```
 
 ### Two Dimensional Array ###
@@ -418,15 +419,18 @@ function flattenTwoDimensionalArray(arr) {
     return result;
 }
 
-Logger.log("flattenTwoDimensionalArray");
-var sheet_ftda = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var val_ftda   = sheet_ftda.getRange("G2:H5").getValues();
+Logger.log('flattenTwoDimensionalArray');
+var sheet_ftda = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Sheet1');
+var val_ftda   = sheet_ftda.getRange('G2:H5').getValues();
 Logger.log(flattenTwoDimensionalArray(val_ftda).sort()); 
 // [1, 2, 3, 4, 5, 6, 7, 8] 
 ```
 
 ### Array of Objects ###
 
+```javascript
+/**
+ * Example array of objects
  */
 
 var arrObj_ex = [{
@@ -452,9 +456,9 @@ var arrObj_ex = [{
 ];
 
 Logger.log('arrObj_ex');
-// FLAG: Separate these two?
+```
 
-#### Sort Array of Objects by Property or Properties ####
+#### Sort Array of Objects by Property ####
 
 ```javascript
 /**
@@ -466,7 +470,7 @@ Logger.log('arrObj_ex');
 
 function sortArrayOfObjects(prop) {
     var sortOrder = 1;
-    if (prop[0] === "-") {
+    if (prop[0] === '-') {
         sortOrder = -1;
         prop = prop.substr(1);
     }
@@ -477,14 +481,18 @@ function sortArrayOfObjects(prop) {
 }
 
 Logger.log('sortArrayOfObjects');
-Logger.log(arrObj_ex.sort(sortArrayOfObjects('a'))); 
+Logger.log(arrObj_ex.sort(sortArrayOfObjects('a')));
+// [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}] 
+```
 
+#### Sort Array of Objects by Properties ####
 
-
-
-
-
-
+```javascript
+/**
+ * Returns an array of objects sorted by multiple property values.
+ * @requires sortArrayOfObjects() 
+ * @param {...string}
+ * @returns {Object[]}
  */
 
 function sortArrayOfObjectsMulti() {
@@ -501,9 +509,10 @@ function sortArrayOfObjectsMulti() {
     };
 }
 
-Logger.log("sortArrayOfObjectsMulti");
-Logger.log(arrObj_ex.sort(sortArrayOfObjectsMulti("b", "c"))); 
-
+Logger.log('sortArrayOfObjectsMulti');
+Logger.log(arrObj_ex.sort(sortArrayOfObjectsMulti('b', 'c'))); 
+// [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}] 
+```
 
 #### Find Object in Array of Objects ####
 
@@ -662,7 +671,7 @@ var arrObj_upfoiaoo = [{
 
 Logger.log("unifyPropertiesForObjectsInArrayOfObjects");
 Logger.log(unifyPropertiesForObjectsInArrayOfObjects(arrObj_upfoiaoo, ["x","y","z"], "new"));
-
+// [{a=1.0, new=123.0, x=123.0}, {new=234.0, b=2.0, y=234.0}, {new=345.0, c=3.0, z=345.0}]
 
 ### Object ###
 
@@ -703,12 +712,12 @@ Logger.log("arrayOfObjectValues");
 var arr_aoov = ["a", "b", "d"];
 Logger.log(arrayOfObjectValues(obj_aoov, arr_aoov)); // [1, 2]
 
+// Merge Objects
 
-
-
-
-
-
+/**
+ * Returns a single object with the values of multiple objects.
+ * @param {...Object}
+ * @returns {Object}
  */
 
 function mergeObjs() {
@@ -756,7 +765,7 @@ function checkForValidObject(obj) {
 Logger.log("checkForValidObject");
 var obj_cfvo = {};
 Logger.log(checkForValidObject(obj_cfvo)); // false
-
+// obj_cfvo = {a: 100};
 Logger.log(checkForValidObject(obj_cfvo)); // true
 
 ### Dates and Times ###
@@ -786,14 +795,14 @@ function dateTime(opt) {
 Logger.log("dateTime");
 Logger.log(dateTime()); // 2018-3-7 7:05:07 PM
 
+// Append Date Time
 
-
-
-
-
-
-
-
+/**
+ * appendDateTime
+ *
+ * @requires dateTime() 
+ * @param {string} str
+ * @returns {string}
  */
 
 function appendDateTime(str) {

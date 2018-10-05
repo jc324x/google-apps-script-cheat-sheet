@@ -1,10 +1,9 @@
 // !=== DIRECT -> QUICK-START
-// !=== DIRECT -> README
-// # Google Apps Script Cheat Sheet #
-// ===!
-// !=== QUICK-START
 // function test() {}
 // Logger.log('Start');
+// ===!
+// !=== DIRECT -> README
+// # Google Apps Script Cheat Sheet #
 // ===!
 // !=== NAV
 // |*| # General
@@ -20,7 +19,8 @@
 // |*| - Two Dimensional Array
 // |*| -- Flatten Two Dimensional Array
 // |?| - Array of Objects
-// |?| -- Sort Array of Objects by Property or Properties
+// | | -- Sort Array of Objects by Property
+// |?| -- Sort Array of Objects by Properties
 // |?| -- Find Object in Array of Objects
 // |?| -- Find First or Last Object in Array of Objects by Timestamp
 // |?| -- Filter Array of Objects by Value or Values
@@ -166,6 +166,7 @@
 // | | -- Object From URL
 // | | -- Object From File
 // | | -- Object From Source
+// ===!
 // !=== README
 // 
 // ===!
@@ -385,11 +386,11 @@ function arrayAsDelimitedString(arr, delim) {
  */
 
 function arrayAsModifiedDelimitedString(arr, delim, mod) {
-    var result = "";
+    var result = '';
     var copy = removeDuplicatesFromArray(arr);
     for (var i = 0; i < copy.length; i++) {
         if (i < copy.length) {
-            result += copy[i] + mod + delim + " ";
+            result += copy[i] + mod + delim + ' ';
         } else if (i === copy.length) {
             result += copy[i] + mod + delim;
         }
@@ -397,10 +398,10 @@ function arrayAsModifiedDelimitedString(arr, delim, mod) {
     return result;
 }
 
-Logger.log("arrayAsModifiedDelimitedString");
-var arr_aamds = ["x", "z", "y"];
-Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ",", "@example.com")); 
-// "x@example.com, y@example.com, z@example.com" //!EX
+Logger.log('arrayAsModifiedDelimitedString');
+var arr_aamds = ['x', 'z', 'y'];
+Logger.log(arrayAsModifiedDelimitedString(arr_aamds, ',', '@example.com'));
+// 'x@example.com, y@example.com, z@example.com' //!EX
 
 // - Two Dimensional Array
 
@@ -418,15 +419,17 @@ function flattenTwoDimensionalArray(arr) {
     return result;
 }
 
-// Logger.log("flattenTwoDimensionalArray");
-// var sheet_ftda = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-// var val_ftda   = sheet_ftda.getRange("G2:H5").getValues();
+// Logger.log('flattenTwoDimensionalArray');
+// var sheet_ftda = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Sheet1');
+// var val_ftda   = sheet_ftda.getRange('G2:H5').getValues();
 // Logger.log(flattenTwoDimensionalArray(val_ftda).sort()); 
 // [1, 2, 3, 4, 5, 6, 7, 8] //!EX
 
 // - Array of Objects
 
-// !=== README, QUICK-START
+// !=== DIRECT -> README
+// ```javascript
+// !=== DIRECT -> README, QUICK-START
 /**
  * Example array of objects
  */
@@ -454,12 +457,13 @@ var arrObj_ex = [{
 ];
 
 // Logger.log('arrObj_ex');
+// !=== DIRECT -> README
+// ```
+
 // ===!
 // !=== MAIN
 
-// FLAG: Separate these two?
-
-// -- Sort Array of Objects by Property or Properties
+// -- Sort Array of Objects by Property
 
 /**
  * Returns an array of objects sorted by a single property value.
@@ -470,7 +474,7 @@ var arrObj_ex = [{
 
 function sortArrayOfObjects(prop) {
     var sortOrder = 1;
-    if (prop[0] === "-") {
+    if (prop[0] === '-') {
         sortOrder = -1;
         prop = prop.substr(1);
     }
@@ -481,8 +485,10 @@ function sortArrayOfObjects(prop) {
 }
 
 // Logger.log('sortArrayOfObjects');
-// Logger.log(arrObj_ex.sort(sortArrayOfObjects('a'))); 
-// [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}] //EX!
+// Logger.log(arrObj_ex.sort(sortArrayOfObjects('a')));
+// [{a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=1000.0, b=1.0, c=5.0}, {a=10000.0, b=2.0, c=5000.0}] //!EX
+
+// -- Sort Array of Objects by Properties
 
 /**
  * Returns an array of objects sorted by multiple property values.
@@ -505,15 +511,14 @@ function sortArrayOfObjectsMulti() {
     };
 }
 
-// Logger.log("sortArrayOfObjectsMulti");
-// Logger.log(arrObj_ex.sort(sortArrayOfObjectsMulti("b", "c"))); 
-// [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}] //EX!
+// Logger.log('sortArrayOfObjectsMulti');
+// Logger.log(arrObj_ex.sort(sortArrayOfObjectsMulti('b', 'c'))); 
+// [{a=1000.0, b=1.0, c=5.0}, {a=1.0, b=1.0, c=50.0}, {a=10.0, b=2.0, c=500.0}, {a=10000.0, b=2.0, c=5000.0}] //!EX
 
 // -- Find Object in Array of Objects
 
 /**
  * Returns the first object in an array of objects with the key value pair.
- * This can return an object or a value from an object if `ret` is set.
  *
  * @param {Object[]} arrObj
  * @param {string} prop
@@ -918,4 +923,3 @@ function convertStringToSnakeCase(str) {
 
 
 // ===!
-
