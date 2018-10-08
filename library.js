@@ -93,10 +93,6 @@ function countOfValuesInArray(arr) {
 // -- Intersect of Two Arrays
 
 /**
-func (p *Process) lineSkipBuffer() {
-	p.LineOutput = ""
-	p.LineHeight = ""
-}
  * Returns an array containing the elements found in both arrays.
  *
  * @param {Array} arrA
