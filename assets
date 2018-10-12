@@ -1,4 +1,10 @@
 gascd
-  -- main
-    --- data
-    --- merge-template
+  \ input
+    - data-sheet
+    - data-json
+    - example-form
+    - example-responses
+    - template-doc
+    - template-sheet
+  \ output
+    - * 

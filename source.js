@@ -1,6 +1,9 @@
 // !=== DIRECT -> QUICK-START
+// // How to handle testing function? Initial setup in script as well
+
 // function test() {}
 // Logger.log('Start');
+
 // ===!
 // !=== DIRECT -> README
 // # Google Apps Script Cheat Sheet #
@@ -424,6 +427,7 @@ function flattenTwoDimensionalArray(arr) {
 // var vals_ftda   = sheet_ftda.getRange('G2:H5').getValues();
 // Logger.log(flattenTwoDimensionalArray(vals_ftda).sort()); 
 // [1, 2, 3, 4, 5, 6, 7, 8] //!EX
+
 
 // - Array of Objects
 
