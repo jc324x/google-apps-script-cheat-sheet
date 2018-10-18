@@ -939,7 +939,7 @@ function getBasename(path) {
 }
 
 // Logger.log("getBasename");
-// Logger.log(getBasename("/a/b/c")); // c
+// Logger.log(getBasename("/a/b/c")); // c //!EX
 
 // -- Get Inverse Basename
 
@@ -1025,6 +1025,7 @@ function matchMIMEType(file, mime) {
 
 // - Folders
 
+// FLAG
 // Example Files And Folders
 
 /**
@@ -1046,7 +1047,6 @@ function matchMIMEType(file, mime) {
  * @requires createFileInFolder()*
  * @requires createFileAtRoot()*
  * @requires moveFileToFolder()*
- *
  */
 
 function verifyExampleFilesAndFolders() {
@@ -2131,7 +2131,7 @@ function checkForFileAtPath(path, mime) {
 // Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet")); // true
 // Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet")); // true
 
-// Create File
+// Create a File
 
 // --- Create File at Root
 

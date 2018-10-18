@@ -274,7 +274,7 @@ function findObjectInArrayOfObjects(arrObj, prop, val) {
     }
 }
 
-// Find Oldest or Latest Object by Timestamp value
+// -- Find Oldest Object in Array of Objects
 
 /**
  * Returns the object with the oldest timestamp value.
@@ -283,7 +283,7 @@ function findObjectInArrayOfObjects(arrObj, prop, val) {
  * @returns {Object}
  */
 
-function oldestObjectInArrayOfObjects(arr) {
+function findOldestObjectInArrayOfObjects(arr) {
     if (arr.length >= 2) {
         var sorted = arr.sort(function(a, b) {
             return new Date(a.timestamp) - new Date(b.timestamp);
@@ -294,6 +294,8 @@ function oldestObjectInArrayOfObjects(arr) {
     }
 }
 
+// -- Find Latest Object in Array of Objects
+
 /**
  * Returns the object with the most recent timestamp value.
  *
@@ -301,7 +303,7 @@ function oldestObjectInArrayOfObjects(arr) {
  * @returns {Object}
  */
 
-function latestObjectInArrayOfObjects(arrObj) {
+function findLatestObjectInArrayOfObjects(arrObj) {
     if (arrObj.length >= 2) {
         var sorted = arrObj.sort(function(a, b) {
             return new Date(b.timestamp) - new Date(a.timestamp);
@@ -413,6 +415,12 @@ var obj_aoov = {
     c: 3
 };
 
+// Merge Objects
+
+/**
+ * Returns a single object with the values of multiple objects.
+ * @param {...Object}
+ * @returns {Object}
  */
 
 function mergeObjs() {
@@ -476,6 +484,14 @@ function dateTime(opt) {
     return date.join("-") + " " + time.join(":") + " " + ampm;
 }
 
+// Append Date Time
+
+/**
+ * appendDateTime
+ *
+ * @requires dateTime() 
+ * @param {string} str
+ * @returns {string}
  */
 
 function appendDateTime(str) {
@@ -584,5 +600,948 @@ function checkStringForSubstring(val, str) {
 
 function convertStringToSnakeCase(str) {
     return String(str).toLowerCase().replace(/ /g, '_');
+}
+
+// Drive
+
+// - Utility Functions for Drive
+
+// -- Validate Path String
+
+/**
+ * Returns a string with leading or trailing forward slashes '/' removed.
+ *
+ * @param {string} path
+ * @returns {string}
+ */
+
+function validatePathString(path) {
+    if ((path.charAt(0)) === "/") {
+        path = path.substr(1);
+    }
+    if ((path.charAt(path.length - 1) === "/")) {
+        path = path.slice(0, -1);
+    }
+    return path;
+}
+
+// -- Get Basename 
+
+/**
+ * Returns the basename from the end of a path.
+ *
+ * @param {string} path
+ * @returns {string}
+ */
+
+function getBasename(path) {
+    path = validatePathString(path);
+    var split = path.split("/");
+    return split.pop();
+}
+
+// -- Get Inverse Basename
+
+/**
+ * Returns a path, minus the basename.
+ *
+ * @param {string} path
+ * @returns {string}
+ */
+
+function getInverseBasename(path) {
+    path = validatePathString(path);
+    var split = path.split("/");
+    split.pop();
+    return split.join("/");
+}
+
+// -- Validate MIME Type
+
+/**
+ * Returns a full MIME type from a short or full MIME type..
+ * @param {string} val
+ * @returns {string || boolean}
+ */
+
+function validateMIME(val) {
+    val = val.toLowerCase();
+    var prefix = "application/vnd.google-apps.";
+    var mimes = [
+        "audio", "document", "drawing",
+        "drive-sdk", "file", "folder",
+        "form", "fusiontable", "map",
+        "photo", "presentation", "script",
+        "site", "spreadsheet", "unknown", "video"
+    ];
+    for (var i = 0; i < mimes.length; i++) {
+        var mime = mimes[i];
+        if (val === prefix.concat(mime)) {
+            return val;
+        }
+    }
+    if (checkArrayForValue(mimes, val)) {
+        return prefix.concat(val);
+    } else {
+        return false;
+    }
+}
+
+// -- Match MIME Type
+
+/**
+ * Returns true if the file's MIME type matches the given MIME type.
+ *
+ * @param {File} file
+ * @param {string} mime - short form mime notation (ex. "doc" or "spreadsheet")
+ * @returns {boolean}
+ */
+
+function matchMIMEType(file, mime) {
+    mime = validateMIME(mime);
+    var type = file.getMimeType();
+    if (type == mime) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// - Folders
+
+// -- Array of Folders 
+
+// --- Array of Folders at Root
+
+/**
+ * Returns an array of all folders found at root.
+ * The array contains folder objects, not folder names.
+ *
+ * @returns {Folder[]}
+ */
+
+function arrayOfFoldersAtRoot() {
+    var result = [];
+    var fi = DriveApp.getRootFolder().getFolders();
+    while (fi.hasNext()) {
+        var fldr = fi.next();
+        result.push(fldr);
+    }
+    return result;
+}
+
+// --- Array of Folders in Folder 
+
+/**
+ * Returns an array of all folders found in a folder.
+ * The array contains folder objects, not folder names.
+ *
+ * @param {Folder} fldr
+ * @returns {Folder[]}
+ */
+
+function arrayOfFoldersInFolder(fldr) {
+    var result = [];
+    var fi = fldr.getFolders();
+    while (fi.hasNext()) {
+        var _fldr = fi.next();
+        result.push(_fldr);
+    }
+    return result;
+}
+
+// --- Array of Folders at Path
+
+/**
+ * Returns an array of all folders found at the end of a folder path.
+ * The array contains folder objects, not folder names.
+ *
+ * @param {string} path
+ * @requires validatePathString() 
+ * @requires findFolderAtPath() 
+ * @requires getBasename()*
+ * @requires arrayOfFoldersInFolder() 
+ * @returns {Folder[]}
+ */
+
+function arrayOfFoldersAtPath(path) {
+    path = validatePathString(path);
+    var result = [];
+    var fldr = findFolderAtPath(path);
+    if (fldr) {
+        return arrayOfFoldersInFolder(fldr);
+    } else {
+        return false;
+    }
+}
+
+// --- Array of All Folders in Drive
+
+/**
+ * Returns an array of all folders in Drive.
+ * The array contains folder objects, not folder names.
+ *
+ * @returns {Folder[]}
+ */
+
+function arrayOfFoldersInDrive() {
+    var result = [];
+    var fi = DriveApp.getFolders();
+    while (fi.hasNext()) {
+        var fldr = fi.next();
+        result.push(fldr);
+    }
+    return result;
+}
+
+// -- Array of Folder Names
+
+/**
+ * Returns an array of folder names given an array of folders.
+ *
+ * @param {Folders[]}
+ * @returns {string[]}
+ */
+
+function arrayOfFolderNames(arr) {
+    var result = [];
+    for (var i = 0; i < arr.length; i++) {
+        var name = arr[i].getName();
+        result.push(name);
+    }
+    return result;
+}
+
+// -- Find a Folder
+
+// --- Find Folder at Root
+
+/**
+ * Returns a folder from root.
+ * Returns false if the folder doesn't exist.
+ *
+ * @param {string} name
+ * @requires arrayOfFoldersAtRoot()
+ * @requires arrayOfFolderNames()
+ * @requires checkArrayForValue()
+ * @returns {Folder}
+ */
+
+function findFolderAtRoot(name) {
+    var fldrs = arrayOfFoldersAtRoot();
+    var names = arrayOfFolderNames(fldrs);
+    if (checkArrayForValue(names, name)) {
+        return DriveApp.getRootFolder().getFoldersByName(name).next();
+    } else {
+        return false;
+    }
+}
+
+// --- Find Folder in Folder
+
+/**
+ * Returns a folder from a folder.
+ * Returns false if either folder doesn't exist.
+ *
+ * @requires arrayOfFoldersInFolder() 
+ * @requires arrayOfFolderNames() 
+ * @requires checkArrayForValue()
+ * @param {Folder} fldr
+ * @param {string} name
+ * @returns {Folder}
+ */
+
+function findFolderInFolder(name, fldr) {
+    var fldrs = arrayOfFoldersInFolder(fldr);
+    var names = arrayOfFolderNames(fldrs);
+    if (checkArrayForValue(names, name)) {
+        return fldr.getFoldersByName(name).next();
+    } else {
+        return false;
+    }
+}
+
+// -- Find Folder at Path
+
+/**
+ * Returns the folder found at the given path.
+ * Returns false if the path is invalid or if the folder doesn't exist.
+ *
+ * @param path
+ * @requires validatePathString() 
+ * @requires getBasename() 
+ * @returns {Folder}
+ */
+
+function findFolderAtPath(path) {
+    path = validatePathString(path);
+    var fi, fldr;
+    var split = path.split("/");
+
+    for (i = 0; i < split.length; i++) {
+        if (i === 0) {
+            fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+            if (fi.hasNext()) {
+                fldr = fi.next();
+            } else {
+                return false;
+            }
+        } else if (i >= 1) {
+            fi = fldr.getFoldersByName(split[i]);
+            if (fi.hasNext()) {
+                fldr = fi.next();
+            } else {
+                return false;
+            }
+        }
+    }
+
+    var target = getBasename(path);
+    if (fldr.getName() === target) {
+        return fldr;
+    } else {
+        return false;
+    }
+}
+
+// --- Find a Folder in Drive
+
+/**
+ * Returns the first matching folder in Drive or false if no folder is found.
+ *
+ * @param {string} name
+ * @returns {Folder}
+ */
+
+function findFolderInDrive(name) {
+    var fi = DriveApp.getFoldersByName(name);
+    while (fi.hasNext()) {
+        return fi.next();
+    }
+    return false;
+}
+
+// -- Check for a Folder
+
+// --- Check for a Folder at Root
+
+/**
+ * Returns true if the folder is found. 
+ *
+ * @param {string} name
+ * @requires findFolderAtRoot() 
+ * @requires arrayOfFoldersAtRoot()*
+ * @requires arrayOfFolderNames()*
+ * @requires checkArrayForValue()*
+ * @returns {boolean}
+ */
+
+function checkForFolderAtRoot(name) {
+    if (findFolderAtRoot(name)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// --- Check for a Folder at Path
+
+/**
+ * Returns true if the folder is found.
+ *
+ * @param {string} path
+ * @requires validatePathString() 
+ * @requires findFolderAtPath() 
+ * @requires getBasename()*
+ * @returns {boolean}
+ */
+
+function checkForFolderAtPath(path) {
+    path = validatePathString(path);
+    var fldr = findFolderAtPath(path);
+    if (fldr) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// -- Create Folder
+
+// --- Create Folder at Root
+
+/**
+ * Return a newly created folder.
+ * This can create duplicate folders if used without caution.
+ *
+ * @param name
+ * @returns {Folder}
+ */
+
+function createFolderAtRoot(name) {
+    return DriveApp.getRootFolder().createFolder(name);
+}
+
+// --- Create Folder in a Folder
+
+/**
+ * Return a newly created folder.
+ * This can create duplicate folders if used without caution.
+ *
+ * @param {string} name
+ * @param {Folder} fldr
+ * @returns {Folder}
+ */
+
+function createFolderInFolder(name, fldr) {
+    return fldr.createFolder(name);
+}
+
+// --- Create Folder at Path
+
+/**
+ * Creates a folder at the given path. 
+ * Returns false if the supporting folders in the path are missing.
+ * To verify a complete folder path, use verifyFolderPath instead.
+ * This can create duplicate folders if used without caution.
+ *
+ * @requires validatePathString() 
+ * @requires getInverseBasename() 
+ * @requires findFolderAtPath() 
+ * @requires getBasename() 
+ * @param {string} path
+ * @returns {Folder || boolean}
+ */
+
+function createFolderAtPath(path) {
+    path = validatePathString(path);
+    var inverse = getInverseBasename(path);
+    var fldr = findFolderAtPath(inverse);
+    if (!fldr) return false;
+    var basename = getBasename(path);
+    return fldr.createFolder(basename);
+}
+
+// -- Create Folders
+
+// --- Create Folders at Root
+
+/**
+ * Returns the root folder. 
+ * This can create duplicate folders if used without caution.
+ *
+ * @param {Array} arr
+ * @returns {Folder}
+ */
+
+function createFoldersAtRoot(arr) {
+    for (i = 0; i < arr.length; i++) {
+        DriveApp.getRootFolder().createFolder(arr[i]);
+    }
+    return DriveApp.getRootFolder();
+}
+
+// --- Create Folders in Folder
+
+/**
+ * Returns the targeted folder.
+ * This can create duplicate folders if used without caution.
+ *
+ * @param {Array} arr
+ * @param {Folder} fldr
+ * @returns {Folder}
+ */
+
+function createFoldersInFolder(arr, fldr) {
+    for (i = 0; i < arr.length; i++) {
+        fldr.createFolder(arr[i]);
+    }
+    return fldr;
+}
+
+// --- Create Folders at Path
+
+/**
+ * Returns the target folder.
+ * This can create duplicate folders if used without caution.
+ *
+ * @requires validatePathString() 
+ * @requires getInverseBasename() 
+ * @requires findFolderAtPath()
+ * @param {Array} arr
+ * @param {string} path
+ * @returns {Folder || boolean}
+ */
+
+function createFoldersAtPath(arr, path) {
+    path = validatePathString(path);
+    var fldr = findFolderAtPath(path);
+    if (!fldr) return false;
+    for (i = 0; i < arr.length; i++) {
+        fldr.createFolder(arr[i]);
+    }
+    return fldr;
+}
+
+// - Verify Folder
+
+// --- Verify Folder at Root
+
+/**
+ * Returns the targeted folder.
+ * A new folder is created only if necessary; this will not create duplicate folders.
+ *
+ * @requires checkForFolderAtRoot() 
+ * @requires findFolderAtRoot()*
+ * @requires arrayOfFoldersAtRoot()*
+ * @requires arrayOfFolderNames()*
+ * @requires checkArrayForValue()*
+ * @requires createFolderAtRoot() 
+ * @requires findFolderAtRoot() 
+ * @param {string} name
+ * @returns {Folder}
+ */
+
+function verifyFolderAtRoot(name) {
+    if (!(checkForFolderAtRoot(name))) {
+        return createFolderAtRoot(name);
+    } else {
+        return findFolderAtRoot(name);
+    }
+}
+
+// --- Verify Folder in Folder
+
+/**
+ * Returns the targeted folder.
+ * A new folder is created only if necessary; this will not create duplicate folders.
+ *
+ * @requires checkForFolderInFolder() 
+ * @requires findFolderInFolder()*
+ * @requires arrayOfFoldersInFolder()*
+ * @requires arrayOfFolderNames()*
+ * @requires checkArrayForValue()*
+ * @requires createFolderInFolder() 
+ * @requires findFolderInFolder() 
+ * @param {string} name
+ * @param {Folder} fldr
+ * @returns {Folder}
+ */
+
+function verifyFolderInFolder(name, fldr) {
+    if (!(checkForFolderInFolder(name, fldr))) {
+        return createFolderInFolder(name, fldr);
+    } else {
+        return findFolderInFolder(name, fldr);
+    }
+}
+
+// --- Verify Folder Path
+
+/**
+
+ * Returns a folder at the end of a folder path.
+ * Folders in the path are created if they don't already exist.
+ *
+ * @requires validatePathString() 
+ * @param {string} path
+ * @returns {Folder}
+ */
+
+function verifyFolderPath(path) {
+    path = validatePathString(path);
+    var split = path.split("/");
+    var fldr;
+    for (i = 0; i < split.length; i++) {
+        var fi = DriveApp.getRootFolder().getFoldersByName(split[i]);
+        if (i === 0) {
+            if (!(fi.hasNext())) {
+                DriveApp.createFolder(split[i]);
+                fi = DriveApp.getFoldersByName(split[i]);
+            }
+            fldr = fi.next();
+        } else if (i >= 1) {
+            fi = fldr.getFoldersByName(split[i]);
+            if (!(fi.hasNext())) {
+                fldr.createFolder(split[i]);
+                fi = DriveApp.getFoldersByName(split[i]);
+            }
+            fldr = fi.next();
+        }
+    }
+    return fldr;
+}
+
+// -- Verify Folders
+
+// --- Verify Folders at Root
+
+/**
+ * Returns the root folder.
+ * Creates folders at root if they don't exist already.
+ *
+ * @requires arrayOfFoldersAtRoot() 
+ * @requires arrayOfFolderNames() 
+ * @requires checkArrayForValue() 
+ *
+ * @param {string[]} names
+ * @returns {Folder}
+ */
+
+function verifyFoldersAtRoot(arr) {
+    var rfs = arrayOfFoldersAtRoot();
+    var names = arrayOfFolderNames(rfs);
+    for (i = 0; i < arr.length; i++) {
+        if (!(checkArrayForValue(names, arr[i]))) {
+            DriveApp.createFolder(arr[i]);
+        }
+    }
+    return DriveApp.getRootFolder();
+}
+
+// --- Verify Folders in a Folder
+
+/**
+ * Returns the targeted folder. 
+ * Creates folders within a folder if they don't already exist.
+ *
+ * @requires arrayOfFoldersInFolder()
+ * @requires arrayOfFolderNames()
+ * @requires checkArrayForValue()
+ * @param {string[]} arr
+ * @param {Folder} fldr
+ * @returns {Folder}
+ */
+
+function verifyFoldersInFolder(arr, fldr) {
+    var fldrs = arrayOfFoldersInFolder(fldr);
+    var names = arrayOfFolderNames(fldrs);
+    for (i = 0; i < arr.length; i++) {
+        if (!(checkArrayForValue(arr[i], names))) {
+            fldr.createFolder(arr[i]);
+        }
+    }
+    return fldr;
+}
+
+// --- Verify Folders at Path
+
+/**
+ * Returns the folder at the end of the target path or false if the given path is invalid.
+ * Creates folders within a folder if they don't already exist.
+ *
+ * @requires validatePathString() 
+ * @requires findFolderAtPath() 
+ * @requires getBasename() 
+ * @requires verifyFoldersInFolder() 
+ * @requires arrayOfFoldersInFolder()
+ * @requires arrayOfFolderNames()
+ * @requires checkArrayForValue()
+ * @returns {Folder}
+ */
+
+function verifyFoldersAtPath(arr, path) {
+    path = validatePathString(path);
+    var fldr = findFolderAtPath(path);
+    verifyFoldersInFolder(arr, fldr);
+}
+
+// - Files
+
+// -- Array of Files 
+
+// --- Array of Files at Root
+
+/**
+ * Returns an array containing all files found at root.
+ *
+ * @returns {File[]}
+ */
+
+function arrayOfFilesAtRoot() {
+    var result = [];
+    var fi = DriveApp.getRootFolder().getFiles();
+    while (fi.hasNext()) {
+        var file = fi.next();
+        result.push(file);
+    }
+    return result;
+}
+
+// --- Array of Files in Folder
+
+/**
+ * Returns an array containing all files found at the top level of a folder.
+ *
+ * @param {Folder} fldr
+ * @returns {File[]}
+ */
+
+function arrayOfFilesInFolder(fldr) {
+    var result = [];
+    var fi = fldr.getFiles();
+    while (fi.hasNext()) {
+        var file = fi.next();
+        result.push(file);
+    }
+    return result;
+}
+
+// --- Array of Files at Path
+
+/**
+ * Returns an array containing all files found at the top level of a folder path.
+ *
+ * @requires validatePathString() 
+ * @requires findFolderAtPath() 
+ * @requires getBasename()*
+ * @requires arrayOfFilesInFolder() 
+ * @param {string} path
+ * @returns {Files[] || boolean}
+ */
+
+function arrayOfFilesAtPath(path) {
+    path = validatePathString(path);
+    var result = [];
+    var fldr = findFolderAtPath(path);
+    if (!fldr) {
+        return arrayOfFilesInFolder(fldr);
+    } else {
+        return false;
+    }
+}
+
+// --- Array of All Files in Drive
+
+/**
+ * Returns an array of all files in Drive..
+ * Please don't actually use this in production. 
+ *
+ * @returns {File[]}
+ */
+
+function arrayOfFilesInDrive() {
+    var result = [];
+    var fi = DriveApp.getFiles();
+    while (fi.hasNext()) {
+        var file = fi.next();
+        result.push(file);
+    }
+    return result;
+}
+
+// -- Array of File Names 
+
+/**
+ *  Returns an array of file names.
+ *
+ * @param {File[]} files
+ * @returns {string[]}
+ */
+
+function arrayOfFileNames(arr) {
+    var result = [];
+    for (var i = 0; i < arr.length; i++) {
+        var name = arr[i].getName();
+        result.push(name);
+    }
+    return result;
+}
+
+// -- Find a File
+
+// --- Find a File at Root
+
+/**
+ * Returns a file from root. 
+ *
+ * @requires arrayOfFilesAtRoot() 
+ * @requires arrayOfFileNames() 
+ * @requires checkArrayForValue() 
+ * @requires validateMIME() 
+ * @param {string} name
+ * @returns {File || false}
+ */
+
+function findFileAtRoot(name, mime) {
+
+    function findFileAtRootAny(name) {
+        var files = arrayOfFilesAtRoot();
+        var names = arrayOfFileNames(files);
+        if (checkArrayForValue(names, name)) {
+            return DriveApp.getRootFolder().getFilesByName(name).next();
+        } else {
+            return false;
+        }
+    }
+
+    function findFileAtRootType(name, mime) {
+        mime = validateMIME(mime);
+        var files = arrayOfFilesAtRoot();
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            if ((file.getName() === name) && file.getMimeType() === mime) {
+                return file;
+            }
+        }
+        return false;
+    }
+
+    if (mime !== undefined) {
+        return findFileAtRootType(name, mime);
+    } else {
+        return findFileAtRootAny(name);
+    }
+}
+
+// --- Find a File in a Folder
+
+/**
+ * Returns a file from a folder.
+ *
+ * @requires arrayOfFilesInFolder() 
+ * @requires arrayOfFileNames() 
+ * @requires checkArrayForValue() 
+ * @requires validateMIME() 
+ * @param {string} name
+ * @param {Folder} fldr
+ * @param {string} [mime]
+ * @returns {File || boolean}
+ */
+
+function findFileInFolder(name, fldr, mime) {
+
+    function findFileInFolderAny(name, fldr) {
+        var files = arrayOfFilesInFolder(fldr);
+        var names = arrayOfFileNames(files);
+        if (checkArrayForValue(names, name)) {
+            return fldr.getFilesByName(name).next();
+        } else {
+            return false;
+        }
+    }
+
+    function findFileInFolderType(name, fldr, mime) {
+        mime = validateMIME(mime);
+        if (mime) {
+            var files = arrayOfFilesInFolder(fldr);
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                if ((file.getName() === name) && file.getMimeType() === mime) {
+                    return file;
+                }
+            }
+        } else {
+            return false;
+        }
+        return false;
+    }
+
+    if (mime !== undefined) {
+        return findFileInFolderType(name, fldr, mime);
+    } else {
+        return findFileInFolderAny(name, fldr);
+    }
+}
+
+// --- Find File at Path
+
+/**
+ * Returns a file from a path.
+ * Returns false if the given path is incomplete.
+ * Returns false if passed a mime value that doesn't match the file's mime type.
+ *
+ * @requires validatePathString() 
+ * @requires getBasename() 
+ * @requires getInverseBasename() 
+ * @requires findFolderAtPath() 
+ * @requires findFileInFolder() 
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME() 
+ * @requires matchMIMEType() 
+ * @param {string} path
+ * @returns {File}
+ */
+
+function findFileAtPath(path, mime) {
+
+    function findFileAtPathAny(path) {
+        path = validatePathString(path);
+        var file = getBasename(path);
+        path = getInverseBasename(path);
+        var fldr = findFolderAtPath(path);
+        if (fldr) {
+            return findFileInFolder(file, fldr);
+        } else {
+            return false;
+        }
+    }
+
+    function findFileAtPathType(path, mime) {
+        path = validatePathString(path);
+        mime = validateMIME(mime);
+        var file = getBasename(path);
+        path = getInverseBasename(path);
+        var fldr = findFolderAtPath(path);
+
+        if (fldr) {
+            file = findFileInFolder(file, fldr);
+        } else {
+            return false;
+        }
+
+        if (file && matchMIMEType(file, mime)) {
+            return file;
+        } else {
+            return false;
+        }
+    }
+
+    if (mime !== undefined) {
+        return findFileAtPathType(path, mime);
+    } else {
+        return findFileAtPathAny(path);
+    }
+}
+
+// --- Find a File in Drive
+
+/**
+ * Returns a file from Drive.
+ *
+ * @requires validateMIME() 
+ * @param {string} name
+ * @returns {File}
+ */
+
+function findFileInDrive(name, mime) {
+
+    function findFileInDriveAny(name) {
+        var fi = DriveApp.getFilesByName(name);
+        while (fi.hasNext()) {
+            var file = fi.next();
+            return file;
+        }
+    }
+
+    function findFileInDriveType(name, mime) {
+        mime = validateMIME(mime);
+        var fi = DriveApp.getFilesByName(name);
+        while (fi.hasNext()) {
+            var file = fi.next();
+            if ((file.getName() === name) && file.getMimeType() === mime) {
+                return file;
+            }
+        }
+        return false;
+    }
+
+    if (mime !== undefined) {
+        return findFileInDriveType(name, mime);
+    } else {
+        return findFileInDriveAny(name);
+    }
 }
 
