@@ -1545,3 +1545,173 @@ function findFileInDrive(name, mime) {
     }
 }
 
+// -- Check for a File
+
+// --- Check for a File at Root
+
+/**
+ * Returns true if a matching file is found.
+ *
+ * @requires findFileAtRoot() 
+ * @requires arrayOfFilesAtRoot()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()* 
+ * @param {string} name
+ * @param {string} mime
+ * @returns {boolean}
+ */
+
+function checkForFileAtRoot(name, mime) {
+    var check = findFileAtRoot(name, mime);
+    if (check) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// --- Check for File in Folder
+
+/**
+ * Returns true if a matching file is found.
+ *
+ * @requires findFileInFolder() 
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()* 
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @param {string} name
+ * @param {Folder} fldr
+ * @param {string} mime
+ * @returns {boolean}
+ */
+
+function checkForFileInFolder(name, fldr, mime) {
+    var check = findFileInFolder(name, fldr, mime);
+    if (check) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//  --- Check for File at Path
+
+/**
+ * Returns true if a matching file is found.
+ *
+ * @requires findFileAtPath() 
+ * @requires validatePathString()*
+ * @requires getBasename()* 
+ * @requires getInverseBasename()*
+ * @requires findFolderAtPath()*
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @requires matchMIMEType()*
+ * @param {string} path
+ * @param {string} mime
+ * @returns {boolean}
+ */
+
+function checkForFileAtPath(path, mime) {
+    var check = findFileAtPath(path, mime);
+    if (check) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// --- Create File at Root
+
+/**
+ * Returns a newly created file.
+ * This can create documents, forms, presentations or spreadsheets, 
+ * but it will always return a file.
+ *
+ * @param {string} name
+ * @param {string} [mime]
+ * @returns {File}
+ */
+
+function createFileAtRoot(name, mime) {
+    switch (mime) {
+        case "document":
+            var document = DocumentApp.create(name);
+            return DriveApp.getFileById(document.getId());
+        case "form":
+            var form = FormApp.create(name);
+            return DriveApp.getFileById(form.getId());
+        case "presentation":
+            var presentation = SlidesApp.create(name);
+            return DriveApp.getFileById(presentation.getId());
+        case "spreadsheet":
+            var spreadsheet = SpreadsheetApp.create(name);
+            return DriveApp.getFileById(spreadsheet.getId());
+        default:
+            var file = DriveApp.getRootFolder().createFile(name, "");
+            return DriveApp.getFileById(file.getId());
+    }
+}
+
+// --- Create File in Folder
+
+/**
+ * Returns a newly created file.
+ * This can create documents, forms, presentations or spreadsheets, 
+ * but it will always return a file.
+ *
+ * @requires createFileAtRoot() 
+ * @requires moveFileToFolder() 
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @param {string} name
+ * @param {Folder} fldr
+ * @param {string} [mime]
+ * @returns {File || boolean}
+ */
+
+function createFileInFolder(name, fldr, mime) {
+    var file = createFileAtRoot(name, mime);
+    return moveFileToFolder(file, fldr);
+}
+
+// --- Create File at Path
+
+/**
+ * Returns a newly created file.
+ * This can create documents, forms, presentations or spreadsheets, 
+ * but it will always return a file.
+ *
+ * @requires getBasename() 
+ * @requires getInverseBasename() 
+ * @requires findFolderAtPath() 
+ * @requires validatePathString()*
+ * @requires createFileInFolder() 
+ * @requires createFileAtRoot()*
+ * @requires moveFileToFolder()*
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @param {string} path
+ * @param {string} [mime]
+ * @returns {File || boolean}
+ */
+
+function createFileAtPath(path, mime) {
+    // validate path...
+    var name = getBasename(path);
+    path = getInverseBasename(path);
+    var fldr = findFolderAtPath(path);
+    return createFileInFolder(name, fldr, mime);
+}
+

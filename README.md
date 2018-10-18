@@ -2079,3 +2079,203 @@ function findFileInDrive(name, mime) {
 Logger.log("findFileInDrive");
 Logger.log(findFileInDrive("example-file")); // example-file
 
+#### Check for a File ####
+
+##### Check for a File at Root #####
+
+```javascript
+/**
+ * Returns true if a matching file is found.
+ *
+ * @requires findFileAtRoot() 
+ * @requires arrayOfFilesAtRoot()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()* 
+ * @param {string} name
+ * @param {string} mime
+ * @returns {boolean}
+ */
+
+function checkForFileAtRoot(name, mime) {
+    var check = findFileAtRoot(name, mime);
+    if (check) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+Logger.log("checkForFileAtRoot");
+
+##### Check for File in Folder #####
+
+```javascript
+/**
+ * Returns true if a matching file is found.
+ *
+ * @requires findFileInFolder() 
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()* 
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @param {string} name
+ * @param {Folder} fldr
+ * @param {string} mime
+ * @returns {boolean}
+ */
+
+function checkForFileInFolder(name, fldr, mime) {
+    var check = findFileInFolder(name, fldr, mime);
+    if (check) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+Logger.log("checkForFileInFolder");
+var fldr_cffif = verifyFolderPath("google-apps-script-cheat-sheet-demo/sheets"); 
+Logger.log(checkForFileInFolder("example-sheet", fldr_cffif, "spreadsheet")); // true
+Logger.log(checkForFileInFolder("example-sheet", fldr_cffif)); // true 
+```
+
+//  --- Check for File at Path
+
+```javascript
+/**
+ * Returns true if a matching file is found.
+ *
+ * @requires findFileAtPath() 
+ * @requires validatePathString()*
+ * @requires getBasename()* 
+ * @requires getInverseBasename()*
+ * @requires findFolderAtPath()*
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @requires matchMIMEType()*
+ * @param {string} path
+ * @param {string} mime
+ * @returns {boolean}
+ */
+
+function checkForFileAtPath(path, mime) {
+    var check = findFileAtPath(path, mime);
+    if (check) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+Logger.log("checkForFileAtPath");
+Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet")); // true
+Logger.log(checkForFileAtPath("google-apps-script-cheat-sheet-demo/sheets/example-sheet", "spreadsheet")); // true
+
+// Create a File
+
+##### Create File at Root #####
+
+```javascript
+/**
+ * Returns a newly created file.
+ * This can create documents, forms, presentations or spreadsheets, 
+ * but it will always return a file.
+ *
+ * @param {string} name
+ * @param {string} [mime]
+ * @returns {File}
+ */
+
+function createFileAtRoot(name, mime) {
+    switch (mime) {
+        case "document":
+            var document = DocumentApp.create(name);
+            return DriveApp.getFileById(document.getId());
+        case "form":
+            var form = FormApp.create(name);
+            return DriveApp.getFileById(form.getId());
+        case "presentation":
+            var presentation = SlidesApp.create(name);
+            return DriveApp.getFileById(presentation.getId());
+        case "spreadsheet":
+            var spreadsheet = SpreadsheetApp.create(name);
+            return DriveApp.getFileById(spreadsheet.getId());
+        default:
+            var file = DriveApp.getRootFolder().createFile(name, "");
+            return DriveApp.getFileById(file.getId());
+    }
+}
+
+Logger.log("createFileAtRoot");
+
+##### Create File in Folder #####
+
+```javascript
+/**
+ * Returns a newly created file.
+ * This can create documents, forms, presentations or spreadsheets, 
+ * but it will always return a file.
+ *
+ * @requires createFileAtRoot() 
+ * @requires moveFileToFolder() 
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @param {string} name
+ * @param {Folder} fldr
+ * @param {string} [mime]
+ * @returns {File || boolean}
+ */
+
+function createFileInFolder(name, fldr, mime) {
+    var file = createFileAtRoot(name, mime);
+    return moveFileToFolder(file, fldr);
+}
+
+Logger.log("createFileInFolder");
+var fldr_cfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/files/create");
+Logger.log(createFileInFolder("example-spreadsheet", fldr_cfif, "spreadsheet")); // amazing-spreadsheet
+
+##### Create File at Path #####
+
+```javascript
+/**
+ * Returns a newly created file.
+ * This can create documents, forms, presentations or spreadsheets, 
+ * but it will always return a file.
+ *
+ * @requires getBasename() 
+ * @requires getInverseBasename() 
+ * @requires findFolderAtPath() 
+ * @requires validatePathString()*
+ * @requires createFileInFolder() 
+ * @requires createFileAtRoot()*
+ * @requires moveFileToFolder()*
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @param {string} path
+ * @param {string} [mime]
+ * @returns {File || boolean}
+ */
+
+function createFileAtPath(path, mime) {
+    // validate path...
+    var name = getBasename(path);
+    path = getInverseBasename(path);
+    var fldr = findFolderAtPath(path);
+    return createFileInFolder(name, fldr, mime);
+}
+
+Logger.log("createFileAtPath");
+Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/bulk/example-spreadsheet", "spreadsheet")); // example-spreadsheet
+
+
