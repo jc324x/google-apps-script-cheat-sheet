@@ -2,7 +2,7 @@
 
 // - Array 
 
-// -- Check Array For a Value
+// -- Check Array For Value
 
 /**
  * Returns true if the value is in the array.

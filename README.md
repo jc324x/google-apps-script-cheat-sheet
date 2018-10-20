@@ -3,7 +3,7 @@
 [General](#general-1)
 =====
 * [Array](#array)
-  * [Check Array for a Value](#check-array-for-a-value)
+  * [Check Array for Value](#check-array-for-value)
   * [Remove Duplicates from Array](#remove-duplicates-from-array)
   * [Remove Empty Elements from Array](#remove-empty-elements-from-array)
   * [Count of Values in Array](#count-of-values-in-array)
@@ -161,7 +161,7 @@
 
 ### Array  ###
 
-#### Check Array For a Value ####
+#### Check Array For Value ####
 
 ```javascript
 /**
