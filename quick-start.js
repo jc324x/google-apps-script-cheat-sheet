@@ -1,3 +1,4 @@
+FLAG: "Copy a File to Folder" -> "Copy File to Folder"
 Logger.log('Start');
 function test() {}
 
@@ -5,7 +6,7 @@ function test() {}
 
 // - Array 
 
-// -- Check Array For Value
+// -- Check Array For a Value
 
 /**
  * Returns true if the value is in the array.
