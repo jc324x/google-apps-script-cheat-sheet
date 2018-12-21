@@ -2278,4 +2278,3 @@ function createFileAtPath(path, mime) {
 Logger.log("createFileAtPath");
 Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/bulk/example-spreadsheet", "spreadsheet")); // example-spreadsheet
 
-

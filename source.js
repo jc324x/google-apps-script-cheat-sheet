@@ -1,7 +1,11 @@
 // !=== DIRECT -> QUICK-START
-// FLAG: "Copy a File to Folder" -> "Copy File to Folder"
+// function setupQuickstart() {
+//    verifyFolderPath("qs");
+// }
+
+// function runQuickstart() {}
+
 // Logger.log('Start');
-// function test() {}
 
 // ===!
 // !=== DIRECT -> README
@@ -2179,7 +2183,6 @@ function createFileAtPath(path, mime) {
 
 // Logger.log("createFileAtPath");
 // Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/bulk/example-spreadsheet", "spreadsheet")); // example-spreadsheet
-
 
 // !=== DIRECT -> QUICK-START
 // Logger.log('End');

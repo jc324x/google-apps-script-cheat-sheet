@@ -1,6 +1,10 @@
-FLAG: "Copy a File to Folder" -> "Copy File to Folder"
+function setupQuickstart() {
+   verifyFolderPath("qs");
+}
+
+function runQuickstart() {}
+
 Logger.log('Start');
-function test() {}
 
 // # General
 
