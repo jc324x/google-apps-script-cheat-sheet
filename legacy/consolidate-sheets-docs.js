@@ -2334,6 +2334,7 @@ function verifyFilePath(path, mime) {
  * @returns {string}
  */
 
+// just get URL and scrape that for mime?
 function idOfActiveFile(mime) {
     switch (mime) {
         case "document":

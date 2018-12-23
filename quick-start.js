@@ -381,10 +381,10 @@ function findOldestObjectInArrayOfObjects(arr) {
     }
 }
 
-Logger.log("findOldestObjectInArrayOfObjects ");
-var sheet_ooiaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var arrObj_ooiaoo = arrayOfObjectsForA1("J1:K4", sheet_ooiaoo);
-Logger.log(oldestObjectInArrayOfObjects(arrObj_ooiaoo)); 
+// Logger.log("findOldestObjectInArrayOfObjects ");
+// var sheet_ooiaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var arrObj_ooiaoo = arrayOfObjectsForA1("J1:K4", sheet_ooiaoo);
+// Logger.log(oldestObjectInArrayOfObjects(arrObj_ooiaoo)); 
 // {Timestamp=Sun Feb 19 19:43:40 GMT-06:00 2017, Multiple Choice=A} 
 
 // -- Find Latest Object in Array of Objects
@@ -407,10 +407,10 @@ function findLatestObjectInArrayOfObjects(arrObj) {
     }
 }
 
-Logger.log("findLatestObjectInArrayOfObjects");
-var sheet_loiaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-var arrObj_loiaoo = arrayOfObjectsForA1("J1:K4", sheet_loiaoo);
-Logger.log(findLatestObjectInArrayOfObjects(arrObj_loiaoo)); 
+// Logger.log("findLatestObjectInArrayOfObjects");
+// var sheet_loiaoo  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+// var arrObj_loiaoo = arrayOfObjectsForA1("J1:K4", sheet_loiaoo);
+// Logger.log(findLatestObjectInArrayOfObjects(arrObj_loiaoo)); 
 // {Timestamp=Wed Feb 22 19:45:07 GMT-06:00 2017, Multiple Choice=C} 
 
 // -- Filter Array of Objects by Value or Values
