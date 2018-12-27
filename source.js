@@ -1,6 +1,8 @@
 // !=== DIRECT -> QUICK-START
 // function setupQuickstart() {
-//    verifyFolderPath("qs");
+//     verifyFolderPath("qs");
+//     var data = "https://docs.google.com/spreadsheets/d/1QhfPg7Hkv2RMMpSQuh9lViVgL46nu1_Ta3b8gjG92sU/edit#gid=0";
+//     verifyCloneAtPath("qs/data", data);
 // }
 
 // function runQuickstart() {}

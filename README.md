@@ -2421,7 +2421,20 @@ Logger.log("verifyFilePath");
  * @param {string} path
  * @param {string} url
  * @requires getInverseBasename() 
- * @requires () 
+ * @requires validatePathString()*
+ * @requires verifyFolderPath() 
+ * @requires getBasename() 
+ * @requires mimeFromUrl() 
+ * @requires checkStringForSubstring()*
+ * @requires checkForFileAtPath() 
+ * @requires findFileAtPath() 
+ * @requires findFolderAtPath()*
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @requires matchMIMEType()*
  * @returns {File}
  */
 

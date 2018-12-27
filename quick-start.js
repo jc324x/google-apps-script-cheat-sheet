@@ -1,5 +1,7 @@
 function setupQuickstart() {
-   verifyFolderPath("qs");
+    verifyFolderPath("qs");
+    var data = "https://docs.google.com/spreadsheets/d/1QhfPg7Hkv2RMMpSQuh9lViVgL46nu1_Ta3b8gjG92sU/edit#gid=0";
+    verifyCloneAtPath("qs/data", data);
 }
 
 function runQuickstart() {}
@@ -2146,7 +2148,20 @@ function verifyFilePath(path, mime) {
  * @param {string} path
  * @param {string} url
  * @requires getInverseBasename() 
- * @requires () 
+ * @requires validatePathString()*
+ * @requires verifyFolderPath() 
+ * @requires getBasename() 
+ * @requires mimeFromUrl() 
+ * @requires checkStringForSubstring()*
+ * @requires checkForFileAtPath() 
+ * @requires findFileAtPath() 
+ * @requires findFolderAtPath()*
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @requires matchMIMEType()*
  * @returns {File}
  */
 
