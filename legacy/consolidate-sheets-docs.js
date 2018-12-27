@@ -2334,7 +2334,6 @@ function verifyFilePath(path, mime) {
  * @returns {string}
  */
 
-// just get URL and scrape that for mime?
 function idOfActiveFile(mime) {
     switch (mime) {
         case "document":
@@ -2458,7 +2457,7 @@ function moveFileToFolder(file, fldr) {
 
 // - Files and Folders
 
-// -- Rename a File or Folder
+// -- Rename File or Folder
 
 /**
  * Returns a renamed file or a folder.

@@ -777,6 +777,7 @@ function validatePathString(path) {
  * Returns the basename from the end of a path.
  *
  * @param {string} path
+ * @requires validatePathString() 
  * @returns {string}
  */
 
@@ -795,6 +796,7 @@ function getBasename(path) {
  * Returns a path, minus the basename.
  *
  * @param {string} path
+ * @requires validatePathString() 
  * @returns {string}
  */
 
@@ -870,6 +872,35 @@ function matchMIMEType(file, mime) {
 // Logger.log(matchMIMEType(file_mmt, "document")); // true
 // Logger.log(matchMIMEType(file_mmt, "application/vnd.google-apps.document")); // true
 // Logger.log(matchMIMEType(file_mmt, "spreadsheet")); // false 
+
+// -- MIME from URL
+
+/**
+ * Flag: DOCUMENTATION HERE
+ *
+ * @param url
+ * @requires checkStringForSubstring() 
+ * @returns {string}
+ */
+
+function mimeFromUrl(url) {
+    if (checkStringForSubstring("spreadsheets", url)) {
+        return "spreadsheet";
+    }
+
+    if (checkStringForSubstring("document", url)) {
+        return "document";
+    }
+
+    if (checkStringForSubstring("presentation", url)) {
+        return "presentation";
+    }
+
+    if (checkStringForSubstring("forms", url)) {
+        return "form";
+    }
+
+}
 
 // - Folders
 
@@ -2010,5 +2041,347 @@ function createFileAtPath(path, mime) {
 
 // Logger.log("createFileAtPath");
 // Logger.log(createFileAtPath("google-apps-script-cheat-sheet-demo/bulk/example-spreadsheet", "spreadsheet")); // example-spreadsheet
+
+// Verify File 
+
+// --- Verify File at Root
+
+/**
+ * Returns a file from root.
+ * A matching file is either found or created.
+ *
+ * @requires checkForFileAtRoot() 
+ * @requires findFileAtRoot() 
+ * @requires createFileAtRoot() 
+ * @param {string} name
+ * @param {string} [mime]
+ * @returns {File}
+ */
+
+function verifyFileAtRoot(name, mime) {
+    if (checkForFileAtRoot(name, mime)) {
+        return findFileAtRoot(name, mime);
+    } else {
+        return createFileAtRoot(name, mime);
+    }
+}
+
+// Logger.log("verifyFileAtRoot");
+
+// --- Verify File in Folder
+
+/**
+ * Returns a file from a folder.
+ * A matching file is either found or created.
+ *
+ * @requires checkForFileInFolder() 
+ * @requires findFileInFolder() 
+ * @requires createFileInFolder() 
+ * @param {string} name
+ * @param {Folder} fldr
+ * @param {string} [mime]
+ * @returns {File || boolean}
+ */
+
+function verifyFileInFolder(name, fldr, mime) {
+    if (checkForFileInFolder(name, fldr, mime)) {
+        return findFileInFolder(name, fldr, mime);
+    } else {
+        return createFileInFolder(name, fldr, mime);
+    }
+}
+
+// Logger.log("verifyFileInFolder");
+// var fldr_vfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/files"); 
+// var file_vfif = verifyFileInFolder(fldr_vfif, "testing"); 
+
+// --- Verify File Path
+
+/**
+ * Returns a file from the end of a path.
+ * A matching file is either found or created.
+ * Any missing folders in the folder path will be created.
+ *
+ * @requires getInverseBasename() 
+ * @requires verifyFolderPath() 
+ * @requires validatePathString()*
+ * @requires checkForFileAtPath() 
+ * @requires getBasename()* 
+ * @requires findFolderAtPath()*
+ * @requires findFileInFolder()*
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @requires matchMIMEType()*
+ * @requires findFileAtPath()
+ * @requires createFileAtPath() 
+ * @requires createFileInFolder()*
+ * @requires createFileAtRoot()*
+ * @requires moveFileToFolder()*
+ * @param {string} path
+ * @param {string} [mime]
+ * @returns {File}
+ */
+
+function verifyFilePath(path, mime) {
+    var folderPath = getInverseBasename(path);
+    verifyFolderPath(folderPath);
+    if (checkForFileAtPath(path, mime)) {
+        return findFileAtPath(path, mime);
+    } else {
+        return createFileAtPath(path, mime);
+    }
+}
+
+// Logger.log("verifyFilePath");
+
+// -- Verify Clone
+
+// --- Verify Clone at Path
+
+/**
+ * Flag: DOCUMENTATION HERE
+ *
+ * @param {string} path
+ * @param {string} url
+ * @requires getInverseBasename() 
+ * @requires () 
+ * @returns {File}
+ */
+
+function verifyCloneAtPath(path, url) {
+    var folderPath = getInverseBasename(path);
+    var fldr = verifyFolderPath(folderPath);
+    var name = getBasename(folderPath);
+    var mime = mimeFromUrl(url);
+
+    if (checkForFileAtPath(path, mime)) {
+        return findFileAtPath(path, mime);
+    }
+
+    var id;
+
+    switch (mime) {
+        case "spreadsheet":
+            id = SpreadsheetApp.openByUrl(url).getId();
+            break;
+        case "document":
+            id = DocumentApp.openByUrl(url).getId();
+            break;
+        case "spreadsheet":
+            id = SlidesApp.openByUrl(url).getId();
+            break;
+        case "form":
+            id = FormApp.openByUrl(url).getId();
+            break;
+    }
+
+    var file = DriveApp.getFileById(id);
+
+    if (file.getId() != "") {
+        file.makeCopy(name, fldr);
+    }
+}
+
+// -- Id of Active File
+
+/**
+ * Returns the ID of the active file.
+ *
+ * @param {string} mime
+ * @returns {string}
+ */
+
+// FLAG: remove need for mime param
+function idOfActiveFile(mime) {
+    switch (mime) {
+        case "document":
+            return DocumentApp.getActiveDocument().getId();
+        case "form":
+            return FormApp.getActiveForm().getId();
+        case "presentation":
+            return SlidesApp.getActivePresentation().getId();
+        case "spreadsheet":
+            return DocumentApp.getActiveSpreadsheet().getId();
+    }
+}
+
+// Logger.log("idOfActiveFile");
+// Logger.log(idOfActiveFile("spreadsheet");
+
+// -- Open File as Type
+
+/**
+ * Returns a file as a document object. 
+ *
+ * @param {File} file
+ * @param {string} mime
+ * @returns {Document || Form || Presentation || Spreadsheet || boolean}
+ */
+
+function openFileAsType(file, mime) {
+    var id = file.getId();
+    switch (mime) {
+        case "document":
+            return DocumentApp.openById(id);
+        case "form":
+            return FormApp.openById(id);
+        case "presentation":
+            return PresentationApp.openById(id);
+        case "spreadsheet":
+            return SpreadsheetApp.openById(id);
+        default:
+            return false;
+    }
+}
+
+// Logger.log("openFileAsType");
+// var file_ofat = verifyFilePath("google-apps-script-cheat-sheet-demo/files/example-document", "document");
+// Logger.log(openFileAsType(file_ofat, "document")); // Document
+
+// -- Copy a File to a Folder
+
+/**
+ * Returns a file from it's new location.
+ * This will not copy a file to a folder if a
+ * file of the same name exists in the destination folder.
+ *
+ * @requires findFileInFolder() 
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @param {File} file
+ * @param {Folder} fldr
+ * @param {string} [mime]
+ * @returns {File || boolean}
+ */
+
+function copyFileToFolder(file, fldr, mime) {
+    var name = file.getName();
+    var dest = findFileInFolder(name, fldr, mime);
+    if (dest === false) {
+        file.makeCopy(name, fldr);
+    }
+    return findFileInFolder(name, fldr);
+}
+
+// Logger.log("copyFileToFolder");
+// var fldr_cftf = verifyFolderPath("google-apps-script-cheat-sheet-demo/copy");
+// var file_cftf = verifyFilePath("google-apps-script-cheat-sheet-demo/bulk/copy-example", "document"); 
+// var doc_cftf = openFileAsType(file_cftf, "document");
+// var body_cftf = doc_cftf.getBody().editAsText();
+// body_cftf.insertText(0, 'copied document!\n');
+// Logger.log(copyFileToFolder(file_cftf, fldr_cftf)); // copy-example
+
+// -- Move a File to a Folder 
+
+/**
+ * Returns a file from it's new location. 
+ * The original file is not deleted until the
+ * copy to the new location is confirmed.
+ *
+ * @requires findFileInFolder()
+ * @requires arrayOfFilesInFolder()*
+ * @requires arrayOfFileNames()*
+ * @requires checkArrayForValue()*
+ * @requires validateMIME()*
+ * @param {File} file
+ * @param {Folder}  fldr
+ * @returns {File || boolean}
+ */
+
+function moveFileToFolder(file, fldr) {
+    var copy, result;
+    var name = file.getName();
+    var dest = findFileInFolder(name, fldr);
+
+    if (dest === false) {
+        copy = file.makeCopy(name, fldr);
+        result = findFileInFolder(name, fldr);
+    }
+
+    if (result) {
+        file.setTrashed(true);
+        return result;
+    } else {
+        return false;
+    }
+}
+
+// Logger.log("moveFileToFolder");
+// var file_mftf = verifyFilePath("google-apps-script-cheat-sheet-demo/bulk/move-example", "spreadsheet");
+// var fldr_mftf = verifyFolderPath("google-apps-script-cheat-sheet-demo/move");
+// Logger.log(moveFileToFolder(file_mftf, fldr_mftf)); // move-example
+
+// - Files and Folders
+
+// -- Rename File or Folder
+
+/**
+ * Returns a renamed file or a folder.
+ *
+ * @param {File || Folder} file_fldr
+ * @param {string} name
+ * @returns {File || Folder}
+ */
+
+function renameFileOrFolder(file_fldr, name) {
+    file_fldr.setName(name);
+    return file_fldr;
+}
+
+// Logger.log("renameFileOrFolder");
+// var file_rfof = verifyFilePath("google-apps-script-cheat-sheet-demo/bulk/spellling-eror");
+// Logger.log(renameFileOrFolder(file_rfof, "spelling-error-fixed")); // modified-example-file
+// var fldr_rfof = verifyFolderPath("google-apps-script-cheat-sheet-demo/bulk/spellling-eror");
+// Logger.log(renameFileOrFolder(fldr_rfof, "spelling-error-fixed")); // modified-example-file
+
+// -- Parent Folder of a File or Folder 
+
+/**
+ * Returns the parent folder or a file or a folder.
+ *
+ * @param {File || Folder} file_fldr
+ * @returns {Folder}
+ */
+
+function parentFolderOfFileOrFolder(file_fldr) {
+    var fi = file_fldr.getParents();
+    return fi.next();
+}
+
+// Logger.log("parentFolderOfFileOrFolder");
+// var file_pfofof = findFileInDrive("example-file");
+// Logger.log(parentFolderOfFileOrFolder(file_pfofof)); // files
+
+// -- Zip Files in Folder
+
+/**
+ * Returns a zipped file. 
+ *
+ * @requires arrayOfFilesInFolder()
+ * @requires findFileInFolder()
+ * @param {Folder} fldr
+ * @param {string} name
+ * @returns {File}
+ */
+
+function zipFilesInFolder(target, name, fldr) {
+    var blobs = [];
+    var files = arrayOfFilesInFolder(target);
+    for (var i = 0; i < files.length; i++) {
+        blobs.push(files[i].getBlob());
+    }
+    var zips = Utilities.zip(blobs, name);
+    fldr.createFile(zips);
+    return findFileInFolder(name, fldr);
+}
+
+// Logger.log("zipFilesInFolder");
+// var fldr1_zfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/zip");
+// var fldr2_zfif = verifyFolderPath("google-apps-script-cheat-sheet-demo/zipped");
+// zipFilesInFolder(fldr1_zfif, "Archive", fldr2_zfif);
 
 Logger.log('End');
